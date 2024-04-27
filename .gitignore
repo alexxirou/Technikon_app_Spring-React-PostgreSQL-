@@ -1,0 +1,46 @@
+# Ignore target directory
+Technikon-App-BackEnd/target/
+
+# Allow Maven wrapper
+Technikon-App-BackEnd/!.mvn/wrapper/maven-wrapper.jar
+
+# Allow target directories inside src/main and src/test
+Technikon-App-BackEnd/!**/src/main/**/target/
+Technikon-App-BackEnd/!**/src/test/**/target/
+
+# Ignore IntelliJ IDEA files
+Technikon-App-BackEnd/.idea/modules.xml
+Technikon-App-BackEnd/.idea/jarRepositories.xml
+Technikon-App-BackEnd/.idea/compiler.xml
+Technikon-App-BackEnd/.idea/libraries/
+Technikon-App-BackEnd/*.iws
+Technikon-App-BackEnd/*.iml
+Technikon-App-BackEnd/*.ipr
+
+# Ignore Eclipse files
+Technikon-App-BackEnd/.apt_generated
+Technikon-App-BackEnd/.classpath
+Technikon-App-BackEnd/.factorypath
+Technikon-App-BackEnd/.project
+Technikon-App-BackEnd/.settings
+Technikon-App-BackEnd/.springBeans
+Technikon-App-BackEnd/.sts4-cache
+
+# Ignore NetBeans files
+Technikon-App-BackEnd/nbproject/private/
+Technikon-App-BackEnd/nbbuild/
+Technikon-App-BackEnd/dist/
+Technikon-App-BackEnd/nbdist/
+Technikon-App-BackEnd/.nb-gradle/
+Technikon-App-BackEnd/build/
+Technikon-App-BackEnd/!**/src/main/**/build/
+Technikon-App-BackEnd/!**/src/test/**/build/
+
+# Ignore VS Code files
+Technikon-App-BackEnd/.vscode/
+
+# Ignore Mac OS specific files
+Technikon-App-BackEnd/.DS_Store
+
+# Ignore .env file
+Technikon-App-BackEnd/src/main/resources/.env
