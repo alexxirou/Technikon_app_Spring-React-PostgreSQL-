@@ -44,3 +44,6 @@ Technikon-App-BackEnd/.DS_Store
 
 # Ignore .env file
 Technikon-App-BackEnd/src/main/resources/.env
+
+#Ignore .idea folder
+.idea/
