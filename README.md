@@ -32,7 +32,7 @@ The Technikon project leverages modern web technologies to provide a robust and 
 
 The following individuals have contributed to the development of the Technikon project:
 
-1. [Collaborator 1](link-to-github-profile)
+1. [Alexandros Xirouchakis](https://github.com/alexxirou)
 2. [Collaborator 2](link-to-github-profile)
 3. [Collaborator 3](link-to-github-profile)
 4. [Collaborator 4](link-to-github-profile)
