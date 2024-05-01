@@ -1,5 +1,0 @@
-spring.application.name=Technikon-App-BackEnd
-
-#ENV
-spring.config.location=classpath:/,classpath:/config/,file:./,file:./src/main/resources/config/
-

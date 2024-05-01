@@ -13,8 +13,8 @@ import java.util.UUID;
 @Data
 public class PropertyRepair {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
     private LocalDate dateOfRepair;
     private String shortDescription;
     private RepairType repairType;
@@ -24,4 +24,6 @@ public class PropertyRepair {
 
     @ManyToOne
     private Property property;
+    @ManyToOne
+    private PropertyOwner propertyOwner;
 }

@@ -15,8 +15,8 @@ import java.util.UUID;
 @Data
 public class Property {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
+    @Column(unique = true)
+    private long id;
     private String address;
     private LocalDate constructionYear;
     private PropertyType propertyType;
@@ -26,10 +26,6 @@ public class Property {
     @ManyToOne
     @NotNull
     private PropertyOwner propertyOwner;
-
-    @OneToMany(mappedBy = "property")
-    @JsonIgnore
-    private List<PropertyRepair>propertyRepairs = new ArrayList<>();
 }
 
 

@@ -12,6 +12,6 @@ public interface PropertyOwnerService {
     public PropertyOwnerDto createPropertyOwner(PropertyOwner propertyOwner);
     public PropertyOwner searchPropertyOwner(PropertyRepairDto propertyOwnerDto);
     public boolean updatePropertyOwner(PropertyOwnerUpdateDto propertyOwnerUpdateDto);
-    public boolean deletePropertyOwner(UUID propertyOwnerId);
+    public boolean deletePropertyOwner(long propertyOwnerId);
 
 }

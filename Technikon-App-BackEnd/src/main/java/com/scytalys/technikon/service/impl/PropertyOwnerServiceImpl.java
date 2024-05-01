@@ -29,7 +29,7 @@ public class PropertyOwnerServiceImpl implements PropertyOwnerService {
     }
 
     @Override
-    public boolean deletePropertyOwner(UUID propertyOwnerId) {
+    public boolean deletePropertyOwner(long propertyOwnerId) {
         return false;
     }
 }

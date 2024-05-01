@@ -16,7 +16,7 @@ public class PropertyServiceImpl implements PropertyService {
 
     @Override
     public Property searchProperty(PropertyDto propertyDto) {
-        UUID propertyId = propertyDto.propertyId();
+        long propertyId = propertyDto.propertyId();
         return propertyRepository.findById(propertyId).orElse(null);
     }
 
