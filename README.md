@@ -36,7 +36,7 @@ The following individuals have contributed to the development of the Technikon p
 2. [Elentina Grispou](https://github.com/eledinaGr)
 3. [Stella Kokolaki](https://github.com/stelakokolaki)
 4. [Collaborator 4](link-to-github-profile)
-5. [Collaborator 5](link-to-github-profile)
+5. [Vasilis Lionas](https://github.com/Vln1991)
 
 ## Setup Instructions
 
