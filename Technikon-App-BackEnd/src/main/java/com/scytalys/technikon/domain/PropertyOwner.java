@@ -7,8 +7,4 @@ import lombok.Data;
 public class PropertyOwner extends User {
     private String address;
     private long phoneNumber;
-
-
-
-
 }
