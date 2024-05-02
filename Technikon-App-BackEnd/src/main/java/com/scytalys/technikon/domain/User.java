@@ -9,13 +9,14 @@ import java.util.UUID;
 @Data
 public abstract class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(unique = true)
     private long id;
     private String name;
     private String surname;
-    @Column(unique = true)
     private String email;
     @Column(unique = true)
     private String username;
     private String password;
+    private Boolean isActive = true;
+
 }
