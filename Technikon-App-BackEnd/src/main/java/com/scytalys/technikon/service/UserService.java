@@ -7,10 +7,12 @@ import com.scytalys.technikon.dto.UserUpdateDto;
 
 public interface UserService {
     //Abstract methods to be used by both types of Users
-    public User createUser(User user);
+    public User createUser(PropertyOwner user);
     public User searchUser(long Id);
     public User searchUser(String username);
     public void deleteUser(long UserId);
+    public void updateUserPassword(UserUpdateDto userUpdateDto);
+    public void updateUserEmail(UserUpdateDto userUpdateDto);
     public UserResponseDto createUserCreationDto(User user, String errorMessage);
     public UserResponseToSearchDto createUserSearchDto(long id, String username, String email, String errorMessage);
 

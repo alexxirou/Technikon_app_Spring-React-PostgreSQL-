@@ -1,15 +1,19 @@
 package com.scytalys.technikon.domain;
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import jakarta.persistence.Version;
+import lombok.*;
+
 
 @EqualsAndHashCode(callSuper = true)
 @Entity
 @Data
+@ToString(callSuper = true)
+
 public class PropertyOwner extends User {
 
     private String address;
     private String phoneNumber;
+
+
+
 }

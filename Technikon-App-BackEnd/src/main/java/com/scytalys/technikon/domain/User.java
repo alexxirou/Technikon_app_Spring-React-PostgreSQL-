@@ -1,13 +1,16 @@
 package com.scytalys.technikon.domain;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 import java.util.UUID;
 
 @MappedSuperclass
 @Data
-public abstract class User {
+public class User {
     @Id
     @Column(unique = true)
     private long id;
@@ -17,6 +20,8 @@ public abstract class User {
     @Column(unique = true)
     private String username;
     private String password;
-    private Boolean isActive = true;
+    private boolean isActive = true;
+    @Version
+    private int version;
 
 }

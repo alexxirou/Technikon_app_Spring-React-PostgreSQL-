@@ -16,8 +16,18 @@ public interface PropertyOwnerRepository extends JpaRepository<PropertyOwner, Lo
 
     @Transactional
     @Modifying
-    @Query("UPDATE PropertyOwner p SET p.email = :email, p.address = :address, p.password = :password WHERE p.id = :id")
-    void updatePropertyOwnerById(@Param("id") long id, @Param("email") String email, @Param("address") String address, @Param("password") String password);
+    @Query("UPDATE PropertyOwner p SET p.email = :email WHERE p.id = :id")
+    void updatePropertyOwnerEmailById(@Param("id") long id, @Param("email") String email);
+
+    @Transactional
+    @Modifying
+    @Query("UPDATE PropertyOwner p SET p.address = :address WHERE p.id = :id")
+    void updatePropertyOwnerAddressById(@Param("id") long id, @Param("address") String address);
+
+    @Transactional
+    @Modifying
+    @Query("UPDATE PropertyOwner p SET p.password = :password WHERE p.id = :id")
+    void updatePropertyOwnerPasswordById(@Param("id") long id, @Param("password") String password);
 
     @Transactional
     @Modifying

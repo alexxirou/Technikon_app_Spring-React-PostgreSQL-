@@ -1,9 +1,11 @@
 package com.scytalys.technikon.bootstrap;
 
 
+import com.scytalys.technikon.domain.PropertyOwner;
 import com.scytalys.technikon.domain.PropertyRepair;
 import com.scytalys.technikon.domain.category.RepairStatus;
 import com.scytalys.technikon.domain.category.RepairType;
+import com.scytalys.technikon.service.PropertyOwnerService;
 import com.scytalys.technikon.service.PropertyRepairService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,7 +22,7 @@ import java.time.LocalDate;
 public class SampleData {
 
     private final PropertyRepairService propertyRepairService;
-
+    private final PropertyOwnerService propertyOwnerService;
     @Bean
     public CommandLineRunner myCommandLineRunner(){
         return args -> {
@@ -32,6 +34,28 @@ public class SampleData {
             propertyRepair.setCost(new BigDecimal(150));
             propertyRepair.setLongDescription("Describing with details the work to be done");
             propertyRepairService.createPropertyRepair(propertyRepair);
+
+            PropertyOwner propertyOwner = new PropertyOwner();
+            propertyOwner.setId(2L); // id
+            propertyOwner.setName("John"); // name
+            propertyOwner.setSurname("Doe"); // surname
+            propertyOwner.setEmail("JDE@hotmail.com"); // email
+            propertyOwner.setUsername("JDE"); // username
+            propertyOwner.setPassword("pass"); // password
+            propertyOwner.setAddress("somewhere"); // address
+            propertyOwner.setPhoneNumber("999582486");
+            propertyOwnerService.createUser(propertyOwner);
+
+            PropertyOwner propertyOwner2 = new PropertyOwner();
+            propertyOwner2.setId(2L); // id
+            propertyOwner2.setName("John"); // name
+            propertyOwner2.setSurname("Doe"); // surname
+            propertyOwner2.setEmail("JDE@hotmail.com"); // email
+            propertyOwner2.setUsername("JDE"); // username
+            propertyOwner2.setPassword("pass"); // password
+            propertyOwner2.setAddress("somewhere"); // address
+            propertyOwner2.setPhoneNumber("999582486");
+            propertyOwnerService.createUser(propertyOwner2);
         };
     }
 }
