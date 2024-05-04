@@ -13,8 +13,8 @@ public interface UserService {
     void deleteUser(long UserId);
     void updateUserPassword(String password, User user);
     void updateUserEmail(String email, User user);
-    UserResponseDto createUserCreationDto(User user, String errorMessage);
-    UserResponseToSearchDto createUserSearchDto(long id, String username, String email, String errorMessage);
+    UserResponseDto createUserCreationResponseDto(User user, String errorMessage);
+    UserResponseToSearchDto createUserSearchResponseDto(long id, String username, String email, String errorMessage);
 
 
 

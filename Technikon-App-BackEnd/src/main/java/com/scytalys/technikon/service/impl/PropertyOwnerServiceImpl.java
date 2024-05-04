@@ -125,7 +125,7 @@ public class PropertyOwnerServiceImpl implements PropertyOwnerService {
      * @param errorMessage The error message, if any.
      * @return The created UserResponseDto object.
      */
-    public UserResponseDto createUserCreationDto(User user, String errorMessage){
+    public UserResponseDto createUserCreationResponseDto(User user, String errorMessage){
         return new UserResponseDto((PropertyOwner) user, errorMessage);
     }
 
@@ -138,7 +138,7 @@ public class PropertyOwnerServiceImpl implements PropertyOwnerService {
      * @param errorMessage The error message, if any.
      * @return The created UserResponseToSearchDto object.
      */
-    public UserResponseToSearchDto createUserSearchDto(long id, String username, String email, String errorMessage){
+    public UserResponseToSearchDto createUserSearchResponseDto(long id, String username, String email, String errorMessage){
         return new UserResponseToSearchDto(
                 id,
                 username,
@@ -156,7 +156,7 @@ public class PropertyOwnerServiceImpl implements PropertyOwnerService {
      * @param errorMessage The error message, if any.
      * @return The created UserUpdateDto object.
      */
-    public UserUpdateDto createUpdateUserDto(long id, String password, String email, String address, String errorMessage ){
+    public UserUpdateDto createUserUpdateResponseDto(long id, String password, String email, String address, String errorMessage ){
         return new UserUpdateDto(id, address, email, password, errorMessage);
     }
     /**
