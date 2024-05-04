@@ -61,7 +61,7 @@ public class PropertyOwnerServiceImpl implements PropertyOwnerService {
     /**
      * Searches for a user in the repository by their username.
      *
-     * @param username The username of the user to be searched.
+     * @param email The email of the user to be searched.
      * @return The found user.
      * @throws NoSuchElementException If the user is not found.
      */
@@ -95,6 +95,7 @@ public class PropertyOwnerServiceImpl implements PropertyOwnerService {
         propertyOwner.setAddress(address);
         propertyOwnerRepository.save(propertyOwner);
     }
+
 
     /**
      * Updates the password of a user in the repository.
