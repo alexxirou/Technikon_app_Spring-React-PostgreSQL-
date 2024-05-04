@@ -40,7 +40,7 @@ public class PropertyOwnerServiceImpl implements PropertyOwnerService {
      * @throws NoSuchElementException If the user is not found.
      */
     @Override
-    public PropertyOwner searchUser(long id) {
+    public PropertyOwner searchUserById(long id) {
         return propertyOwnerRepository.findById(id).orElseThrow(
                 () -> new NoSuchElementException("User Id not found."));
     }
@@ -53,9 +53,22 @@ public class PropertyOwnerServiceImpl implements PropertyOwnerService {
      * @throws NoSuchElementException If the user is not found.
      */
     @Override
-    public PropertyOwner searchUser(String username) {
+    public PropertyOwner searchUserByUsername(String username) {
         return propertyOwnerRepository.findByUsername(username).orElseThrow(
                 () -> new NoSuchElementException("Username not found."));
+    }
+
+    /**
+     * Searches for a user in the repository by their username.
+     *
+     * @param username The username of the user to be searched.
+     * @return The found user.
+     * @throws NoSuchElementException If the user is not found.
+     */
+    @Override
+    public PropertyOwner searchUserByEmail(String email) {
+        return propertyOwnerRepository.findByEmail(email).orElseThrow(
+                () -> new NoSuchElementException("Email not found."));
     }
 
     /**
