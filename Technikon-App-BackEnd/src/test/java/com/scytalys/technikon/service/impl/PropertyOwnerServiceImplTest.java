@@ -53,6 +53,7 @@ public class PropertyOwnerServiceImplTest {
         propertyOwner.setPhoneNumber("999582486"); // phoneNumber
 
     }
+
     /**
      * This test verifies that the createUser method correctly saves a PropertyOwner to the repository and returns the saved PropertyOwner.
      */
@@ -64,6 +65,7 @@ public class PropertyOwnerServiceImplTest {
         assertEquals(propertyOwner, result);
 
     }
+
     /**
      * This test verifies the behavior of the searchUserById method when a PropertyOwner with the given ID is found.
      */
@@ -98,6 +100,10 @@ public class PropertyOwnerServiceImplTest {
         PropertyOwner result = propertyOwnerService.searchUserByUsername(propertyOwner.getUsername());
         assertEquals(propertyOwner, result);
     }
+
+    /**
+     * This test verifies the behavior of the searchUserByUsername method when a PropertyOwner with the given Username is not found.
+     */
     @Test
     public void testSearchUserByUsernameFail(){
         when(propertyOwnerRepository.save(any(PropertyOwner.class))).thenReturn(propertyOwner);
@@ -107,7 +113,7 @@ public class PropertyOwnerServiceImplTest {
     }
 
     /**
-     * This test verifies the behavior of the searchUserByUsername method when a PropertyOwner with the given username is not found.
+     * This test verifies the behavior of the searchUserByEmail method when a PropertyOwner with the given email is found.
      */
     @Test
     public void testSearchUserByEmail(){
@@ -119,7 +125,7 @@ public class PropertyOwnerServiceImplTest {
     }
 
     /**
-     * This test verifies the behavior of the searchUserByEmail method when a PropertyOwner with the given email is found.
+     * This test verifies the behavior of the searchUserByEmail method when a PropertyOwner with the given email is not found.
      */
     @Test
     public void testSearchUserByEmailFail(){
