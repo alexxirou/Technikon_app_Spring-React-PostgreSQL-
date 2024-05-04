@@ -21,16 +21,15 @@ public class PropertyOwnerServiceImpl implements PropertyOwnerService {
     private final PropertyOwnerRepository propertyOwnerRepository;
 
     /**
-     * Creates a new user in the repository.
+     * Creates a new user in the repository as a PropertyOwner type
      *
-     * @param propertyOwner The user to be created.
+     * @param user The user to be created.
      * @return The created user.
      */
     @Override
     @Transactional
-    public User createUser(PropertyOwner propertyOwner) {
-        verifyConstraints(propertyOwner);
-        return propertyOwnerRepository.save(propertyOwner);
+    public PropertyOwner createUser(PropertyOwner user) {
+        return propertyOwnerRepository.save(user);
     }
 
     /**
@@ -62,37 +61,39 @@ public class PropertyOwnerServiceImpl implements PropertyOwnerService {
     /**
      * Updates the email of a user in the repository.
      *
-     * @param propertyOwnerUpdateDto The DTO containing the user's ID and new email.
+     * @param email the email column
+     * @param user the row to update.
+     *
      */
     @Transactional
-    public void updateUserEmail(UserUpdateDto propertyOwnerUpdateDto) {
-        PropertyOwner propertyOwner = searchUser(propertyOwnerUpdateDto.id());
-        propertyOwner.setEmail(propertyOwnerUpdateDto.email());
-        propertyOwnerRepository.save(propertyOwner);
+    public void updateUserEmail(String email, User user) {
+        user.setEmail(email);
+        propertyOwnerRepository.save((PropertyOwner) user);
     }
 
     /**
      * Updates the address of a user in the repository.
      *
-     * @param propertyOwnerUpdateDto The DTO containing the user's ID and new address.
+     * @param address the address column
+     * @param propertyOwner the row to update.
      */
     @Transactional
-    public void updateUserAddress(UserUpdateDto propertyOwnerUpdateDto) {
-        PropertyOwner propertyOwner = searchUser(propertyOwnerUpdateDto.id());
-        propertyOwner.setAddress(propertyOwnerUpdateDto.address());
+    public void updateUserAddress(String address, PropertyOwner propertyOwner) {
+        propertyOwner.setAddress(address);
         propertyOwnerRepository.save(propertyOwner);
     }
 
     /**
      * Updates the password of a user in the repository.
      *
-     * @param propertyOwnerUpdateDto The DTO containing the user's ID and new password.
+     * @param password the password column
+     * @param user the row to update
      */
     @Transactional
-    public void updateUserPassword(UserUpdateDto propertyOwnerUpdateDto) {
-        PropertyOwner propertyOwner = searchUser(propertyOwnerUpdateDto.id());
-        propertyOwner.setPassword(propertyOwnerUpdateDto.password());
-        propertyOwnerRepository.save(propertyOwner);
+    public void updateUserPassword(String password, User user) {
+
+        user.setPassword(password);
+        propertyOwnerRepository.save((PropertyOwner) user);
     }
 
     /**
@@ -107,13 +108,12 @@ public class PropertyOwnerServiceImpl implements PropertyOwnerService {
     }
 
     /**
-     * Performs a soft delete on a user in the repository by their ID.
+     * Performs a soft delete on a user in the repository
      *
-     * @param propertyOwnerId The ID of the user to be soft deleted.
+     * @param propertyOwner the row to be deactivated
      */
     @Transactional
-    public void softDeleteUser(long propertyOwnerId){
-        PropertyOwner propertyOwner = searchUser(propertyOwnerId);
+    public void softDeleteUser(PropertyOwner propertyOwner){
         propertyOwner.setActive(false);
         propertyOwnerRepository.save(propertyOwner);
     }
@@ -126,7 +126,7 @@ public class PropertyOwnerServiceImpl implements PropertyOwnerService {
      * @return The created UserResponseDto object.
      */
     public UserResponseDto createUserCreationDto(User user, String errorMessage){
-        return new UserResponseDto(user, errorMessage);
+        return new UserResponseDto((PropertyOwner) user, errorMessage);
     }
 
     /**
@@ -159,14 +159,39 @@ public class PropertyOwnerServiceImpl implements PropertyOwnerService {
     public UserUpdateDto createUpdateUserDto(long id, String password, String email, String address, String errorMessage ){
         return new UserUpdateDto(id, address, email, password, errorMessage);
     }
+    /**
+     * Verifies that the object does not have duplicate fields that should be unique in the db
+     *
+     * @param id the id column
+     * @throws DataIntegrityViolationException If an unique field matches the db
+     */
+    public void verifyConstraintsId(Long id){
+        PropertyOwner test= propertyOwnerRepository.findById(id).orElse(null);
+        if (test!=null) throw new DataIntegrityViolationException("User id already exists.");
 
-    public void verifyConstraints(PropertyOwner propertyOwner){
-        PropertyOwner test= propertyOwnerRepository.findById(propertyOwner.getId()).orElse(null);
-        if (test!=null) {
-            if (test.getId() == propertyOwner.getId()) throw new DataIntegrityViolationException("User id already exists.");
-            if (test.getUsername().equalsIgnoreCase(propertyOwner.getUsername())) throw new DataIntegrityViolationException("Username already exists.");
+    }
 
-        }
+    /**
+     * Verifies that the object does not have duplicate fields that should be unique in the db
+     *
+     * @param username the username column
+     * @throws DataIntegrityViolationException If an unique field matches the db
+     */
+    public void verifyConstraintsUsername(String username){
+        PropertyOwner test= propertyOwnerRepository.findByUsername(username).orElse(null);
+        if (test!=null) throw new DataIntegrityViolationException("Username already exists.");
+
+    }
+
+    /**
+     * Verifies that the object does not have duplicate fields that should be unique in the db
+     *
+     * @param email the email column
+     * @throws DataIntegrityViolationException If an unique field matches the db
+     */
+    public void verifyConstraintsEmail(String email){
+        PropertyOwner test= propertyOwnerRepository.findByEmail(email).orElse(null);
+        if (test!=null) throw new DataIntegrityViolationException("Email already exists.");
 
     }
 }

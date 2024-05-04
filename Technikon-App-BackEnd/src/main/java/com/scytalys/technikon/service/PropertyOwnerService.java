@@ -6,10 +6,11 @@ import com.scytalys.technikon.dto.UserUpdateDto;
 import com.scytalys.technikon.service.UserService;
 
 public interface PropertyOwnerService extends UserService {
-
-    public void updateUserAddress(UserUpdateDto userUpdateDto);
-    public void softDeleteUser(long propertyOwnerId);
-    public UserUpdateDto createUpdateUserDto(long id, String password, String email, String address, String errorMessage );
-
-
+    PropertyOwner createUser(PropertyOwner user);
+    void updateUserAddress(String address, PropertyOwner propertyOwner);
+    void softDeleteUser(PropertyOwner propertyOwner);
+    UserUpdateDto createUpdateUserDto(long id, String password, String email, String address, String errorMessage );
+    void verifyConstraintsEmail(String email);
+    void verifyConstraintsId(Long id);
+    void verifyConstraintsUsername(String username);
     }
