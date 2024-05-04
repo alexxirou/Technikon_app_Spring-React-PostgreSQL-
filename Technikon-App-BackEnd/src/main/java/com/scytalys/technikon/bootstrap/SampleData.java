@@ -46,16 +46,7 @@ public class SampleData {
             propertyOwner.setPhoneNumber("999582486");
             propertyOwnerService.createUser(propertyOwner);
 
-            PropertyOwner propertyOwner2 = new PropertyOwner();
-            propertyOwner2.setId(2L); // id
-            propertyOwner2.setName("John"); // name
-            propertyOwner2.setSurname("Doe"); // surname
-            propertyOwner2.setEmail("JDE@hotmail.com"); // email
-            propertyOwner2.setUsername("JDE"); // username
-            propertyOwner2.setPassword("pass"); // password
-            propertyOwner2.setAddress("somewhere"); // address
-            propertyOwner2.setPhoneNumber("999582486");
-            propertyOwnerService.createUser(propertyOwner2);
+            propertyOwnerService.searchUserById(2L);
         };
     }
 }
