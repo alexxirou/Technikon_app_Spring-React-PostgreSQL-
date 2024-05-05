@@ -90,7 +90,7 @@ public class PropertyOwnerServiceImpl implements PropertyOwnerService {
      */
     @Transactional
     public void updateUserEmail(String email, User user) {
-        user.setEmail(email);
+        user.setEmail(email.toLowerCase());
         propertyOwnerRepository.save((PropertyOwner) user);
     }
 
