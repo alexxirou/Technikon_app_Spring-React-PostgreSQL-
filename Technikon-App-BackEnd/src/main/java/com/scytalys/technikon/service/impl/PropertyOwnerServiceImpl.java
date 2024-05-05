@@ -5,6 +5,7 @@ import com.scytalys.technikon.domain.User;
 import com.scytalys.technikon.dto.UserResponseDto;
 import com.scytalys.technikon.repository.PropertyOwnerRepository;
 import com.scytalys.technikon.service.PropertyOwnerService;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
@@ -75,7 +76,7 @@ public class PropertyOwnerServiceImpl implements PropertyOwnerService {
      */
 
     public void verifySearchResult(User propertyOwner){
-        if (propertyOwner==null) throw new NoSuchElementException("User not found.");
+        if (propertyOwner==null) throw new EntityNotFoundException("User not found.");
     }
 
     /**

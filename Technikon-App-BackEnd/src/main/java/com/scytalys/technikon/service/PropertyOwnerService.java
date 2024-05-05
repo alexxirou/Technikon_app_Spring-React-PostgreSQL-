@@ -2,8 +2,7 @@ package com.scytalys.technikon.service;
 
 import com.scytalys.technikon.domain.PropertyOwner;
 import com.scytalys.technikon.domain.User;
-import com.scytalys.technikon.dto.UserUpdateDto;
-import com.scytalys.technikon.service.UserService;
+
 
 public interface PropertyOwnerService extends UserService {
     PropertyOwner createUser(PropertyOwner user);

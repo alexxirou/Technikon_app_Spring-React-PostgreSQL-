@@ -6,6 +6,7 @@ import com.scytalys.technikon.domain.PropertyOwner;
 import com.scytalys.technikon.dto.UserResponseDto;
 import com.scytalys.technikon.repository.PropertyOwnerRepository;
 
+import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -128,7 +129,7 @@ public class PropertyOwnerServiceImplTest {
     public void testSearchUserByEmailFail(){
         when(propertyOwnerRepository.save(any(PropertyOwner.class))).thenReturn(propertyOwner);
         PropertyOwner result =propertyOwnerService.searchUserByEmail("");
-        assertThrows(NoSuchElementException.class, () -> propertyOwnerService.verifySearchResult(result));
+        assertThrows(EntityNotFoundException.class, () -> propertyOwnerService.verifySearchResult(result));
     }
 
     /**
