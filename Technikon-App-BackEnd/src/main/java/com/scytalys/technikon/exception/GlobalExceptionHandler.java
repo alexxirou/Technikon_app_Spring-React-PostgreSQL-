@@ -1,6 +1,7 @@
 package com.scytalys.technikon.exception;
 
 import jakarta.persistence.EntityNotFoundException;
+import org.springframework.dao.DataAccessResourceFailureException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,6 +27,14 @@ public class GlobalExceptionHandler {
         headers.add("Error-Message", "Invalid request body: " + e.getMessage());
 
         return new ResponseEntity<>(null, headers, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(DataAccessResourceFailureException.class)
+    public ResponseEntity<String> handleDatabaseAccessFailure(DataAccessResourceFailureException e){
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Error-Message", "Database resource access failed: " + e.getMessage());
+
+        return new ResponseEntity<>(null, headers, HttpStatus.NOT_MODIFIED);
     }
 
 }
