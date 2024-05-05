@@ -1,5 +1,6 @@
 package com.scytalys.technikon.service.impl;
 
+import com.fasterxml.jackson.databind.annotation.JsonAppend;
 import com.scytalys.technikon.domain.PropertyOwner;
 
 import com.scytalys.technikon.dto.UserResponseDto;
@@ -83,10 +84,9 @@ public class PropertyOwnerServiceImplTest {
      */
     @Test
     public void testSearchUserByIdFail(){
-        when(propertyOwnerRepository.save(any(PropertyOwner.class))).thenReturn(propertyOwner);
         when(propertyOwnerRepository.findById(any(Long.class))).thenReturn(Optional.empty());
-        propertyOwnerService.createUser(propertyOwner);
-        assertThrows(NoSuchElementException.class, () -> propertyOwnerService.searchUserById(0L));
+        PropertyOwner result =propertyOwnerService.searchUserById(0L);
+        assertThrows(NoSuchElementException.class, () -> propertyOwnerService.verifySearchResult(result));
     }
 
     /**
@@ -106,10 +106,9 @@ public class PropertyOwnerServiceImplTest {
      */
     @Test
     public void testSearchUserByUsernameFail(){
-        when(propertyOwnerRepository.save(any(PropertyOwner.class))).thenReturn(propertyOwner);
         when(propertyOwnerRepository.findByUsername(any(String.class))).thenReturn(Optional.empty());
-        propertyOwnerService.createUser(propertyOwner);
-        assertThrows(NoSuchElementException.class, () -> propertyOwnerService.searchUserByUsername(""));
+        PropertyOwner result=propertyOwnerService.searchUserByUsername("");
+        assertThrows(NoSuchElementException.class, () -> propertyOwnerService.verifySearchResult(result));
     }
 
     /**
@@ -130,9 +129,8 @@ public class PropertyOwnerServiceImplTest {
     @Test
     public void testSearchUserByEmailFail(){
         when(propertyOwnerRepository.save(any(PropertyOwner.class))).thenReturn(propertyOwner);
-        when(propertyOwnerRepository.findByEmail(any(String.class))).thenReturn(Optional.empty());
-        propertyOwnerService.createUser(propertyOwner);
-        assertThrows(NoSuchElementException.class, () -> propertyOwnerService.searchUserByEmail(""));
+        PropertyOwner result =propertyOwnerService.searchUserByEmail("");
+        assertThrows(NoSuchElementException.class, () -> propertyOwnerService.verifySearchResult(result));
     }
 
     /**

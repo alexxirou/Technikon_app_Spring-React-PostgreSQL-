@@ -13,4 +13,5 @@ public interface PropertyOwnerService extends UserService {
     void verifyConstraintsEmail(String email);
     void verifyConstraintsId(Long id);
     void verifyConstraintsUsername(String username);
-    }
+    void verifySearchResult(User user);
+}

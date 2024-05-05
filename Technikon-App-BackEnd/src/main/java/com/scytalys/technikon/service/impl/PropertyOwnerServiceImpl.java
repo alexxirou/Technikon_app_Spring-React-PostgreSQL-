@@ -36,39 +36,47 @@ public class PropertyOwnerServiceImpl implements PropertyOwnerService {
      * Searches for a user in the repository by their ID.
      *
      * @param id The ID of the user to be searched.
-     * @return The found user.
-     * @throws NoSuchElementException If the user is not found.
+     * @return The found user or null
+     *
      */
     @Override
     public PropertyOwner searchUserById(long id) {
-        return propertyOwnerRepository.findById(id).orElseThrow(
-                () -> new NoSuchElementException("User Id not found."));
+        return propertyOwnerRepository.findById(id).orElse(null);
     }
 
     /**
      * Searches for a user in the repository by their username.
      *
      * @param username The username of the user to be searched.
-     * @return The found user.
-     * @throws NoSuchElementException If the user is not found.
+     * @return The found user or null.
+     *
      */
     @Override
     public PropertyOwner searchUserByUsername(String username) {
-        return propertyOwnerRepository.findByUsername(username).orElseThrow(
-                () -> new NoSuchElementException("Username not found."));
+        return propertyOwnerRepository.findByUsername(username).orElse(null);
     }
 
     /**
      * Searches for a user in the repository by their username.
      *
      * @param email The email of the user to be searched.
-     * @return The found user.
-     * @throws NoSuchElementException If the user is not found.
+     * @return The found user or null
+     *
      */
     @Override
     public PropertyOwner searchUserByEmail(String email) {
-        return propertyOwnerRepository.findByEmail(email).orElseThrow(
-                () -> new NoSuchElementException("Email not found."));
+        return propertyOwnerRepository.findByEmail(email).orElse(null);
+    }
+
+    /**
+     * Verify if the user is null.
+     *
+     * @param propertyOwner the user.
+     * @throws NoSuchElementException if user is null
+     */
+
+    public void verifySearchResult(User propertyOwner){
+        if (propertyOwner==null) throw new NoSuchElementException("User not found.");
     }
 
     /**
