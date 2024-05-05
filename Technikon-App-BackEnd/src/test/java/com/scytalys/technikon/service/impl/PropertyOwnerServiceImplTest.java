@@ -1,13 +1,17 @@
 package com.scytalys.technikon.service.impl;
 
+import com.scytalys.technikon.domain.Property;
 import com.scytalys.technikon.domain.PropertyOwner;
 
 
 import com.scytalys.technikon.domain.User;
+import com.scytalys.technikon.domain.category.PropertyType;
 import com.scytalys.technikon.dto.UserResponseDto;
 import com.scytalys.technikon.repository.PropertyOwnerRepository;
 
+import com.scytalys.technikon.repository.PropertyRepository;
 import jakarta.persistence.EntityNotFoundException;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -20,7 +24,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.OptimisticLockingFailureException;
 
 
-import java.util.NoSuchElementException;
+import java.time.LocalDate;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -38,6 +42,9 @@ public class PropertyOwnerServiceImplTest {
 
     @Mock
     private PropertyOwnerRepository propertyOwnerRepository;
+
+    @Mock
+    private PropertyRepository propertyRepository;
 
     private PropertyOwner propertyOwner;
 
@@ -278,6 +285,36 @@ public class PropertyOwnerServiceImplTest {
         });
     }
 
+    /**
+     * test checks if a user has a property linked
+     *
+     */
+
+    @Test
+    public void checkPropertyHasUser(){
+        when(propertyOwnerRepository.save(any(PropertyOwner.class))).thenReturn(propertyOwner);
+
+        propertyOwnerService.createUser(propertyOwner);
+
+        Property property = new Property();
+        property.setId(1L);
+        property.setAddress("somewhere");
+        property.setConstructionYear(LocalDate.of(1980, 3, 2));
+        property.setPropertyType(PropertyType.values()[1]);
+        property.setLatitude(10.5);
+        property.setLongitude(58.4);
+        property.setPropertyOwner((PropertyOwner) propertyOwner);
+        when(propertyRepository.save(any(Property.class))).thenReturn(property);
+        when(propertyOwnerRepository.findByIdWithProperty(any(Long.class))).thenReturn(true);
+        propertyRepository.save(property);
+        assertTrue(propertyOwnerService.checkUserProperties(propertyOwner.getId()),"Expected user to have property.");
+    }
+
+    /**
+     * Concurrency test with two threads updating the password in the db at the same time.
+     * Checks optimistic locking through version works by tracking the Exception thrown on version mismatch.
+     *
+     */
     @Test
     public void whenConcurrentUpdate_thenThrowException() throws InterruptedException {
         when(propertyOwnerRepository.save(any(PropertyOwner.class))).thenReturn(propertyOwner);

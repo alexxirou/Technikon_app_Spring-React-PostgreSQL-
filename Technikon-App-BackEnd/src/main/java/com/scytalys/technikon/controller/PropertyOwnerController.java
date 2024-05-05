@@ -9,6 +9,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessResourceFailureException;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -129,7 +130,10 @@ public class PropertyOwnerController {
 
     @PostMapping("users/deleteUser")
     public ResponseEntity<String> deleteUser(@RequestParam long id, long version) {
-        propertyOwnerService.deleteUser(id);
+        if(propertyOwnerService.checkUserProperties(id)){
+            propertyOwnerService.softDeleteUser(id,version);
+        }
+        else{propertyOwnerService.deleteUser(id);}
         User user = propertyOwnerService.searchUserById(id);
         if(user!=null && user.isActive()) throw new DataAccessResourceFailureException("Failed to delete user with id: "+id);
         HttpHeaders headers= new HttpHeaders();

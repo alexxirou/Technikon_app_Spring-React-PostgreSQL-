@@ -197,6 +197,15 @@ public class PropertyOwnerServiceImpl implements PropertyOwnerService {
         if (test!=null) throw new DataIntegrityViolationException("Email already exists.");
 
     }
+
+    /**
+     * Check if a user is linked to a property
+     * @param userId the id of the User
+     * @return propertyOwner the user that has the property or null
+     */
+    public boolean checkUserProperties(long userId){
+        return propertyOwnerRepository.findByIdWithProperty(userId);
+    }
 }
 
 
