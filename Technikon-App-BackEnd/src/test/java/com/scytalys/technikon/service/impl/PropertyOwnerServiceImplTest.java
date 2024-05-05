@@ -143,7 +143,7 @@ public class PropertyOwnerServiceImplTest {
         when(propertyOwnerRepository.save(any(PropertyOwner.class))).thenReturn(propertyOwner);
         propertyOwnerService.createUser(propertyOwner);
         String newEmail = "newEmail@example.com";
-        propertyOwnerService.updateUserEmail(newEmail, propertyOwner);
+        propertyOwnerService.updateUserEmail(propertyOwner.getId(), newEmail, propertyOwner.getVersion());
         assertEquals(newEmail.toLowerCase(), propertyOwner.getEmail());
     }
 
@@ -155,7 +155,7 @@ public class PropertyOwnerServiceImplTest {
         when(propertyOwnerRepository.save(any(PropertyOwner.class))).thenReturn(propertyOwner);
         propertyOwnerService.createUser(propertyOwner);
         String newAddress = "New Address";
-        propertyOwnerService.updateUserAddress(newAddress, propertyOwner);
+        propertyOwnerService.updateUserAddress(propertyOwner.getId(), newAddress, propertyOwner.getVersion());
         assertEquals(newAddress, propertyOwner.getAddress());
     }
 
@@ -167,7 +167,7 @@ public class PropertyOwnerServiceImplTest {
         when(propertyOwnerRepository.save(any(PropertyOwner.class))).thenReturn(propertyOwner);
         propertyOwnerService.createUser(propertyOwner);
         String newPassword = "newPassword";
-        propertyOwnerService.updateUserPassword(newPassword, propertyOwner);
+        propertyOwnerService.updateUserPassword(propertyOwner.getId(), newPassword, propertyOwner.getVersion());
         assertEquals(newPassword, propertyOwner.getPassword());
     }
 
@@ -193,8 +193,19 @@ public class PropertyOwnerServiceImplTest {
     public void testSoftDeleteUser() {
         when(propertyOwnerRepository.save(any(PropertyOwner.class))).thenReturn(propertyOwner);
         propertyOwnerService.createUser(propertyOwner);
-        propertyOwnerService.softDeleteUser(propertyOwner);
+        propertyOwnerService.softDeleteUser(propertyOwner.getId(), propertyOwner.getVersion());
         Assertions.assertFalse(propertyOwner.isActive());
+    }
+
+    /**
+     * This test verifies that the softDeleteUser method returns null if row is non existant.
+     */
+    @Test
+    public void testSoftDeleteUserfail() {
+        when(propertyOwnerRepository.save(any(PropertyOwner.class))).thenReturn(propertyOwner);
+        propertyOwnerService.createUser(propertyOwner);
+        propertyOwner= propertyOwnerService.softDeleteUser(6, 0);
+        assertNull(propertyOwner);
     }
 
     /**
@@ -204,7 +215,7 @@ public class PropertyOwnerServiceImplTest {
     public void testCreateUserResponseDto() {
         when(propertyOwnerRepository.save(any(PropertyOwner.class))).thenReturn(propertyOwner);
         propertyOwnerService.createUser(propertyOwner);
-        UserResponseDto responseDto = propertyOwnerService.createUserResponseDto(propertyOwner.getId(), propertyOwner.getUsername(), propertyOwner.getEmail());
+        UserResponseDto responseDto = propertyOwnerService.createUserResponseDto(propertyOwner.getId(), propertyOwner.getUsername(), propertyOwner.getEmail(), propertyOwner.getVersion());
         assertEquals(propertyOwner.getId(), responseDto.id());
         assertEquals(propertyOwner.getUsername(), responseDto.username());
         assertEquals(propertyOwner.getEmail(), responseDto.email());
@@ -267,18 +278,16 @@ public class PropertyOwnerServiceImplTest {
 
 
 
-        User finalUser = propertyOwner;
-        Thread thread1 = new Thread(() -> { propertyOwnerService.updateUserPassword("new", finalUser); finalUser.setVersion(1); System.out.println("User1 " +finalUser.getVersion()); });
+        Thread thread1 = new Thread(() -> { propertyOwnerService.updateUserPassword(propertyOwner.getId(),"new", propertyOwner.getVersion()); System.out.println("User1 " +propertyOwner.getVersion()); });
 
-        User finalUser1 = propertyOwner2;
         Thread thread2 = new Thread(() -> {
             try {
                 Thread.sleep(100);
-                System.out.println("User2 " +finalUser1.getVersion());
-                propertyOwnerService.updateUserPassword("newer", finalUser1);
-                System.out.println("User2 " +finalUser1.getVersion());
+                System.out.println("User2 " +propertyOwner2.getVersion());
+                User user2 = propertyOwnerService.updateUserPassword(propertyOwner2.getId(),"newer", propertyOwner2.getVersion() );
+                if (user2==null) throw new OptimisticLockingFailureException("Resource is busy.");
 
-            } catch (OptimisticLockingFailureException e ) {
+            } catch (OptimisticLockingFailureException e  ) {
                 e.printStackTrace();
                 exceptionThrown.set(true);
             } catch (InterruptedException e) {

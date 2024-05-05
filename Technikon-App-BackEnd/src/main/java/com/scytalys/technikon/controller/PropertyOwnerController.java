@@ -43,7 +43,7 @@ public class PropertyOwnerController {
         PropertyOwner createdUser = propertyOwnerService.createUser(newUser);
         HttpHeaders headers= new HttpHeaders();
         headers.add("Success-Message", "User registered successfully");
-        UserResponseDto userinfo= propertyOwnerService.createUserResponseDto(createdUser.getId(), createdUser.getUsername(), createdUser.getEmail());
+        UserResponseDto userinfo= propertyOwnerService.createUserResponseDto(createdUser.getId(), createdUser.getUsername(), createdUser.getEmail(), createdUser.getVersion());
         return new ResponseEntity<>(userinfo, headers, HttpStatus.CREATED);
     }
 
@@ -53,7 +53,7 @@ public class PropertyOwnerController {
         propertyOwnerService.verifySearchResult(user);
         HttpHeaders headers= new HttpHeaders();
         headers.add("Success-Message", "User found.");
-        UserResponseDto userinfo= propertyOwnerService.createUserResponseDto(user.getId(), user.getUsername(), user.getEmail());
+        UserResponseDto userinfo= propertyOwnerService.createUserResponseDto(user.getId(), user.getUsername(), user.getEmail(), user.getVersion());
         return new ResponseEntity<>(userinfo, headers, HttpStatus.OK);
     }
 
@@ -64,7 +64,7 @@ public class PropertyOwnerController {
         propertyOwnerService.verifySearchResult(user);
         HttpHeaders headers= new HttpHeaders();
         headers.add("Success-Message", "User found.");
-        UserResponseDto userinfo= propertyOwnerService.createUserResponseDto(user.getId(), user.getUsername(), user.getEmail());
+        UserResponseDto userinfo= propertyOwnerService.createUserResponseDto(user.getId(), user.getUsername(), user.getEmail(), user.getVersion());
         return new ResponseEntity<>(userinfo, headers, HttpStatus.OK);
     }
 
@@ -75,54 +75,57 @@ public class PropertyOwnerController {
         propertyOwnerService.verifySearchResult(user);
         HttpHeaders headers= new HttpHeaders();
         headers.add("Success-Message", "User found.");
-        UserResponseDto userinfo= propertyOwnerService.createUserResponseDto(user.getId(), user.getUsername(), user.getEmail());
+        UserResponseDto userinfo= propertyOwnerService.createUserResponseDto(user.getId(), user.getUsername(), user.getEmail(), user.getVersion());
         return new ResponseEntity<>(userinfo, headers, HttpStatus.OK);
     }
 
     @PutMapping("users/UpdateEmail")
-    public ResponseEntity<UserResponseDto> updateUserEmail(@RequestParam String email, @RequestParam long id) {
+    public ResponseEntity<UserResponseDto> updateUserEmail(@RequestBody String email, @RequestBody long id, @RequestBody long version) {
         email=email.toLowerCase();
         User user = propertyOwnerService.searchUserById(id);
         propertyOwnerService.verifySearchResult(user);
         propertyOwnerService.verifyConstraintsEmail(email);
-        propertyOwnerService.updateUserEmail(email, user);
+        propertyOwnerService.updateUserEmail(id,email,version);
         user = propertyOwnerService.searchUserById(id); // Fetch the updated user by ID
         if (!email.equals(user.getEmail())) throw new DataAccessResourceFailureException("Failed to to update email for user with id: "+id);
         HttpHeaders headers= new HttpHeaders();
         headers.add("Success-Message", "User Updated.");
-        UserResponseDto userinfo= propertyOwnerService.createUserResponseDto(user.getId(), user.getUsername(), user.getEmail());
+        UserResponseDto userinfo= propertyOwnerService.createUserResponseDto(user.getId(), user.getUsername(), user.getEmail(), user.getVersion());
         return new ResponseEntity<>(userinfo, headers, HttpStatus.OK);
     }
 
 
     @PutMapping("users/UpdateAddress")
-    public ResponseEntity<UserResponseDto> updateUserAddress(@RequestParam String address, @RequestParam long id) {
-        PropertyOwner user = (PropertyOwner) propertyOwnerService.searchUserById(id);
-        propertyOwnerService.verifySearchResult(user);
-        propertyOwnerService.updateUserAddress(address, user);
-        user = (PropertyOwner) propertyOwnerService.searchUserById(id); // Fetch the updated user by ID
-        if (!address.equals(user.getAddress())) throw new DataAccessResourceFailureException("Failed to to update address for user with id: "+id);
-        HttpHeaders headers= new HttpHeaders();
+    public ResponseEntity<UserResponseDto> updateUserAddress(@RequestBody String address, @RequestBody long id, @RequestBody long version) {
+
+        PropertyOwner user =  propertyOwnerService.updateUserAddress(id, address, version);
+        if (user == null) {
+            propertyOwnerService.searchUserById(id);
+            throw new DataAccessResourceFailureException("Failed to to update address for user with id: " + id);
+        }
+            HttpHeaders headers= new HttpHeaders();
         headers.add("Success-Message", "User Updated.");
-        UserResponseDto userinfo= propertyOwnerService.createUserResponseDto(user.getId(), user.getUsername(), user.getEmail());
+        UserResponseDto userinfo= propertyOwnerService.createUserResponseDto(user.getId(), user.getUsername(), user.getEmail(), user.getVersion());
         return new ResponseEntity<>(userinfo, headers, HttpStatus.OK);
     }
 
     @PutMapping("users/UpdatePassword")
-    public ResponseEntity<UserResponseDto> updateUserPassword(@RequestParam String password, @RequestParam long id) {
-        User user = propertyOwnerService.searchUserById(id);
-        propertyOwnerService.verifySearchResult(user);
-        propertyOwnerService.updateUserEmail(password, user);
-        user = propertyOwnerService.searchUserById(id); // Fetch the updated user by ID
-        if (!password.equals(user.getPassword())) throw new DataAccessResourceFailureException("Failed to to update password for user with id: "+id);
+    public ResponseEntity<UserResponseDto> updateUserPassword(@RequestBody String password, @RequestBody long id, @RequestBody long version) {
+
+        User user = propertyOwnerService.updateUserEmail(id, password, version);
+        if (user == null) {
+            propertyOwnerService.searchUserById(id);// Fetch the updated user by ID
+            throw new DataAccessResourceFailureException("Failed to to update password for user with id: "+id);
+        }
+
         HttpHeaders headers= new HttpHeaders();
         headers.add("Success-Message", "User Updated.");
-        UserResponseDto userinfo= propertyOwnerService.createUserResponseDto(user.getId(), user.getUsername(), user.getEmail());
+        UserResponseDto userinfo= propertyOwnerService.createUserResponseDto(user.getId(), user.getUsername(), user.getEmail(), user.getVersion());
         return new ResponseEntity<>(userinfo, headers, HttpStatus.OK);
     }
 
     @PostMapping("users/deleteUser")
-    public ResponseEntity<String> deleteUser(@RequestParam long id) {
+    public ResponseEntity<String> deleteUser(@RequestParam long id, long version) {
         propertyOwnerService.deleteUser(id);
         User user = propertyOwnerService.searchUserById(id);
         if(user!=null && user.isActive()) throw new DataAccessResourceFailureException("Failed to delete user with id: "+id);

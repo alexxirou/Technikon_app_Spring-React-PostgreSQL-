@@ -23,6 +23,6 @@ public class User {
     private String password;
     private boolean isActive = true;
     @Version
-    private int version;
+    private long version;
 
 }
