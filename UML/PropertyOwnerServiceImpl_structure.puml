@@ -95,16 +95,29 @@ subgraph cluster_197470096 {
 	fillcolor="#d8d8d8"
 	style=filled
    
-   PropertyOwnerServiceImpl124484289[
+   PropertyOwnerController931943586[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)PropertyOwnerController</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   propertyOwnerService: PropertyOwnerService [1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ createPropertyOwner(newUser: PropertyOwner): ResponseEntity&lt;UserResponseDto&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ handleDataException(e: Exception): ResponseEntity&lt;UserResponseDto&gt;</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+PropertyOwnerServiceImpl124484289[
 	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
 <TR><TD ALIGN="LEFT" >(C)PropertyOwnerServiceImpl</TD></TR>
 <HR/>
 <TR><TD ALIGN="LEFT" >-   propertyOwnerRepository: PropertyOwnerRepository [0..1]</TD></TR>
 <HR/>
 <TR><TD ALIGN="LEFT" >+ createUser(user: PropertyOwner): PropertyOwner</TD></TR>
-<TR><TD ALIGN="LEFT" >+ createUserCreationResponseDto(user: User, errorMessage: String): UserResponseDto</TD></TR>
-<TR><TD ALIGN="LEFT" >+ createUserSearchResponseDto(id: long, username: String, email: String, errorMessage: String): UserResponseToSearchDto</TD></TR>
-<TR><TD ALIGN="LEFT" >+ createUserUpdateResponseDto(id: long, password: String, email: String, address: String, errorMessage: String): UserUpdateDto</TD></TR>
+<TR><TD ALIGN="LEFT" >+ createUserResponseDto(id: long, username: String, email: String): UserResponseDto</TD></TR>
 <TR><TD ALIGN="LEFT" >+ deleteUser(propertyOwnerId: long)</TD></TR>
 <TR><TD ALIGN="LEFT" >+ searchUserByEmail(email: String): PropertyOwner</TD></TR>
 <TR><TD ALIGN="LEFT" >+ searchUserById(id: long): PropertyOwner</TD></TR>
@@ -116,6 +129,7 @@ subgraph cluster_197470096 {
 <TR><TD ALIGN="LEFT" >+ verifyConstraintsEmail(email: String)</TD></TR>
 <TR><TD ALIGN="LEFT" >+ verifyConstraintsId(id: Long)</TD></TR>
 <TR><TD ALIGN="LEFT" >+ verifyConstraintsUsername(username: String)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ verifySearchResult(propertyOwner: User)</TD></TR>
 </TABLE>>
 	style=filled
 	margin=0
@@ -141,6 +155,8 @@ SampleData2033362088[
 } 
 
 'edges    
+PropertyOwnerController931943586 -> PropertyOwnerServiceImpl124484289[label="propertyOwnerService
+[1]", arrowhead=none];
 SampleData2033362088 -> PropertyOwnerServiceImpl124484289[label="propertyOwnerService
 [0..1]", arrowhead=none];
     

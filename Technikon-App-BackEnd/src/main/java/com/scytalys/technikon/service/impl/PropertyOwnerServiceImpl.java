@@ -8,6 +8,7 @@ import com.scytalys.technikon.service.PropertyOwnerService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -90,6 +91,11 @@ public class PropertyOwnerServiceImpl implements PropertyOwnerService {
      */
     @Transactional
     public void updateUserEmail(String email, User user) {
+        User currentUser = searchUserById(user.getId());
+        // Check if the version of the user entity passed to this method matches the version of the user entity in the database
+        if (currentUser.getVersion()!=user.getVersion()) {
+            throw new OptimisticLockingFailureException("User was updated by another transaction");
+        }
         user.setEmail(email.toLowerCase());
         propertyOwnerRepository.save((PropertyOwner) user);
     }
@@ -102,6 +108,11 @@ public class PropertyOwnerServiceImpl implements PropertyOwnerService {
      */
     @Transactional
     public void updateUserAddress(String address, PropertyOwner propertyOwner) {
+        User currentUser = searchUserById(propertyOwner.getId());
+        // Check if the version of the user entity passed to this method matches the version of the user entity in the database
+        if (currentUser.getVersion()!=propertyOwner.getVersion()) {
+            throw new OptimisticLockingFailureException("User was updated by another transaction");
+        }
         propertyOwner.setAddress(address);
         propertyOwnerRepository.save(propertyOwner);
     }
@@ -115,7 +126,11 @@ public class PropertyOwnerServiceImpl implements PropertyOwnerService {
      */
     @Transactional
     public void updateUserPassword(String password, User user) {
-
+       User currentUser = searchUserById(user.getId());
+        // Check if the version of the user entity passed to this method matches the version of the user entity in the database
+        if (currentUser.getVersion()!=user.getVersion()) {
+           throw new OptimisticLockingFailureException("User was updated by another transaction");
+        }
         user.setPassword(password);
         propertyOwnerRepository.save((PropertyOwner) user);
     }

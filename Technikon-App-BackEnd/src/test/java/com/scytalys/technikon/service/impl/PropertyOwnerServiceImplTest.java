@@ -3,6 +3,7 @@ package com.scytalys.technikon.service.impl;
 import com.scytalys.technikon.domain.PropertyOwner;
 
 
+import com.scytalys.technikon.domain.User;
 import com.scytalys.technikon.dto.UserResponseDto;
 import com.scytalys.technikon.repository.PropertyOwnerRepository;
 
@@ -16,10 +17,12 @@ import org.mockito.Mock;
 
 import org.mockito.MockitoAnnotations;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.OptimisticLockingFailureException;
 
 
 import java.util.NoSuchElementException;
 import java.util.Optional;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -46,8 +49,8 @@ public class PropertyOwnerServiceImplTest {
         propertyOwner.setId(2L); // id
         propertyOwner.setName("John"); // name
         propertyOwner.setSurname("Doe"); // surname
-        propertyOwner.setEmail("JDE@hotmail.com"); // email
-        propertyOwner.setUsername("JDE"); // username
+        propertyOwner.setEmail("jde@hotmail.com"); // email
+        propertyOwner.setUsername("jde"); // username
         propertyOwner.setPassword("pass"); // password
         propertyOwner.setAddress("somewhere"); // address
         propertyOwner.setPhoneNumber("999582486"); // phoneNumber
@@ -85,7 +88,7 @@ public class PropertyOwnerServiceImplTest {
     public void testSearchUserByIdFail(){
         when(propertyOwnerRepository.findById(any(Long.class))).thenReturn(Optional.empty());
         PropertyOwner result =propertyOwnerService.searchUserById(0L);
-        assertThrows(NoSuchElementException.class, () -> propertyOwnerService.verifySearchResult(result));
+        assertThrows(EntityNotFoundException.class, () -> propertyOwnerService.verifySearchResult(result));
     }
 
     /**
@@ -107,7 +110,7 @@ public class PropertyOwnerServiceImplTest {
     public void testSearchUserByUsernameFail(){
         when(propertyOwnerRepository.findByUsername(any(String.class))).thenReturn(Optional.empty());
         PropertyOwner result=propertyOwnerService.searchUserByUsername("");
-        assertThrows(NoSuchElementException.class, () -> propertyOwnerService.verifySearchResult(result));
+        assertThrows(EntityNotFoundException.class, () -> propertyOwnerService.verifySearchResult(result));
     }
 
     /**
@@ -141,7 +144,7 @@ public class PropertyOwnerServiceImplTest {
         propertyOwnerService.createUser(propertyOwner);
         String newEmail = "newEmail@example.com";
         propertyOwnerService.updateUserEmail(newEmail, propertyOwner);
-        assertEquals(newEmail, propertyOwner.getEmail());
+        assertEquals(newEmail.toLowerCase(), propertyOwner.getEmail());
     }
 
     /**
@@ -241,6 +244,56 @@ public class PropertyOwnerServiceImplTest {
         assertThrows(DataIntegrityViolationException.class, () -> {
             propertyOwnerService.verifyConstraintsEmail(propertyOwner.getEmail());
         });
+    }
+
+    @Test
+    public void whenConcurrentUpdate_thenThrowException() throws InterruptedException {
+        when(propertyOwnerRepository.save(any(PropertyOwner.class))).thenReturn(propertyOwner);
+        when(propertyOwnerRepository.findById(any(Long.class))).thenReturn(Optional.of(propertyOwner));
+
+
+        propertyOwnerService.createUser(propertyOwner);
+
+        PropertyOwner propertyOwner2 = new PropertyOwner();
+        propertyOwner2.setId(2L); // id
+        propertyOwner2.setName("John"); // name
+        propertyOwner2.setSurname("Doe"); // surname
+        propertyOwner2.setEmail("jde@hotmail.com"); // email
+        propertyOwner2.setUsername("jde"); // username
+        propertyOwner2.setPassword("pass"); // password
+        propertyOwner2.setAddress("somewhere"); // address
+        propertyOwner2.setPhoneNumber("999582486");
+        AtomicBoolean exceptionThrown = new AtomicBoolean(false);
+
+
+
+        User finalUser = propertyOwner;
+        Thread thread1 = new Thread(() -> { propertyOwnerService.updateUserPassword("new", finalUser); finalUser.setVersion(1); System.out.println("User1 " +finalUser.getVersion()); });
+
+        User finalUser1 = propertyOwner2;
+        Thread thread2 = new Thread(() -> {
+            try {
+                Thread.sleep(100);
+                System.out.println("User2 " +finalUser1.getVersion());
+                propertyOwnerService.updateUserPassword("newer", finalUser1);
+                System.out.println("User2 " +finalUser1.getVersion());
+
+            } catch (OptimisticLockingFailureException e ) {
+                e.printStackTrace();
+                exceptionThrown.set(true);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        });
+
+        thread1.start();
+        thread2.start();
+        thread1.join();
+        thread2.join();
+
+
+
+        assertTrue(exceptionThrown.get(), "Expected OptimisticLockingFailureException to be thrown, but it wasn't");
     }
 
 }

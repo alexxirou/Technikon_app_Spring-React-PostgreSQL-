@@ -185,22 +185,6 @@ User25216822[
 	shape=plaintext
 	fillcolor="#FFFFFF"
 ];
-
-UserResponseDto686682215[
-	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
-<TR><TD ALIGN="LEFT" >(C)UserResponseDto</TD></TR>
-<HR/>
-<TR><TD ALIGN="LEFT" >-   errorMessage: String [0..1]</TD></TR>
-<TR><TD ALIGN="LEFT" >-   user: User [0..1]</TD></TR>
-<HR/>
-<TR><TD ALIGN="LEFT" >+ errorMessage(): String</TD></TR>
-<TR><TD ALIGN="LEFT" >+ user(): User</TD></TR>
-</TABLE>>
-	style=filled
-	margin=0
-	shape=plaintext
-	fillcolor="#FFFFFF"
-];
 } 
 } 
 
@@ -213,8 +197,6 @@ PropertyRepair25216822 -> PropertyOwner25216822[label="propertyOwner
 [0..1]"];
 User25216822 -> Admin25216822[arrowhead=none, arrowtail=empty, dir=both];
 User25216822 -> PropertyOwner25216822[arrowhead=none, arrowtail=empty, dir=both];
-UserResponseDto686682215 -> User25216822[label="user
-[0..1]"];
     
 }
 @enduml

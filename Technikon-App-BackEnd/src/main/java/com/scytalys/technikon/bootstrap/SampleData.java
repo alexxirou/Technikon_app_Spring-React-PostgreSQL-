@@ -46,7 +46,7 @@ public class SampleData {
             propertyOwner.setPhoneNumber("999582486");
             propertyOwnerService.createUser(propertyOwner);
 
-            propertyOwnerService.searchUserById(2L);
+            propertyOwnerService.updateUserPassword("new", propertyOwner);
         };
     }
 }

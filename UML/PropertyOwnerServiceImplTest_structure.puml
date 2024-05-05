@@ -129,9 +129,7 @@ PropertyOwnerServiceImpl124484289[
 <TR><TD ALIGN="LEFT" >-   propertyOwnerRepository: PropertyOwnerRepository [0..1]</TD></TR>
 <HR/>
 <TR><TD ALIGN="LEFT" >+ createUser(user: PropertyOwner): PropertyOwner</TD></TR>
-<TR><TD ALIGN="LEFT" >+ createUserCreationResponseDto(user: User, errorMessage: String): UserResponseDto</TD></TR>
-<TR><TD ALIGN="LEFT" >+ createUserSearchResponseDto(id: long, username: String, email: String, errorMessage: String): UserResponseToSearchDto</TD></TR>
-<TR><TD ALIGN="LEFT" >+ createUserUpdateResponseDto(id: long, password: String, email: String, address: String, errorMessage: String): UserUpdateDto</TD></TR>
+<TR><TD ALIGN="LEFT" >+ createUserResponseDto(id: long, username: String, email: String): UserResponseDto</TD></TR>
 <TR><TD ALIGN="LEFT" >+ deleteUser(propertyOwnerId: long)</TD></TR>
 <TR><TD ALIGN="LEFT" >+ searchUserByEmail(email: String): PropertyOwner</TD></TR>
 <TR><TD ALIGN="LEFT" >+ searchUserById(id: long): PropertyOwner</TD></TR>
@@ -143,6 +141,7 @@ PropertyOwnerServiceImpl124484289[
 <TR><TD ALIGN="LEFT" >+ verifyConstraintsEmail(email: String)</TD></TR>
 <TR><TD ALIGN="LEFT" >+ verifyConstraintsId(id: Long)</TD></TR>
 <TR><TD ALIGN="LEFT" >+ verifyConstraintsUsername(username: String)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ verifySearchResult(propertyOwner: User)</TD></TR>
 </TABLE>>
 	style=filled
 	margin=0
@@ -159,9 +158,7 @@ PropertyOwnerServiceImplTest124484289[
 <TR><TD ALIGN="LEFT" >-   propertyOwnerService: PropertyOwnerServiceImpl [0..1]</TD></TR>
 <HR/>
 <TR><TD ALIGN="LEFT" >+ testCreateUser()</TD></TR>
-<TR><TD ALIGN="LEFT" >+ testCreateUserCreationResponseDto()</TD></TR>
-<TR><TD ALIGN="LEFT" >+ testCreateUserSearchResponseDto()</TD></TR>
-<TR><TD ALIGN="LEFT" >+ testCreateUserUpdateResponseDto()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ testCreateUserResponseDto()</TD></TR>
 <TR><TD ALIGN="LEFT" >+ testDeleteUser()</TD></TR>
 <TR><TD ALIGN="LEFT" >+ testSearchUserByEmail()</TD></TR>
 <TR><TD ALIGN="LEFT" >+ testSearchUserByEmailFail()</TD></TR>
@@ -208,53 +205,13 @@ UserResponseDto686682215[
 	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
 <TR><TD ALIGN="LEFT" >(C)UserResponseDto</TD></TR>
 <HR/>
-<TR><TD ALIGN="LEFT" >-   errorMessage: String [0..1]</TD></TR>
-<TR><TD ALIGN="LEFT" >-   user: User [0..1]</TD></TR>
-<HR/>
-<TR><TD ALIGN="LEFT" >+ errorMessage(): String</TD></TR>
-<TR><TD ALIGN="LEFT" >+ user(): User</TD></TR>
-</TABLE>>
-	style=filled
-	margin=0
-	shape=plaintext
-	fillcolor="#FFFFFF"
-];
-
-UserResponseToSearchDto686682215[
-	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
-<TR><TD ALIGN="LEFT" >(C)UserResponseToSearchDto</TD></TR>
-<HR/>
 <TR><TD ALIGN="LEFT" >-   email: String [0..1]</TD></TR>
-<TR><TD ALIGN="LEFT" >-   errorMessage: String [0..1]</TD></TR>
 <TR><TD ALIGN="LEFT" >-   id: long [1]</TD></TR>
 <TR><TD ALIGN="LEFT" >-   username: String [0..1]</TD></TR>
 <HR/>
 <TR><TD ALIGN="LEFT" >+ email(): String</TD></TR>
-<TR><TD ALIGN="LEFT" >+ errorMessage(): String</TD></TR>
 <TR><TD ALIGN="LEFT" >+ id(): long</TD></TR>
 <TR><TD ALIGN="LEFT" >+ username(): String</TD></TR>
-</TABLE>>
-	style=filled
-	margin=0
-	shape=plaintext
-	fillcolor="#FFFFFF"
-];
-
-UserUpdateDto686682215[
-	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
-<TR><TD ALIGN="LEFT" >(C)UserUpdateDto</TD></TR>
-<HR/>
-<TR><TD ALIGN="LEFT" >-   address: String [0..1]</TD></TR>
-<TR><TD ALIGN="LEFT" >-   email: String [0..1]</TD></TR>
-<TR><TD ALIGN="LEFT" >-   errorMessage: String [0..1]</TD></TR>
-<TR><TD ALIGN="LEFT" >-   id: long [1]</TD></TR>
-<TR><TD ALIGN="LEFT" >-   password: String [0..1]</TD></TR>
-<HR/>
-<TR><TD ALIGN="LEFT" >+ address(): String</TD></TR>
-<TR><TD ALIGN="LEFT" >+ email(): String</TD></TR>
-<TR><TD ALIGN="LEFT" >+ errorMessage(): String</TD></TR>
-<TR><TD ALIGN="LEFT" >+ id(): long</TD></TR>
-<TR><TD ALIGN="LEFT" >+ password(): String</TD></TR>
 </TABLE>>
 	style=filled
 	margin=0
@@ -271,8 +228,6 @@ PropertyOwnerServiceImplTest124484289 -> PropertyOwnerServiceImpl124484289[label
 [0..1]"];
 User25216822 -> Admin25216822[arrowhead=none, arrowtail=empty, dir=both];
 User25216822 -> PropertyOwner25216822[arrowhead=none, arrowtail=empty, dir=both];
-UserResponseDto686682215 -> User25216822[label="user
-[0..1]"];
     
 }
 @enduml
