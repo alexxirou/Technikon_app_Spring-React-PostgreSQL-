@@ -102,7 +102,14 @@ subgraph cluster_197470096 {
 <TR><TD ALIGN="LEFT" >-   propertyOwnerService: PropertyOwnerService [1]</TD></TR>
 <HR/>
 <TR><TD ALIGN="LEFT" >+ createPropertyOwner(newUser: PropertyOwner): ResponseEntity&lt;UserResponseDto&gt;</TD></TR>
-<TR><TD ALIGN="LEFT" >+ handleDataException(e: Exception): ResponseEntity&lt;UserResponseDto&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ deleteUser(id: long, version: long): ResponseEntity&lt;String&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ findUserByEmail(email: String): ResponseEntity&lt;UserResponseDto&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ findUserById(id: Long): ResponseEntity&lt;UserResponseDto&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ findUserByUsername(username: String): ResponseEntity&lt;UserResponseDto&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ handleDataException(e: Exception): ResponseEntity&lt;String&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ updateUserAddress(address: String, id: long, version: long): ResponseEntity&lt;UserResponseDto&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ updateUserEmail(email: String, id: long, version: long): ResponseEntity&lt;UserResponseDto&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ updateUserPassword(password: String, id: long, version: long): ResponseEntity&lt;UserResponseDto&gt;</TD></TR>
 </TABLE>>
 	style=filled
 	margin=0
@@ -117,15 +124,15 @@ PropertyOwnerServiceImpl124484289[
 <TR><TD ALIGN="LEFT" >-   propertyOwnerRepository: PropertyOwnerRepository [0..1]</TD></TR>
 <HR/>
 <TR><TD ALIGN="LEFT" >+ createUser(user: PropertyOwner): PropertyOwner</TD></TR>
-<TR><TD ALIGN="LEFT" >+ createUserResponseDto(id: long, username: String, email: String): UserResponseDto</TD></TR>
+<TR><TD ALIGN="LEFT" >+ createUserResponseDto(id: long, username: String, email: String, version: long): UserResponseDto</TD></TR>
 <TR><TD ALIGN="LEFT" >+ deleteUser(propertyOwnerId: long)</TD></TR>
 <TR><TD ALIGN="LEFT" >+ searchUserByEmail(email: String): PropertyOwner</TD></TR>
 <TR><TD ALIGN="LEFT" >+ searchUserById(id: long): PropertyOwner</TD></TR>
 <TR><TD ALIGN="LEFT" >+ searchUserByUsername(username: String): PropertyOwner</TD></TR>
-<TR><TD ALIGN="LEFT" >+ softDeleteUser(propertyOwner: PropertyOwner)</TD></TR>
-<TR><TD ALIGN="LEFT" >+ updateUserAddress(address: String, propertyOwner: PropertyOwner)</TD></TR>
-<TR><TD ALIGN="LEFT" >+ updateUserEmail(email: String, user: User)</TD></TR>
-<TR><TD ALIGN="LEFT" >+ updateUserPassword(password: String, user: User)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ softDeleteUser(id: long, version: long): PropertyOwner</TD></TR>
+<TR><TD ALIGN="LEFT" >+ updateUserAddress(id: long, address: String, version: long): PropertyOwner</TD></TR>
+<TR><TD ALIGN="LEFT" >+ updateUserEmail(id: long, email: String, version: long): User</TD></TR>
+<TR><TD ALIGN="LEFT" >+ updateUserPassword(id: long, password: String, version: long): User</TD></TR>
 <TR><TD ALIGN="LEFT" >+ verifyConstraintsEmail(email: String)</TD></TR>
 <TR><TD ALIGN="LEFT" >+ verifyConstraintsId(id: Long)</TD></TR>
 <TR><TD ALIGN="LEFT" >+ verifyConstraintsUsername(username: String)</TD></TR>

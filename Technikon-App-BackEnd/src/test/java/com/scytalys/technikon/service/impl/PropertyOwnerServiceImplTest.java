@@ -148,6 +148,27 @@ public class PropertyOwnerServiceImplTest {
     }
 
     /**
+     * This test verifies that the UpdateUserEmail fails because there is a unique constraint violation.
+     */
+    @Test
+    public void testUpdateUserEmailFail() {
+        when(propertyOwnerRepository.save(any(PropertyOwner.class))).thenReturn(propertyOwner);
+        propertyOwnerService.createUser(propertyOwner);
+        PropertyOwner propertyOwner2 = new PropertyOwner();
+        propertyOwner2.setId(3L); // id
+        propertyOwner2.setName("John"); // name
+        propertyOwner2.setSurname("Doe"); // surname
+        propertyOwner2.setEmail("newEmail@example.com"); // email
+        propertyOwner2.setUsername("jde2"); // username
+        propertyOwner2.setPassword("pass"); // password
+        propertyOwner2.setAddress("somewhere"); // address
+        propertyOwner2.setPhoneNumber("999582486");
+        String newEmail = "newEmail@example.com";
+        propertyOwnerService.updateUserEmail(propertyOwner.getId(), newEmail, propertyOwner.getVersion());
+        assertNotEquals(newEmail.toLowerCase(), propertyOwner.getEmail());
+    }
+
+    /**
      * This test verifies that the updateUserAddress method correctly updates the address of a PropertyOwner.
      */
     @Test

@@ -82,12 +82,13 @@ public class PropertyOwnerController {
     @PutMapping("users/UpdateEmail")
     public ResponseEntity<UserResponseDto> updateUserEmail(@RequestBody String email, @RequestBody long id, @RequestBody long version) {
         email=email.toLowerCase();
-        User user = propertyOwnerService.searchUserById(id);
-        propertyOwnerService.verifySearchResult(user);
-        propertyOwnerService.verifyConstraintsEmail(email);
-        propertyOwnerService.updateUserEmail(id,email,version);
-        user = propertyOwnerService.searchUserById(id); // Fetch the updated user by ID
-        if (!email.equals(user.getEmail())) throw new DataAccessResourceFailureException("Failed to to update email for user with id: "+id);
+        PropertyOwner user =  propertyOwnerService.updateUserAddress(id, email, version);
+        if (user == null) { //update failed
+            User checkUserExists = propertyOwnerService.searchUserById(id);// Fetch the updated user by ID
+            propertyOwnerService.verifySearchResult(checkUserExists); //check if user with id exists
+            propertyOwnerService.verifyConstraintsEmail(email); //check if email is already in the DB;
+            throw new DataAccessResourceFailureException("Failed to to update email for user with id: " + id);
+        }
         HttpHeaders headers= new HttpHeaders();
         headers.add("Success-Message", "User Updated.");
         UserResponseDto userinfo= propertyOwnerService.createUserResponseDto(user.getId(), user.getUsername(), user.getEmail(), user.getVersion());
@@ -100,10 +101,11 @@ public class PropertyOwnerController {
 
         PropertyOwner user =  propertyOwnerService.updateUserAddress(id, address, version);
         if (user == null) {
-            propertyOwnerService.searchUserById(id);
-            throw new DataAccessResourceFailureException("Failed to to update address for user with id: " + id);
+            User checkUserExists=propertyOwnerService.searchUserById(id);// Fetch the updated user by ID
+            propertyOwnerService.verifySearchResult(checkUserExists);
+            throw new DataAccessResourceFailureException("Failed to to update address for user with id: "+id+ "please try again.");
         }
-            HttpHeaders headers= new HttpHeaders();
+        HttpHeaders headers= new HttpHeaders();
         headers.add("Success-Message", "User Updated.");
         UserResponseDto userinfo= propertyOwnerService.createUserResponseDto(user.getId(), user.getUsername(), user.getEmail(), user.getVersion());
         return new ResponseEntity<>(userinfo, headers, HttpStatus.OK);
@@ -114,8 +116,9 @@ public class PropertyOwnerController {
 
         User user = propertyOwnerService.updateUserEmail(id, password, version);
         if (user == null) {
-            propertyOwnerService.searchUserById(id);// Fetch the updated user by ID
-            throw new DataAccessResourceFailureException("Failed to to update password for user with id: "+id);
+            User checkUserExists=propertyOwnerService.searchUserById(id);// Fetch the updated user by ID
+            propertyOwnerService.verifySearchResult(checkUserExists);
+            throw new DataAccessResourceFailureException("Failed to to update password for user with id: "+id+ "please try again.");
         }
 
         HttpHeaders headers= new HttpHeaders();
