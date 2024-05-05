@@ -1,11 +1,9 @@
 package com.scytalys.technikon.service.impl;
 
-import com.fasterxml.jackson.databind.annotation.JsonAppend;
 import com.scytalys.technikon.domain.PropertyOwner;
 
+
 import com.scytalys.technikon.dto.UserResponseDto;
-import com.scytalys.technikon.dto.UserResponseToSearchDto;
-import com.scytalys.technikon.dto.UserUpdateDto;
 import com.scytalys.technikon.repository.PropertyOwnerRepository;
 
 import org.junit.jupiter.api.Assertions;
@@ -195,56 +193,20 @@ public class PropertyOwnerServiceImplTest {
         Assertions.assertFalse(propertyOwner.isActive());
     }
 
-
     /**
-     * This test verifies that the createUserCreationResponseDto method correctly creates a UserResponseDto object.
+     * This test verifies that the UserResponseDto is properly created from a User object.
      */
     @Test
-    public void testCreateUserCreationResponseDto() {
+    public void testCreateUserResponseDto() {
         when(propertyOwnerRepository.save(any(PropertyOwner.class))).thenReturn(propertyOwner);
         propertyOwnerService.createUser(propertyOwner);
-        String errorMessage = "No errors";
-        UserResponseDto dto = propertyOwnerService.createUserCreationResponseDto(propertyOwner, errorMessage);
-        assertEquals(propertyOwner, dto.user());
-        assertEquals(errorMessage, dto.errorMessage());
-    }
-    /**
-     * This test verifies that the createUserSearchResponseDto method correctly creates a UserResponseToSearchDto object.
-     */
-    @Test
-    public void testCreateUserSearchResponseDto() {
-        when(propertyOwnerRepository.save(any(PropertyOwner.class))).thenReturn(propertyOwner);
-        propertyOwnerService.createUser(propertyOwner);
-        long id = propertyOwner.getId();
-        String username = propertyOwner.getUsername();
-        String email = propertyOwner.getEmail();
-        String errorMessage = "No errors";
-        UserResponseToSearchDto dto = propertyOwnerService.createUserSearchResponseDto(id, username, email, errorMessage);
-        assertEquals(id, dto.id());
-        assertEquals(username, dto.username());
-        assertEquals(email, dto.email());
-        assertEquals(errorMessage, dto.errorMessage());
+        UserResponseDto responseDto = propertyOwnerService.createUserResponseDto(propertyOwner.getId(), propertyOwner.getUsername(), propertyOwner.getEmail());
+        assertEquals(propertyOwner.getId(), responseDto.id());
+        assertEquals(propertyOwner.getUsername(), responseDto.username());
+        assertEquals(propertyOwner.getEmail(), responseDto.email());
     }
 
-    /**
-     * This test verifies that the createUserUpdateResponseDto method correctly creates a UserUpdateDto object.
-     */
-    @Test
-    public void testCreateUserUpdateResponseDto() {
-        when(propertyOwnerRepository.save(any(PropertyOwner.class))).thenReturn(propertyOwner);
-        propertyOwnerService.createUser(propertyOwner);
-        long id = propertyOwner.getId();
-        String password = propertyOwner.getPassword();
-        String email = propertyOwner.getEmail();
-        String address = propertyOwner.getAddress();
-        String errorMessage = "No errors";
-        UserUpdateDto dto = propertyOwnerService.createUserUpdateResponseDto(id, password, email, address, errorMessage);
-        assertEquals(id, dto.id());
-        assertEquals(password, dto.password());
-        assertEquals(email, dto.email());
-        assertEquals(address, dto.address());
-        assertEquals(errorMessage, dto.errorMessage());
-    }
+
 
     /**
      * This test verifies that the verifyConstraintsId method throws a DataIntegrityViolationException when a PropertyOwner with the given ID is found.

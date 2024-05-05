@@ -1,9 +1,8 @@
 package com.scytalys.technikon.service.impl;
 import com.scytalys.technikon.domain.PropertyOwner;
 import com.scytalys.technikon.domain.User;
-import com.scytalys.technikon.dto.UserUpdateDto;
+
 import com.scytalys.technikon.dto.UserResponseDto;
-import com.scytalys.technikon.dto.UserResponseToSearchDto;
 import com.scytalys.technikon.repository.PropertyOwnerRepository;
 import com.scytalys.technikon.service.PropertyOwnerService;
 import lombok.AllArgsConstructor;
@@ -141,46 +140,22 @@ public class PropertyOwnerServiceImpl implements PropertyOwnerService {
     }
 
     /**
-     * Creates a UserResponseDto object for a new user.
-     *
-     * @param user The user to be created.
-     * @param errorMessage The error message, if any.
-     * @return The created UserResponseDto object.
-     */
-    public UserResponseDto createUserCreationResponseDto(User user, String errorMessage){
-        return new UserResponseDto((PropertyOwner) user, errorMessage);
-    }
-
-    /**
-     * Creates a UserResponseToSearchDto object for a user search operation.
+     * Creates a UserResponseDto object for a user  operation.
      *
      * @param id The ID of the user to be searched.
      * @param username The username of the user to be searched.
      * @param email The email of the user to be searched.
-     * @param errorMessage The error message, if any.
+     *
      * @return The created UserResponseToSearchDto object.
      */
-    public UserResponseToSearchDto createUserSearchResponseDto(long id, String username, String email, String errorMessage){
-        return new UserResponseToSearchDto(
+    public UserResponseDto createUserResponseDto(long id, String username, String email){
+        return new UserResponseDto(
                 id,
                 username,
-                email,
-                errorMessage);
+                email);
     }
 
-    /**
-     * Creates a UserUpdateDto object for a user update operation.
-     *
-     * @param id The ID of the user to be updated.
-     * @param password The new password of the user.
-     * @param email The new email of the user.
-     * @param address The new address of the user.
-     * @param errorMessage The error message, if any.
-     * @return The created UserUpdateDto object.
-     */
-    public UserUpdateDto createUserUpdateResponseDto(long id, String password, String email, String address, String errorMessage ){
-        return new UserUpdateDto(id, address, email, password, errorMessage);
-    }
+
     /**
      * Verifies that the object does not have duplicate fields that should be unique in the db
      *
