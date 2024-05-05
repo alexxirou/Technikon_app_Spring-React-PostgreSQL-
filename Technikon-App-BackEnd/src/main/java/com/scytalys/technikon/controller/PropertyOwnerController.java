@@ -7,7 +7,6 @@ import com.scytalys.technikon.service.PropertyOwnerService;
 
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataAccessResourceFailureException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpHeaders;
@@ -36,9 +35,11 @@ public class PropertyOwnerController {
 
     @PostMapping("/register")
     public ResponseEntity<UserResponseDto> createPropertyOwner(@RequestBody PropertyOwner newUser) {
+        newUser.setEmail(newUser.getEmail().toLowerCase());
+        newUser.setUsername(newUser.getUsername().toLowerCase());
         propertyOwnerService.verifyConstraintsId(newUser.getId());
-        propertyOwnerService.verifyConstraintsEmail(newUser.getEmail().toLowerCase());
-        propertyOwnerService.verifyConstraintsUsername(newUser.getUsername().toLowerCase());
+        propertyOwnerService.verifyConstraintsEmail(newUser.getEmail());
+        propertyOwnerService.verifyConstraintsUsername(newUser.getUsername());
         PropertyOwner createdUser = propertyOwnerService.createUser(newUser);
         HttpHeaders headers= new HttpHeaders();
         headers.add("Success-Message", "User registered successfully");
@@ -58,7 +59,8 @@ public class PropertyOwnerController {
 
     @GetMapping("users/searchUsername")
     public ResponseEntity<UserResponseDto> findUserById(@RequestParam String username) {
-        User user = propertyOwnerService.searchUserByUsername(username.toLowerCase());
+        username=username.toLowerCase();
+        User user = propertyOwnerService.searchUserByUsername(username);
         propertyOwnerService.verifySearchResult(user);
         HttpHeaders headers= new HttpHeaders();
         headers.add("Success-Message", "User found.");
@@ -68,7 +70,8 @@ public class PropertyOwnerController {
 
     @GetMapping("users/searchEmail")
     public ResponseEntity<UserResponseDto> findUserByEmail(@RequestParam String email) {
-        User user = propertyOwnerService.searchUserByEmail(email.toLowerCase());
+        email=email.toLowerCase();
+        User user = propertyOwnerService.searchUserByEmail(email);
         propertyOwnerService.verifySearchResult(user);
         HttpHeaders headers= new HttpHeaders();
         headers.add("Success-Message", "User found.");
