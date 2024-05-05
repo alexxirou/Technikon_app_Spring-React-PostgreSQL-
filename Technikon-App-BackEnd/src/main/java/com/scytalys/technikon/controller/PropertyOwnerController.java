@@ -58,7 +58,7 @@ public class PropertyOwnerController {
     }
 
     @GetMapping("users/searchUsername")
-    public ResponseEntity<UserResponseDto> findUserById(@RequestParam String username) {
+    public ResponseEntity<UserResponseDto> findUserByUsername(@RequestParam String username) {
         username=username.toLowerCase();
         User user = propertyOwnerService.searchUserByUsername(username);
         propertyOwnerService.verifySearchResult(user);

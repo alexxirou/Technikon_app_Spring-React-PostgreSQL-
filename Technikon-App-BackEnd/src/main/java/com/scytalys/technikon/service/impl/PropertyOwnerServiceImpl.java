@@ -30,8 +30,6 @@ public class PropertyOwnerServiceImpl implements PropertyOwnerService {
     @Override
     @Transactional
     public PropertyOwner createUser(PropertyOwner user) {
-        user.setUsername(user.getName().toLowerCase());
-        user.setEmail(user.getEmail().toLowerCase());
         return propertyOwnerRepository.save(user);
     }
 
@@ -79,7 +77,7 @@ public class PropertyOwnerServiceImpl implements PropertyOwnerService {
      */
 
     public void verifySearchResult(User propertyOwner){
-        if (propertyOwner==null) throw new EntityNotFoundException("User not found.");
+        if (propertyOwner==null || !propertyOwner.isActive()) throw new EntityNotFoundException("User not found.");
     }
 
     /**
