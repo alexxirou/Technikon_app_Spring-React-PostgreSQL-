@@ -29,6 +29,8 @@ public class PropertyOwnerServiceImpl implements PropertyOwnerService {
     @Override
     @Transactional
     public PropertyOwner createUser(PropertyOwner user) {
+        user.setUsername(user.getName().toLowerCase());
+        user.setEmail(user.getEmail().toLowerCase());
         return propertyOwnerRepository.save(user);
     }
 
