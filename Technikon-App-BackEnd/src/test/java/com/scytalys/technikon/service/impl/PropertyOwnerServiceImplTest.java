@@ -226,10 +226,10 @@ public class PropertyOwnerServiceImplTest {
     }
 
     /**
-     * This test verifies that the softDeleteUser method returns null if row is non existant.
+     * This test verifies that the softDeleteUser method returns null if row is non-existent.
      */
     @Test
-    public void testSoftDeleteUserfail() {
+    public void testSoftDeleteUserFail() {
         when(propertyOwnerRepository.save(any(PropertyOwner.class))).thenReturn(propertyOwner);
         propertyOwnerService.createUser(propertyOwner);
         propertyOwner= propertyOwnerService.softDeleteUser(6, 0);
@@ -257,9 +257,7 @@ public class PropertyOwnerServiceImplTest {
     @Test
     public void testVerifyConstraintsIdFailure(){
         when(propertyOwnerRepository.findById(any(Long.class))).thenReturn(Optional.of(propertyOwner));
-        assertThrows(DataIntegrityViolationException.class, () -> {
-            propertyOwnerService.verifyConstraintsId(propertyOwner.getId());
-        });
+        assertThrows(DataIntegrityViolationException.class, () -> propertyOwnerService.verifyConstraintsId(propertyOwner.getId()));
     }
 
     /**
@@ -268,9 +266,7 @@ public class PropertyOwnerServiceImplTest {
     @Test
     public void testVerifyConstraintsUsernameFailure(){
         when(propertyOwnerRepository.findByUsername(any(String.class))).thenReturn(Optional.of(propertyOwner));
-        assertThrows(DataIntegrityViolationException.class, () -> {
-            propertyOwnerService.verifyConstraintsUsername(propertyOwner.getUsername());
-        });
+        assertThrows(DataIntegrityViolationException.class, () -> propertyOwnerService.verifyConstraintsUsername(propertyOwner.getUsername()));
     }
 
 
@@ -280,9 +276,7 @@ public class PropertyOwnerServiceImplTest {
     @Test
     public void testVerifyConstraintsEmailFailure() {
         when(propertyOwnerRepository.findByEmail(any(String.class))).thenReturn(Optional.of(propertyOwner));
-        assertThrows(DataIntegrityViolationException.class, () -> {
-            propertyOwnerService.verifyConstraintsEmail(propertyOwner.getEmail());
-        });
+        assertThrows(DataIntegrityViolationException.class, () -> propertyOwnerService.verifyConstraintsEmail(propertyOwner.getEmail()));
     }
 
     /**
@@ -303,7 +297,7 @@ public class PropertyOwnerServiceImplTest {
         property.setPropertyType(PropertyType.values()[1]);
         property.setLatitude(10.5);
         property.setLongitude(58.4);
-        property.setPropertyOwner((PropertyOwner) propertyOwner);
+        property.setPropertyOwner(propertyOwner);
         when(propertyRepository.save(any(Property.class))).thenReturn(property);
         when(propertyOwnerRepository.findByIdWithProperty(any(Long.class))).thenReturn(true);
         propertyRepository.save(property);
