@@ -81,10 +81,10 @@ public class PropertyOwnerController {
     }
 
     @PutMapping("users/UpdateEmail")
-    public ResponseEntity<UserResponseDto> updateUserEmail(@RequestBody String email, @RequestBody long id, @RequestBody long version) {
+    public ResponseEntity<String> updateUserEmail(@RequestParam String email, @RequestParam long id, @RequestParam long version) {
         email=email.toLowerCase();
-        PropertyOwner user =  propertyOwnerService.updateUserAddress(id, email, version);
-        if (user == null) { //update failed
+        int res =  propertyOwnerService.updateUserAddress(id, email, version);
+        if (res == 0) { //update failed
             User checkUserExists = propertyOwnerService.searchUserById(id);// Fetch the updated user by ID
             propertyOwnerService.verifySearchResult(checkUserExists); //check if user with id exists
             propertyOwnerService.verifyConstraintsEmail(email); //check if email is already in the DB;
@@ -92,31 +92,29 @@ public class PropertyOwnerController {
         }
         HttpHeaders headers= new HttpHeaders();
         headers.add("Success-Message", "User Updated.");
-        UserResponseDto userinfo= propertyOwnerService.createUserResponseDto(user.getId(), user.getUsername(), user.getEmail(), user.getVersion());
-        return new ResponseEntity<>(userinfo, headers, HttpStatus.OK);
+        return new ResponseEntity<>( headers, HttpStatus.OK);
     }
 
 
     @PutMapping("users/UpdateAddress")
-    public ResponseEntity<UserResponseDto> updateUserAddress(@RequestBody String address, @RequestBody long id, @RequestBody long version) {
+    public ResponseEntity<String> updateUserAddress(@RequestParam String address, @RequestParam long id, @RequestParam long version) {
 
-        PropertyOwner user =  propertyOwnerService.updateUserAddress(id, address, version);
-        if (user == null) {
+        int res =  propertyOwnerService.updateUserAddress(id, address, version);
+        if (res == 0) {
             User checkUserExists=propertyOwnerService.searchUserById(id);// Fetch the updated user by ID
             propertyOwnerService.verifySearchResult(checkUserExists);
             throw new DataAccessResourceFailureException("Failed to to update address for user with id: "+id+ "please try again.");
         }
         HttpHeaders headers= new HttpHeaders();
         headers.add("Success-Message", "User Updated.");
-        UserResponseDto userinfo= propertyOwnerService.createUserResponseDto(user.getId(), user.getUsername(), user.getEmail(), user.getVersion());
-        return new ResponseEntity<>(userinfo, headers, HttpStatus.OK);
+        return new ResponseEntity<>( headers, HttpStatus.OK);
     }
 
     @PutMapping("users/UpdatePassword")
-    public ResponseEntity<UserResponseDto> updateUserPassword(@RequestBody String password, @RequestBody long id, @RequestBody long version) {
+    public ResponseEntity<String> updateUserPassword(@RequestParam String password, @RequestParam long id, @RequestParam long version) {
 
-        User user = propertyOwnerService.updateUserEmail(id, password, version);
-        if (user == null) {
+        int res = propertyOwnerService.updateUserEmail(id, password, version);
+        if (res==0) {
             User checkUserExists=propertyOwnerService.searchUserById(id);// Fetch the updated user by ID
             propertyOwnerService.verifySearchResult(checkUserExists);
             throw new DataAccessResourceFailureException("Failed to to update password for user with id: "+id+ "please try again.");
@@ -124,12 +122,11 @@ public class PropertyOwnerController {
 
         HttpHeaders headers= new HttpHeaders();
         headers.add("Success-Message", "User Updated.");
-        UserResponseDto userinfo= propertyOwnerService.createUserResponseDto(user.getId(), user.getUsername(), user.getEmail(), user.getVersion());
-        return new ResponseEntity<>(userinfo, headers, HttpStatus.OK);
+        return new ResponseEntity<>( headers, HttpStatus.OK);
     }
 
     @PostMapping("users/deleteUser")
-    public ResponseEntity<String> deleteUser(@RequestParam long id, long version) {
+    public ResponseEntity<String> deleteUser(@RequestParam long id, @RequestParam long version) {
         if(propertyOwnerService.checkUserProperties(id)){
             propertyOwnerService.softDeleteUser(id,version);
         }

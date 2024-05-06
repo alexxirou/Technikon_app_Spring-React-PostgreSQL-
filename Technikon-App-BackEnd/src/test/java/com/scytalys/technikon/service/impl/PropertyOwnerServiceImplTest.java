@@ -19,6 +19,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 
+
 import org.mockito.MockitoAnnotations;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.OptimisticLockingFailureException;
@@ -50,6 +51,7 @@ public class PropertyOwnerServiceImplTest {
 
     @BeforeEach
     public void setup(){
+
         MockitoAnnotations.openMocks(this);
 
         propertyOwner= new PropertyOwner();
@@ -288,7 +290,7 @@ public class PropertyOwnerServiceImplTest {
     public void checkPropertyHasUser(){
         when(propertyOwnerRepository.save(any(PropertyOwner.class))).thenReturn(propertyOwner);
 
-        propertyOwnerService.createUser(propertyOwner);
+        propertyOwner=propertyOwnerService.createUser(propertyOwner);
 
         Property property = new Property();
         property.setId(1L);
@@ -299,8 +301,8 @@ public class PropertyOwnerServiceImplTest {
         property.setLongitude(58.4);
         property.setPropertyOwner(propertyOwner);
         when(propertyRepository.save(any(Property.class))).thenReturn(property);
-        when(propertyOwnerRepository.findByIdWithProperty(any(Long.class))).thenReturn(true);
         propertyRepository.save(property);
+        System.out.println(propertyOwnerService.checkUserProperties(2L));;
         assertTrue(propertyOwnerService.checkUserProperties(propertyOwner.getId()),"Expected user to have property.");
     }
 
@@ -311,11 +313,10 @@ public class PropertyOwnerServiceImplTest {
      */
     @Test
     public void whenConcurrentUpdate_thenThrowException() throws InterruptedException {
-        when(propertyOwnerRepository.save(any(PropertyOwner.class))).thenReturn(propertyOwner);
-        when(propertyOwnerRepository.findById(any(Long.class))).thenReturn(Optional.of(propertyOwner));
 
 
-        propertyOwnerService.createUser(propertyOwner);
+
+        propertyOwner=propertyOwnerService.createUser(propertyOwner);
 
         PropertyOwner propertyOwner2 = new PropertyOwner();
         propertyOwner2.setId(2L); // id

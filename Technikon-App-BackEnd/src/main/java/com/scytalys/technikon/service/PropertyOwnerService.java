@@ -7,8 +7,8 @@ import com.scytalys.technikon.domain.User;
 
 public interface PropertyOwnerService extends UserService {
     PropertyOwner createUser(PropertyOwner user);
-    PropertyOwner updateUserAddress(long id, String address, long version);
-    PropertyOwner softDeleteUser(long id, long version);
+    int updateUserAddress(long id, String address, long version);
+    int softDeleteUser(long id, long version);
     void verifyConstraintsEmail(String email);
     void verifyConstraintsId(Long id);
     void verifyConstraintsUsername(String username);

@@ -5,14 +5,13 @@ import com.scytalys.technikon.domain.User;
 import com.scytalys.technikon.dto.UserResponseDto;
 import com.scytalys.technikon.repository.PropertyOwnerRepository;
 import com.scytalys.technikon.service.PropertyOwnerService;
-import com.scytalys.technikon.service.UserService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 
 
@@ -90,9 +89,9 @@ public class PropertyOwnerServiceImpl implements PropertyOwnerService {
      *
      */
     @Transactional
-    public User updateUserEmail(long id, String email, long version) {
+    public int updateUserEmail(long id, String email, long version) {
         email=email.toLowerCase();
-        return propertyOwnerRepository.updateEmail(id, email, version).orElse(null);
+        return propertyOwnerRepository.updateEmail(id, email, version);
 
     }
 
@@ -104,8 +103,8 @@ public class PropertyOwnerServiceImpl implements PropertyOwnerService {
      * @param version   checks the record is updated correctly.
      */
     @Transactional
-    public PropertyOwner updateUserAddress(long id, String address, long version) {
-        return propertyOwnerRepository.updateAddress(id, address, version).orElse(null);
+    public int updateUserAddress(long id, String address, long version) {
+        return propertyOwnerRepository.updateAddress(id, address, version);
     }
 
 
@@ -117,8 +116,8 @@ public class PropertyOwnerServiceImpl implements PropertyOwnerService {
      * @param version   checks the record is updated correctly.
      */
     @Transactional
-    public User updateUserPassword(long id, String password, long version) {
-        return propertyOwnerRepository.updatePassword(id, password, version).orElse(null);
+    public int updateUserPassword(long id, String password, long version) {
+        return propertyOwnerRepository.updatePassword(id, password, version);
     }
 
     /**
@@ -139,9 +138,9 @@ public class PropertyOwnerServiceImpl implements PropertyOwnerService {
      * @param version the version of the row to be soft deleted
      */
     @Transactional
-    public PropertyOwner softDeleteUser(long id, long version){
+    public int softDeleteUser(long id, long version){
 
-      return propertyOwnerRepository.softDeleteByid(id,version).orElse(null);
+      return propertyOwnerRepository.softDeleteByid(id,version);
     }
 
     /**
@@ -201,10 +200,11 @@ public class PropertyOwnerServiceImpl implements PropertyOwnerService {
     /**
      * Check if a user is linked to a property
      * @param userId the id of the User
-     * @return propertyOwner the user that has the property or null
+     * @return a boolean based on if the propertyId list is empty or not
      */
     public boolean checkUserProperties(long userId){
-        return propertyOwnerRepository.findByIdWithProperty(userId);
+        List<Long> propertyIds = propertyOwnerRepository.findPropertyIdsByUserId(userId);
+        return !propertyIds.isEmpty(); // Return true if the list of property IDs is not empty
     }
 }
 

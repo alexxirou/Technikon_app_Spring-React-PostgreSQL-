@@ -7,22 +7,20 @@ import com.scytalys.technikon.service.PropertyService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.UUID;
-
 @Service
 @AllArgsConstructor
 public class PropertyServiceImpl implements PropertyService {
     private final PropertyRepository propertyRepository;
 
     @Override
-    public Property searchProperty(PropertyDto propertyDto) {
-        long propertyId = propertyDto.propertyId();
+    public Property searchProperty(long propertyId) {
         return propertyRepository.findById(propertyId).orElse(null);
     }
 
     @Override
     public Property createProperty(Property property) {
-        return null;
+        propertyRepository.save(property);
+        return property;
     }
 
     @Override

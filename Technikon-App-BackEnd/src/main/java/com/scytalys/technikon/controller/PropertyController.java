@@ -14,7 +14,7 @@ public class PropertyController {
 
     @GetMapping()
     public Property searchProperty(@RequestBody PropertyDto propertyDto){
-        return propertyService.searchProperty(propertyDto);
+        return propertyService.searchProperty(propertyDto.propertyId());
     }
 
 //    @PostMapping
