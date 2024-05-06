@@ -42,7 +42,8 @@ public class PropertyOwnerServiceImpl implements PropertyOwnerService {
      */
     @Override
     public PropertyOwner searchUserById(long id) {
-        return propertyOwnerRepository.findById(id).orElse(null);
+        return propertyOwnerRepository.findById(id).filter(PropertyOwner::isActive)
+                .orElse(null);
     }
 
     /**
@@ -54,7 +55,8 @@ public class PropertyOwnerServiceImpl implements PropertyOwnerService {
      */
     @Override
     public PropertyOwner searchUserByUsername(String username) {
-        return propertyOwnerRepository.findByUsername(username).orElse(null);
+        return propertyOwnerRepository.findByUsername(username).filter(PropertyOwner::isActive)
+                .orElse(null);
     }
 
     /**
@@ -66,18 +68,19 @@ public class PropertyOwnerServiceImpl implements PropertyOwnerService {
      */
     @Override
     public PropertyOwner searchUserByEmail(String email) {
-        return propertyOwnerRepository.findByEmail(email).orElse(null);
+        return propertyOwnerRepository.findByEmail(email).filter(PropertyOwner::isActive)
+                .orElse(null);
     }
 
     /**
      * Verify if the user is null.
      *
      * @param propertyOwner the user.
-     * @throws NoSuchElementException if user is null
+     * @throws EntityNotFoundException if user is null
      */
 
     public void verifySearchResult(User propertyOwner){
-        if (propertyOwner==null || !propertyOwner.isActive()) throw new EntityNotFoundException("User not found.");
+        if (propertyOwner==null) throw new EntityNotFoundException("User not found.");
     }
 
     /**
@@ -88,7 +91,7 @@ public class PropertyOwnerServiceImpl implements PropertyOwnerService {
      * @param version checks the record is updated correctly.
      *
      */
-    @Transactional
+
     public int updateUserEmail(long id, String email, long version) {
         email=email.toLowerCase();
         return propertyOwnerRepository.updateEmail(id, email, version);
@@ -115,7 +118,7 @@ public class PropertyOwnerServiceImpl implements PropertyOwnerService {
      * @param id of the row to update
      * @param version   checks the record is updated correctly.
      */
-    @Transactional
+
     public int updateUserPassword(long id, String password, long version) {
         return propertyOwnerRepository.updatePassword(id, password, version);
     }
@@ -126,7 +129,7 @@ public class PropertyOwnerServiceImpl implements PropertyOwnerService {
      * @param propertyOwnerId The ID of the user to be deleted.
      */
 
-    @Transactional
+
     public void deleteUser(long propertyOwnerId) {
         propertyOwnerRepository.deleteById(propertyOwnerId);
     }
@@ -137,7 +140,7 @@ public class PropertyOwnerServiceImpl implements PropertyOwnerService {
      * @param id of the row to be deactivated
      * @param version the version of the row to be soft deleted
      */
-    @Transactional
+
     public int softDeleteUser(long id, long version){
 
       return propertyOwnerRepository.softDeleteByid(id,version);

@@ -42,7 +42,7 @@ public class GlobalExceptionHandler {
     public ResponseEntity<String> handleOptimisticLockingFailureException(OptimisticLockingFailureException e) {
         HttpHeaders headers = new HttpHeaders();
         headers.add("Error-Message", "Request resource is busy: " + e.getMessage());
-        return new ResponseEntity<>("Failed to update due to concurrent modification. Please try again.", headers, HttpStatus.CONFLICT);
+        return new ResponseEntity<>("Failed to modify resource because of high traffic. Please try again.", headers, HttpStatus.CONFLICT);
     }
 
 }

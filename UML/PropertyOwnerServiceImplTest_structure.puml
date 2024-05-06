@@ -135,10 +135,10 @@ PropertyOwnerServiceImpl124484289[
 <TR><TD ALIGN="LEFT" >+ searchUserByEmail(email: String): PropertyOwner</TD></TR>
 <TR><TD ALIGN="LEFT" >+ searchUserById(id: long): PropertyOwner</TD></TR>
 <TR><TD ALIGN="LEFT" >+ searchUserByUsername(username: String): PropertyOwner</TD></TR>
-<TR><TD ALIGN="LEFT" >+ softDeleteUser(id: long, version: long): PropertyOwner</TD></TR>
-<TR><TD ALIGN="LEFT" >+ updateUserAddress(id: long, address: String, version: long): PropertyOwner</TD></TR>
-<TR><TD ALIGN="LEFT" >+ updateUserEmail(id: long, email: String, version: long): User</TD></TR>
-<TR><TD ALIGN="LEFT" >+ updateUserPassword(id: long, password: String, version: long): User</TD></TR>
+<TR><TD ALIGN="LEFT" >+ softDeleteUser(id: long, version: long): int</TD></TR>
+<TR><TD ALIGN="LEFT" >+ updateUserAddress(id: long, address: String, version: long): int</TD></TR>
+<TR><TD ALIGN="LEFT" >+ updateUserEmail(id: long, email: String, version: long): int</TD></TR>
+<TR><TD ALIGN="LEFT" >+ updateUserPassword(id: long, password: String, version: long): int</TD></TR>
 <TR><TD ALIGN="LEFT" >+ verifyConstraintsEmail(email: String)</TD></TR>
 <TR><TD ALIGN="LEFT" >+ verifyConstraintsId(id: Long)</TD></TR>
 <TR><TD ALIGN="LEFT" >+ verifyConstraintsUsername(username: String)</TD></TR>
@@ -154,12 +154,13 @@ PropertyOwnerServiceImplTest124484289[
 	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
 <TR><TD ALIGN="LEFT" >(C)PropertyOwnerServiceImplTest</TD></TR>
 <HR/>
+<TR><TD ALIGN="LEFT" >-   entityManager: EntityManager [1]</TD></TR>
 <TR><TD ALIGN="LEFT" >-   propertyOwner: PropertyOwner [0..1]</TD></TR>
-<TR><TD ALIGN="LEFT" >-   propertyOwnerRepository: PropertyOwnerRepository [0..1]</TD></TR>
-<TR><TD ALIGN="LEFT" >-   propertyOwnerService: PropertyOwnerServiceImpl [0..1]</TD></TR>
-<TR><TD ALIGN="LEFT" >-   propertyRepository: PropertyRepository [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   propertyOwnerRepository: PropertyOwnerRepository [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   propertyOwnerService: PropertyOwnerService [1]</TD></TR>
 <HR/>
-<TR><TD ALIGN="LEFT" >+ checkPropertyHasUser()</TD></TR>
+<TR><TD ALIGN="LEFT" ># findSoftDeletedUser()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ teardown()</TD></TR>
 <TR><TD ALIGN="LEFT" >+ testCreateUser()</TD></TR>
 <TR><TD ALIGN="LEFT" >+ testCreateUserResponseDto()</TD></TR>
 <TR><TD ALIGN="LEFT" >+ testDeleteUser()</TD></TR>
@@ -170,7 +171,7 @@ PropertyOwnerServiceImplTest124484289[
 <TR><TD ALIGN="LEFT" >+ testSearchUserByUsername()</TD></TR>
 <TR><TD ALIGN="LEFT" >+ testSearchUserByUsernameFail()</TD></TR>
 <TR><TD ALIGN="LEFT" >+ testSoftDeleteUser()</TD></TR>
-<TR><TD ALIGN="LEFT" >+ testSoftDeleteUserfail()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ testSoftDeleteUserFail()</TD></TR>
 <TR><TD ALIGN="LEFT" >+ testUpdateUserAddress()</TD></TR>
 <TR><TD ALIGN="LEFT" >+ testUpdateUserEmail()</TD></TR>
 <TR><TD ALIGN="LEFT" >+ testUpdateUserEmailFail()</TD></TR>
@@ -231,8 +232,6 @@ UserResponseDto686682215[
 
 'edges    
 PropertyOwnerServiceImplTest124484289 -> PropertyOwner25216822[label="propertyOwner
-[0..1]"];
-PropertyOwnerServiceImplTest124484289 -> PropertyOwnerServiceImpl124484289[label="propertyOwnerService
 [0..1]"];
 User25216822 -> Admin25216822[arrowhead=none, arrowtail=empty, dir=both];
 User25216822 -> PropertyOwner25216822[arrowhead=none, arrowtail=empty, dir=both];

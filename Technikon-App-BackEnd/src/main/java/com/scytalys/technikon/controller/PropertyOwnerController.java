@@ -9,7 +9,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessResourceFailureException;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -83,7 +82,7 @@ public class PropertyOwnerController {
     @PutMapping("users/UpdateEmail")
     public ResponseEntity<String> updateUserEmail(@RequestParam String email, @RequestParam long id, @RequestParam long version) {
         email=email.toLowerCase();
-        int res =  propertyOwnerService.updateUserAddress(id, email, version);
+        int res =  propertyOwnerService.updateUserEmail(id, email, version);
         if (res == 0) { //update failed
             User checkUserExists = propertyOwnerService.searchUserById(id);// Fetch the updated user by ID
             propertyOwnerService.verifySearchResult(checkUserExists); //check if user with id exists
@@ -103,7 +102,7 @@ public class PropertyOwnerController {
         if (res == 0) {
             User checkUserExists=propertyOwnerService.searchUserById(id);// Fetch the updated user by ID
             propertyOwnerService.verifySearchResult(checkUserExists);
-            throw new DataAccessResourceFailureException("Failed to to update address for user with id: "+id+ "please try again.");
+            throw new DataAccessResourceFailureException("Failed to to update address for user with id: "+id);
         }
         HttpHeaders headers= new HttpHeaders();
         headers.add("Success-Message", "User Updated.");
@@ -117,7 +116,7 @@ public class PropertyOwnerController {
         if (res==0) {
             User checkUserExists=propertyOwnerService.searchUserById(id);// Fetch the updated user by ID
             propertyOwnerService.verifySearchResult(checkUserExists);
-            throw new DataAccessResourceFailureException("Failed to to update password for user with id: "+id+ "please try again.");
+            throw new DataAccessResourceFailureException("Failed to to update password for user with id: "+id);
         }
 
         HttpHeaders headers= new HttpHeaders();
@@ -138,4 +137,4 @@ public class PropertyOwnerController {
         return new ResponseEntity<>( headers, HttpStatus.OK);
     }
 
-    }
+}
