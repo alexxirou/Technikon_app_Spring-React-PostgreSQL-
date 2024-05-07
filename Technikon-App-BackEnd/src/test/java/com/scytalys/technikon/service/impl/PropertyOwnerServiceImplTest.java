@@ -385,8 +385,8 @@ public class PropertyOwnerServiceImplTest {
 
         propertyService.createProperty(property);
         List<Long> properties= propertyOwnerService.findPropertiesForUser(propertyOwner.getId());
-
-        assertFalse(properties.isEmpty(),"The properties list should not be empty.");
+        assertEquals(1, properties.size());
+        assertEquals(1L, properties.get(0));
         propertyRepository.delete(property);
 
     }
