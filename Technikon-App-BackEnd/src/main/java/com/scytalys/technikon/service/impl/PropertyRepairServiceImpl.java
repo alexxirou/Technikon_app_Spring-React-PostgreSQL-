@@ -75,6 +75,11 @@ public class PropertyRepairServiceImpl implements PropertyRepairService {
         return "Updated property repair";
     }
 
+    public void deletePropertyRepair(long propertyRepairId){
+        propertyRepairRepository.deleteById(propertyRepairId);
+    }
+
+
     private PropertyRepairDto convertToDto(PropertyRepair propertyRepair) {
         return new PropertyRepairDto(
                 propertyRepair.getPropertyOwner().getId(),
@@ -87,4 +92,6 @@ public class PropertyRepairServiceImpl implements PropertyRepairService {
                 propertyRepair.getLongDescription()
         );
     }
+
+
 }

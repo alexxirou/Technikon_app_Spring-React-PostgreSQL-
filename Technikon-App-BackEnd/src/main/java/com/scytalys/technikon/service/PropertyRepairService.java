@@ -11,4 +11,5 @@ public interface PropertyRepairService {
     List<PropertyRepairDto> searchPropertyRepairs(long propertyOwnerId);
     PropertyRepairDto createPropertyRepair(PropertyRepairDto propertyRepairDto);
     String updatePropertyRepair(PropertyRepairDto propertyRepairDto, long propertyRepairId) throws IllegalAccessException;
+    void deletePropertyRepair(long propertyRepairId);
 }
