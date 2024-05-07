@@ -158,12 +158,16 @@ PropertyOwnerServiceImplTest124484289[
 <TR><TD ALIGN="LEFT" >-   propertyOwner: PropertyOwner [0..1]</TD></TR>
 <TR><TD ALIGN="LEFT" >-   propertyOwnerRepository: PropertyOwnerRepository [1]</TD></TR>
 <TR><TD ALIGN="LEFT" >-   propertyOwnerService: PropertyOwnerService [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   propertyRepository: PropertyRepository [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   propertyService: PropertyServiceImpl [1]</TD></TR>
 <HR/>
 <TR><TD ALIGN="LEFT" ># findSoftDeletedUser()</TD></TR>
 <TR><TD ALIGN="LEFT" >+ teardown()</TD></TR>
 <TR><TD ALIGN="LEFT" >+ testCreateUser()</TD></TR>
 <TR><TD ALIGN="LEFT" >+ testCreateUserResponseDto()</TD></TR>
 <TR><TD ALIGN="LEFT" >+ testDeleteUser()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ testFindUsersWithProperties()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ testFindUsersWithPropertiesFail()</TD></TR>
 <TR><TD ALIGN="LEFT" >+ testSearchUserByEmail()</TD></TR>
 <TR><TD ALIGN="LEFT" >+ testSearchUserByEmailFail()</TD></TR>
 <TR><TD ALIGN="LEFT" >+ testSearchUserById()</TD></TR>
@@ -180,6 +184,22 @@ PropertyOwnerServiceImplTest124484289[
 <TR><TD ALIGN="LEFT" >+ testVerifyConstraintsIdFailure()</TD></TR>
 <TR><TD ALIGN="LEFT" >+ testVerifyConstraintsUsernameFailure()</TD></TR>
 <TR><TD ALIGN="LEFT" >+ whenConcurrentUpdate_thenThrowException()</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+PropertyServiceImpl124484289[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)PropertyServiceImpl</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   propertyRepository: PropertyRepository [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ createProperty(property: Property): Property</TD></TR>
+<TR><TD ALIGN="LEFT" >+ searchProperty(propertyId: long): Property</TD></TR>
+<TR><TD ALIGN="LEFT" >+ updateProperty(propertyDto: PropertyDto): Property</TD></TR>
 </TABLE>>
 	style=filled
 	margin=0
@@ -233,6 +253,8 @@ UserResponseDto686682215[
 'edges    
 PropertyOwnerServiceImplTest124484289 -> PropertyOwner25216822[label="propertyOwner
 [0..1]"];
+PropertyOwnerServiceImplTest124484289 -> PropertyServiceImpl124484289[label="propertyService
+[1]"];
 User25216822 -> Admin25216822[arrowhead=none, arrowtail=empty, dir=both];
 User25216822 -> PropertyOwner25216822[arrowhead=none, arrowtail=empty, dir=both];
     

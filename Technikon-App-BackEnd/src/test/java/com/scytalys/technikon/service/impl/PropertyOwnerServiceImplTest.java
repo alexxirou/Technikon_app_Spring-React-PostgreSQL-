@@ -1,15 +1,18 @@
 package com.scytalys.technikon.service.impl;
 
 
+import com.scytalys.technikon.domain.Property;
 import com.scytalys.technikon.domain.PropertyOwner;
 
 
 import com.scytalys.technikon.domain.User;
 
+import com.scytalys.technikon.domain.category.PropertyType;
 import com.scytalys.technikon.dto.UserResponseDto;
 import com.scytalys.technikon.repository.PropertyOwnerRepository;
 
 
+import com.scytalys.technikon.repository.PropertyRepository;
 import com.scytalys.technikon.service.PropertyOwnerService;
 
 import jakarta.persistence.EntityManager;
@@ -33,7 +36,7 @@ import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ActiveProfiles;
 
-import org.springframework.transaction.annotation.Transactional;
+
 
 
 import java.util.Optional;
@@ -54,6 +57,11 @@ public class PropertyOwnerServiceImplTest {
 
     @Autowired
     private PropertyOwnerRepository propertyOwnerRepository;
+
+    @Autowired
+    PropertyServiceImpl propertyService;
+    @Autowired
+    PropertyRepository propertyRepository;
 
     @Autowired
     private EntityManager entityManager;
@@ -348,7 +356,40 @@ public class PropertyOwnerServiceImplTest {
     }
 
 
+    /**
+     * Test that returns true if users have properties
+     */
+    @Test
+    public void testFindUsersWithProperties(){
+        propertyOwnerService.createUser(propertyOwner);
+        PropertyOwner user = (PropertyOwner) propertyOwnerService.searchUserById(propertyOwner.getId());
+        Property property = new Property();
+        property.setId(1L);
+        property.setAddress("somewhere");
+        property.setPropertyType(PropertyType.values()[1]);
+        property.setLatitude(10.5);
+        property.setLongitude(58.4);
+        property.setPropertyOwner(propertyOwner);
 
+        propertyService.createProperty(property);
+        boolean result = propertyOwnerService.checkUserProperties(propertyOwner.getId());
+        assertTrue(result, "Result should be true because user has a property.");
+        propertyRepository.delete(property);
+
+    }
+
+
+    /**
+     * Test that returns false if users do not  have properties
+     */
+    @Test
+    public void testFindUsersWithPropertiesFail(){
+        propertyOwnerService.createUser(propertyOwner);
+        boolean result = propertyOwnerService.checkUserProperties(propertyOwner.getId());
+        assertFalse(result, "Result should be false because the property is not linked to the user.");
+
+
+    }
 
     /**
      * Concurrency test with two threads updating the password in the db at the same time.
