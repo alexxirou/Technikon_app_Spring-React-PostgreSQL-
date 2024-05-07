@@ -1,8 +1,11 @@
 package com.scytalys.technikon.service;
 
-import com.fasterxml.jackson.databind.annotation.JsonAppend;
+
 import com.scytalys.technikon.domain.PropertyOwner;
 import com.scytalys.technikon.domain.User;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public interface PropertyOwnerService extends UserService {
@@ -13,5 +16,6 @@ public interface PropertyOwnerService extends UserService {
     void verifyConstraintsId(Long id);
     void verifyConstraintsUsername(String username);
     void verifySearchResult(User user);
-    boolean checkUserProperties(long id);
+    ArrayList<Long> findPropertiesForUser(long userId);
+    boolean checkUserHasProperties(List<Long> propertyIds);
 }

@@ -7,6 +7,8 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -42,7 +44,7 @@ public interface PropertyOwnerRepository extends JpaRepository<PropertyOwner, Lo
 
     @Transactional
     @Query("SELECT p.id FROM Property p WHERE p.propertyOwner.id = :userId")
-    List<Long> findPropertyIdsByUserId(@Param("userId") long userId);
+    ArrayList<Long> findPropertyIdsByUserId(@Param("userId") long userId);
 
 
 }

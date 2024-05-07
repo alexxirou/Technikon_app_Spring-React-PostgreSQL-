@@ -128,10 +128,11 @@ PropertyOwnerServiceImpl124484289[
 <HR/>
 <TR><TD ALIGN="LEFT" >-   propertyOwnerRepository: PropertyOwnerRepository [0..1]</TD></TR>
 <HR/>
-<TR><TD ALIGN="LEFT" >+ checkUserProperties(userId: long): boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >+ checkUserHasProperties(results: List&lt;Long&gt;): boolean</TD></TR>
 <TR><TD ALIGN="LEFT" >+ createUser(user: PropertyOwner): PropertyOwner</TD></TR>
 <TR><TD ALIGN="LEFT" >+ createUserResponseDto(id: long, username: String, email: String, version: long): UserResponseDto</TD></TR>
 <TR><TD ALIGN="LEFT" >+ deleteUser(propertyOwnerId: long)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ findPropertiesForUser(userId: long): ArrayList&lt;Long&gt;</TD></TR>
 <TR><TD ALIGN="LEFT" >+ searchUserByEmail(email: String): PropertyOwner</TD></TR>
 <TR><TD ALIGN="LEFT" >+ searchUserById(id: long): PropertyOwner</TD></TR>
 <TR><TD ALIGN="LEFT" >+ searchUserByUsername(username: String): PropertyOwner</TD></TR>
@@ -161,6 +162,8 @@ PropertyOwnerServiceImplTest124484289[
 <TR><TD ALIGN="LEFT" >#   propertyRepository: PropertyRepository [1]</TD></TR>
 <TR><TD ALIGN="LEFT" >#   propertyService: PropertyServiceImpl [1]</TD></TR>
 <HR/>
+<TR><TD ALIGN="LEFT" >+ findPropertiesforUser()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ findPropertiesforUserFail()</TD></TR>
 <TR><TD ALIGN="LEFT" ># findSoftDeletedUser()</TD></TR>
 <TR><TD ALIGN="LEFT" >+ teardown()</TD></TR>
 <TR><TD ALIGN="LEFT" >+ testCreateUser()</TD></TR>

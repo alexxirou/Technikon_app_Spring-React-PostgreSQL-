@@ -14,6 +14,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
 
 
 @RestController
@@ -126,7 +128,8 @@ public class PropertyOwnerController {
 
     @PostMapping("users/deleteUser")
     public ResponseEntity<String> deleteUser(@RequestParam long id, @RequestParam long version) {
-        if(propertyOwnerService.checkUserProperties(id)){
+        ArrayList<Long> properties = propertyOwnerService.findPropertiesForUser(id);
+        if(propertyOwnerService.checkUserHasProperties(properties)){
             propertyOwnerService.softDeleteUser(id,version);
         }
         else{propertyOwnerService.deleteUser(id);}

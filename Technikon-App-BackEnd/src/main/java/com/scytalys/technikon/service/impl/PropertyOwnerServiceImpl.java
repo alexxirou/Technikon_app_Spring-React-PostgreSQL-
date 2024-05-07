@@ -11,6 +11,8 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -201,13 +203,25 @@ public class PropertyOwnerServiceImpl implements PropertyOwnerService {
     }
 
     /**
-     * Check if a user is linked to a property
-     * @param userId the id of the User
+     *Returns the ids of properties linked to a  User
+     * @param userId the id of the user
+     * @return a list of the property ids linked to a User
+    */
+    public ArrayList<Long> findPropertiesForUser(long userId){
+        return propertyOwnerRepository.findPropertyIdsByUserId(userId);
+
+    }
+
+
+
+    /**
+     * Verify if a user is linked to a property
+     * @param results the list of property ids linked to a user.
      * @return a boolean based on if the propertyId list is empty or not
      */
-    public boolean checkUserProperties(long userId){
-        List<Long> propertyIds = propertyOwnerRepository.findPropertyIdsByUserId(userId);
-        return !propertyIds.isEmpty(); // Return true if the list of property IDs is not empty
+    public boolean checkUserHasProperties(List<Long> results){
+
+        return !results.isEmpty(); // Return true if the list of property IDs is not empty
     }
 }
 

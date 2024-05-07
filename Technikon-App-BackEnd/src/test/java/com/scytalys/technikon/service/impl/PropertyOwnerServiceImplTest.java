@@ -37,8 +37,7 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ActiveProfiles;
 
 
-
-
+import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -357,6 +356,43 @@ public class PropertyOwnerServiceImplTest {
 
 
     /**
+     * Test that returns the propertyIds for a user that has properties
+     */
+    @Test
+    public void findPropertiesforUserFail(){
+        propertyOwnerService.createUser(propertyOwner);
+        PropertyOwner user = (PropertyOwner) propertyOwnerService.searchUserById(propertyOwner.getId());
+        List<Long> properties= propertyOwnerService.findPropertiesForUser(propertyOwner.getId());
+        assertTrue(properties.isEmpty(),"The properties list should be empty.");
+
+
+    }
+
+    /**
+     * Test that returns the propertyIds for a user that has properties
+     */
+    @Test
+    public void findPropertiesforUser(){
+        propertyOwnerService.createUser(propertyOwner);
+        PropertyOwner user = (PropertyOwner) propertyOwnerService.searchUserById(propertyOwner.getId());
+        Property property = new Property();
+        property.setId(1L);
+        property.setAddress("somewhere");
+        property.setPropertyType(PropertyType.values()[1]);
+        property.setLatitude(10.5);
+        property.setLongitude(58.4);
+        property.setPropertyOwner(propertyOwner);
+
+        propertyService.createProperty(property);
+        List<Long> properties= propertyOwnerService.findPropertiesForUser(propertyOwner.getId());
+
+        assertFalse(properties.isEmpty(),"The properties list should not be empty.");
+        propertyRepository.delete(property);
+
+    }
+
+
+    /**
      * Test that returns true if users have properties
      */
     @Test
@@ -372,7 +408,8 @@ public class PropertyOwnerServiceImplTest {
         property.setPropertyOwner(propertyOwner);
 
         propertyService.createProperty(property);
-        boolean result = propertyOwnerService.checkUserProperties(propertyOwner.getId());
+        List<Long> properties= propertyOwnerService.findPropertiesForUser(propertyOwner.getId());
+        boolean result = propertyOwnerService.checkUserHasProperties(properties);
         assertTrue(result, "Result should be true because user has a property.");
         propertyRepository.delete(property);
 
@@ -385,7 +422,8 @@ public class PropertyOwnerServiceImplTest {
     @Test
     public void testFindUsersWithPropertiesFail(){
         propertyOwnerService.createUser(propertyOwner);
-        boolean result = propertyOwnerService.checkUserProperties(propertyOwner.getId());
+        List<Long> properties= propertyOwnerService.findPropertiesForUser(propertyOwner.getId());
+        boolean result = propertyOwnerService.checkUserHasProperties(properties);
         assertFalse(result, "Result should be false because the property is not linked to the user.");
 
 
