@@ -126,7 +126,7 @@ public class PropertyOwnerController {
         return new ResponseEntity<>( headers, HttpStatus.OK);
     }
 
-    @PostMapping("users/deleteUser")
+    @DeleteMapping("users/deleteUser")
     public ResponseEntity<String> deleteUser(@RequestParam long id, @RequestParam long version) {
         ArrayList<Long> properties = propertyOwnerService.findPropertiesForUser(id);
         if(propertyOwnerService.checkUserHasProperties(properties)){
