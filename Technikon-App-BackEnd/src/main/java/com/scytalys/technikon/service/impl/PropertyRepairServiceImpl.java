@@ -133,29 +133,7 @@ public class PropertyRepairServiceImpl implements PropertyRepairService {
 
 
 
-    //-------------------------------------
 
-//    /**
-//     * Creates a new property repair in the repository
-//     *
-//     * @param propertyRepairDto The property repair to be created.
-//     * @return The created property repair.
-//     */
-//    @Override
-//    public PropertyRepairDto createPropertyRepair(PropertyRepairDto propertyRepairDto) {
-//        PropertyRepair propertyRepair = new PropertyRepair();
-//        propertyRepair.setPropertyOwner(propertyOwnerRepository.findById(propertyRepairDto.propertyOwnerId()).orElseThrow(() -> new NoSuchElementException("PropertyOwner with id " + propertyRepairDto.propertyOwnerId() + " not found")));;
-//        propertyRepair.setProperty(propertyRepository.findById(propertyRepairDto.propertyId()).orElse(null));
-//
-//        propertyRepair.setDateOfRepair(propertyRepairDto.dateOfRepair());
-//        propertyRepair.setShortDescription(propertyRepairDto.shortDescription());
-//        propertyRepair.setRepairType(propertyRepairDto.repairType());
-//        propertyRepair.setRepairStatus(propertyRepairDto.repairStatus());
-//        propertyRepair.setCost(propertyRepairDto.cost());
-//        propertyRepair.setLongDescription(propertyRepairDto.longDescription());
-//        PropertyRepair repair = propertyRepairRepository.save(propertyRepair);
-//        return convertToDto(repair);
-//    }
 
 
 
