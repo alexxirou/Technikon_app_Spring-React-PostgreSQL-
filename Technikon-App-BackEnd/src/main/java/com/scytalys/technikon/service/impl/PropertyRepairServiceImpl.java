@@ -1,16 +1,13 @@
 package com.scytalys.technikon.service.impl;
 
 import com.scytalys.technikon.domain.PropertyRepair;
-import com.scytalys.technikon.domain.category.RepairType;
 import com.scytalys.technikon.dto.PropertyRepairDto;
 import com.scytalys.technikon.repository.PropertyOwnerRepository;
 import com.scytalys.technikon.repository.PropertyRepairRepository;
 import com.scytalys.technikon.repository.PropertyRepository;
 import com.scytalys.technikon.repository.RepoPropertyRepair;
 import com.scytalys.technikon.service.PropertyRepairService;
-import com.scytalys.technikon.service.PropertyService;
 import lombok.AllArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -75,7 +72,7 @@ public class PropertyRepairServiceImpl implements PropertyRepairService {
         propertyRepair.update(
                 propertyRepair1,
                 propertyRepairId);
-        return "not nice";
+        return "Updated property repair";
     }
 
     private PropertyRepairDto convertToDto(PropertyRepair propertyRepair) {
