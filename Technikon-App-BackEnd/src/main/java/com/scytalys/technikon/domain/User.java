@@ -1,15 +1,18 @@
 package com.scytalys.technikon.domain;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 import java.util.UUID;
 
 @MappedSuperclass
 @Data
-public abstract class User {
+public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(unique = true)
     private long id;
     private String name;
     private String surname;
@@ -18,4 +21,8 @@ public abstract class User {
     @Column(unique = true)
     private String username;
     private String password;
+    private boolean isActive = true;
+    @Version
+    private long version;
+
 }

@@ -3,76 +3,89 @@ package com.scytalys.technikon.service.impl;
 import com.scytalys.technikon.domain.PropertyRepair;
 import com.scytalys.technikon.domain.category.RepairType;
 import com.scytalys.technikon.dto.PropertyRepairDto;
+import com.scytalys.technikon.repository.PropertyOwnerRepository;
 import com.scytalys.technikon.repository.PropertyRepairRepository;
+import com.scytalys.technikon.repository.PropertyRepository;
+import com.scytalys.technikon.repository.RepoPropertyRepair;
 import com.scytalys.technikon.service.PropertyRepairService;
 import com.scytalys.technikon.service.PropertyService;
 import lombok.AllArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
 public class PropertyRepairServiceImpl implements PropertyRepairService {
 
     private final PropertyRepairRepository propertyRepairRepository;
+    private final PropertyOwnerRepository propertyOwnerRepository;
+    private final PropertyRepository propertyRepository;
+    private final RepoPropertyRepair propertyRepair;
 
+    /**
+     * Searches for all property repairs in the repository that were scheduled by a specific property owner.
+     *
+     * @param propertyOwnerId The unique identifier of the property owner. This is used to filter the repairs that belong to this owner.
+     * @return A list of all property repairs that were scheduled by the specified property owner. If no repairs were found for the given owner, an empty list is returned.
+     */
     @Override
-    public PropertyRepair createPropertyRepair(PropertyRepair pr) {
+    public List<PropertyRepairDto> searchPropertyRepairs(long propertyOwnerId) {
+        return propertyRepairRepository.searchPropertyRepairs(propertyOwnerId)
+                .stream()
+                .map(this::convertToDto)
+                .collect(Collectors.toList());
+    }
+
+    /**
+     * Creates a new property repair in the repository
+     *
+     * @param propertyRepairDto The property repair to be created.
+     * @return The created property repair.
+     */
+    @Override
+    public PropertyRepairDto createPropertyRepair(PropertyRepairDto propertyRepairDto) {
         PropertyRepair propertyRepair = new PropertyRepair();
-        propertyRepair.setDateOfRepair(pr.getDateOfRepair());
-        propertyRepair.setShortDescription(pr.getShortDescription());
-        propertyRepair.setRepairType(pr.getRepairType());
-        propertyRepair.setRepairStatus(pr.getRepairStatus());
-        propertyRepair.setCost(pr.getCost());
-        propertyRepair.setLongDescription(pr.getLongDescription());
-        propertyRepairRepository.save(propertyRepair);
-        return propertyRepair;
+        propertyRepair.setPropertyOwner(propertyOwnerRepository.findById(propertyRepairDto.propertyOwnerId()).orElseThrow(() -> new NoSuchElementException("PropertyOwner with id " + propertyRepairDto.propertyOwnerId() + " not found")));;
+        propertyRepair.setProperty(propertyRepository.findById(propertyRepairDto.propertyId()).orElse(null));
+
+        propertyRepair.setDateOfRepair(propertyRepairDto.dateOfRepair());
+        propertyRepair.setShortDescription(propertyRepairDto.shortDescription());
+        propertyRepair.setRepairType(propertyRepairDto.repairType());
+        propertyRepair.setRepairStatus(propertyRepairDto.repairStatus());
+        propertyRepair.setCost(propertyRepairDto.cost());
+        propertyRepair.setLongDescription(propertyRepairDto.longDescription());
+        PropertyRepair repair = propertyRepairRepository.save(propertyRepair);
+        return convertToDto(repair);
     }
 
     @Override
-    public List<PropertyRepair> getPropertyRepairByDate(LocalDate date) {
-        return propertyRepairRepository.getPropertyRepairByDate(date);
+    public String updatePropertyRepair(PropertyRepairDto propertyRepairDto, long propertyRepairId) {
+        propertyRepair.update(
+                propertyRepairDto.dateOfRepair(),
+                propertyRepairDto.cost(),
+                propertyRepairDto.shortDescription(),
+                propertyRepairDto.longDescription(),
+                propertyRepairDto.repairType(),
+                propertyRepairDto.repairStatus(),
+                propertyRepairId);
+        return "not nice";
     }
 
-    @Override
-    public List<PropertyRepair> getPropertyRepairByDates(LocalDate firstDate, LocalDate lastDate ) {
-        return propertyRepairRepository.getPropertyRepairByDates(firstDate, lastDate);
-    }
-
-    @Override
-    public List<PropertyRepair> getPropertyRepairs(long propertyOwnerId) {
-        return propertyRepairRepository.getPropertyRepairs(propertyOwnerId);
-    }
-
-    @Override
-    public boolean updatePropertyRepairByDate(long propertyRepairId, LocalDate date) {
-        return propertyRepairRepository.updatePropertyRepairByDate(propertyRepairId, date);
-    }
-
-    @Override
-    public boolean updatePropertyRepairByShortDescription(long propertyRepairId, String shortDescription) {
-        return propertyRepairRepository.updatePropertyRepairByShortDescription(propertyRepairId, shortDescription);
-    }
-
-    @Override
-    public boolean updatePropertyRepairByRepairType(long propertyRepairId, RepairType repairType) {
-        return propertyRepairRepository.updatePropertyRepairByRepairType(propertyRepairId, repairType);
-    }
-
-    @Override
-    public boolean updatePropertyRepairByCost(long propertyRepairId, double cost) {
-        return propertyRepairRepository.updatePropertyRepairByCost(propertyRepairId, cost);
-    }
-
-    @Override
-    public boolean updatePropertyRepairByLongDescription(long propertyRepairId, String longDescription) {
-        return propertyRepairRepository.updatePropertyRepairByLongDescription(propertyRepairId, longDescription);
-    }
-
-    @Override
-    public void deletePropertyRepair(long propertyRepairId) {
-        propertyRepairRepository.deleteById(propertyRepairId);
+    private PropertyRepairDto convertToDto(PropertyRepair propertyRepair) {
+        return new PropertyRepairDto(
+                propertyRepair.getPropertyOwner().getId(),
+                propertyRepair.getProperty().getId(),
+                propertyRepair.getDateOfRepair(),
+                propertyRepair.getShortDescription(),
+                propertyRepair.getRepairType(),
+                propertyRepair.getRepairStatus(),
+                propertyRepair.getCost(),
+                propertyRepair.getLongDescription()
+        );
     }
 }

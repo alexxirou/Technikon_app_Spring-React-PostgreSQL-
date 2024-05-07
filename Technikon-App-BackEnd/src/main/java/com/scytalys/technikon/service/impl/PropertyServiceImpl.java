@@ -22,7 +22,7 @@ public class PropertyServiceImpl implements PropertyService {
 
     @Override
     public Property createProperty(Property property) {
-        return null;
+        return propertyRepository.save(property);
     }
 
     @Override

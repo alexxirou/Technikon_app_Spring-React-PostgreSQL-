@@ -5,12 +5,17 @@ import com.scytalys.technikon.domain.category.RepairType;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.UUID;
 
-public record PropertyRepairDto (LocalDate dateOfRepair,
-                                 String shortDescription,
-                                 RepairType repairType,
-                                 RepairStatus repairStatus,
-                                 BigDecimal cost,
-                                 String longDescription){
+public record PropertyRepairDto(
+        long propertyOwnerId,
+        long propertyId,
+        LocalDate dateOfRepair,
+        String shortDescription,
+        RepairType repairType,
+        RepairStatus repairStatus,
+        BigDecimal cost,
+        String longDescription) {
 }
+
