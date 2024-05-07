@@ -8,6 +8,7 @@ import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Repository;
 
+import java.lang.reflect.Field;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Date;
@@ -18,32 +19,20 @@ public class RepoPropertyRepair {
     private EntityManager entityManager;
 
     @Transactional
-    public void update(LocalDate newDateOfRepair,
-                       BigDecimal newCost,
-                       String newShortDescription,
-                       String newLongDescription,
-                       RepairType newRepairType,
-                       RepairStatus newRepairStatus,
-                       long propertyRepairId) {
-        PropertyRepair propertyRepair = entityManager.find(PropertyRepair.class, propertyRepairId);
-        if (newDateOfRepair != null) {
-            propertyRepair.setDateOfRepair(newDateOfRepair);
+    public void update(PropertyRepair newPropertyRepair, long propertyRepairId) throws IllegalAccessException {
+        PropertyRepair existingPropertyRepair = entityManager.find(PropertyRepair.class, propertyRepairId);
+
+        Class<?> propertyRepairClass = PropertyRepair.class;
+        Field[] propertyRepairFields = propertyRepairClass.getDeclaredFields();
+
+        for(Field field : propertyRepairFields){
+            field.setAccessible(true);
+            Object value= field.get(newPropertyRepair);
+            if(value!=null){
+                field.set(existingPropertyRepair, value);
+            }
+            field.setAccessible(false);
         }
-        if (newCost != null) {
-            propertyRepair.setCost(newCost);
-        }
-        if (newLongDescription != null) {
-            propertyRepair.setLongDescription(newLongDescription);
-        }
-        if (newShortDescription != null) {
-            propertyRepair.setShortDescription(newShortDescription);
-        }
-        if (newRepairStatus != null) {
-            propertyRepair.setRepairStatus(newRepairStatus);
-        }
-        if (newRepairType != null) {
-            propertyRepair.setRepairType(newRepairType);
-        }
-        entityManager.merge(propertyRepair);
+        entityManager.merge(existingPropertyRepair);
     }
 }

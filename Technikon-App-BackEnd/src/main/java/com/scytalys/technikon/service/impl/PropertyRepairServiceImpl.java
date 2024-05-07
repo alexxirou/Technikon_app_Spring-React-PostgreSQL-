@@ -64,14 +64,16 @@ public class PropertyRepairServiceImpl implements PropertyRepairService {
     }
 
     @Override
-    public String updatePropertyRepair(PropertyRepairDto propertyRepairDto, long propertyRepairId) {
+    public String updatePropertyRepair(PropertyRepairDto propertyRepairDto, long propertyRepairId) throws IllegalAccessException {
+        PropertyRepair propertyRepair1 = new PropertyRepair();
+        propertyRepair1.setDateOfRepair(propertyRepairDto.dateOfRepair());
+        propertyRepair1.setRepairType(propertyRepairDto.repairType());
+        propertyRepair1.setCost(propertyRepairDto.cost());
+        propertyRepair1.setRepairStatus(propertyRepairDto.repairStatus());
+        propertyRepair1.setLongDescription(propertyRepairDto.longDescription());
+        propertyRepair1.setShortDescription(propertyRepairDto.shortDescription());
         propertyRepair.update(
-                propertyRepairDto.dateOfRepair(),
-                propertyRepairDto.cost(),
-                propertyRepairDto.shortDescription(),
-                propertyRepairDto.longDescription(),
-                propertyRepairDto.repairType(),
-                propertyRepairDto.repairStatus(),
+                propertyRepair1,
                 propertyRepairId);
         return "not nice";
     }

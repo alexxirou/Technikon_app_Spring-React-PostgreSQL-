@@ -14,7 +14,7 @@ import java.util.Date;
 public class PropertyRepair {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
     private LocalDate dateOfRepair;
     private String shortDescription;
     private RepairType repairType;

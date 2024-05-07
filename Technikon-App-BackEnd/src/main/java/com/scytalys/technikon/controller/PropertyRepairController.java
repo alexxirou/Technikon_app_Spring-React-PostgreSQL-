@@ -28,7 +28,7 @@ public class PropertyRepairController {
     }
 
     @PatchMapping("/update/{propertyRepairId}/")
-    public ResponseEntity<String> updatePropertyRepair(@PathVariable long propertyRepairId, @RequestBody PropertyRepairDto propertyRepairDto) {
+    public ResponseEntity<String> updatePropertyRepair(@PathVariable long propertyRepairId, @RequestBody PropertyRepairDto propertyRepairDto) throws IllegalAccessException {
         String returned = propertyRepairService.updatePropertyRepair(propertyRepairDto, propertyRepairId);
         return new ResponseEntity<>(returned, HttpStatus.OK);
     }
