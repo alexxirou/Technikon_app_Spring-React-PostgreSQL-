@@ -1,12 +1,9 @@
 package com.scytalys.technikon.controller;
 
-import com.scytalys.technikon.domain.PropertyRepair;
-import com.scytalys.technikon.domain.category.RepairStatus;
 import com.scytalys.technikon.dto.PropertyRepairDto;
 import com.scytalys.technikon.service.PropertyRepairService;
 import lombok.AllArgsConstructor;
 import org.springframework.dao.DataAccessResourceFailureException;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -57,5 +54,4 @@ public class PropertyRepairController {
     public ResponseEntity<String> handleDataAccessResourceFailureException(DataAccessResourceFailureException e) {
         return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
     }
-
 }
