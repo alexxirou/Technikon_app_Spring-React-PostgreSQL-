@@ -103,7 +103,7 @@ public class PropertyOwnerServiceImplTest {
     @Test
     public void testCreateUser() {
 //        when(propertyOwnerRepository.save(any(PropertyOwner.class))).thenReturn(propertyOwner);
-        PropertyOwner result =  propertyOwnerService.createUser(propertyOwner);
+        PropertyOwner result = (PropertyOwner) propertyOwnerService.createDBUser(propertyOwner);
         System.out.println(result);
         assertEquals(propertyOwner, result);
 
@@ -116,7 +116,7 @@ public class PropertyOwnerServiceImplTest {
     public void testSearchUserById(){
 //        when(propertyOwnerRepository.save(any(PropertyOwner.class))).thenReturn(propertyOwner);
 //        when(propertyOwnerRepository.findById(any(Long.class))).thenReturn(Optional.of(propertyOwner));
-        propertyOwnerService.createUser(propertyOwner);
+        propertyOwnerService.createDBUser(propertyOwner);
         User result = propertyOwnerService.searchUserById(propertyOwner.getId());
         assertEquals(propertyOwner, result);
     }
@@ -138,7 +138,7 @@ public class PropertyOwnerServiceImplTest {
     public void testSearchUserByUsername(){
 //        when(propertyOwnerRepository.save(any(PropertyOwner.class))).thenReturn(propertyOwner);
 //        when(propertyOwnerRepository.findByUsername(any(String.class))).thenReturn(Optional.of(propertyOwner));
-        propertyOwner=propertyOwnerService.createUser(propertyOwner);
+        propertyOwner= (PropertyOwner) propertyOwnerService.createDBUser(propertyOwner);
         User result = propertyOwnerService.searchUserByUsername(propertyOwner.getUsername());
         System.out.println(result);
         assertEquals(propertyOwner, result);
@@ -161,7 +161,7 @@ public class PropertyOwnerServiceImplTest {
     public void testSearchUserByEmail(){
 //        when(propertyOwnerRepository.save(any(PropertyOwner.class))).thenReturn(propertyOwner);
 //        when(propertyOwnerRepository.findByEmail(any(String.class))).thenReturn(Optional.of(propertyOwner));
-        propertyOwnerService.createUser(propertyOwner);
+        propertyOwnerService.createDBUser(propertyOwner);
         User result = propertyOwnerService.searchUserByEmail(propertyOwner.getEmail());
         assertEquals(propertyOwner, result);
     }
@@ -184,7 +184,7 @@ public class PropertyOwnerServiceImplTest {
 
     public void testUpdateUserEmail()  {
 
-        PropertyOwner user2=propertyOwnerService.createUser(propertyOwner);
+        PropertyOwner user2=(PropertyOwner) propertyOwnerService.createDBUser(propertyOwner);
         String newEmail = "newEmail@example.com";
         propertyOwnerService.updateUserEmail(user2.getId(), newEmail, user2.getVersion());
 
@@ -203,7 +203,7 @@ public class PropertyOwnerServiceImplTest {
     @Test
     public void testUpdateUserEmailFail() {
 //        when(propertyOwnerRepository.save(any(PropertyOwner.class))).thenReturn(propertyOwner);
-        PropertyOwner user=propertyOwnerService.createUser(propertyOwner);
+        PropertyOwner user=(PropertyOwner) propertyOwnerService.createDBUser(propertyOwner);
         PropertyOwner propertyOwner2 = new PropertyOwner();
         propertyOwner2.setId(4L); // id
         propertyOwner2.setName("John"); // name
@@ -224,7 +224,7 @@ public class PropertyOwnerServiceImplTest {
     @Test
     public void testUpdateUserAddress() {
         //when(propertyOwnerRepository.save(any(PropertyOwner.class))).thenReturn(propertyOwner);
-        PropertyOwner user= propertyOwnerService.createUser(propertyOwner);
+        PropertyOwner user= (PropertyOwner) propertyOwnerService.createDBUser(propertyOwner);
         String newAddress = "New Address";
         propertyOwnerService.updateUserAddress(propertyOwner.getId(), newAddress, propertyOwner.getVersion());
         PropertyOwner result = (PropertyOwner) propertyOwnerService.searchUserById(user.getId());
@@ -237,7 +237,7 @@ public class PropertyOwnerServiceImplTest {
     @Test
     public void testUpdateUserPassword() {
         //when(propertyOwnerRepository.save(any(PropertyOwner.class))).thenReturn(propertyOwner);
-        PropertyOwner user= propertyOwnerService.createUser(propertyOwner);
+        PropertyOwner user= (PropertyOwner) propertyOwnerService.createDBUser(propertyOwner);
         String newPassword = "newPassword";
         propertyOwnerService.updateUserPassword(user.getId(), newPassword, user.getVersion());
         PropertyOwner result = (PropertyOwner) propertyOwnerService.searchUserById(user.getId());
@@ -250,7 +250,7 @@ public class PropertyOwnerServiceImplTest {
     @Test
     public void testDeleteUser() {
         //when(propertyOwnerRepository.save(any(PropertyOwner.class))).thenReturn(propertyOwner);
-        propertyOwnerService.createUser(propertyOwner);
+        propertyOwnerService.createDBUser(propertyOwner);
         long id = propertyOwner.getId();
         propertyOwnerService.deleteUser(id);
         //when(propertyOwnerRepository.findById(any(Long.class))).thenReturn(Optional.empty());
@@ -269,7 +269,7 @@ public class PropertyOwnerServiceImplTest {
 //            when(propertyOwnerRepository.save(any(PropertyOwner.class))).thenReturn(propertyOwner);
 
             // Create a user
-            propertyOwnerService.createUser(propertyOwner);
+            propertyOwnerService.createDBUser(propertyOwner);
 
             // Call the softDeleteUser method
             propertyOwnerService.softDeleteUser(propertyOwner.getId(), propertyOwner.getVersion());
@@ -292,7 +292,7 @@ public class PropertyOwnerServiceImplTest {
     @Test
     public  void testSoftDeleteUserFail() {
         //when(propertyOwnerRepository.save(any(PropertyOwner.class))).thenReturn(propertyOwner);
-        propertyOwner=propertyOwnerService.createUser(propertyOwner);
+        propertyOwnerService.createDBUser(propertyOwner);
         int res =propertyOwnerService.softDeleteUser(6, 0);
         assertEquals(res, 0);
     }
@@ -302,7 +302,7 @@ public class PropertyOwnerServiceImplTest {
      */
 
     @Test void findSoftDeletedUser(){
-        propertyOwnerService.createUser(propertyOwner);
+        propertyOwnerService.createDBUser(propertyOwner);
         int res =propertyOwnerService.softDeleteUser(propertyOwner.getId(), propertyOwner.getVersion());
         User result =propertyOwnerService.searchUserById(3L);
         assertNull(result);
@@ -314,7 +314,6 @@ public class PropertyOwnerServiceImplTest {
     @Test
     public void testCreateUserResponseDto() {
         //when(propertyOwnerRepository.save(any(PropertyOwner.class))).thenReturn(propertyOwner);
-        propertyOwner=propertyOwnerService.createUser(propertyOwner);
         UserResponseDto responseDto = propertyOwnerService.createUserResponseDto(propertyOwner.getId(), propertyOwner.getUsername(), propertyOwner.getEmail(), propertyOwner.getVersion());
         assertEquals(propertyOwner.getId(), responseDto.id());
         assertEquals(propertyOwner.getUsername(), responseDto.username());
@@ -329,7 +328,7 @@ public class PropertyOwnerServiceImplTest {
     @Test
     public void testVerifyConstraintsIdFailure(){
         //when(propertyOwnerRepository.findById(any(Long.class))).thenReturn(Optional.of(propertyOwner));
-        propertyOwner=propertyOwnerService.createUser(propertyOwner);
+        propertyOwnerService.createDBUser(propertyOwner);
         assertThrows(DataIntegrityViolationException.class, () -> propertyOwnerService.verifyConstraintsId(propertyOwner.getId()));
     }
 
@@ -339,7 +338,7 @@ public class PropertyOwnerServiceImplTest {
     @Test
     public void testVerifyConstraintsUsernameFailure(){
        // when(propertyOwnerRepository.findByUsername(any(String.class))).thenReturn(Optional.of(propertyOwner));
-        propertyOwner=propertyOwnerService.createUser(propertyOwner);
+        propertyOwnerService.createDBUser(propertyOwner);
         assertThrows(DataIntegrityViolationException.class, () -> propertyOwnerService.verifyConstraintsUsername(propertyOwner.getUsername()));
     }
 
@@ -350,7 +349,7 @@ public class PropertyOwnerServiceImplTest {
     @Test
     public void testVerifyConstraintsEmailFailure() {
         //when(propertyOwnerRepository.findByEmail(any(String.class))).thenReturn(Optional.of(propertyOwner));
-        propertyOwner=propertyOwnerService.createUser(propertyOwner);
+        propertyOwnerService.createDBUser(propertyOwner);
         assertThrows(DataIntegrityViolationException.class, () -> propertyOwnerService.verifyConstraintsEmail(propertyOwner.getEmail()));
     }
 
@@ -360,7 +359,7 @@ public class PropertyOwnerServiceImplTest {
      */
     @Test
     public void findPropertiesforUserFail(){
-        propertyOwnerService.createUser(propertyOwner);
+        propertyOwnerService.createDBUser(propertyOwner);
         PropertyOwner user = (PropertyOwner) propertyOwnerService.searchUserById(propertyOwner.getId());
         List<Long> properties= propertyOwnerService.findPropertiesForUser(propertyOwner.getId());
         assertTrue(properties.isEmpty(),"The properties list should be empty.");
@@ -373,7 +372,7 @@ public class PropertyOwnerServiceImplTest {
      */
     @Test
     public void findPropertiesforUser(){
-        propertyOwnerService.createUser(propertyOwner);
+        propertyOwnerService.createDBUser(propertyOwner);
         PropertyOwner user = (PropertyOwner) propertyOwnerService.searchUserById(propertyOwner.getId());
         Property property = new Property();
         property.setId(1L);
@@ -397,7 +396,7 @@ public class PropertyOwnerServiceImplTest {
      */
     @Test
     public void testFindUsersWithProperties(){
-        propertyOwnerService.createUser(propertyOwner);
+        propertyOwnerService.createDBUser(propertyOwner);
         PropertyOwner user = (PropertyOwner) propertyOwnerService.searchUserById(propertyOwner.getId());
         Property property = new Property();
         property.setId(1L);
@@ -421,7 +420,7 @@ public class PropertyOwnerServiceImplTest {
      */
     @Test
     public void testFindUsersWithPropertiesFail(){
-        propertyOwnerService.createUser(propertyOwner);
+        propertyOwnerService.createDBUser(propertyOwner);
         List<Long> properties= propertyOwnerService.findPropertiesForUser(propertyOwner.getId());
         boolean result = propertyOwnerService.checkUserHasProperties(properties);
         assertFalse(result, "Result should be false because the property is not linked to the user.");
@@ -440,7 +439,7 @@ public class PropertyOwnerServiceImplTest {
 //        when(propertyOwnerRepository.save(any(PropertyOwner.class))).thenReturn(propertyOwner);
 
 
-        propertyOwner=propertyOwnerService.createUser(propertyOwner);
+        propertyOwnerService.createDBUser(propertyOwner);
 
         AtomicBoolean exceptionThrown = new AtomicBoolean(false);
 

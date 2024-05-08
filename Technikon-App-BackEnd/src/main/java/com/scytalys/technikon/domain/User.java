@@ -10,7 +10,7 @@ import java.util.UUID;
 
 @MappedSuperclass
 @Data
-public class User {
+public abstract class User {
     @Id
     @Column(unique = true)
     private long id;
@@ -24,7 +24,6 @@ public class User {
     private boolean isActive = true;
     private String address;
     private String phoneNumber;
-
     @Version
     private long version;
 

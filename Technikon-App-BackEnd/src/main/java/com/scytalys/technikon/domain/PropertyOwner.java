@@ -6,7 +6,6 @@ import lombok.*;
 
 @EqualsAndHashCode(callSuper = true)
 @Entity
-
 @ToString(callSuper = true)
 
 public class PropertyOwner extends User {

@@ -31,7 +31,7 @@ public class PropertyOwnerServiceImpl implements PropertyOwnerService {
      */
     @Override
     @Transactional
-    public PropertyOwner createUser(PropertyOwner user) {
+    public User createDBUser(User user) {
         return propertyOwnerRepository.save(user);
     }
 
@@ -43,8 +43,8 @@ public class PropertyOwnerServiceImpl implements PropertyOwnerService {
      *
      */
     @Override
-    public PropertyOwner searchUserById(long id) {
-        return propertyOwnerRepository.findById(id).filter(PropertyOwner::isActive)
+    public User searchUserById(long id) {
+        return propertyOwnerRepository.findById(id).filter(User::isActive)
                 .orElse(null);
     }
 
@@ -56,8 +56,8 @@ public class PropertyOwnerServiceImpl implements PropertyOwnerService {
      *
      */
     @Override
-    public PropertyOwner searchUserByUsername(String username) {
-        return propertyOwnerRepository.findByUsername(username).filter(PropertyOwner::isActive)
+    public User searchUserByUsername(String username) {
+        return propertyOwnerRepository.findByUsername(username).filter(User::isActive)
                 .orElse(null);
     }
 
@@ -69,8 +69,8 @@ public class PropertyOwnerServiceImpl implements PropertyOwnerService {
      *
      */
     @Override
-    public PropertyOwner searchUserByEmail(String email) {
-        return propertyOwnerRepository.findByEmail(email).filter(PropertyOwner::isActive)
+    public User searchUserByEmail(String email) {
+        return propertyOwnerRepository.findByEmail(email).filter(User::isActive)
                 .orElse(null);
     }
 
