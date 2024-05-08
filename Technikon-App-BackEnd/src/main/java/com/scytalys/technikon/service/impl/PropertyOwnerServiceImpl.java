@@ -30,8 +30,7 @@ public class PropertyOwnerServiceImpl implements PropertyOwnerService {
      * @return The created user.
      */
     @Override
-    @Transactional
-    public User createDBUser(User user) {
+    public PropertyOwner createDBUser(PropertyOwner user) {
         return propertyOwnerRepository.save(user);
     }
 

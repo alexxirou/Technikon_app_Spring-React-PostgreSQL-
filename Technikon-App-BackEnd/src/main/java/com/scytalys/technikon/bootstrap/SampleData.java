@@ -52,7 +52,7 @@ public class SampleData {
             propertyOwner.setPassword("pass"); // password
             propertyOwner.setAddress("somewhere"); // address
             propertyOwner.setPhoneNumber("999582486");
-            propertyOwnerService.createUser(propertyOwner);
+            propertyOwnerService.createDBUser(propertyOwner);
 
             propertyOwnerService.updateUserPassword(propertyOwner.getId(),"password", propertyOwner.getVersion());
             Property property = new Property();

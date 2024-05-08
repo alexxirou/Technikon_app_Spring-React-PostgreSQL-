@@ -9,7 +9,7 @@ import java.util.List;
 
 
 public interface PropertyOwnerService extends UserService {
-
+    PropertyOwner createDBUser(PropertyOwner user);
     ArrayList<Long> findPropertiesForUser(long userId);
     boolean checkUserHasProperties(List<Long> propertyIds);
 }

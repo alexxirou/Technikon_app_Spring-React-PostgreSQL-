@@ -10,7 +10,7 @@ import java.util.UUID;
 
 @MappedSuperclass
 @Data
-public abstract class User {
+public class User {
     @Id
     @Column(unique = true)
     private long id;

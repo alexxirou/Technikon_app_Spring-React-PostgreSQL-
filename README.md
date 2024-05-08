@@ -53,7 +53,7 @@ Follow these steps to set up and run the Technikon project locally on your machi
 
 3. **Pull PostgreSQL Docker Image**: Open a terminal or command prompt and run the following command to pull the official PostgreSQL Docker image:
    ```bash
-   docker run --name my-postgres-db -e POSTGRES_PASSWORD=mysecretpassword -e POSTGRES_USER=myuser POSTGRES_DB=mydatabase -d -p 5432:5432 postgres
+   docker run --name my-postgres-db -e POSTGRES_PASSWORD=mysecretpassword -e POSTGRES_USER=myuser -e POSTGRES_DB=mydatabase -d -p 5432:5432 postgres
    ```
    Update the DB information in the application.properties file or in the .env file if you are using one.
 

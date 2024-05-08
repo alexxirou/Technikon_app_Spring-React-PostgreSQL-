@@ -5,7 +5,7 @@ import com.scytalys.technikon.dto.UserResponseDto;
 
 public interface UserService {
     //Abstract methods to be used by both types of Users
-    User createDBUser(User user);
+
     int updateUserAddress(long id, String address, long version);
     int softDeleteUser(long id, long version);
     void verifyConstraintsEmail(String email);
