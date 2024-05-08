@@ -35,7 +35,7 @@ public class PropertyRepairRepoImpl implements PropertyRepairRepo {
                 }
                 field.setAccessible(false);
             }
-            entityManager.merge(existingPropertyRepair);
+            entityManager.merge(existingPropertyRepair);        // do we need it ?
         } catch (IllegalArgumentException | IllegalAccessException ex) {
             LOGGER.error(ex.getMessage());
             throw new RuntimeException(ex);

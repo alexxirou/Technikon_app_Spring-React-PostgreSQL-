@@ -47,8 +47,8 @@ public class PropertyRepairController {
     }
 
     @DeleteMapping("/delete/{propertyRepairId}")
-    public ResponseEntity<Object> deletePropertyRepair(@PathVariable long propertyRepairId, @RequestParam long propertyOwnerId) {
-        propertyRepairService.deletePropertyRepair(propertyRepairId, propertyOwnerId);
+    public ResponseEntity<Object> deletePropertyRepair(@RequestParam long propertyOwnerId,@PathVariable long propertyRepairId) {
+        propertyRepairService.deletePropertyRepair(propertyOwnerId, propertyRepairId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

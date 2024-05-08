@@ -120,6 +120,12 @@ public class PropertyRepairServiceImpl implements PropertyRepairService {
         }
     }
 
+//    @Override
+//    public void softDeletePropertyRepair(long propertyOwnerId, long propertyRepairId) {
+//        validatePropertyOwnerExistsOrThrow(propertyOwnerId);
+//        return propertyRepairRepository.softDeletePropertyRepair(propertyOwnerId, propertyRepairId);
+//    }
+
     /**
      * Deletes a specific property repair from the repository.
      *

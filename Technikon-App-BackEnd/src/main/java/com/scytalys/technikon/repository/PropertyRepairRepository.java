@@ -47,9 +47,15 @@ public interface PropertyRepairRepository extends JpaRepository<PropertyRepair, 
     @Query("SELECT p FROM PropertyRepair p WHERE p.propertyOwner.id= :id AND p.dateOfRepair>= :firstDate AND p.dateOfRepair<= :lastDate")
     List<PropertyRepair> searchPropertyRepairByDates(@Param("id") long propertyOwnerId, @Param("firstDate") LocalDate firstDate,@Param("lastDate") LocalDate lastDate);
 
+//    @Modifying
+//    @Transactional
+//    @Query("UPDATE PropertyRepair p set p.isActive = false where p.propertyOwner.id=:propertyOwnerId and p.id=:propertyRepairId")
+//    void softDeletePropertyRepair(@Param("propertyOwnerId") long propertyOwnerId,@Param("propertyRepairId") long propertyRepairId);
+
     @Transactional
     @Modifying
-    @Query("DELETE PropertyRepair p WHERE p.propertyOwner.id= :propertyOwnerId AND p.id= :id")
-    int deletePropertyRepair(@Param("propertyOwnerId") long propertyOwnerId, @Param("id") long propertyRepairId);
+    @Query("DELETE PropertyRepair p WHERE p.propertyOwner.id= :propertyOwnerId AND p.id= :propertyRepairId")
+    int deletePropertyRepair(@Param("propertyOwnerId") long propertyOwnerId, @Param("propertyRepairId") long propertyRepairId);
+
 
 }
