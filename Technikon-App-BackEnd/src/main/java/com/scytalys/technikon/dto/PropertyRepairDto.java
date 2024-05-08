@@ -9,8 +9,8 @@ import java.util.Date;
 import java.util.UUID;
 
 public record PropertyRepairDto(
-        long propertyOwnerId,
-        long propertyId,
+        Long propertyOwnerId,
+        Long propertyId,
         LocalDate dateOfRepair,
         String shortDescription,
         RepairType repairType,

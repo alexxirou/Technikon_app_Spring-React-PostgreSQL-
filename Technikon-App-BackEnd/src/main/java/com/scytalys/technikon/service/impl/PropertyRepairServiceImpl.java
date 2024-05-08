@@ -3,6 +3,7 @@ package com.scytalys.technikon.service.impl;
 import com.scytalys.technikon.domain.Property;
 import com.scytalys.technikon.domain.PropertyOwner;
 import com.scytalys.technikon.domain.PropertyRepair;
+import com.scytalys.technikon.domain.category.RepairType;
 import com.scytalys.technikon.dto.PropertyRepairDto;
 import com.scytalys.technikon.repository.PropertyOwnerRepository;
 import com.scytalys.technikon.repository.PropertyRepairRepository;
@@ -10,11 +11,11 @@ import com.scytalys.technikon.repository.PropertyRepository;
 import com.scytalys.technikon.repository.impl.PropertyRepairRepoImpl;
 import com.scytalys.technikon.service.PropertyRepairService;
 import lombok.AllArgsConstructor;
-import org.springdoc.api.OpenApiResourceNotFoundException;
 import org.springframework.dao.DataAccessResourceFailureException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
@@ -28,7 +29,6 @@ public class PropertyRepairServiceImpl implements PropertyRepairService {
     private final PropertyRepairRepository propertyRepairRepository;
     private final PropertyOwnerRepository propertyOwnerRepository;
     private final PropertyRepository propertyRepository;
-    private final PropertyRepairRepoImpl propertyRepairRepoImpl;
 
 
     /**
@@ -99,25 +99,37 @@ public class PropertyRepairServiceImpl implements PropertyRepairService {
      */
     @Override
     public List<PropertyRepairDto> searchPropertyRepairByDates(long propertyOwnerId, LocalDate firstDate, LocalDate lastDate) {
-        validatePropertyOwnerExistsOrThrow(propertyOwnerId);
         List<PropertyRepair> foundRepairs = propertyRepairRepository.searchPropertyRepairByDates(propertyOwnerId, firstDate, lastDate);
-        if (foundRepairs.isEmpty()) {
-            return Collections.emptyList();
-        }
+
         return foundRepairs
                 .stream()
                 .map(this::convertToDto)
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public int updatePropertyRepairByDate(long propertyRepairId, LocalDate date) {
+        return propertyRepairRepository.updatePropertyRepairByDate(propertyRepairId, date);
+    }
 
     @Override
-    public void updatePropertyRepair(long propertyOwnerId, long propertyRepairId, PropertyRepairDto propertyRepairDto) {
-        validatePropertyOwnerExistsOrThrow(propertyOwnerId);
-        int updatedPropertyRepairs = propertyRepairRepoImpl.updatePropertyRepairExistingFields(convertToPropertyRepair(propertyRepairDto), propertyRepairId);
-        if (updatedPropertyRepairs == 0) {
-            throw new DataAccessResourceFailureException("Property repair with id" + propertyRepairId + " does not exist");
-        }
+    public int updatePropertyRepairByShortDescription(long propertyRepairId, String shortDescription) {
+        return propertyRepairRepository.updatePropertyRepairByShortDescription(propertyRepairId, shortDescription);
+    }
+
+    @Override
+    public int updatePropertyRepairByRepairType(long propertyRepairId, RepairType repairType) {
+        return propertyRepairRepository.updatePropertyRepairByRepairType(propertyRepairId, repairType);
+    }
+
+    @Override
+    public int updatePropertyRepairByCost(long propertyRepairId, BigDecimal cost) {
+        return propertyRepairRepository.updatePropertyRepairByCost(propertyRepairId, cost);
+    }
+
+    @Override
+    public int updatePropertyRepairByLongDescription(long propertyRepairId, String longDescription) {
+        return propertyRepairRepository.updatePropertyRepairByLongDescription(propertyRepairId, longDescription);
     }
 
 //    @Override
@@ -134,7 +146,6 @@ public class PropertyRepairServiceImpl implements PropertyRepairService {
      */
     @Transactional
     public void deletePropertyRepair(long propertyOwnerId, long propertyRepairId) {
-        validatePropertyOwnerExistsOrThrow(propertyOwnerId);
         int deletedRows = propertyRepairRepository.deletePropertyRepair(propertyOwnerId, propertyRepairId);
         if (deletedRows == 0) {
             throw new DataAccessResourceFailureException("Failed to delete property repair for property owner with id: " + propertyOwnerId);

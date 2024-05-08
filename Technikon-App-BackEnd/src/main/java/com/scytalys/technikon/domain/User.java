@@ -24,5 +24,7 @@ public class User {
     private boolean isActive = true;
     @Version
     private long version;
+    private String address;
+    private long phoneNumber;
 
 }

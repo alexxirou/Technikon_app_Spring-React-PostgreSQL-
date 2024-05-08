@@ -1,9 +1,12 @@
 package com.scytalys.technikon.controller;
 
+import com.scytalys.technikon.domain.PropertyRepair;
+import com.scytalys.technikon.domain.category.RepairStatus;
 import com.scytalys.technikon.dto.PropertyRepairDto;
 import com.scytalys.technikon.service.PropertyRepairService;
 import lombok.AllArgsConstructor;
 import org.springframework.dao.DataAccessResourceFailureException;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -37,10 +40,54 @@ public class PropertyRepairController {
         return new ResponseEntity<>(propertyRepairService.searchPropertyRepairByDates(propertyOwnerId, firstDate, lastDate), HttpStatus.OK);
     }
 
-    @PatchMapping("/update/{propertyOwnerId}/{propertyRepairId}")
-    public ResponseEntity<Object> updatePropertyRepair(@PathVariable long propertyOwnerId, @PathVariable long propertyRepairId, @RequestBody PropertyRepairDto propertyRepairDto) throws IllegalAccessException {
-        propertyRepairService.updatePropertyRepair(propertyOwnerId, propertyRepairId, propertyRepairDto);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+//    @PatchMapping("/update/{propertyOwnerId}/{propertyRepairId}")
+//    public ResponseEntity<Object> updatePropertyRepair(@PathVariable long propertyOwnerId, @PathVariable long propertyRepairId, @RequestBody PropertyRepairDto propertyRepairDto) throws IllegalAccessException {
+//        propertyRepairService.updatePropertyRepair(propertyOwnerId, propertyRepairId, propertyRepairDto);
+//        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+//    }
+
+    @PutMapping("/update-by-date/{propertyRepairId}")
+    public ResponseEntity<String> updatePropertyRepairByDate(long propertyRepairId, LocalDate newDate){
+        int res =  propertyRepairService.updatePropertyRepairByDate(propertyRepairId, newDate);
+        if (res == 0) { //update failed
+            throw new DataAccessResourceFailureException("Failed to update date for property repair with id: " + propertyRepairId);
+        }
+        return new ResponseEntity<>("Property repair updated", HttpStatus.OK);
+    }
+    @PutMapping("/update-by-shortDescription/{propertyRepairId}")
+    public ResponseEntity<String> updatePropertyRepairByShortDescription(long propertyRepairId, String newShortDescription){
+        int res =  propertyRepairService.updatePropertyRepairByShortDescription(propertyRepairId, newShortDescription);
+        if (res == 0) { //update failed
+            throw new DataAccessResourceFailureException("Failed to update short description for property repair with id: " + propertyRepairId);
+        }
+        return new ResponseEntity<>("Property repair updated", HttpStatus.OK);
+    }
+
+    @PutMapping("/update-by-repairType/{propertyRepairId}")
+    public ResponseEntity<String> updatePropertyRepairByType(long propertyRepairId, RepairType newRepairType){
+        int res =  propertyRepairService.updatePropertyRepairByRepairType(propertyRepairId, newRepairType);
+        if (res == 0) { //update failed
+            throw new DataAccessResourceFailureException("Failed to update repair type for property repair with id: " + propertyRepairId);
+        }
+        return new ResponseEntity<>("Property repair updated", HttpStatus.OK);
+    }
+
+    @PutMapping("/update-by-cost/{propertyRepairId}")
+    public ResponseEntity<String> updatePropertyRepairByCost(long propertyRepairId, BigDecimal newCost){
+        int res =  propertyRepairService.updatePropertyRepairByCost(propertyRepairId, newCost);
+        if (res == 0) { //update failed
+            throw new DataAccessResourceFailureException("Failed to update cost for property repair with id: " + propertyRepairId);
+        }
+        return new ResponseEntity<>("Property repair updated", HttpStatus.OK);
+    }
+
+    @PutMapping("/update-by-longDescription/{propertyRepairId}")
+    public ResponseEntity<String> updatePropertyRepairByLongDescription(long propertyRepairId, String newLongDescription){
+        int res =  propertyRepairService.updatePropertyRepairByLongDescription(propertyRepairId, newLongDescription);
+        if (res == 0) { //update failed
+            throw new DataAccessResourceFailureException("Failed to update long description for property repair with id: " + propertyRepairId);
+        }
+        return new ResponseEntity<>("Property repair updated", HttpStatus.OK);
     }
 
     @DeleteMapping("/delete/{propertyRepairId}")
@@ -54,4 +101,5 @@ public class PropertyRepairController {
     public ResponseEntity<String> handleDataAccessResourceFailureException(DataAccessResourceFailureException e) {
         return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
     }
+
 }
