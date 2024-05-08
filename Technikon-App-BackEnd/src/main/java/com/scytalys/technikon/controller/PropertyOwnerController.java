@@ -21,6 +21,7 @@ import java.util.List;
 @RestController
 
 @AllArgsConstructor
+@RequestMapping("/users/propertyOwners")
 public class PropertyOwnerController {
 
     @Autowired
@@ -35,7 +36,7 @@ public class PropertyOwnerController {
 
     }
 
-    @PostMapping("/register")
+    @PostMapping("/subscribe")
     public ResponseEntity<UserResponseDto> createPropertyOwner(@RequestBody PropertyOwner newUser) {
         newUser.setEmail(newUser.getEmail().toLowerCase());
         newUser.setUsername(newUser.getUsername().toLowerCase());
@@ -49,7 +50,7 @@ public class PropertyOwnerController {
         return new ResponseEntity<>(userinfo, headers, HttpStatus.CREATED);
     }
 
-    @GetMapping("users/searchId")
+    @GetMapping("/id/")
     public ResponseEntity<UserResponseDto> findUserById(@RequestParam Long id) {
         User user = propertyOwnerService.searchUserById(id);
         propertyOwnerService.verifySearchResult(user);
@@ -59,7 +60,7 @@ public class PropertyOwnerController {
         return new ResponseEntity<>(userinfo, headers, HttpStatus.OK);
     }
 
-    @GetMapping("users/searchUsername")
+    @GetMapping("/username/")
     public ResponseEntity<UserResponseDto> findUserByUsername(@RequestParam String username) {
         username=username.toLowerCase();
         User user = propertyOwnerService.searchUserByUsername(username);
@@ -70,7 +71,7 @@ public class PropertyOwnerController {
         return new ResponseEntity<>(userinfo, headers, HttpStatus.OK);
     }
 
-    @GetMapping("users/searchEmail")
+    @GetMapping("/email/")
     public ResponseEntity<UserResponseDto> findUserByEmail(@RequestParam String email) {
         email=email.toLowerCase();
         User user = propertyOwnerService.searchUserByEmail(email);
@@ -81,7 +82,7 @@ public class PropertyOwnerController {
         return new ResponseEntity<>(userinfo, headers, HttpStatus.OK);
     }
 
-    @PutMapping("users/UpdateEmail")
+    @PutMapping("/email/update")
     public ResponseEntity<String> updateUserEmail(@RequestParam String email, @RequestParam long id, @RequestParam long version) {
         email=email.toLowerCase();
         int res =  propertyOwnerService.updateUserEmail(id, email, version);
@@ -97,7 +98,7 @@ public class PropertyOwnerController {
     }
 
 
-    @PutMapping("users/UpdateAddress")
+    @PutMapping("/address/update")
     public ResponseEntity<String> updateUserAddress(@RequestParam String address, @RequestParam long id, @RequestParam long version) {
 
         int res =  propertyOwnerService.updateUserAddress(id, address, version);
@@ -111,7 +112,7 @@ public class PropertyOwnerController {
         return new ResponseEntity<>( headers, HttpStatus.OK);
     }
 
-    @PutMapping("users/UpdatePassword")
+    @PutMapping("/password/update")
     public ResponseEntity<String> updateUserPassword(@RequestParam String password, @RequestParam long id, @RequestParam long version) {
 
         int res = propertyOwnerService.updateUserEmail(id, password, version);
@@ -126,7 +127,7 @@ public class PropertyOwnerController {
         return new ResponseEntity<>( headers, HttpStatus.OK);
     }
 
-    @DeleteMapping("users/deleteUser")
+    @DeleteMapping("/unsubscribe")
     public ResponseEntity<String> deleteUser(@RequestParam long id, @RequestParam long version) {
         ArrayList<Long> properties = propertyOwnerService.findPropertiesForUser(id);
         if(propertyOwnerService.checkUserHasProperties(properties)){
