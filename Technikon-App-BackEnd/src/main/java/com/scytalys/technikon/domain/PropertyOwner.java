@@ -6,13 +6,11 @@ import lombok.*;
 
 @EqualsAndHashCode(callSuper = true)
 @Entity
-@Data
+
 @ToString(callSuper = true)
 
 public class PropertyOwner extends User {
 
-    private String address;
-    private String phoneNumber;
 
 
 

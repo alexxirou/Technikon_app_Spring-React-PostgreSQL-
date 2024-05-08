@@ -22,6 +22,9 @@ public class User {
     private String username;
     private String password;
     private boolean isActive = true;
+    private String address;
+    private String phoneNumber;
+
     @Version
     private long version;
 
