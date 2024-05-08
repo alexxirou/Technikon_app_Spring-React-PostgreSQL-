@@ -5,6 +5,7 @@ import com.scytalys.technikon.domain.PropertyOwner;
 import com.scytalys.technikon.domain.PropertyRepair;
 import com.scytalys.technikon.domain.category.RepairType;
 import com.scytalys.technikon.dto.PropertyRepairDto;
+import com.scytalys.technikon.exception.InvalidInputException;
 import com.scytalys.technikon.repository.PropertyOwnerRepository;
 import com.scytalys.technikon.repository.PropertyRepairRepository;
 import com.scytalys.technikon.repository.PropertyRepository;
@@ -43,12 +44,11 @@ public class PropertyRepairServiceImpl implements PropertyRepairService {
                 new NoSuchElementException("PropertyOwner with id " + propertyRepairDto.propertyOwnerId() + " not found"));
         Property property = propertyRepository.findById(propertyRepairDto.propertyId()).orElseThrow(() ->
                 new NoSuchElementException("Property with id " + propertyRepairDto.propertyId() + " not found"));
+        validateDateInput(propertyRepairDto.dateOfRepair());
         PropertyRepair propertyRepair = convertToPropertyRepair(propertyRepairDto, propertyOwner, property);
         PropertyRepair repair = propertyRepairRepository.save(propertyRepair);
         return convertToDto(repair);
     }
-
-
     /**
      * Searches for all property repairs in the repository that were scheduled by a specific property owner.
      *
@@ -107,26 +107,66 @@ public class PropertyRepairServiceImpl implements PropertyRepairService {
                 .collect(Collectors.toList());
     }
 
+
+    /**
+     * Updates the date of a specific property repair in the repository.
+     *
+     * @param propertyRepairId The unique identifier of the property repair to be updated.
+     * @param date The new date for the property repair.
+     * @return The number of rows affected in the database.
+     */
     @Override
     public int updatePropertyRepairByDate(long propertyRepairId, LocalDate date) {
         return propertyRepairRepository.updatePropertyRepairByDate(propertyRepairId, date);
     }
 
+
+    /**
+     * Updates the short description of a specific property repair in the repository.
+     *
+     * @param propertyRepairId The unique identifier of the property repair to be updated.
+     * @param shortDescription The new short description for the property repair.
+     * @return The number of rows affected in the database.
+     */
     @Override
     public int updatePropertyRepairByShortDescription(long propertyRepairId, String shortDescription) {
         return propertyRepairRepository.updatePropertyRepairByShortDescription(propertyRepairId, shortDescription);
     }
 
+
+    /**
+     * Updates the repair type of a specific property repair in the repository.
+     *
+     * @param propertyRepairId The unique identifier of the property repair to be updated.
+     * @param repairType The new repair type for the property repair.
+     * @return The number of rows affected in the database.
+     */
     @Override
     public int updatePropertyRepairByRepairType(long propertyRepairId, RepairType repairType) {
         return propertyRepairRepository.updatePropertyRepairByRepairType(propertyRepairId, repairType);
     }
+
+    /**
+     * Updates the cost of a specific property repair in the repository.
+     *
+     * @param propertyRepairId The unique identifier of the property repair to be updated.
+     * @param cost The new cost for the property repair.
+     * @return The number of rows affected in the database.
+     */
 
     @Override
     public int updatePropertyRepairByCost(long propertyRepairId, BigDecimal cost) {
         return propertyRepairRepository.updatePropertyRepairByCost(propertyRepairId, cost);
     }
 
+
+    /**
+     * Updates the long description of a specific property repair in the repository.
+     *
+     * @param propertyRepairId The unique identifier of the property repair to be updated.
+     * @param longDescription The new long description for the property repair.
+     * @return The number of rows affected in the database.
+     */
     @Override
     public int updatePropertyRepairByLongDescription(long propertyRepairId, String longDescription) {
         return propertyRepairRepository.updatePropertyRepairByLongDescription(propertyRepairId, longDescription);
@@ -190,8 +230,19 @@ public class PropertyRepairServiceImpl implements PropertyRepairService {
     }
 
     private void validatePropertyOwnerExistsOrThrow(long propertyOwnerId) {
-        if (propertyOwnerRepository.findById(propertyOwnerId).isEmpty()) {
-            throw new DataAccessResourceFailureException("Property owner with id: " + propertyOwnerId + " not found");
+        propertyOwnerRepository.findById(propertyOwnerId)
+                .orElseThrow(() -> new NoSuchElementException("Property owner with id: " + propertyOwnerId + " not found"));
+    }
+
+    private void validatePropertyExistsOrThrow(PropertyRepairDto propertyRepairDto){
+        propertyRepository.findById(propertyRepairDto.propertyId()).orElseThrow(() ->
+                new NoSuchElementException("Property with id " + propertyRepairDto.propertyId() + " not found"));
+    }
+
+    private void validateDateInput(LocalDate date) {
+        if (date.isBefore(LocalDate.now())) {
+            throw new InvalidInputException("Date of repair must not be in the past");
         }
+
     }
 }

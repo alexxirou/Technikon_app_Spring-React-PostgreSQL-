@@ -3,7 +3,9 @@ package com.scytalys.technikon.controller;
 import com.scytalys.technikon.domain.PropertyRepair;
 import com.scytalys.technikon.domain.category.RepairStatus;
 import com.scytalys.technikon.dto.PropertyRepairDto;
+import com.scytalys.technikon.exception.InvalidInputException;
 import com.scytalys.technikon.service.PropertyRepairService;
+import jakarta.validation.constraints.Min;
 import lombok.AllArgsConstructor;
 import org.springframework.dao.DataAccessResourceFailureException;
 import org.springframework.http.HttpHeaders;
@@ -21,12 +23,12 @@ public class PropertyRepairController {
     private final PropertyRepairService propertyRepairService;
 
     @PostMapping
-    public PropertyRepairDto createPropertyRepair(@RequestBody PropertyRepairDto propertyRepairDto) {
-        return propertyRepairService.createPropertyRepair(propertyRepairDto);
+    public ResponseEntity<PropertyRepairDto> createPropertyRepair(@RequestBody PropertyRepairDto propertyRepairDto) {
+        return new ResponseEntity<>(propertyRepairService.createPropertyRepair(propertyRepairDto), HttpStatus.CREATED);
     }
 
     @GetMapping("/search")
-    public ResponseEntity<List<PropertyRepairDto>> searchPropertyRepairs(@RequestParam long propertyOwnerId) {
+    public ResponseEntity<List<PropertyRepairDto>> searchPropertyRepairs(@Min(1) @RequestParam long propertyOwnerId) {
         return new ResponseEntity<>(propertyRepairService.searchPropertyRepairs(propertyOwnerId), HttpStatus.OK);
     }
 
@@ -101,5 +103,11 @@ public class PropertyRepairController {
     public ResponseEntity<String> handleDataAccessResourceFailureException(DataAccessResourceFailureException e) {
         return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
     }
+    @ExceptionHandler(InvalidInputException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<String> handleInvalidInputException(InvalidInputException e) {
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+    }
+
 
 }
