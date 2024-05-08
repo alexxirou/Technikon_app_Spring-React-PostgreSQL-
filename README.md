@@ -58,10 +58,31 @@ Follow these steps to set up and run the Technikon project locally on your machi
    Update the DB information in the application.properties file or in the .env file if you are using one.
 
 
-4. **Build the application**:
+4. **Install maven**:
+   For linux debian distros:
+   
    ```bash
-   mvn clean package
+   sudo apt install maven
+
    ```
+
+   For windows:
+
+   1. Download Maven:
+   Visit the official Apache Maven website to download the latest version of Maven: Apache Maven Download Page.
+
+   2. Extract Maven:
+   After downloading the Maven archive (a .zip file), extract it to a directory on your computer where you want Maven to be installed. For example, you can extract it to C:\Program Files\Apache\.
+
+   3. Set Environment Variables:
+
+    JAVA_HOME: If not already set, set the JAVA_HOME environment variable to the location of your JDK installation. For example, C:\Program Files\Java\jdk1.8.0_291.
+    M2_HOME: Set the M2_HOME environment variable to the directory where you extracted Maven. For example, C:\Program Files\Apache\apache-maven-3.8.4.
+    Path: Add %M2_HOME%\bin to your system's PATH variable. This step allows you to run Maven commands from the command prompt without specifying the full path to Maven's bin directory.
+
+   4. Verify Installation:
+   Open a command prompt and type mvn -v. This command will display the Maven version and other relevant information if Maven is installed correctly.
+
 5. **Start the application**:
    ```bash
    java -jar TechnikonApplication.jar  
