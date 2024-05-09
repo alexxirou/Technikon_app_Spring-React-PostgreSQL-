@@ -172,6 +172,11 @@ public class PropertyRepairServiceImpl implements PropertyRepairService {
         return propertyRepairRepository.updatePropertyRepairByLongDescription(propertyRepairId, longDescription);
     }
 
+    @Override
+    public void updatePropertyRepair(long propertyOwnerId, long propertyRepairId, PropertyRepairDto propertyRepairDto) {
+
+    }
+
 //    @Override
 //    public void softDeletePropertyRepair(long propertyOwnerId, long propertyRepairId) {
 //        validatePropertyOwnerExistsOrThrow(propertyOwnerId);
