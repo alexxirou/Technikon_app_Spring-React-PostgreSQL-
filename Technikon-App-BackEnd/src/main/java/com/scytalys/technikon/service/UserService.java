@@ -12,7 +12,4 @@ public interface UserService {
     int updateUserPassword(long id,String password, long version);
     int updateUserEmail(long id, String email, long version);
     UserResponseDto createUserResponseDto(long id, String username, String email, long version);
-
-
-
 }

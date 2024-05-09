@@ -1,15 +1,16 @@
 package com.scytalys.technikon.controller;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.scytalys.technikon.domain.PropertyRepair;
 import com.scytalys.technikon.domain.category.RepairStatus;
 import com.scytalys.technikon.domain.category.RepairType;
+import com.scytalys.technikon.dto.PropertyRepairCreationDto;
 import com.scytalys.technikon.dto.PropertyRepairDto;
 import com.scytalys.technikon.exception.InvalidInputException;
 import com.scytalys.technikon.service.PropertyRepairService;
 import jakarta.validation.constraints.Min;
 import lombok.AllArgsConstructor;
 import org.springframework.dao.DataAccessResourceFailureException;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,27 +20,27 @@ import java.time.LocalDate;
 import java.util.List;
 
 @RestController
-@RequestMapping("/propertyRepair")
+@RequestMapping("/experimental/propertyRepairs/")
 @AllArgsConstructor
 public class PropertyRepairController {
     private final PropertyRepairService propertyRepairService;
 
-    @PostMapping
-    public ResponseEntity<PropertyRepairDto> createPropertyRepair(@RequestBody PropertyRepairDto propertyRepairDto) {
-        return new ResponseEntity<>(propertyRepairService.createPropertyRepair(propertyRepairDto), HttpStatus.CREATED);
+    @PostMapping("create")
+    public ResponseEntity<PropertyRepairCreationDto> createPropertyRepair(@RequestBody PropertyRepairCreationDto propertyRepairCreationDto) {
+        return new ResponseEntity<>(propertyRepairService.createPropertyRepair(propertyRepairCreationDto), HttpStatus.CREATED);
     }
 
-    @GetMapping("/search")
+    @GetMapping("get")
     public ResponseEntity<List<PropertyRepairDto>> searchPropertyRepairs(@Min(1) @RequestParam long propertyOwnerId) {
         return new ResponseEntity<>(propertyRepairService.searchPropertyRepairs(propertyOwnerId), HttpStatus.OK);
     }
 
-    @GetMapping("search-by-date")
+    @GetMapping("get-by-date")
     public ResponseEntity<List<PropertyRepairDto>> searchPropertyRepairByDate(@RequestParam long propertyOwnerId, LocalDate date) {
         return new ResponseEntity<>(propertyRepairService.searchPropertyRepairByDate(propertyOwnerId, date), HttpStatus.OK);
     }
 
-    @GetMapping("search-by-dates")
+    @GetMapping("get-by-dates")
     public ResponseEntity<List<PropertyRepairDto>> searchPropertyRepairByDates(@RequestParam long propertyOwnerId, LocalDate firstDate, LocalDate lastDate) {
         return new ResponseEntity<>(propertyRepairService.searchPropertyRepairByDates(propertyOwnerId, firstDate, lastDate), HttpStatus.OK);
     }

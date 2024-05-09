@@ -5,11 +5,8 @@ import com.scytalys.technikon.domain.category.RepairType;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.Date;
-import java.util.UUID;
 
-public record PropertyRepairDto(
-        Long propertyRepairId,
+public record PropertyRepairCreationDto(
         Long propertyOwnerId,
         Long propertyId,
         LocalDate dateOfRepair,
@@ -17,6 +14,6 @@ public record PropertyRepairDto(
         RepairType repairType,
         RepairStatus repairStatus,
         BigDecimal cost,
-        String longDescription) {
+        String longDescription
+) {
 }
-

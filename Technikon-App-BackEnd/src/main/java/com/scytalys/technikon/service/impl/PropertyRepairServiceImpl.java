@@ -4,14 +4,16 @@ import com.scytalys.technikon.domain.Property;
 import com.scytalys.technikon.domain.PropertyOwner;
 import com.scytalys.technikon.domain.PropertyRepair;
 import com.scytalys.technikon.domain.category.RepairType;
+import com.scytalys.technikon.dto.PropertyRepairCreationDto;
 import com.scytalys.technikon.dto.PropertyRepairDto;
 import com.scytalys.technikon.exception.InvalidInputException;
+import com.scytalys.technikon.mapper.PropertyRepairMapper;
 import com.scytalys.technikon.repository.PropertyOwnerRepository;
 import com.scytalys.technikon.repository.PropertyRepairRepository;
 import com.scytalys.technikon.repository.PropertyRepository;
-import com.scytalys.technikon.repository.impl.PropertyRepairRepoImpl;
 import com.scytalys.technikon.service.PropertyRepairService;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessResourceFailureException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,25 +32,28 @@ public class PropertyRepairServiceImpl implements PropertyRepairService {
     private final PropertyRepairRepository propertyRepairRepository;
     private final PropertyOwnerRepository propertyOwnerRepository;
     private final PropertyRepository propertyRepository;
+    private final PropertyRepairMapper propertyRepairMapper;
 
 
     /**
      * Creates a new property repair in the repository
      *
-     * @param propertyRepairDto The property repair to be created.
+     * @param propertyRepairCreationDto The property repair to be created.
      * @return The created property repair.
      */
     @Override
-    public PropertyRepairDto createPropertyRepair(PropertyRepairDto propertyRepairDto) {
-        PropertyOwner propertyOwner = propertyOwnerRepository.findById(propertyRepairDto.propertyOwnerId()).orElseThrow(() ->
-                new NoSuchElementException("PropertyOwner with id " + propertyRepairDto.propertyOwnerId() + " not found"));
-        Property property = propertyRepository.findById(propertyRepairDto.propertyId()).orElseThrow(() ->
-                new NoSuchElementException("Property with id " + propertyRepairDto.propertyId() + " not found"));
-        validateDateInput(propertyRepairDto.dateOfRepair());
-        PropertyRepair propertyRepair = convertToPropertyRepair(propertyRepairDto, propertyOwner, property);
-        PropertyRepair repair = propertyRepairRepository.save(propertyRepair);
-        return convertToDto(repair);
+    public PropertyRepairCreationDto createPropertyRepair(PropertyRepairCreationDto propertyRepairCreationDto) {
+        validatePropertyOwnerExistsOrThrow(propertyRepairCreationDto.propertyOwnerId());
+        validatePropertyExistsOrThrow(propertyRepairCreationDto.propertyId());
+        validateDateInput(propertyRepairCreationDto.dateOfRepair());
+        PropertyRepair convertedToPropertyRepair = propertyRepairMapper.convertPropertyRepairCreationDtoToPropertyRepair(propertyRepairCreationDto);
+        propertyRepairRepository.save(convertedToPropertyRepair);
+        PropertyRepairCreationDto propertyRepairCreationDto1 = propertyRepairMapper.convertPropertyRepairToPropertyRepairCreationDto(convertedToPropertyRepair);
+        return propertyRepairCreationDto1;
+//        return propertyRepairMapper.convertPropertyRepairToPropertyRepairCreationDto(propertyRepairRepository.save(propertyRepairMapper.convertPropertyRepairCreationDtoToPropertyRepair(propertyRepairCreationDto)));
     }
+
+
     /**
      * Searches for all property repairs in the repository that were scheduled by a specific property owner.
      *
@@ -199,6 +204,7 @@ public class PropertyRepairServiceImpl implements PropertyRepairService {
 
     private PropertyRepairDto convertToDto(PropertyRepair propertyRepair) {
         return new PropertyRepairDto(
+                propertyRepair.getId(),
                 propertyRepair.getPropertyOwner().getId(),
                 propertyRepair.getProperty().getId(),
                 propertyRepair.getDateOfRepair(),
@@ -239,9 +245,9 @@ public class PropertyRepairServiceImpl implements PropertyRepairService {
                 .orElseThrow(() -> new NoSuchElementException("Property owner with id: " + propertyOwnerId + " not found"));
     }
 
-    private void validatePropertyExistsOrThrow(PropertyRepairDto propertyRepairDto){
-        propertyRepository.findById(propertyRepairDto.propertyId()).orElseThrow(() ->
-                new NoSuchElementException("Property with id " + propertyRepairDto.propertyId() + " not found"));
+    private void validatePropertyExistsOrThrow(long propertyId){
+        propertyRepository.findById(propertyId).orElseThrow(() ->
+                new NoSuchElementException("Property with id " + propertyId + " not found"));
     }
 
     private void validateDateInput(LocalDate date) {

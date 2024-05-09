@@ -7,6 +7,7 @@ import com.scytalys.technikon.domain.PropertyRepair;
 import com.scytalys.technikon.domain.category.PropertyType;
 import com.scytalys.technikon.domain.category.RepairStatus;
 import com.scytalys.technikon.domain.category.RepairType;
+import com.scytalys.technikon.dto.PropertyRepairCreationDto;
 import com.scytalys.technikon.dto.PropertyRepairDto;
 import com.scytalys.technikon.service.PropertyOwnerService;
 import com.scytalys.technikon.service.PropertyRepairService;
@@ -58,7 +59,7 @@ public class SampleData {
             property.setConstructionYear(LocalDate.of(1998, 10, 12));
             propertyService.createProperty(property);
 
-            PropertyRepairDto propertyRepairDto = new PropertyRepairDto(
+            PropertyRepairCreationDto propertyRepairCreationDto = new PropertyRepairCreationDto(
                     propertyOwner.getId(),
                     property.getId(),
                     LocalDate.of(2024, 8, 15),
@@ -67,7 +68,7 @@ public class SampleData {
                     RepairStatus.SCHEDULED,
                     new BigDecimal("12.0"),
                     "Describing with details the work to be done");
-            propertyRepairService.createPropertyRepair(propertyRepairDto);
+            propertyRepairService.createPropertyRepair(propertyRepairCreationDto);
         };
     }
 }
