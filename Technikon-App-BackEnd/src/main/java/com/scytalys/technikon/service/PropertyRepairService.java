@@ -15,12 +15,13 @@ public interface PropertyRepairService {
     List<PropertyRepairDto> searchPropertyRepairs(long propertyOwnerId);
     List<PropertyRepairDto> searchPropertyRepairByDate(long propertyOwnerId, LocalDate date);
     List<PropertyRepairDto> searchPropertyRepairByDates(long propertyOwnerId, LocalDate firstDate, LocalDate lastDate);
-    int updatePropertyRepairByDate(long propertyRepairId, LocalDate date);
-    int updatePropertyRepairByShortDescription(long propertyRepairId, String shortDescription);
-    int updatePropertyRepairByRepairType(long propertyRepairId, RepairType repairType);
-    int updatePropertyRepairByCost(long propertyRepairId, BigDecimal cost);
-    int updatePropertyRepairByLongDescription(long propertyRepairId, String longDescription);
-    void updatePropertyRepair(long propertyOwnerId,long propertyRepairId,PropertyRepairDto propertyRepairDto);
+//    int updatePropertyRepairByDate(long propertyRepairId, LocalDate date);
+//    int updatePropertyRepairByShortDescription(long propertyRepairId, String shortDescription);
+//    int updatePropertyRepairByRepairType(long propertyRepairId, RepairType repairType);
+//    int updatePropertyRepairByCost(long propertyRepairId, BigDecimal cost);
+//    int updatePropertyRepairByLongDescription(long propertyRepairId, String longDescription);
+    PropertyRepairCreationDto patchPropertyRepair(long propertyOwnerId,long propertyRepairId, PropertyRepairCreationDto propertyRepairCreationDto);
+//    void updatePropertyRepair(long propertyOwnerId,long propertyRepairId,PropertyRepairCreationDto propertyRepairCreationDto);
 //    void softDeletePropertyRepair(long propertyOwnerId, long propertyRepairId);
     void deletePropertyRepair(long propertyOwnerId, long propertyRepairId);
 }

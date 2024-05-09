@@ -1,12 +1,10 @@
 package com.scytalys.technikon.controller;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.scytalys.technikon.domain.PropertyRepair;
-import com.scytalys.technikon.domain.category.RepairStatus;
 import com.scytalys.technikon.domain.category.RepairType;
 import com.scytalys.technikon.dto.PropertyRepairCreationDto;
 import com.scytalys.technikon.dto.PropertyRepairDto;
 import com.scytalys.technikon.exception.InvalidInputException;
+import com.scytalys.technikon.exception.ResourceNotFoundException;
 import com.scytalys.technikon.service.PropertyRepairService;
 import jakarta.validation.constraints.Min;
 import lombok.AllArgsConstructor;
@@ -20,13 +18,13 @@ import java.time.LocalDate;
 import java.util.List;
 
 @RestController
-@RequestMapping("/experimental/propertyRepairs/")
+@RequestMapping("api/experimental/users/property-owners/{propertyOwnerId}/property-repairs")
 @AllArgsConstructor
 public class PropertyRepairController {
     private final PropertyRepairService propertyRepairService;
 
     @PostMapping("create")
-    public ResponseEntity<PropertyRepairCreationDto> createPropertyRepair(@RequestBody PropertyRepairCreationDto propertyRepairCreationDto) {
+    public ResponseEntity<PropertyRepairCreationDto> createPropertyRepair(@PathVariable("propertyOwnerId") long propertyOwnerId, @RequestBody PropertyRepairCreationDto propertyRepairCreationDto) {
         return new ResponseEntity<>(propertyRepairService.createPropertyRepair(propertyRepairCreationDto), HttpStatus.CREATED);
     }
 
@@ -51,49 +49,56 @@ public class PropertyRepairController {
 //        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 //    }
 
-    @PutMapping("/update-by-date/{propertyRepairId}")
-    public ResponseEntity<String> updatePropertyRepairByDate(long propertyRepairId, LocalDate newDate){
-        int res =  propertyRepairService.updatePropertyRepairByDate(propertyRepairId, newDate);
-        if (res == 0) { //update failed
-            throw new DataAccessResourceFailureException("Failed to update date for property repair with id: " + propertyRepairId);
-        }
-        return new ResponseEntity<>("Property repair updated", HttpStatus.OK);
-    }
-    @PutMapping("/update-by-shortDescription/{propertyRepairId}")
-    public ResponseEntity<String> updatePropertyRepairByShortDescription(long propertyRepairId, String newShortDescription){
-        int res =  propertyRepairService.updatePropertyRepairByShortDescription(propertyRepairId, newShortDescription);
-        if (res == 0) { //update failed
-            throw new DataAccessResourceFailureException("Failed to update short description for property repair with id: " + propertyRepairId);
-        }
-        return new ResponseEntity<>("Property repair updated", HttpStatus.OK);
+    @PatchMapping("/update/{propertyRepairId}")
+    public ResponseEntity<PropertyRepairCreationDto> updatePropertyRepair(@PathVariable("propertyOwnerId") long propertyOwnerId, @PathVariable("propertyRepairId") long propertyRepairId, @RequestBody PropertyRepairCreationDto propertyRepairCreationDto) throws IllegalAccessException {
+       PropertyRepairCreationDto updatedPropertyRepairDto= propertyRepairService.patchPropertyRepair(propertyOwnerId, propertyRepairId, propertyRepairCreationDto);
+        return new ResponseEntity<>(updatedPropertyRepairDto,HttpStatus.OK);
     }
 
-    @PutMapping("/update-by-repairType/{propertyRepairId}")
-    public ResponseEntity<String> updatePropertyRepairByType(long propertyRepairId, RepairType newRepairType){
-        int res =  propertyRepairService.updatePropertyRepairByRepairType(propertyRepairId, newRepairType);
-        if (res == 0) { //update failed
-            throw new DataAccessResourceFailureException("Failed to update repair type for property repair with id: " + propertyRepairId);
-        }
-        return new ResponseEntity<>("Property repair updated", HttpStatus.OK);
-    }
-
-    @PutMapping("/update-by-cost/{propertyRepairId}")
-    public ResponseEntity<String> updatePropertyRepairByCost(long propertyRepairId, BigDecimal newCost){
-        int res =  propertyRepairService.updatePropertyRepairByCost(propertyRepairId, newCost);
-        if (res == 0) { //update failed
-            throw new DataAccessResourceFailureException("Failed to update cost for property repair with id: " + propertyRepairId);
-        }
-        return new ResponseEntity<>("Property repair updated", HttpStatus.OK);
-    }
-
-    @PutMapping("/update-by-longDescription/{propertyRepairId}")
-    public ResponseEntity<String> updatePropertyRepairByLongDescription(long propertyRepairId, String newLongDescription){
-        int res =  propertyRepairService.updatePropertyRepairByLongDescription(propertyRepairId, newLongDescription);
-        if (res == 0) { //update failed
-            throw new DataAccessResourceFailureException("Failed to update long description for property repair with id: " + propertyRepairId);
-        }
-        return new ResponseEntity<>("Property repair updated", HttpStatus.OK);
-    }
+//    @PutMapping("/update-by-date/{propertyRepairId}")
+//    public ResponseEntity<String> updatePropertyRepairByDate(long propertyRepairId, LocalDate newDate){
+//        int res =  propertyRepairService.updatePropertyRepairByDate(propertyRepairId, newDate);
+//        if (res == 0) { //update failed
+//            throw new DataAccessResourceFailureException("Failed to update date for property repair with id: " + propertyRepairId);
+//        }
+//        return new ResponseEntity<>("Property repair updated", HttpStatus.OK);
+//    }
+//
+//    @PutMapping("/update-by-shortDescription/{propertyRepairId}")
+//    public ResponseEntity<String> updatePropertyRepairByShortDescription(long propertyRepairId, String newShortDescription){
+//        int res =  propertyRepairService.updatePropertyRepairByShortDescription(propertyRepairId, newShortDescription);
+//        if (res == 0) { //update failed
+//            throw new DataAccessResourceFailureException("Failed to update short description for property repair with id: " + propertyRepairId);
+//        }
+//        return new ResponseEntity<>("Property repair updated", HttpStatus.OK);
+//    }
+//
+//    @PutMapping("/update-by-repairType/{propertyRepairId}")
+//    public ResponseEntity<String> updatePropertyRepairByType(long propertyRepairId, RepairType newRepairType){
+//        int res =  propertyRepairService.updatePropertyRepairByRepairType(propertyRepairId, newRepairType);
+//        if (res == 0) { //update failed
+//            throw new DataAccessResourceFailureException("Failed to update repair type for property repair with id: " + propertyRepairId);
+//        }
+//        return new ResponseEntity<>("Property repair updated", HttpStatus.OK);
+//    }
+//
+//    @PutMapping("/update-by-cost/{propertyRepairId}")
+//    public ResponseEntity<String> updatePropertyRepairByCost(long propertyRepairId, BigDecimal newCost){
+//        int res =  propertyRepairService.updatePropertyRepairByCost(propertyRepairId, newCost);
+//        if (res == 0) { //update failed
+//            throw new DataAccessResourceFailureException("Failed to update cost for property repair with id: " + propertyRepairId);
+//        }
+//        return new ResponseEntity<>("Property repair updated", HttpStatus.OK);
+//    }
+//
+//    @PutMapping("/update-by-longDescription/{propertyRepairId}")
+//    public ResponseEntity<String> updatePropertyRepairByLongDescription(long propertyRepairId, String newLongDescription){
+//        int res =  propertyRepairService.updatePropertyRepairByLongDescription(propertyRepairId, newLongDescription);
+//        if (res == 0) { //update failed
+//            throw new DataAccessResourceFailureException("Failed to update long description for property repair with id: " + propertyRepairId);
+//        }
+//        return new ResponseEntity<>("Property repair updated", HttpStatus.OK);
+//    }
 
     @DeleteMapping("/delete/{propertyRepairId}")
     public ResponseEntity<Object> deletePropertyRepair(@RequestParam long propertyOwnerId,@PathVariable long propertyRepairId) {
@@ -110,6 +115,12 @@ public class PropertyRepairController {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseEntity<String> handleInvalidInputException(InvalidInputException e) {
         return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(ResourceNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ResponseEntity<String> handleResourceNotFoundException(ResourceNotFoundException e) {
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
     }
 
 

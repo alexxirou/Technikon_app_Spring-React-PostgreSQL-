@@ -47,30 +47,33 @@ public interface PropertyRepairRepository extends JpaRepository<PropertyRepair, 
     @Query("SELECT p FROM PropertyRepair p WHERE p.propertyOwner.id= :id AND p.dateOfRepair>= :firstDate AND p.dateOfRepair<= :lastDate")
     List<PropertyRepair> searchPropertyRepairByDates(@Param("id") long propertyOwnerId, @Param("firstDate") LocalDate firstDate,@Param("lastDate") LocalDate lastDate);
 
-    @Transactional
-    @Modifying
-    @Query("UPDATE PropertyRepair p SET p.dateOfRepair= :date WHERE p.id= :id")
-    int updatePropertyRepairByDate(@Param("id")long propertyRepairId, @Param("date") LocalDate date);
+//    @Transactional
+//    @Modifying
+//    @Query("UPDATE PropertyRepair p SET p.dateOfRepair= :date WHERE p.id= :id")
+//    int updatePropertyRepairByDate(@Param("id")long propertyRepairId, @Param("date") LocalDate date);
+//
+//    @Transactional
+//    @Modifying
+//    @Query("UPDATE PropertyRepair p SET p.shortDescription= :description WHERE p.id= :id")
+//    int updatePropertyRepairByShortDescription(@Param("id") long propertyRepairId, @Param("description") String shortDescription);
+//
+//    @Transactional
+//    @Modifying
+//    @Query("UPDATE PropertyRepair p SET p.repairType= :type WHERE p.id= :id")
+//    int updatePropertyRepairByRepairType(@Param("id") long propertyRepairId, @Param("type")RepairType repairType);
+//
+//    @Transactional
+//    @Modifying
+//    @Query("UPDATE PropertyRepair p SET p.cost= :cost WHERE p.id= :id")
+//    int updatePropertyRepairByCost(@Param("id") long propertyRepairId,@Param("cost") BigDecimal cost);
+//
+//    @Transactional
+//    @Modifying
+//    @Query("UPDATE PropertyRepair p SET p.longDescription= :description WHERE p.id= :id")
+//    int updatePropertyRepairByLongDescription(@Param("id") long propertyRepairId,@Param("description") String longDescription);
 
-    @Transactional
-    @Modifying
-    @Query("UPDATE PropertyRepair p SET p.shortDescription= :description WHERE p.id= :id")
-    int updatePropertyRepairByShortDescription(@Param("id") long propertyRepairId, @Param("description") String shortDescription);
 
-    @Transactional
-    @Modifying
-    @Query("UPDATE PropertyRepair p SET p.repairType= :type WHERE p.id= :id")
-    int updatePropertyRepairByRepairType(@Param("id") long propertyRepairId, @Param("type")RepairType repairType);
 
-    @Transactional
-    @Modifying
-    @Query("UPDATE PropertyRepair p SET p.cost= :cost WHERE p.id= :id")
-    int updatePropertyRepairByCost(@Param("id") long propertyRepairId,@Param("cost") BigDecimal cost);
-
-    @Transactional
-    @Modifying
-    @Query("UPDATE PropertyRepair p SET p.longDescription= :description WHERE p.id= :id")
-    int updatePropertyRepairByLongDescription(@Param("id") long propertyRepairId,@Param("description") String longDescription);
 
 //    @Modifying
 //    @Transactional

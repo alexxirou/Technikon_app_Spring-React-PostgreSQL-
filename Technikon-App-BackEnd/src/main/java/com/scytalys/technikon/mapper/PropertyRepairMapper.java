@@ -3,8 +3,7 @@ package com.scytalys.technikon.mapper;
 import com.scytalys.technikon.domain.PropertyRepair;
 import com.scytalys.technikon.dto.PropertyRepairCreationDto;
 import com.scytalys.technikon.dto.PropertyRepairDto;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
+import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
 
 @Mapper(componentModel = "spring")
@@ -26,6 +25,9 @@ public interface PropertyRepairMapper {
     @Mapping(source = "propertyOwner.id", target = "propertyOwnerId")
     @Mapping(source = "property.id", target = "propertyId")
     PropertyRepairDto convertPropertyRepairToPropertyRepairDto(PropertyRepair propertyRepair);
+
+    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    void update(PropertyRepairCreationDto propertyRepairCreationDto, @MappingTarget PropertyRepair propertyRepair);
 }
 
 //    PropertyRepairMapper INSTANCE = Mappers.getMapper(PropertyRepairMapper.class);
