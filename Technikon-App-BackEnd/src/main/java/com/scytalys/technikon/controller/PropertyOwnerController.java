@@ -57,7 +57,7 @@ public class PropertyOwnerController {
         URI userLocation = ServletUriComponentsBuilder.fromCurrentContextPath().path("/users/propertyOwners/{id}").buildAndExpand(createdUser.getId()).toUri();
 
         // Build URI for the created property resource
-         URI propertyAddLocation = ServletUriComponentsBuilder.fromCurrentContextPath().path("/properties/add").build().toUri();
+         URI propertyAddLocation = ServletUriComponentsBuilder.fromCurrentContextPath().path("/users/propertyOwners/{id}/properties").build().toUri();
 
 
         // Return ResponseEntity with the created user info, URI of the created user resource, and URI of the created property resource

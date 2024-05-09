@@ -15,8 +15,7 @@ import com.scytalys.technikon.repository.PropertyOwnerRepository;
 import com.scytalys.technikon.repository.PropertyRepository;
 import com.scytalys.technikon.service.PropertyOwnerService;
 
-
-import com.scytalys.technikon.service.PropertyService;
+import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityNotFoundException;
 
 
@@ -25,11 +24,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
-import org.mockito.Spy;
 
+
+import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -46,34 +43,36 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
-
-public class PropertyOwnerServiceImplTest {
-
-    @InjectMocks
-    private PropertyOwnerServiceImpl propertyOwnerService;
 
 
-    @Mock
+@SpringBootTest
+@ActiveProfiles("test")
+@Rollback(value = false)
+public class PropertyOwnerServiceImplIntTest {
+
+    @Autowired
+    private PropertyOwnerService propertyOwnerService;
+
+
+    @Autowired
     private PropertyOwnerRepository propertyOwnerRepository;
 
-    @InjectMocks
+    @Autowired
     PropertyServiceImpl propertyService;
-    @Mock
+    @Autowired
     PropertyRepository propertyRepository;
 
-
+    @Autowired
+    private EntityManager entityManager;
+//    @Autowired
+//    private PropertyRepository propertyRepository;
 
     private PropertyOwner propertyOwner;
-
-
-    private Property property;
 
     @BeforeEach
     public void setup(){
 
-        MockitoAnnotations.openMocks(this);
+//        MockitoAnnotations.openMocks(this);
 
         propertyOwner= new PropertyOwner();
         propertyOwner.setId(3L); // id
@@ -91,7 +90,7 @@ public class PropertyOwnerServiceImplTest {
     @AfterEach
     public void teardown(){
 
-   
+//        MockitoAnnotations.openMocks(this);
         propertyOwnerService.deleteUser(propertyOwner.getId());
         propertyOwner=null;
 
@@ -103,8 +102,8 @@ public class PropertyOwnerServiceImplTest {
      */
     @Test
     public void testCreateUser() {
-        when(propertyOwnerRepository.save(any(PropertyOwner.class))).thenReturn(propertyOwner);
-        PropertyOwner result =  propertyOwnerService.createDBUser(propertyOwner);
+//        when(propertyOwnerRepository.save(any(PropertyOwner.class))).thenReturn(propertyOwner);
+        PropertyOwner result = (PropertyOwner) propertyOwnerService.createDBUser(propertyOwner);
         System.out.println(result);
         assertEquals(propertyOwner, result);
 
@@ -115,8 +114,8 @@ public class PropertyOwnerServiceImplTest {
      */
     @Test
     public void testSearchUserById(){
-        when(propertyOwnerRepository.save(any(PropertyOwner.class))).thenReturn(propertyOwner);
-        when(propertyOwnerRepository.findById(any(Long.class))).thenReturn(Optional.of(propertyOwner));
+//        when(propertyOwnerRepository.save(any(PropertyOwner.class))).thenReturn(propertyOwner);
+//        when(propertyOwnerRepository.findById(any(Long.class))).thenReturn(Optional.of(propertyOwner));
         propertyOwnerService.createDBUser(propertyOwner);
         User result = propertyOwnerService.searchUserById(propertyOwner.getId());
         assertEquals(propertyOwner, result);
@@ -151,7 +150,7 @@ public class PropertyOwnerServiceImplTest {
     @Test
     public void testSearchUserByUsernameFail(){
 //        when(propertyOwnerRepository.findByUsername(any(String.class))).thenReturn(Optional.empty());
-        User result=propertyOwnerService.searchUserByUsername("");
+       User result=propertyOwnerService.searchUserByUsername("");
         assertThrows(EntityNotFoundException.class, () -> propertyOwnerService.verifySearchResult(result));
     }
 
@@ -266,23 +265,23 @@ public class PropertyOwnerServiceImplTest {
     @Test
     public void testSoftDeleteUser() {
 
-
+            // Configure repository mocks
 //            when(propertyOwnerRepository.save(any(PropertyOwner.class))).thenReturn(propertyOwner);
 
-        // Create a user
-        propertyOwnerService.createDBUser(propertyOwner);
+            // Create a user
+            propertyOwnerService.createDBUser(propertyOwner);
 
-        // Call the softDeleteUser method
-        propertyOwnerService.softDeleteUser(propertyOwner.getId(), propertyOwner.getVersion());
+            // Call the softDeleteUser method
+            propertyOwnerService.softDeleteUser(propertyOwner.getId(), propertyOwner.getVersion());
 
-        // Fetch the entity from the repository
-        PropertyOwner deletedUserOptional = propertyOwnerRepository.findById(propertyOwner.getId()).orElse(null);
+            // Fetch the entity from the repository
+            PropertyOwner deletedUserOptional = (PropertyOwner) propertyOwnerRepository.findById(propertyOwner.getId()).orElse(null);
 
 
-        System.out.println(deletedUserOptional);
-        // Assert that isActive flag is set to false
-        assertFalse(deletedUserOptional.isActive());
-    }
+            System.out.println(deletedUserOptional);
+            // Assert that isActive flag is set to false
+            assertFalse(deletedUserOptional.isActive());
+        }
 
 
 
@@ -338,7 +337,7 @@ public class PropertyOwnerServiceImplTest {
      */
     @Test
     public void testVerifyConstraintsUsernameFailure(){
-        // when(propertyOwnerRepository.findByUsername(any(String.class))).thenReturn(Optional.of(propertyOwner));
+       // when(propertyOwnerRepository.findByUsername(any(String.class))).thenReturn(Optional.of(propertyOwner));
         propertyOwnerService.createDBUser(propertyOwner);
         assertThrows(DataIntegrityViolationException.class, () -> propertyOwnerService.verifyConstraintsUsername(propertyOwner.getUsername()));
     }
@@ -437,7 +436,7 @@ public class PropertyOwnerServiceImplTest {
     @Test
     public void whenConcurrentUpdate_thenThrowException() throws InterruptedException {
 
-//         when(propertyOwnerRepository.save(any(PropertyOwner.class))).thenReturn(propertyOwner);
+//        when(propertyOwnerRepository.save(any(PropertyOwner.class))).thenReturn(propertyOwner);
 
 
         propertyOwnerService.createDBUser(propertyOwner);
