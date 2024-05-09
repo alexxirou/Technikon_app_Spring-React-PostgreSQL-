@@ -24,7 +24,7 @@ import java.util.ArrayList;
 @RestController
 
 @AllArgsConstructor
-@RequestMapping("/users/propertyOwners")
+@RequestMapping("/api/v2/users/propertyOwners")
 public class PropertyOwnerController {
 
 
@@ -43,7 +43,7 @@ public class PropertyOwnerController {
 
 
 
-    @PostMapping("/subscribe")
+    @PostMapping("/")
     public ResponseEntity<EntityModel<UserResponseDto>> createPropertyOwner(@RequestBody PropertyOwner newUser) {
         newUser.setEmail(newUser.getEmail().toLowerCase());
         newUser.setUsername(newUser.getUsername().toLowerCase());
@@ -155,7 +155,7 @@ public class PropertyOwnerController {
 
 
 
-    @PutMapping("/{id}/update")
+    @PutMapping("/{id}")
     public ResponseEntity<String> updateUser(@PathVariable long id, @RequestParam(required = false) String address, @RequestParam(required = false) String password, @RequestParam(required = false) String email, @RequestParam long version) {
         int res =0;
         if (address != null) {
@@ -192,7 +192,7 @@ public class PropertyOwnerController {
 
 
 
-    @DeleteMapping("/unsubscribe")
+    @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteUser(@RequestParam long id, @RequestParam long version) {
         ArrayList<Long> properties = propertyOwnerService.findPropertiesForUser(id);
         if(propertyOwnerService.checkUserHasProperties(properties)){
