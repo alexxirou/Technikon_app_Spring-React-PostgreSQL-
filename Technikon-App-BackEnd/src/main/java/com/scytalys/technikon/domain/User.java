@@ -14,9 +14,11 @@ import java.util.UUID;
 @NoArgsConstructor
 public class User {
     @Id
-    @Column(unique = true)
-    @NonNull
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @NonNull
+    @Column(unique = true)
+    private String tin;
     @NonNull
     private String name;
     @NonNull
