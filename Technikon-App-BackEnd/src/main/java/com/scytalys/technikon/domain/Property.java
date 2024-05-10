@@ -16,10 +16,10 @@ import java.util.UUID;
 @Data
 public class Property {
     @Id
-    @Column(unique = true)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    @NonNull
     @Column(unique = true)
+    @NonNull
     private String tin;
     private String address;
     private LocalDate constructionYear;
