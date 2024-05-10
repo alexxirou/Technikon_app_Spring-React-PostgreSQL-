@@ -132,9 +132,6 @@ PropertyOwner25216822[
 	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
 <TR><TD ALIGN="LEFT" >(C)PropertyOwner</TD></TR>
 <HR/>
-<TR><TD ALIGN="LEFT" >-   address: String [0..1]</TD></TR>
-<TR><TD ALIGN="LEFT" >-   phoneNumber: String [0..1]</TD></TR>
-<HR/>
 <TR><TD ALIGN="LEFT" ># canEqual(other: Object): boolean</TD></TR>
 </TABLE>>
 	style=filled
@@ -169,14 +166,16 @@ User25216822[
 	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
 <TR><TD ALIGN="LEFT" >(C)User</TD></TR>
 <HR/>
+<TR><TD ALIGN="LEFT" >-   address: String [0..1]</TD></TR>
 <TR><TD ALIGN="LEFT" >-   email: String [0..1]</TD></TR>
-<TR><TD ALIGN="LEFT" >-   id: long [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   id: Long [0..1]</TD></TR>
 <TR><TD ALIGN="LEFT" >-   isActive: boolean [1]</TD></TR>
 <TR><TD ALIGN="LEFT" >-   name: String [0..1]</TD></TR>
 <TR><TD ALIGN="LEFT" >-   password: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   phoneNumber: String [0..1]</TD></TR>
 <TR><TD ALIGN="LEFT" >-   surname: String [0..1]</TD></TR>
 <TR><TD ALIGN="LEFT" >-   username: String [0..1]</TD></TR>
-<TR><TD ALIGN="LEFT" >-   version: int [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   version: long [1]</TD></TR>
 <HR/>
 <TR><TD ALIGN="LEFT" ># canEqual(other: Object): boolean</TD></TR>
 </TABLE>>

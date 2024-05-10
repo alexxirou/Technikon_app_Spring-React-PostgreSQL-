@@ -70,7 +70,7 @@ config=StructureConfiguration;
     "showPackageLevels": 2,
     "showDetailedClassStructure": true
   },
-  "rootClass": "com.scytalys.technikon.service.impl.PropertyOwnerServiceImpl",
+  "rootClass": "com.scytalys.technikon.mapper.UserMapperTest",
   "extensionCallbackMethod": "" // qualified.class.name#methodName - signature: public static String method(String)
 }
 diagram meta data end '/
@@ -95,13 +95,36 @@ subgraph cluster_197470096 {
 	fillcolor="#d8d8d8"
 	style=filled
    
-   PropertyOwnerController931943586[
+   Admin25216822[
 	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
-<TR><TD ALIGN="LEFT" >(C)PropertyOwnerController</TD></TR>
+<TR><TD ALIGN="LEFT" >(C)Admin</TD></TR>
 <HR/>
-<TR><TD ALIGN="LEFT" >-   propertyOwnerService: PropertyOwnerService [1]</TD></TR>
+<TR><TD ALIGN="LEFT" ># canEqual(other: Object): boolean</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+OwnerMapperImpl219619911[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)OwnerMapperImpl</TD></TR>
 <HR/>
-<TR><TD ALIGN="LEFT" >+ handleDataException(e: Exception): ResponseEntity&lt;String&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ userCreationDtoToPropertyOwner(userCreationDto: UserCreationDto): PropertyOwner</TD></TR>
+<TR><TD ALIGN="LEFT" >+ userToUserResponseDto(user: User): UserResponseDto</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+PropertyOwner25216822[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)PropertyOwner</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" ># canEqual(other: Object): boolean</TD></TR>
 </TABLE>>
 	style=filled
 	margin=0
@@ -113,8 +136,8 @@ PropertyOwnerServiceImpl124484289[
 	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
 <TR><TD ALIGN="LEFT" >(C)PropertyOwnerServiceImpl</TD></TR>
 <HR/>
+<TR><TD ALIGN="LEFT" >-   OwnerMapper: OwnerMapper [1]</TD></TR>
 <TR><TD ALIGN="LEFT" >-   propertyOwnerRepository: PropertyOwnerRepository [0..1]</TD></TR>
-<TR><TD ALIGN="LEFT" >-   userMapper: UserMapper [1]</TD></TR>
 <HR/>
 <TR><TD ALIGN="LEFT" >+ UpdateUser(dto: UserUpdateDto)</TD></TR>
 <TR><TD ALIGN="LEFT" >+ checkUserHasProperties(userId: long): boolean</TD></TR>
@@ -130,15 +153,38 @@ PropertyOwnerServiceImpl124484289[
 	fillcolor="#FFFFFF"
 ];
 
-SampleData2033362088[
+PropertyServiceImpl124484289[
 	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
-<TR><TD ALIGN="LEFT" >(C)SampleData</TD></TR>
+<TR><TD ALIGN="LEFT" >(C)PropertyServiceImpl</TD></TR>
 <HR/>
-<TR><TD ALIGN="LEFT" >-   propertyOwnerService: PropertyOwnerService [1]</TD></TR>
-<TR><TD ALIGN="LEFT" >-   propertyRepairService: PropertyRepairService [1]</TD></TR>
-<TR><TD ALIGN="LEFT" >-   propertyService: PropertyService [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   propertyRepository: PropertyRepository [0..1]</TD></TR>
 <HR/>
-<TR><TD ALIGN="LEFT" >+ myCommandLineRunner(): CommandLineRunner</TD></TR>
+<TR><TD ALIGN="LEFT" >+ createProperty(property: Property): Property</TD></TR>
+<TR><TD ALIGN="LEFT" >+ searchProperty(propertyId: long): Property</TD></TR>
+<TR><TD ALIGN="LEFT" >+ updateProperty(propertyDto: PropertyDto): Property</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+User25216822[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)User</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   address: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   email: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   id: Long [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   isActive: boolean [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   name: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   password: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   phoneNumber: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   surname: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   username: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   version: long [1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" ># canEqual(other: Object): boolean</TD></TR>
 </TABLE>>
 	style=filled
 	margin=0
@@ -176,12 +222,41 @@ UserCreationDto686682215[
 	fillcolor="#FFFFFF"
 ];
 
-UserMapperImpl219619911[
+UserMapperTest219619911[
 	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
-<TR><TD ALIGN="LEFT" >(C)UserMapperImpl</TD></TR>
+<TR><TD ALIGN="LEFT" >(C)UserMapperTest</TD></TR>
 <HR/>
-<TR><TD ALIGN="LEFT" >+ userCreationDtoToPropertyOwner(userCreationDto: UserCreationDto): PropertyOwner</TD></TR>
-<TR><TD ALIGN="LEFT" >+ userToUserResponseDto(user: User): UserResponseDto</TD></TR>
+<TR><TD ALIGN="LEFT" >-   createUserDto: UserCreationDto [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   propertyOwner: PropertyOwner [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   propertyOwnerRepository: PropertyOwnerRepository [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   propertyOwnerService: PropertyOwnerServiceImpl [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   propertyService: PropertyServiceImpl [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ teardown()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ testUserCreationDtoToUser()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ testUserCreationDtoToUserFailInvalidFieldEmail()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ testUserCreationDtoToUserFailNullField()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ testUserToUserResponseDto()</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+UserResponseDto686682215[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)UserResponseDto</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   email: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   id: long [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   username: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   version: long [1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ email(): String</TD></TR>
+<TR><TD ALIGN="LEFT" >+ id(): long</TD></TR>
+<TR><TD ALIGN="LEFT" >+ username(): String</TD></TR>
+<TR><TD ALIGN="LEFT" >+ version(): long</TD></TR>
 </TABLE>>
 	style=filled
 	margin=0
@@ -214,11 +289,15 @@ UserUpdateDto686682215[
 } 
 
 'edges    
-PropertyOwnerController931943586 -> PropertyOwnerServiceImpl124484289[label="propertyOwnerService
-[1]", arrowhead=none];
-PropertyOwnerServiceImpl124484289 -> UserMapperImpl219619911[arrowhead=none];
-SampleData2033362088 -> PropertyOwnerServiceImpl124484289[label="propertyOwnerService
-[1]", arrowhead=none];
+User25216822 -> Admin25216822[arrowhead=none, arrowtail=empty, dir=both];
+User25216822 -> PropertyOwner25216822[arrowhead=none, arrowtail=empty, dir=both];
+UserMapperTest219619911 -> OwnerMapperImpl219619911[arrowhead=none];
+UserMapperTest219619911 -> PropertyOwner25216822[label="propertyOwner
+[0..1]"];
+UserMapperTest219619911 -> PropertyOwnerServiceImpl124484289[label="propertyOwnerService
+[0..1]"];
+UserMapperTest219619911 -> PropertyServiceImpl124484289[label="propertyService
+[0..1]"];
     
 }
 @enduml
