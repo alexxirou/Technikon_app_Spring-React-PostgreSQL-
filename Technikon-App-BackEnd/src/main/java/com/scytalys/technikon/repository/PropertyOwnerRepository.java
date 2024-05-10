@@ -42,7 +42,7 @@ public interface PropertyOwnerRepository extends JpaRepository<PropertyOwner, Lo
             "  OR (:tin IS NOT NULL AND p.tin = :tin)")
     Optional<PropertyOwner> search(@Param("username") String username,
                     @Param("email") String email,
-                    @Param("tin") Long id);
+                    @Param("tin") String tin);
 
     @Transactional
     @Query("SELECT p.id FROM Property p WHERE p.propertyOwner.tin = :tin")
