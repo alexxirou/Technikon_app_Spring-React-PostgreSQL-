@@ -18,8 +18,8 @@ public interface PropertyOwnerRepository extends JpaRepository<PropertyOwner, Lo
 
     @Modifying
     @Transactional
-    @Query("UPDATE PropertyOwner p set p.isActive = false, p.version = p.version + 1  where p.id=:id and p.version= :version")
-    int softDeleteById(@Param("id")long id, @Param("version")long version);
+    @Query("UPDATE PropertyOwner p set p.isActive = false, p.version = p.version + 1  where p.tin=:tin and p.version= :version")
+    int softDeleteByTin(@Param("id")String tin, @Param("version")long version);
 
     @Modifying
     @Transactional
@@ -28,8 +28,8 @@ public interface PropertyOwnerRepository extends JpaRepository<PropertyOwner, Lo
             "    p.password = CASE WHEN :password IS NOT NULL AND p.password <> :password THEN :password ELSE p.password END, " +
             "    p.address = CASE WHEN :address IS NOT NULL AND p.address <> :address THEN :address ELSE p.address END, " +
             "    p.version = p.version + 1 " +
-            "WHERE p.id = :id AND p.version = :version")
-    int update(@Param("id") long id,
+            "WHERE p.tin = :tin AND p.version = :version")
+    int update(@Param("tin") String tin,
                @Param("email") String email,
                @Param("password") String password,
                @Param("address") String address,
@@ -39,14 +39,17 @@ public interface PropertyOwnerRepository extends JpaRepository<PropertyOwner, Lo
     @Query("SELECT p FROM PropertyOwner p " +
             "WHERE (:username IS NOT NULL AND p.username = :username) " +
             "  OR (:email IS NOT NULL AND p.email = :email) " +
-            "  OR (:id IS NOT NULL AND p.id = :id)")
+            "  OR (:tin IS NOT NULL AND p.tin = :tin)")
     Optional<PropertyOwner> search(@Param("username") String username,
                     @Param("email") String email,
-                    @Param("id") Long id);
+                    @Param("tin") Long id);
 
     @Transactional
-    @Query("SELECT p.id FROM Property p WHERE p.propertyOwner.id = :userId")
-    ArrayList<Long> findPropertyIdsByUserId(@Param("userId") long userId);
+    @Query("SELECT p.id FROM Property p WHERE p.propertyOwner.tin = :tin")
+    ArrayList<Long> findPropertyIdsByUserId(@Param("tin") String tin);
 
-
+    @Transactional
+    @Modifying
+    @Query("DELETE FROM PropertyOwner p WHERE p.tin = :tin")
+    int deleteByTin(@Param("tin") String tin);
 }
