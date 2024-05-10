@@ -3,7 +3,7 @@ package com.scytalys.technikon.dto;
 import jakarta.persistence.Column;
 import jakarta.persistence.Version;
 
-public record UserCreationDto(Long id,
+public record UserCreationDto(String tin,
                               String name,
                               String surname,
                               String email,
