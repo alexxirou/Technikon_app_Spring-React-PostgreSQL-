@@ -21,7 +21,7 @@ public interface OwnerMapper {
         @BeforeMapping
         default void checkForNull(UserCreationDto userCreationDto) {
                 Optional.ofNullable(userCreationDto).orElseThrow(() -> new IllegalArgumentException("UserCreationDto cannot be null"));
-                Optional.ofNullable(userCreationDto.id()).orElseThrow(() -> new IllegalArgumentException("ID cannot be null"));
+                Optional.ofNullable(userCreationDto.tin()).orElseThrow(() -> new IllegalArgumentException("ID cannot be null"));
                 Optional.ofNullable(userCreationDto.username()).orElseThrow(() -> new IllegalArgumentException("Username cannot be null"));
                 Optional.ofNullable(userCreationDto.email()).orElseThrow(() -> new IllegalArgumentException("Email cannot be null"));
                 Optional.ofNullable(userCreationDto.name()).orElseThrow(() -> new IllegalArgumentException("Name cannot be null"));
@@ -42,13 +42,14 @@ public interface OwnerMapper {
                 Optional.ofNullable(userCreationDto.username())
                         .filter(username -> username.length() >= 5 && username.length() <= 20)
                         .orElseThrow(() -> new IllegalArgumentException("Username must be between 5 and 20 characters long"));
-                Optional.ofNullable(userCreationDto.id())
-                        .filter(id -> String.valueOf(id).length() >= 9 )
-                        .orElseThrow(() -> new IllegalArgumentException("ID must be at least 9 digits long"));
+                Optional.ofNullable(userCreationDto.tin())
+                        .filter(tin -> tin.length() >= 9 && tin.matches(".*[0-9].*[a-zA-Z].*")) // Check if tin has at least 9 characters and contains both digits and letters
+                        .orElseThrow(() -> new IllegalArgumentException("TIN must contain at least 9 characters with both digits and letters."));
+
         }
 
 
-        @Mapping(source = "id", target = "id")
+        @Mapping(source = "tin", target = "tin")
         @Mapping(source = "username", target = "username")
         @Mapping(source = "email", target = "email")
         @Mapping(source = "version", target = "version")
