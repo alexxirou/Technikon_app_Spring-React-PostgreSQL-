@@ -11,6 +11,7 @@ import java.time.LocalDate;
 
 @Entity
 @Data
+@NoArgsConstructor
 public class PropertyRepair {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
