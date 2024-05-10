@@ -1,10 +1,11 @@
-package com.scytalys.technikon.domain;
+package com.scytalys.technikon.domain.domain;
 
+import com.scytalys.technikon.domain.Property;
+import com.scytalys.technikon.domain.PropertyOwner;
 import com.scytalys.technikon.domain.category.RepairStatus;
 import com.scytalys.technikon.domain.category.RepairType;
 import jakarta.persistence.*;
 import lombok.Data;
-import lombok.NonNull;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -23,9 +24,7 @@ public class PropertyRepair {
     private String longDescription;
 
     @ManyToOne
-    @NonNull
     private Property property;
     @ManyToOne
-    @NonNull
     private PropertyOwner propertyOwner;
 }

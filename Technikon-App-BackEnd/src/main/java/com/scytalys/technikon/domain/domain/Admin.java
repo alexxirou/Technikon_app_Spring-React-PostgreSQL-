@@ -1,5 +1,6 @@
-package com.scytalys.technikon.domain;
+package com.scytalys.technikon.domain.domain;
 
+import com.scytalys.technikon.domain.User;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;

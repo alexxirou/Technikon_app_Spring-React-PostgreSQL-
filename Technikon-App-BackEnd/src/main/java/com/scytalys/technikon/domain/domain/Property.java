@@ -1,10 +1,10 @@
-package com.scytalys.technikon.domain;
+package com.scytalys.technikon.domain.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.scytalys.technikon.domain.PropertyOwner;
 import com.scytalys.technikon.domain.category.PropertyType;
 import jakarta.persistence.*;
 import lombok.Data;
-import lombok.NonNull;
 import org.antlr.v4.runtime.misc.NotNull;
 
 import java.time.LocalDate;
@@ -18,9 +18,6 @@ public class Property {
     @Id
     @Column(unique = true)
     private long id;
-    @NonNull
-    @Column(unique = true)
-    private String tin;
     private String address;
     private LocalDate constructionYear;
     private PropertyType propertyType;
@@ -28,7 +25,7 @@ public class Property {
     private double longitude;
     private String picture;
     @ManyToOne
-    @NonNull
+    @NotNull
     private PropertyOwner propertyOwner;
 }
 

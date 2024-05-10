@@ -1,4 +1,4 @@
-package com.scytalys.technikon.domain;
+package com.scytalys.technikon.domain.domain;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
