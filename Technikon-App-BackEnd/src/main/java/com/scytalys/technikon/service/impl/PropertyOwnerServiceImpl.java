@@ -3,7 +3,7 @@ import com.scytalys.technikon.domain.PropertyOwner;
 import com.scytalys.technikon.domain.User;
 import com.scytalys.technikon.dto.UserResponseDto;
 import com.scytalys.technikon.dto.UserUpdateDto;
-import com.scytalys.technikon.mapper.UserMapper;
+import com.scytalys.technikon.mapper.OwnerMapper;
 import com.scytalys.technikon.repository.PropertyOwnerRepository;
 import com.scytalys.technikon.service.PropertyOwnerService;
 import jakarta.persistence.EntityNotFoundException;
@@ -21,7 +21,7 @@ public class PropertyOwnerServiceImpl implements PropertyOwnerService {
 
     private final PropertyOwnerRepository propertyOwnerRepository;
     @Autowired
-    private final UserMapper userMapper;
+    private final OwnerMapper OwnerMapper;
 
     /**
      * Creates a new user in the repository as a PropertyOwner type
@@ -105,7 +105,7 @@ public class PropertyOwnerServiceImpl implements PropertyOwnerService {
      * @return The created UserResponseDto object.
      */
     public UserResponseDto createUserResponseDto(User user){
-        return userMapper.userToUserResponseDto(user);
+        return OwnerMapper.userToUserResponseDto(user);
     }
 
 

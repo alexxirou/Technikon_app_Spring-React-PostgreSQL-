@@ -42,16 +42,16 @@ public class UserMapperTest {
         MockitoAnnotations.openMocks(this);
 
         propertyOwner = new PropertyOwner();
-        propertyOwner.setId(3L); // id
+        propertyOwner.setId(3145648468468L); // id
         propertyOwner.setName("Johny"); // name
         propertyOwner.setSurname("Doep"); // surname
         propertyOwner.setEmail("jdee@hotmail.com"); // email
-        propertyOwner.setUsername("jdee"); // username
+        propertyOwner.setUsername("jdeed"); // username
         propertyOwner.setPassword("pass"); // password
         propertyOwner.setAddress("somewhere"); // address
-        propertyOwner.setPhoneNumber("999582486");// phoneNumber
+        propertyOwner.setPhoneNumber("+309099582486");// phoneNumber
         propertyOwner.setVersion(0);
-        createUserDto = new UserCreationDto(3L, "Johny", "Doep", "jdee@hotmail.com", "jdee", "pass", "somewhere", "999582486", 0);
+        createUserDto = new UserCreationDto(3145648468468L, "Johny", "Doep", "jdee@hotmail.com", "jdeed", "pass", "somewhere", "+309099582486", 0);
 
     }
 
@@ -69,29 +69,37 @@ public class UserMapperTest {
 
 
         // Call the method to be tested
-       PropertyOwner user = UserMapper.INSTANCE.userCreationDtoToPropertyOwner(createUserDto);
+       PropertyOwner user = OwnerMapper.INSTANCE.userCreationDtoToPropertyOwner(createUserDto);
 
-        assertEquals(user, propertyOwner);
+       assertEquals(user, propertyOwner);
     }
 
     @Test
-    public void testUserCreationDtoToUserFail() {
+    public void testUserCreationDtoToUserFailNullField() {
 
 
         // Call the method to be tested
-        UserCreationDto noIdDto= new UserCreationDto(null, "Johny", "Doep", "jdee@hotmail.com", "jdee", "pass", "somewhere", "999582486", 0);
-
-
+        UserCreationDto noIdDto= new UserCreationDto(null, "Johny", "Doep", "jdee@hotmail.com", "jdee", "pass", "somewhere", "+309099582486", 0);
         assertThrows(IllegalArgumentException.class, () -> {
-            UserMapper.INSTANCE.userCreationDtoToPropertyOwner(noIdDto);
+            OwnerMapper.INSTANCE.userCreationDtoToPropertyOwner(noIdDto);
+        });    }
+
+
+    @Test
+    public void testUserCreationDtoToUserFailInvalidFieldEmail() {
+
+
+        // Call the method to be tested
+        UserCreationDto noIdDto= new UserCreationDto(3145648468468L, "Johny", "Doep", "jdee@gfoefe", "jdee", "pass", "somewhere", "+309099582486", 0);
+        assertThrows(IllegalArgumentException.class, () -> {
+            OwnerMapper.INSTANCE.userCreationDtoToPropertyOwner(noIdDto);
         });    }
 
     @Test
     public void testUserToUserResponseDto() {
 
         // Call the method to be tested
-        UserResponseDto userResponseDto = UserMapper.INSTANCE.userToUserResponseDto(propertyOwner);
-
+        UserResponseDto userResponseDto = OwnerMapper.INSTANCE.userToUserResponseDto(propertyOwner);
         assertEquals(userResponseDto.id(), propertyOwner.getId());
         assertEquals(userResponseDto.username(), propertyOwner.getUsername());
         assertEquals(userResponseDto.email(), propertyOwner.getEmail());
