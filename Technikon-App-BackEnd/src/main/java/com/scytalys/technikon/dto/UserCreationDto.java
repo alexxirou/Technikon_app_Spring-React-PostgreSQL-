@@ -10,6 +10,5 @@ public record UserCreationDto(String tin,
                               String username,
                               String password,
                               String address,
-                              String phoneNumber,
-                              long version) {
+                              String phoneNumber) {
 }

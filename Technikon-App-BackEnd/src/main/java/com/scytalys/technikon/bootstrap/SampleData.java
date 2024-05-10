@@ -7,6 +7,8 @@ import com.scytalys.technikon.domain.PropertyRepair;
 import com.scytalys.technikon.domain.category.PropertyType;
 import com.scytalys.technikon.domain.category.RepairStatus;
 import com.scytalys.technikon.domain.category.RepairType;
+import com.scytalys.technikon.dto.UserCreationDto;
+import com.scytalys.technikon.mapper.OwnerMapper;
 import com.scytalys.technikon.repository.PropertyRepository;
 import com.scytalys.technikon.service.PropertyOwnerService;
 import com.scytalys.technikon.service.PropertyRepairService;
@@ -31,6 +33,9 @@ public class SampleData {
     private final PropertyOwnerService propertyOwnerService;
     @Autowired
     private final PropertyService propertyService;
+    @Autowired
+    private final OwnerMapper ownerMapper;
+
     @Bean
     public CommandLineRunner myCommandLineRunner(){
         return args -> {
@@ -44,7 +49,8 @@ public class SampleData {
             propertyRepairService.createPropertyRepair(propertyRepair);
 
             PropertyOwner propertyOwner = new PropertyOwner();
-            propertyOwner.setId(2L); // id
+            propertyOwner.setId(2L);
+            propertyOwner.setTin("1651614865GR");// id
             propertyOwner.setName("John"); // name
             propertyOwner.setSurname("Doe"); // surname
             propertyOwner.setEmail("JDE@hotmail.com"); // email
@@ -52,11 +58,14 @@ public class SampleData {
             propertyOwner.setPassword("pass"); // password
             propertyOwner.setAddress("somewhere"); // address
             propertyOwner.setPhoneNumber("999582486");
-            propertyOwnerService.createDBUser(propertyOwner);
+            UserCreationDto dto =new UserCreationDto(propertyOwner.getTin(), propertyOwner.getName(), propertyOwner.getSurname(), propertyOwner.getEmail(), propertyOwner.getUsername(), propertyOwner.getPassword(), propertyOwner.getAddress(), propertyOwner.getPhoneNumber());
+
+            propertyOwnerService.createDBUser(dto);
 
 //            propertyOwnerService.updateUserPassword(propertyOwner.getId(),"password", propertyOwner.getVersion());
             Property property = new Property();
             property.setId(1L);
+            property.setTin("15161651616fr");
             property.setAddress("somewhere");
             property.setPropertyType(PropertyType.values()[1]);
             property.setLatitude(10.5);

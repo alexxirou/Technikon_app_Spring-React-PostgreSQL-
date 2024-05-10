@@ -91,7 +91,7 @@ public class PropertyOwnerServiceImplIntTest {
     public void teardown(){
 
 //        MockitoAnnotations.openMocks(this);
-        propertyOwnerService.deleteUser(propertyOwner.getId());
+        propertyOwnerService.deleteUser(propertyOwner.getTin());
         propertyOwner=null;
 
 

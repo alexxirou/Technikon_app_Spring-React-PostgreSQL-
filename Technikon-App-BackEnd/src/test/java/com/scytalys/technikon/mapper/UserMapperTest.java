@@ -10,12 +10,14 @@ import com.scytalys.technikon.repository.PropertyRepository;
 import com.scytalys.technikon.service.impl.PropertyOwnerServiceImpl;
 import com.scytalys.technikon.service.impl.PropertyServiceImpl;
 import jakarta.validation.UnexpectedTypeException;
+import lombok.NoArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.mockito.Spy;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -42,7 +44,8 @@ public class UserMapperTest {
         MockitoAnnotations.openMocks(this);
 
         propertyOwner = new PropertyOwner();
-        propertyOwner.setId(3145648468468L); // id
+        propertyOwner.setId(3145648468468L);
+        propertyOwner.setTin("3145648468468GR");
         propertyOwner.setName("Johny"); // name
         propertyOwner.setSurname("Doep"); // surname
         propertyOwner.setEmail("jdee@hotmail.com"); // email
@@ -51,7 +54,7 @@ public class UserMapperTest {
         propertyOwner.setAddress("somewhere"); // address
         propertyOwner.setPhoneNumber("+309099582486");// phoneNumber
         propertyOwner.setVersion(0);
-        createUserDto = new UserCreationDto(3145648468468L, "Johny", "Doep", "jdee@hotmail.com", "jdeed", "pass", "somewhere", "+309099582486", 0);
+        createUserDto = new UserCreationDto("3145648468468GR", "Johny", "Doep", "jdee@hotmail.com", "jdeed", "pass", "somewhere", "+309099582486");
 
     }
 
@@ -70,7 +73,7 @@ public class UserMapperTest {
 
         // Call the method to be tested
        PropertyOwner user = OwnerMapper.INSTANCE.userCreationDtoToPropertyOwner(createUserDto);
-
+       user.setId(3145648468468L);
        assertEquals(user, propertyOwner);
     }
 
@@ -79,7 +82,7 @@ public class UserMapperTest {
 
 
         // Call the method to be tested
-        UserCreationDto noIdDto= new UserCreationDto(null, "Johny", "Doep", "jdee@hotmail.com", "jdee", "pass", "somewhere", "+309099582486", 0);
+        UserCreationDto noIdDto= new UserCreationDto(null, "Johny", "Doep", "jdee@hotmail.com", "jdee", "pass", "somewhere", "+309099582486");
         assertThrows(IllegalArgumentException.class, () -> {
             OwnerMapper.INSTANCE.userCreationDtoToPropertyOwner(noIdDto);
         });    }
@@ -90,7 +93,7 @@ public class UserMapperTest {
 
 
         // Call the method to be tested
-        UserCreationDto noIdDto= new UserCreationDto(3145648468468L, "Johny", "Doep", "jdee@gfoefe", "jdee", "pass", "somewhere", "+309099582486", 0);
+        UserCreationDto noIdDto= new UserCreationDto("3145648468468GR", "Johny", "Doep", "jdee@gfoefe", "jdee", "pass", "somewhere", "+309099582486");
         assertThrows(IllegalArgumentException.class, () -> {
             OwnerMapper.INSTANCE.userCreationDtoToPropertyOwner(noIdDto);
         });    }
@@ -100,7 +103,7 @@ public class UserMapperTest {
 
         // Call the method to be tested
         UserResponseDto userResponseDto = OwnerMapper.INSTANCE.userToUserResponseDto(propertyOwner);
-        assertEquals(userResponseDto.id(), propertyOwner.getId());
+        assertEquals(userResponseDto.tin(), propertyOwner.getTin());
         assertEquals(userResponseDto.username(), propertyOwner.getUsername());
         assertEquals(userResponseDto.email(), propertyOwner.getEmail());
         assertEquals(userResponseDto.version(), propertyOwner.getVersion());

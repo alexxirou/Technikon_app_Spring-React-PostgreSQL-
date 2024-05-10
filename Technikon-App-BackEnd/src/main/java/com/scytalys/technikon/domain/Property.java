@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.scytalys.technikon.domain.category.PropertyType;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import org.antlr.v4.runtime.misc.NotNull;
 
@@ -14,6 +15,7 @@ import java.util.UUID;
 
 @Entity
 @Data
+@NoArgsConstructor
 public class Property {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,7 +30,6 @@ public class Property {
     private double longitude;
     private String picture;
     @ManyToOne
-    @NonNull
     private PropertyOwner propertyOwner;
 }
 
