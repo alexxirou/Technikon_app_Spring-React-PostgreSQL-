@@ -7,10 +7,10 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.lang.reflect.Array;
+
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
+
 
 @Repository
 public interface PropertyOwnerRepository extends JpaRepository<PropertyOwner, Long> {
@@ -19,28 +19,30 @@ public interface PropertyOwnerRepository extends JpaRepository<PropertyOwner, Lo
     @Modifying
     @Transactional
     @Query("UPDATE PropertyOwner p set p.isActive = false, p.version = p.version + 1  where p.id=:id and p.version= :version")
-    int softDeleteByid(@Param("id")long id, @Param("version")long version);
+    int softDeleteById(@Param("id")long id, @Param("version")long version);
 
     @Modifying
     @Transactional
-    @Query("UPDATE PropertyOwner p set p.email= :email, p.version = p.version + 1 where p.id=:id and p.version= :version")
-    int updateEmail(@Param("id")long id, @Param("email")String email, @Param("version")long version);
-
-    @Modifying
-    @Transactional
-    @Query("UPDATE PropertyOwner p SET p.address = :address, p.version = p.version + 1  WHERE p.id = :id AND p.version = :version")
-    int updateAddress(@Param("id") long id, @Param("address") String address, @Param("version") long version);
-
-
-    @Modifying
-    @Transactional
-    @Query("UPDATE PropertyOwner p set p.password= :password, p.version = p.version + 1 where p.id=:id and p.version= :version")
-    int updatePassword(@Param("id")long id, @Param("password")String password, @Param("version")long version);
-
-    Optional<PropertyOwner> findByUsername(String username);
+    @Query("UPDATE PropertyOwner p " +
+            "SET p.email = CASE WHEN :email IS NOT NULL AND p.email <> :email THEN :email ELSE p.email END, " +
+            "    p.password = CASE WHEN :password IS NOT NULL AND p.password <> :password THEN :password ELSE p.password END, " +
+            "    p.address = CASE WHEN :address IS NOT NULL AND p.address <> :address THEN :address ELSE p.address END, " +
+            "    p.version = p.version + 1 " +
+            "WHERE p.id = :id AND p.version = :version")
+    int update(@Param("id") long id,
+               @Param("email") String email,
+               @Param("password") String password,
+               @Param("address") String address,
+               @Param("version") long version);
 
 
-    Optional<PropertyOwner> findByEmail(String email);
+    @Query("SELECT p FROM PropertyOwner p " +
+            "WHERE (:username IS NOT NULL AND p.username = :username) " +
+            "  OR (:email IS NOT NULL AND p.email = :email) " +
+            "  OR (:id IS NOT NULL AND p.id = :id)")
+    Optional<PropertyOwner> search(@Param("username") String username,
+                    @Param("email") String email,
+                    @Param("id") Long id);
 
     @Transactional
     @Query("SELECT p.id FROM Property p WHERE p.propertyOwner.id = :userId")

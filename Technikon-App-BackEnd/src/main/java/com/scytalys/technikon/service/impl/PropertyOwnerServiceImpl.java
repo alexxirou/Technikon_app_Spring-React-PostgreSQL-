@@ -1,8 +1,6 @@
 package com.scytalys.technikon.service.impl;
 import com.scytalys.technikon.domain.PropertyOwner;
 import com.scytalys.technikon.domain.User;
-
-
 import com.scytalys.technikon.dto.UserResponseDto;
 import com.scytalys.technikon.dto.UserUpdateDto;
 import com.scytalys.technikon.mapper.UserMapper;
@@ -15,12 +13,7 @@ import org.springframework.dao.DataAccessResourceFailureException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
-
-import java.util.ArrayList;
-
 import java.util.List;
-
-
 
 @Service
 @AllArgsConstructor
@@ -39,10 +32,10 @@ public class PropertyOwnerServiceImpl implements PropertyOwnerService {
      * throws DataIntegrityViolationException if unique field constraint violation
      */
     @Override
-    public UserResponseDto createDBUser(PropertyOwner user) {
+    public PropertyOwner createDBUser(PropertyOwner user) {
         try {
             propertyOwnerRepository.save(user);
-            return createUserResponseDto(user);
+            return user;
         }catch (IllegalArgumentException e) {
             throw e;
         }catch (Exception e){
@@ -50,56 +43,32 @@ public class PropertyOwnerServiceImpl implements PropertyOwnerService {
         }
     }
 
-    /**
-     * Searches for a user in the repository by their ID.
-     *
-     * @param id The ID of the user to be searched.
-     * @return The found user or null
-     *
-     */
-    @Override
-    public User searchUserById(long id) {
-        return propertyOwnerRepository.findById(id).filter(User::isActive)
-                .orElse(null);
-    }
 
     /**
      * Searches for a user in the repository by their username.
      *
-     * @param username The username of the user to be searched.
-     * @return The found user or null.
-     *
+     * @param user The user object containing search parameters.
+     * @return The found user or null if not found or inactive.
      */
     @Override
-    public User searchUserByUsername(String username) {
-        return propertyOwnerRepository.findByUsername(username).filter(User::isActive)
-                .orElse(null);
-    }
-
-    /**
-     * Searches for a user in the repository by their username.
-     *
-     * @param email The email of the user to be searched.
-     * @return The found user or null
-     *
-     */
-    @Override
-    public User searchUserByEmail(String email) {
-        return propertyOwnerRepository.findByEmail(email).filter(User::isActive)
+    public User searchUser(User user) {
+        return propertyOwnerRepository.search(user.getUsername(), user.getEmail(), user.getId())
+                .filter(User::isActive)
                 .orElse(null);
     }
 
 
 
     /**
-     * Updates a User in the DB
-     * @param dto the Update Information record.
-     * @Throws EntityNotFoundException, IllegalArgumentException.
+     * Updates a user in the database.
+     *
+     * @param dto The DTO containing update information.
+     * @throws EntityNotFoundException if the user to be updated is not found.
+     * @throws IllegalArgumentException if the provided DTO is invalid or contains incomplete information.
      */
     public void UpdateUser(UserUpdateDto dto){
-        User user =searchUserById(dto.id());
-        if (user==null) throw new EntityNotFoundException("User not found.");
-        propertyOwnerRepository.save(userMapper.userUpdateDtoToOwner(dto,user));
+        int res =propertyOwnerRepository.update(dto.id(), dto.email(), dto.address(), dto.password(), dto.version());
+        if (res==0) throw new DataAccessResourceFailureException("Update failed: User not found, or resource is busy.");
     }
 
     /**
@@ -124,7 +93,7 @@ public class PropertyOwnerServiceImpl implements PropertyOwnerService {
      */
 
     public int softDeleteUser(long id, long version){
-      int res = propertyOwnerRepository.softDeleteByid(id,version);
+      int res = propertyOwnerRepository.softDeleteById(id,version);
       if (res==0) throw new DataAccessResourceFailureException("User not found, or resource is busy.0");
       return res;
     }
@@ -133,7 +102,7 @@ public class PropertyOwnerServiceImpl implements PropertyOwnerService {
      * Creates a UserResponseDto object for a user  operation.
      *
      * @param user the User object
-     * @return The created UserResponseToSearchDto object.
+     * @return The created UserResponseDto object.
      */
     public UserResponseDto createUserResponseDto(User user){
         return userMapper.userToUserResponseDto(user);
@@ -145,14 +114,12 @@ public class PropertyOwnerServiceImpl implements PropertyOwnerService {
     /**
      *Returns the ids of properties linked to a  User
      * @param userId the id of the user
-     *  @return a boolean based on if the user is linked to any property ids
+     * @return a boolean based on if the user is linked to any property ids
     */
     public boolean checkUserHasProperties(long userId){
         List<Long> results=propertyOwnerRepository.findPropertyIdsByUserId(userId);
         return !results.isEmpty(); // Return true if the list of property IDs is not empty
     }
-
-
 
 
 }

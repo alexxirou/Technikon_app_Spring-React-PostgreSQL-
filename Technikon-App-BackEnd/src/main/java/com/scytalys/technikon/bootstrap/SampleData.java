@@ -54,7 +54,7 @@ public class SampleData {
             propertyOwner.setPhoneNumber("999582486");
             propertyOwnerService.createDBUser(propertyOwner);
 
-            propertyOwnerService.updateUserPassword(propertyOwner.getId(),"password", propertyOwner.getVersion());
+//            propertyOwnerService.updateUserPassword(propertyOwner.getId(),"password", propertyOwner.getVersion());
             Property property = new Property();
             property.setId(1L);
             property.setAddress("somewhere");

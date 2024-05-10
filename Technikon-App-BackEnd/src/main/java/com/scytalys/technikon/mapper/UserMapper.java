@@ -13,31 +13,20 @@ import java.util.Optional;
 @Mapper
 public interface UserMapper {
         UserMapper INSTANCE = Mappers.getMapper(UserMapper.class);
-        @Named("throwExceptionIfNull")
-        default String throwExceptionIfNull(String field) {
-                if (field == null) {
-                        throw new IllegalArgumentException("Field cannot be null");
-                }
-                return field;
-        }
 
-        @Named("throwExceptionIfNull")
-        default Long throwExceptionIfNull(Long id) {
-                if (id == null) {
-                        throw new IllegalArgumentException("ID cannot be null");
-                }
-                return id;
-        }
+        PropertyOwner userCreationDtoToPropertyOwner(UserCreationDto userCreationDto);
 
-        @Mapping(target = "id", source = "id", qualifiedByName = "throwExceptionIfNull")
-        @Mapping(target = "username", source = "username", qualifiedByName = "throwExceptionIfNull")
-        @Mapping(target = "email", source = "email", qualifiedByName = "throwExceptionIfNull")
-        @Mapping(target = "password", source = "password", qualifiedByName = "throwExceptionIfNull")
-        @Mapping(target = "phoneNumber", source = "phoneNumber", qualifiedByName = "throwExceptionIfNull")
-        @Mapping(target = "name", source = "name", qualifiedByName = "throwExceptionIfNull")
-        @Mapping(target = "surname", source = "surname", qualifiedByName = "throwExceptionIfNull")
-        @Mapping(source = "address", target = "address", qualifiedByName = "throwExceptionIfNull")
-        PropertyOwner userCreationDtoToOwner(UserCreationDto userCreationDto);
+        @BeforeMapping
+        default void checkForNull(UserCreationDto userCreationDto) {
+                Optional.ofNullable(userCreationDto).orElseThrow(() -> new IllegalArgumentException("UserCreationDto cannot be null"));
+                Optional.ofNullable(userCreationDto.id()).orElseThrow(() -> new IllegalArgumentException("ID cannot be null"));
+                Optional.ofNullable(userCreationDto.username()).orElseThrow(() -> new IllegalArgumentException("Username cannot be null"));
+                Optional.ofNullable(userCreationDto.email()).orElseThrow(() -> new IllegalArgumentException("Email cannot be null"));
+                Optional.ofNullable(userCreationDto.name()).orElseThrow(() -> new IllegalArgumentException("Name cannot be null"));
+                Optional.ofNullable(userCreationDto.surname()).orElseThrow(() -> new IllegalArgumentException("Surname cannot be null"));
+                Optional.ofNullable(userCreationDto.password()).orElseThrow(() -> new IllegalArgumentException("Password cannot be null"));
+                Optional.ofNullable(userCreationDto.phoneNumber()).orElseThrow(() -> new IllegalArgumentException("Phone number cannot be null"));
+        }
 
 
 
@@ -46,29 +35,6 @@ public interface UserMapper {
         @Mapping(source = "email", target = "email")
         @Mapping(source = "version", target = "version")
         UserResponseDto userToUserResponseDto(User user);
-
-
-        @Mapping(source = "email", target = "email", defaultValue = MappingConstants.NULL)
-        @Mapping(source = "address", target = "address", defaultValue = MappingConstants.NULL)
-        @Mapping(source = "password", target = "password", defaultValue = MappingConstants.NULL)
-        @Mapping(source = "version", target = "version")
-        PropertyOwner userUpdateDtoToOwner(UserUpdateDto userUpdateDto, @Context User user);
-
-        @Mapping(source = "email", target = "email", defaultValue = MappingConstants.NULL)
-        @Mapping(source = "address", target = "address", defaultValue = MappingConstants.NULL)
-        @Mapping(source = "password", target = "password", defaultValue = MappingConstants.NULL)
-        @Mapping(source = "version", target = "version")
-        Admin userUpdateDtoToAdmin(UserUpdateDto userUpdateDto, @Context User user);
-
-        @Mapping(target = "id", source = "id", qualifiedByName = "throwExceptionIfNull")
-        @Mapping(target = "username", source = "username", qualifiedByName = "throwExceptionIfNull")
-        @Mapping(target = "email", source = "email", qualifiedByName = "throwExceptionIfNull")
-        @Mapping(target = "password", source = "password", qualifiedByName = "throwExceptionIfNull")
-        @Mapping(target = "phoneNumber", source = "phoneNumber", qualifiedByName = "throwExceptionIfNull")
-        @Mapping(target = "name", source = "name", qualifiedByName = "throwExceptionIfNull")
-        @Mapping(target = "surname", source = "surname", qualifiedByName = "throwExceptionIfNull")
-        @Mapping(source = "address", target = "address", qualifiedByName = "throwExceptionIfNull")
-        Admin userCreationDtoToAdmin(UserCreationDto userCreationDto);
     }
 
 

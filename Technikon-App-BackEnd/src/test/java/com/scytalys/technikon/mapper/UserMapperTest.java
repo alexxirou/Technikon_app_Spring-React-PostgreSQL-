@@ -69,7 +69,7 @@ public class UserMapperTest {
 
 
         // Call the method to be tested
-        PropertyOwner user =  UserMapper.INSTANCE.userCreationDtoToOwner(createUserDto);
+       PropertyOwner user = UserMapper.INSTANCE.userCreationDtoToPropertyOwner(createUserDto);
 
         assertEquals(user, propertyOwner);
     }
@@ -83,7 +83,7 @@ public class UserMapperTest {
 
 
         assertThrows(IllegalArgumentException.class, () -> {
-            UserMapper.INSTANCE.userCreationDtoToOwner(noIdDto);
+            UserMapper.INSTANCE.userCreationDtoToPropertyOwner(noIdDto);
         });    }
 
     @Test
@@ -98,21 +98,7 @@ public class UserMapperTest {
         assertEquals(userResponseDto.version(), propertyOwner.getVersion());
     }
 
-    @Test
-    public void testUserUpdateDtoToUser() {
-        // Create a UserUpdateDto object with sample data
-        UserUpdateDto userUpdateDto = new UserUpdateDto(3L,null,"nowhere",null, 0);
 
-        // Call the method to be tested
-        PropertyOwner updatedUser = UserMapper.INSTANCE.userUpdateDtoToOwner(userUpdateDto, propertyOwner);
-
-        assertEquals(updatedUser.getId(),userUpdateDto.id());
-        assertEquals(updatedUser.getAddress(),userUpdateDto.address());
-        assertNotEquals(updatedUser.getEmail(), userUpdateDto.email());
-        assertNotEquals(updatedUser.getPassword(), userUpdateDto.password());
-        assertEquals(updatedUser.getVersion(),userUpdateDto.version());
-
-    }
 }
 
 

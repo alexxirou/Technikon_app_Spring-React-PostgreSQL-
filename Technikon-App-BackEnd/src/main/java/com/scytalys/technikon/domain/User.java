@@ -17,7 +17,9 @@ public class User {
     @Column(unique = true)
     @NonNull
     private Long id;
+    @NonNull
     private String name;
+    @NonNull
     private String surname;
     @Column(unique = true)
     @NonNull
@@ -29,6 +31,7 @@ public class User {
     private String password;
     private boolean isActive = true;
     private String address;
+    @NonNull
     private String phoneNumber;
     @Version
     private long version;
