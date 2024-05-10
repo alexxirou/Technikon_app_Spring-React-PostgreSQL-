@@ -14,6 +14,7 @@ import java.util.UUID;
 
 @Entity
 @Data
+@NoArgsConstructor
 public class Property {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
