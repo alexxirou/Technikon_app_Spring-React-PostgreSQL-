@@ -26,30 +26,28 @@ import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.when;
 
 public class PropertyOwnerServiceImplTest {
-
-    @InjectMocks
-    private PropertyOwnerServiceImpl propertyOwnerService;
+    ;
 
 
     @Mock
     private PropertyOwnerRepository propertyOwnerRepository;
-
-    @InjectMocks
-    PropertyServiceImpl propertyService;
     @Mock
     PropertyRepository propertyRepository;
 
     @Spy
+    @InjectMocks
+    PropertyServiceImpl propertyService;
+    @Spy
+    @InjectMocks
+    private PropertyOwnerServiceImpl propertyOwnerService;
+
+    @Spy
     private OwnerMapper ownerMapper = OwnerMapper.INSTANCE; // Initialize ownerMapper
-
-
     @Spy
     private PropertyOwner propertyOwner;
 
     private UserCreationDto dto;
 
-    @Spy
-    private Property property;
 
     @BeforeEach
     public void setup(){
