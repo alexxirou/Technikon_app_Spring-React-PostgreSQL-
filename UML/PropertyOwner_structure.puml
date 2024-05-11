@@ -117,8 +117,9 @@ Property25216822[
 <TR><TD ALIGN="LEFT" >-   latitude: double [1]</TD></TR>
 <TR><TD ALIGN="LEFT" >-   longitude: double [1]</TD></TR>
 <TR><TD ALIGN="LEFT" >-   picture: String [0..1]</TD></TR>
-<TR><TD ALIGN="LEFT" >-   propertyOwner: PropertyOwner [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   propertyOwner: PropertyOwner [0..1]</TD></TR>
 <TR><TD ALIGN="LEFT" >-   propertyType: PropertyType [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   tin: String [0..1]</TD></TR>
 <HR/>
 <TR><TD ALIGN="LEFT" ># canEqual(other: Object): boolean</TD></TR>
 </TABLE>>
@@ -174,6 +175,7 @@ User25216822[
 <TR><TD ALIGN="LEFT" >-   password: String [0..1]</TD></TR>
 <TR><TD ALIGN="LEFT" >-   phoneNumber: String [0..1]</TD></TR>
 <TR><TD ALIGN="LEFT" >-   surname: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   tin: String [0..1]</TD></TR>
 <TR><TD ALIGN="LEFT" >-   username: String [0..1]</TD></TR>
 <TR><TD ALIGN="LEFT" >-   version: long [1]</TD></TR>
 <HR/>
@@ -189,7 +191,7 @@ User25216822[
 
 'edges    
 Property25216822 -> PropertyOwner25216822[label="propertyOwner
-[1]"];
+[0..1]"];
 PropertyRepair25216822 -> Property25216822[label="property
 [0..1]"];
 PropertyRepair25216822 -> PropertyOwner25216822[label="propertyOwner

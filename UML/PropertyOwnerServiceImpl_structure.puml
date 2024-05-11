@@ -113,16 +113,16 @@ PropertyOwnerServiceImpl124484289[
 	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
 <TR><TD ALIGN="LEFT" >(C)PropertyOwnerServiceImpl</TD></TR>
 <HR/>
+<TR><TD ALIGN="LEFT" >-   ownerMapper: OwnerMapper [1]</TD></TR>
 <TR><TD ALIGN="LEFT" >-   propertyOwnerRepository: PropertyOwnerRepository [0..1]</TD></TR>
-<TR><TD ALIGN="LEFT" >-   userMapper: UserMapper [1]</TD></TR>
 <HR/>
 <TR><TD ALIGN="LEFT" >+ UpdateUser(dto: UserUpdateDto)</TD></TR>
-<TR><TD ALIGN="LEFT" >+ checkUserHasProperties(userId: long): boolean</TD></TR>
-<TR><TD ALIGN="LEFT" >+ createDBUser(user: PropertyOwner): PropertyOwner</TD></TR>
+<TR><TD ALIGN="LEFT" >+ checkUserHasProperties(tin: String): boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >+ createDBUser(dto: UserCreationDto): PropertyOwner</TD></TR>
 <TR><TD ALIGN="LEFT" >+ createUserResponseDto(user: User): UserResponseDto</TD></TR>
-<TR><TD ALIGN="LEFT" >+ deleteUser(propertyOwnerId: long)</TD></TR>
-<TR><TD ALIGN="LEFT" >+ searchUser(user: User): User</TD></TR>
-<TR><TD ALIGN="LEFT" >+ softDeleteUser(id: long, version: long): int</TD></TR>
+<TR><TD ALIGN="LEFT" >+ deleteUser(tin: String)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ searchUser(dto: UserSearchDto): User</TD></TR>
+<TR><TD ALIGN="LEFT" >+ softDeleteUser(tin: String, version: long): int</TD></TR>
 </TABLE>>
 	style=filled
 	margin=0
@@ -152,23 +152,21 @@ UserCreationDto686682215[
 <HR/>
 <TR><TD ALIGN="LEFT" >-   address: String [0..1]</TD></TR>
 <TR><TD ALIGN="LEFT" >-   email: String [0..1]</TD></TR>
-<TR><TD ALIGN="LEFT" >-   id: Long [0..1]</TD></TR>
 <TR><TD ALIGN="LEFT" >-   name: String [0..1]</TD></TR>
 <TR><TD ALIGN="LEFT" >-   password: String [0..1]</TD></TR>
 <TR><TD ALIGN="LEFT" >-   phoneNumber: String [0..1]</TD></TR>
 <TR><TD ALIGN="LEFT" >-   surname: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   tin: String [0..1]</TD></TR>
 <TR><TD ALIGN="LEFT" >-   username: String [0..1]</TD></TR>
-<TR><TD ALIGN="LEFT" >-   version: long [1]</TD></TR>
 <HR/>
 <TR><TD ALIGN="LEFT" >+ address(): String</TD></TR>
 <TR><TD ALIGN="LEFT" >+ email(): String</TD></TR>
-<TR><TD ALIGN="LEFT" >+ id(): Long</TD></TR>
 <TR><TD ALIGN="LEFT" >+ name(): String</TD></TR>
 <TR><TD ALIGN="LEFT" >+ password(): String</TD></TR>
 <TR><TD ALIGN="LEFT" >+ phoneNumber(): String</TD></TR>
 <TR><TD ALIGN="LEFT" >+ surname(): String</TD></TR>
+<TR><TD ALIGN="LEFT" >+ tin(): String</TD></TR>
 <TR><TD ALIGN="LEFT" >+ username(): String</TD></TR>
-<TR><TD ALIGN="LEFT" >+ version(): long</TD></TR>
 </TABLE>>
 	style=filled
 	margin=0
@@ -176,12 +174,17 @@ UserCreationDto686682215[
 	fillcolor="#FFFFFF"
 ];
 
-UserMapperImpl219619911[
+UserSearchDto686682215[
 	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
-<TR><TD ALIGN="LEFT" >(C)UserMapperImpl</TD></TR>
+<TR><TD ALIGN="LEFT" >(C)UserSearchDto</TD></TR>
 <HR/>
-<TR><TD ALIGN="LEFT" >+ userCreationDtoToPropertyOwner(userCreationDto: UserCreationDto): PropertyOwner</TD></TR>
-<TR><TD ALIGN="LEFT" >+ userToUserResponseDto(user: User): UserResponseDto</TD></TR>
+<TR><TD ALIGN="LEFT" >-   Email: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   tin: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   username: String [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ Email(): String</TD></TR>
+<TR><TD ALIGN="LEFT" >+ tin(): String</TD></TR>
+<TR><TD ALIGN="LEFT" >+ username(): String</TD></TR>
 </TABLE>>
 	style=filled
 	margin=0
@@ -195,14 +198,14 @@ UserUpdateDto686682215[
 <HR/>
 <TR><TD ALIGN="LEFT" >-   address: String [0..1]</TD></TR>
 <TR><TD ALIGN="LEFT" >-   email: String [0..1]</TD></TR>
-<TR><TD ALIGN="LEFT" >-   id: long [1]</TD></TR>
 <TR><TD ALIGN="LEFT" >-   password: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   tin: String [0..1]</TD></TR>
 <TR><TD ALIGN="LEFT" >-   version: long [1]</TD></TR>
 <HR/>
 <TR><TD ALIGN="LEFT" >+ address(): String</TD></TR>
 <TR><TD ALIGN="LEFT" >+ email(): String</TD></TR>
-<TR><TD ALIGN="LEFT" >+ id(): long</TD></TR>
 <TR><TD ALIGN="LEFT" >+ password(): String</TD></TR>
+<TR><TD ALIGN="LEFT" >+ tin(): String</TD></TR>
 <TR><TD ALIGN="LEFT" >+ version(): long</TD></TR>
 </TABLE>>
 	style=filled
@@ -216,7 +219,6 @@ UserUpdateDto686682215[
 'edges    
 PropertyOwnerController931943586 -> PropertyOwnerServiceImpl124484289[label="propertyOwnerService
 [1]", arrowhead=none];
-PropertyOwnerServiceImpl124484289 -> UserMapperImpl219619911[arrowhead=none];
 SampleData2033362088 -> PropertyOwnerServiceImpl124484289[label="propertyOwnerService
 [1]", arrowhead=none];
     
