@@ -1,52 +1,28 @@
 package com.scytalys.technikon.service.impl;
 
-
 import com.scytalys.technikon.domain.Property;
 import com.scytalys.technikon.domain.PropertyOwner;
-
-
 import com.scytalys.technikon.domain.User;
-
 import com.scytalys.technikon.domain.category.PropertyType;
-import com.scytalys.technikon.dto.UserResponseDto;
+import com.scytalys.technikon.dto.UserCreationDto;
+import com.scytalys.technikon.dto.UserSearchDto;
+import com.scytalys.technikon.dto.UserUpdateDto;
+import com.scytalys.technikon.mapper.OwnerMapper;
 import com.scytalys.technikon.repository.PropertyOwnerRepository;
-
-
 import com.scytalys.technikon.repository.PropertyRepository;
-import com.scytalys.technikon.service.PropertyOwnerService;
-
-
-import com.scytalys.technikon.service.PropertyService;
-import jakarta.persistence.EntityNotFoundException;
-
-
+import java.util.*;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.Spy;
-
-
-import org.springframework.boot.test.context.SpringBootTest;
-
-import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.dao.OptimisticLockingFailureException;
-
-import org.springframework.test.annotation.Rollback;
-import org.springframework.test.context.ActiveProfiles;
-
-
-import java.util.List;
-import java.util.Optional;
-import java.util.concurrent.atomic.AtomicBoolean;
-
-
+import org.springframework.dao.DataAccessResourceFailureException;
+import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.when;
 
 public class PropertyOwnerServiceImplTest {
@@ -63,11 +39,16 @@ public class PropertyOwnerServiceImplTest {
     @Mock
     PropertyRepository propertyRepository;
 
+    @Spy
+    private OwnerMapper ownerMapper = OwnerMapper.INSTANCE; // Initialize ownerMapper
 
 
+    @Spy
     private PropertyOwner propertyOwner;
 
+    private UserCreationDto dto;
 
+    @Spy
     private Property property;
 
     @BeforeEach
@@ -75,372 +56,169 @@ public class PropertyOwnerServiceImplTest {
 
         MockitoAnnotations.openMocks(this);
 
-        propertyOwner= new PropertyOwner();
-        propertyOwner.setId(3L); // id
+        propertyOwner= new PropertyOwner();; // id
+        propertyOwner.setTin("1651614865GR");
         propertyOwner.setName("Johny"); // name
         propertyOwner.setSurname("Doep"); // surname
         propertyOwner.setEmail("jdee@hotmail.com"); // email
-        propertyOwner.setUsername("jdee"); // username
+        propertyOwner.setUsername("jdeeefe"); // username
         propertyOwner.setPassword("pass"); // password
         propertyOwner.setAddress("somewhere"); // address
-        propertyOwner.setPhoneNumber("999582486");// phoneNumber
+        propertyOwner.setPhoneNumber("+30999582486");// phoneNumber
         propertyOwner.setVersion(0);
+        dto =new UserCreationDto(propertyOwner.getTin(), propertyOwner.getName(), propertyOwner.getSurname(), propertyOwner.getEmail(), propertyOwner.getUsername(), propertyOwner.getPassword(), propertyOwner.getAddress(), propertyOwner.getPhoneNumber());
+
 
 
     }
     @AfterEach
-    public void teardown(){
-
-   
-        propertyOwnerService.deleteUser(propertyOwner.getTin());
+    public void tearDown(){
         propertyOwner=null;
+        dto=null;
+    }
 
+    /**
+     * This test verifies that the createUser method correctly  the object when the repository method succeeds.
+     */
+    @Test
+    public void testCreateUser() {
+        when(propertyOwnerRepository.save(eq(propertyOwner))).thenReturn(propertyOwner);
+        PropertyOwner result =  propertyOwnerService.createDBUser(dto);
+        assertEquals(propertyOwner, result);
 
     }
 
     /**
-     * This test verifies that the createUser method correctly saves a PropertyOwner to the repository and returns the saved PropertyOwner.
+     * This test verifies the behavior of the searchUser method when the property owner is found in the DB.
      */
-//    @Test
-//    public void testCreateUser() {
-//        when(propertyOwnerRepository.save(any(PropertyOwner.class))).thenReturn(propertyOwner);
-//        //PropertyOwner result =  propertyOwnerService.createDBUser(propertyOwner);
-////        System.out.println(result);
-////        assertEquals(propertyOwner, result);
-//
-//    }
-////
-//    /**
-//     * This test verifies the behavior of the searchUserById method when a PropertyOwner with the given ID is found.
-//     */
-//    @Test
-//    public void testSearchUserById(){
-//        when(propertyOwnerRepository.save(any(PropertyOwner.class))).thenReturn(propertyOwner);
-//        when(propertyOwnerRepository.findById(any(Long.class))).thenReturn(Optional.of(propertyOwner));
-//        propertyOwnerService.createDBUser(propertyOwner);
-//        //User result = propertyOwnerService.searchUserById(propertyOwner.getId());
-////        assertEquals(propertyOwner, result);
-//    }
-//
-//    /**
-//     * This test verifies the behavior of the searchUserById method when a PropertyOwner with the given ID is not found.
-//     */
-//    @Test
-//    public void testSearchUserByIdFail(){
-//
-//        //User result =propertyOwnerService.searchUserById(0L);
-////        assertThrows(EntityNotFoundException.class, () -> propertyOwnerService.verifySearchResult(result));
-//    }
-//
-//    /**
-//     * This test verifies the behavior of the searchUserByUsername method when a PropertyOwner with the given username is found.
-//     */
-//    @Test
-//    public void testSearchUserByUsername(){
-////        when(propertyOwnerRepository.save(any(PropertyOwner.class))).thenReturn(propertyOwner);
-////        when(propertyOwnerRepository.findByUsername(any(String.class))).thenReturn(Optional.of(propertyOwner));
-//        propertyOwner= (PropertyOwner) propertyOwnerService.createDBUser(propertyOwner);
-//        //User result = propertyOwnerService.searchUserByUsername(propertyOwner.getUsername());
-////        System.out.println(result);
-////        assertEquals(propertyOwner, result);
-//    }
-//
-//    /**
-//     * This test verifies the behavior of the searchUserByUsername method when a PropertyOwner with the given Username is not found.
-//     */
-//    @Test
-//    public void testSearchUserByUsernameFail(){
-////        when(propertyOwnerRepository.findByUsername(any(String.class))).thenReturn(Optional.empty());
-//        //User result=propertyOwnerService.searchUserByUsername("");
-////        assertThrows(EntityNotFoundException.class, () -> propertyOwnerService.verifySearchResult(result));
-//    }
-//
-//    /**
-//     * This test verifies the behavior of the searchUserByEmail method when a PropertyOwner with the given email is found.
-//     */
-//    @Test
-//    public void testSearchUserByEmail(){
-////        when(propertyOwnerRepository.save(any(PropertyOwner.class))).thenReturn(propertyOwner);
-////        when(propertyOwnerRepository.findByEmail(any(String.class))).thenReturn(Optional.of(propertyOwner));
-//        propertyOwnerService.createDBUser(propertyOwner);
-//        //User result = propertyOwnerService.searchUserByEmail(propertyOwner.getEmail());
-////        assertEquals(propertyOwner, result);
-//    }
-//
-//    /**
-//     * This test verifies the behavior of the searchUserByEmail method when a PropertyOwner with the given email is not found.
-//     */
-//    @Test
-//    public void testSearchUserByEmailFail(){
-////        when(propertyOwnerRepository.save(any(PropertyOwner.class))).thenReturn(propertyOwner);
-//        //User result =propertyOwnerService.searchUserByEmail("");
-////        assertThrows(EntityNotFoundException.class, () -> propertyOwnerService.verifySearchResult(result));
-//    }
-//
-//    /**
-//     * This test verifies that the updateUserEmail method correctly updates the email of a PropertyOwner.
-//     */
-//    @Test
-//
-//
-//    public void testUpdateUserEmail()  {
-//
-//        PropertyOwner user2=(PropertyOwner) propertyOwnerService.createDBUser(propertyOwner);
-//        String newEmail = "newEmail@example.com";
-//        //propertyOwnerService.updateUserEmail(user2.getId(), newEmail, user2.getVersion());
-//
-//        // Flush changes to the database
-//        //entityManager.flush();
-//
-//        //User result=propertyOwnerService.searchUserByEmail(newEmail.toLowerCase());
-//
-////        System.out.println(result);
-////        assertEquals(newEmail.toLowerCase(), result.getEmail());
-//    }
-//
-//    /**
-//     * This test verifies that the UpdateUserEmail fails because there is a unique constraint violation.
-//     */
-//    @Test
-//    public void testUpdateUserEmailFail() {
-////        when(propertyOwnerRepository.save(any(PropertyOwner.class))).thenReturn(propertyOwner);
-//        //PropertyOwner user=(PropertyOwner) propertyOwnerService.createDBUser(propertyOwner);
-//        PropertyOwner propertyOwner2 = new PropertyOwner();
-//        propertyOwner2.setId(4L); // id
-//        propertyOwner2.setName("John"); // name
-//        propertyOwner2.setSurname("Doe"); // surname
-//        propertyOwner2.setEmail("newEmail@example.com"); // email
-//        propertyOwner2.setUsername("jde2"); // username
-//        propertyOwner2.setPassword("pass"); // password
-//        propertyOwner2.setAddress("somewhere"); // address
-//        propertyOwner2.setPhoneNumber("999582486");
-//        String newEmail = "newEmail@example.com";
-//        //propertyOwnerService.updateUserEmail(user.getId(), newEmail, user.getVersion());
-////        assertNotEquals(newEmail.toLowerCase(), user.getEmail());
-//    }
-//
-//    /**
-//     * This test verifies that the updateUserAddress method correctly updates the address of a PropertyOwner.
-//     */
-//    @Test
-//    public void testUpdateUserAddress() {
-//        //when(propertyOwnerRepository.save(any(PropertyOwner.class))).thenReturn(propertyOwner);
-//        PropertyOwner user= (PropertyOwner) propertyOwnerService.createDBUser(propertyOwner);
-//        String newAddress = "New Address";
-////        propertyOwnerService.updateUserAddress(propertyOwner.getId(), newAddress, propertyOwner.getVersion());
-////        PropertyOwner result = (PropertyOwner) propertyOwnerService.searchUserById(user.getId());
-////        assertEquals(newAddress, result.getAddress());
-//    }
-//
-//    /**
-//     * This test verifies that the updateUserPassword method correctly updates the password of a PropertyOwner.
-//     */
-//    @Test
-//    public void testUpdateUserPassword() {
-//        //when(propertyOwnerRepository.save(any(PropertyOwner.class))).thenReturn(propertyOwner);
-//        PropertyOwner user= (PropertyOwner) propertyOwnerService.createDBUser(propertyOwner);
-//        String newPassword = "newPassword";
-////        propertyOwnerService.updateUserPassword(user.getId(), newPassword, user.getVersion());
-////        PropertyOwner result = (PropertyOwner) propertyOwnerService.searchUserById(user.getId());
-////        assertEquals(newPassword, result.getPassword());
-//    }
-//
-//    /**
-//     * This test verifies that the deleteUser method correctly deletes a PropertyOwner from the repository.
-//     */
-//    @Test
-//    public void testDeleteUser() {
-//        //when(propertyOwnerRepository.save(any(PropertyOwner.class))).thenReturn(propertyOwner);
-//        propertyOwnerService.createDBUser(propertyOwner);
-//        long id = propertyOwner.getId();
-//        propertyOwnerService.deleteUser(id);
-//        //when(propertyOwnerRepository.findById(any(Long.class))).thenReturn(Optional.empty());
-//        Optional<PropertyOwner> deletedUser = propertyOwnerRepository.findById(id);
-//        assertFalse(deletedUser.isPresent());
-//
-//    }
-//
-//    /**
-//     * This test verifies that the softDeleteUser method correctly sets the active status of a PropertyOwner to false.
-//     */
-//    @Test
-//    public void testSoftDeleteUser() {
-//
-//
-////            when(propertyOwnerRepository.save(any(PropertyOwner.class))).thenReturn(propertyOwner);
-//
-//        // Create a user
-//        propertyOwnerService.createDBUser(propertyOwner);
-//
-//        // Call the softDeleteUser method
-//        propertyOwnerService.softDeleteUser(propertyOwner.getId(), propertyOwner.getVersion());
-//
-//        // Fetch the entity from the repository
-//        PropertyOwner deletedUserOptional = propertyOwnerRepository.findById(propertyOwner.getId()).orElse(null);
-//
-//
-//        System.out.println(deletedUserOptional);
-//        // Assert that isActive flag is set to false
-//        assertFalse(deletedUserOptional.isActive());
-//    }
-//
-//
-//
-//
-//    /**
-//     * This test verifies that the softDeleteUser method returns null if row is non-existent.
-//     */
-//    @Test
-//    public  void testSoftDeleteUserFail() {
-//        //when(propertyOwnerRepository.save(any(PropertyOwner.class))).thenReturn(propertyOwner);
-//        propertyOwnerService.createDBUser(propertyOwner);
-//        int res =propertyOwnerService.softDeleteUser(6, 0);
-//        assertEquals(res, 0);
-//    }
-//
-//    /**
-//     * This test verifies that a softDeleted user will not appear on searches
-//     */
-//
-//    @Test void findSoftDeletedUser(){
-//        propertyOwnerService.createDBUser(propertyOwner);
-//        int res =propertyOwnerService.softDeleteUser(propertyOwner.getId(), propertyOwner.getVersion());
-//        // User result =propertyOwnerService.searchUserById(3L);
-////        assertNull(result);
-//    }
-//
-//    /**
-//     * This test verifies that the UserResponseDto is properly created from a User object.
-//     */
-//    @Test
-//    public void testCreateUserResponseDto() {
-//        when(propertyOwnerRepository.save(any(PropertyOwner.class))).thenReturn(propertyOwner);
-//        UserResponseDto responseDto = propertyOwnerService.createUserResponseDto(propertyOwner);
-//        assertEquals(propertyOwner.getId(), responseDto.id());
-//        assertEquals(propertyOwner.getUsername(), responseDto.username());
-//        assertEquals(propertyOwner.getEmail(), responseDto.email());
-//    }
-//
-//
-//
-//    /**
-//     * This test verifies that the verifyConstraintsId method throws a DataIntegrityViolationException when a PropertyOwner with the given ID is found.
-//     */
-//
-//    /**
-//     * Test that returns the propertyIds for a user that has properties
-//     */
-//    @Test
-//    public void findPropertiesforUserFail(){
-//        propertyOwnerService.createDBUser(propertyOwner);
-//        PropertyOwner user = (PropertyOwner) propertyOwnerService.searchUser(propertyOwner);
-//        boolean res= propertyOwnerService.checkUserHasProperties(propertyOwner.getId());
-//        assertTrue(res,"The properties list should be empty.");
-//
-//
-//    }
-//
-//    /**
-//     * Test that returns the propertyIds for a user that has properties
-//     */
-//    @Test
-//    public void findPropertiesforUser(){
-//        propertyOwnerService.createDBUser(propertyOwner);
-//        PropertyOwner user = (PropertyOwner) propertyOwnerService.searchUser(propertyOwner);
-//        Property property = new Property();
-//        property.setId(1L);
-//        property.setAddress("somewhere");
-//        property.setPropertyType(PropertyType.values()[1]);
-//        property.setLatitude(10.5);
-//        property.setLongitude(58.4);
-//        property.setPropertyOwner(propertyOwner);
-//
-//        propertyService.createProperty(property);
-////        List<Long> properties= propertyOwnerService.findPropertiesForUser(propertyOwner.getId());
-////        assertEquals(1, properties.size());
-////        assertEquals(1L, properties.get(0));
-//        propertyRepository.delete(property);
-//
-//    }
-//
-//
-//    /**
-//     * Test that returns true if users have properties
-//     */
-//    @Test
-//    public void testFindUsersWithProperties(){
-//        propertyOwnerService.createDBUser(propertyOwner);
-//        PropertyOwner user = (PropertyOwner) propertyOwnerService.searchUser(propertyOwner);
-//        Property property = new Property();
-//        property.setId(1L);
-//        property.setAddress("somewhere");
-//        property.setPropertyType(PropertyType.values()[1]);
-//        property.setLatitude(10.5);
-//        property.setLongitude(58.4);
-//        property.setPropertyOwner(propertyOwner);
-//
-//        propertyService.createProperty(property);
-//  //      List<Long> properties= propertyOwnerService.findPropertiesForUser(propertyOwner.getId());
-//    //    boolean result = propertyOwnerService.checkUserHasProperties(properties);
-//    //    assertTrue(result, "Result should be true because user has a property.");
-//        propertyRepository.delete(property);
-//
-//    }
-//
-//
-//    /**
-//     * Test that returns false if users do not  have properties
-//     */
-//    @Test
-//    public void testFindUsersWithPropertiesFail(){
-//        propertyOwnerService.createDBUser(propertyOwner);
-//    //    List<Long> properties= propertyOwnerService.findPropertiesForUser(propertyOwner.getId());
-//     //   boolean result = propertyOwnerService.checkUserHasProperties(properties);
-//     //   assertFalse(result, "Result should be false because the property is not linked to the user.");
-//
-//
-//    }
-//
-//    /**
-//     * Concurrency test with two threads updating the password in the db at the same time.
-//     * Checks optimistic locking through version works by tracking the Exception thrown on version mismatch.
-//     *
-//     */
-//    @Test
-//    public void whenConcurrentUpdate_thenThrowException() throws InterruptedException {
-//
-////         when(propertyOwnerRepository.save(any(PropertyOwner.class))).thenReturn(propertyOwner);
-//
-//
-//        propertyOwnerService.createDBUser(propertyOwner);
-//
-//        AtomicBoolean exceptionThrown = new AtomicBoolean(false);
-//
-//    //    Thread thread1 = new Thread(() -> { propertyOwnerService.updateUserPassword(propertyOwner.getId(),"new", propertyOwner.getVersion());});
-//
-//        Thread thread2 = new Thread(() -> {
-//            try {
-//                Thread.sleep(100);
-//
-//      //          int res = propertyOwnerService.updateUserPassword(propertyOwner.getId(),"newer", propertyOwner.getVersion() );
-//                //          if (res==0) throw new OptimisticLockingFailureException("Resource is busy.");
-//
-//            } catch (OptimisticLockingFailureException e  ) {
-//                e.printStackTrace();
-//                exceptionThrown.set(true);
-//            } catch (InterruptedException e) {
-//                throw new RuntimeException(e);
-//            }
-//        });
-//
-//        //thread1.start();
-//        thread2.start();
-//        //thread1.join();
-//        thread2.join();
-//
-//
-//
-//        assertTrue(exceptionThrown.get(), "Expected OptimisticLockingFailureException to be thrown, but it wasn't");
-//    }
+    @Test
+    public void testSearchUserByTin(){
+
+        when(propertyOwnerRepository.search(eq(propertyOwner.getUsername()), eq(propertyOwner.getEmail()), eq(propertyOwner.getTin()))).thenReturn(Optional.of(propertyOwner));
+        UserSearchDto searchRequest=new UserSearchDto(propertyOwner.getTin(),propertyOwner.getUsername(),propertyOwner.getEmail());
+        User result = propertyOwnerService.searchUser(searchRequest);
+        assertEquals(propertyOwner, result);
+    }
+
+    /**
+     * This test verifies the behavior of the searchUser method when the fields are null.
+     */
+    @Test
+    public void testSearchUserByFail(){
+        when(propertyOwnerRepository.search(eq(null),eq(null),eq(null))).thenReturn(Optional.ofNullable(null));
+        UserSearchDto searchRequest=new UserSearchDto(null,null,null);
+        User result =propertyOwnerService.searchUser(searchRequest);
+        assertNull(result);
+    }
+
+
+    /**
+     * This test verifies that the deleteUser method correctly returns when the repository operation is successful.
+     */
+
+    @Test
+    public void testDeleteUser() {
+        when(propertyOwnerRepository.deleteByTin(eq(propertyOwner.getTin()))).thenReturn(1);
+        assertDoesNotThrow(() -> propertyOwnerService.deleteUser(propertyOwner.getTin()));
+    }
+
+
+    /**
+     * This test verifies that the softDeleteUser method correctly sets the active status of a PropertyOwner to false.
+     */
+    @Test
+    public void testSoftDeleteUser() {
+        when(propertyOwnerRepository.save(eq(propertyOwner))).thenReturn(propertyOwner);
+        propertyOwnerService.createDBUser(dto);
+        doAnswer(invocation -> {
+            propertyOwner.setActive(false); // Set isActive flag to false
+            return 1;
+        }).when(propertyOwnerRepository).softDeleteByTin(eq(propertyOwner.getTin()), eq(propertyOwner.getVersion()));
+        propertyOwnerService.softDeleteUser(propertyOwner.getTin(),propertyOwner.getVersion());
+        // Assert that isActive flag is set to false
+        assertFalse(propertyOwner.isActive());
+    }
+
+
+
+
+    /**
+     * This test verifies that the softDeleteUser throws DataAccessResourceFailure if the delete fails
+     */
+    @Test
+    public  void testSoftDeleteUserFail() {
+        propertyOwnerService.createDBUser(dto);
+        assertThrows(DataAccessResourceFailureException.class, ()->propertyOwnerService.softDeleteUser(propertyOwner.getTin(), 0));
+
+    }
+
+
+    /**
+     * Test that returns the propertyIds for a user that has properties
+     */
+    @Test
+    public void findPropertiesForUser(){
+        Property property = new Property();
+        property.setId(1L);
+        property.setTin("1516165161dg");
+        property.setAddress("somewhere");
+        property.setPropertyType(PropertyType.values()[1]);
+        property.setLatitude(10.5);
+        property.setLongitude(58.4);
+        property.setPropertyOwner(propertyOwner);
+        List<String> propertiesList = List.of(property.getTin());
+        when(propertyOwnerRepository.findPropertyIdsByUserId(eq(propertyOwner.getTin()))).thenReturn(propertiesList);
+        boolean res = propertyOwnerService.checkUserHasProperties(propertyOwner.getTin());
+        assertTrue(res);
+        propertyRepository.delete(property);
+
+    }
+
+
+    /**
+     * Test that returns false if users do not  have properties
+     */
+    @Test
+    public void testFindUsersWithPropertiesFail(){
+        when(propertyOwnerRepository.findPropertyIdsByUserId(eq(propertyOwner.getTin()))).thenReturn(new ArrayList<>());
+        boolean res = propertyOwnerService.checkUserHasProperties(propertyOwner.getTin());
+        assertFalse(res);
+
+    }
+
+    /**
+     *
+     * Checks DataAccessResourceFailure is thrown on update operations where there is a version mismatch.
+     *
+     */
+    @Test
+    public void whenConcurrentUpdate_thenThrowException(){
+        UserUpdateDto updateRequest = new UserUpdateDto(propertyOwner.getTin(), "dezfze@fezfez.com", propertyOwner.getAddress(), propertyOwner.getPassword(), 0);
+        UserUpdateDto updateRequest2 = new UserUpdateDto(propertyOwner.getTin(), "dezdefze@fezfez.com", propertyOwner.getAddress(), propertyOwner.getPassword(), 0);
+
+        // Stubbing the behavior of propertyOwnerRepository.update
+        doAnswer(invocation -> {
+
+                Long version=invocation.getArgument(4);
+
+            // Check if the version matches
+            if (propertyOwner.getVersion() == version ) {
+                propertyOwner.setVersion(propertyOwner.getVersion() + 1);
+                String tin = invocation.getArgument(0);
+                String email = invocation.getArgument(1);
+                String address = invocation.getArgument(2);
+                String password = invocation.getArgument(3);
+                return 1;
+            }
+            return 0;
+        }).when(propertyOwnerRepository).update(any(String.class), any(String.class), any(String.class), any(String.class), any(Long.class));
+
+        // Call the UpdateUser method with updateRequest
+        propertyOwnerService.UpdateUser(updateRequest);
+
+        // Assert that an exception is thrown when attempting to update with updateRequest2
+        assertThrows(DataAccessResourceFailureException.class, () -> propertyOwnerService.UpdateUser(updateRequest2));
+    }
+
 
 }

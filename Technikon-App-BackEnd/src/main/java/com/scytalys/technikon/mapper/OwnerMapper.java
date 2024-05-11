@@ -11,7 +11,9 @@ import org.mapstruct.factory.Mappers;
 import java.util.Optional;
 import java.util.regex.Pattern;
 
-@Mapper
+
+@Mapper(componentModel = "spring"  )
+@MapperConfig(unmappedSourcePolicy = ReportingPolicy.IGNORE, unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface OwnerMapper {
         OwnerMapper INSTANCE = Mappers.getMapper(OwnerMapper.class);
 

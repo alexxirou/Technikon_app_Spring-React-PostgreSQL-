@@ -15,6 +15,7 @@ import org.springframework.dao.DataAccessResourceFailureException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -118,7 +119,7 @@ public class PropertyOwnerServiceImpl implements PropertyOwnerService {
      * @return a boolean based on if the user is linked to any property ids
     */
     public boolean checkUserHasProperties(String tin){
-        List<Long> results=propertyOwnerRepository.findPropertyIdsByUserId(tin);
+        List<String> results=propertyOwnerRepository.findPropertyIdsByUserId(tin);
         return !results.isEmpty(); // Return true if the list of property IDs is not empty
     }
 

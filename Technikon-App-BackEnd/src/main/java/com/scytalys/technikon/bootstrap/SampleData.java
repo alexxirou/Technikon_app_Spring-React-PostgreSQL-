@@ -33,8 +33,7 @@ public class SampleData {
     private final PropertyOwnerService propertyOwnerService;
     @Autowired
     private final PropertyService propertyService;
-    @Autowired
-    private final OwnerMapper ownerMapper;
+
 
     @Bean
     public CommandLineRunner myCommandLineRunner(){
@@ -49,22 +48,22 @@ public class SampleData {
             propertyRepairService.createPropertyRepair(propertyRepair);
 
             PropertyOwner propertyOwner = new PropertyOwner();
-            propertyOwner.setId(2L);
+
             propertyOwner.setTin("1651614865GR");// id
             propertyOwner.setName("John"); // name
             propertyOwner.setSurname("Doe"); // surname
             propertyOwner.setEmail("JDE@hotmail.com"); // email
-            propertyOwner.setUsername("JDE"); // username
+            propertyOwner.setUsername("JDEdfezv"); // username
             propertyOwner.setPassword("pass"); // password
             propertyOwner.setAddress("somewhere"); // address
-            propertyOwner.setPhoneNumber("999582486");
+            propertyOwner.setPhoneNumber("+30999582486");
             UserCreationDto dto =new UserCreationDto(propertyOwner.getTin(), propertyOwner.getName(), propertyOwner.getSurname(), propertyOwner.getEmail(), propertyOwner.getUsername(), propertyOwner.getPassword(), propertyOwner.getAddress(), propertyOwner.getPhoneNumber());
 
-            propertyOwnerService.createDBUser(dto);
+            propertyOwner=propertyOwnerService.createDBUser(dto);
 
 //            propertyOwnerService.updateUserPassword(propertyOwner.getId(),"password", propertyOwner.getVersion());
             Property property = new Property();
-            property.setId(1L);
+
             property.setTin("15161651616fr");
             property.setAddress("somewhere");
             property.setPropertyType(PropertyType.values()[1]);

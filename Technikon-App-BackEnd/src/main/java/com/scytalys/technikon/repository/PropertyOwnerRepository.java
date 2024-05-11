@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 
@@ -19,7 +20,7 @@ public interface PropertyOwnerRepository extends JpaRepository<PropertyOwner, Lo
     @Modifying
     @Transactional
     @Query("UPDATE PropertyOwner p set p.isActive = false, p.version = p.version + 1  where p.tin=:tin and p.version= :version")
-    int softDeleteByTin(@Param("id")String tin, @Param("version")long version);
+    int softDeleteByTin(@Param("tin")String tin, @Param("version")long version);
 
     @Modifying
     @Transactional
@@ -45,8 +46,8 @@ public interface PropertyOwnerRepository extends JpaRepository<PropertyOwner, Lo
                     @Param("tin") String tin);
 
     @Transactional
-    @Query("SELECT p.id FROM Property p WHERE p.propertyOwner.tin = :tin")
-    ArrayList<Long> findPropertyIdsByUserId(@Param("tin") String tin);
+    @Query("SELECT p.tin FROM Property p WHERE p.propertyOwner.tin = :tin")
+    List<String> findPropertyIdsByUserId(@Param("tin") String tin);
 
     @Transactional
     @Modifying
