@@ -2,12 +2,14 @@ package com.scytalys.technikon.mapper;
 import com.scytalys.technikon.domain.Admin;
 import com.scytalys.technikon.domain.PropertyOwner;
 import com.scytalys.technikon.domain.User;
-import com.scytalys.technikon.dto.UserCreationDto;
-import com.scytalys.technikon.dto.UserResponseDto;
-import com.scytalys.technikon.dto.UserUpdateDto;
+import com.scytalys.technikon.dto.*;
+import com.scytalys.technikon.repository.PropertyOwnerRepository;
 import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
+import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.regex.Pattern;
 
@@ -56,7 +58,21 @@ public interface OwnerMapper {
         @Mapping(source = "email", target = "email")
         @Mapping(source = "version", target = "version")
         UserResponseDto userToUserResponseDto(User user);
-    }
+
+        @Mapping(source = "user.tin", target = "tin")
+        @Mapping(source = "user.username", target = "username")
+        @Mapping(source = "user.email", target = "email")
+        @Mapping(source = "user.name", target = "name")
+        @Mapping(source = "user.surname", target = "surname")
+        @Mapping(source = "user.address", target = "address")
+        @Mapping(source = "user.phoneNumber", target = "phoneNumber")
+        @Mapping(target = "properties", source = "results")
+        @Mapping(source = "user.version", target = "version")
+        UserSearchResponseDto userToUserSearchResponseDto(User user, List<String> results);
+
+
+
+}
 
 
 

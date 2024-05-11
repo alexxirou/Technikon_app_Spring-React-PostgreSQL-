@@ -3,6 +3,7 @@ import com.scytalys.technikon.domain.PropertyOwner;
 import com.scytalys.technikon.domain.User;
 import com.scytalys.technikon.dto.UserResponseDto;
 import com.scytalys.technikon.dto.UserSearchDto;
+import com.scytalys.technikon.dto.UserSearchResponseDto;
 import com.scytalys.technikon.dto.UserUpdateDto;
 
 public interface UserService {
@@ -13,6 +14,6 @@ public interface UserService {
     void deleteUser(String tin);
     void UpdateUser(UserUpdateDto dto);
     UserResponseDto createUserResponseDto(User user);
-
+    UserSearchResponseDto createSearchResponse(User user);
 
     }

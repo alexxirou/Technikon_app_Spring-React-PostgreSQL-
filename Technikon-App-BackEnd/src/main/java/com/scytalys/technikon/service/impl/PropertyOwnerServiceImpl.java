@@ -1,10 +1,7 @@
 package com.scytalys.technikon.service.impl;
 import com.scytalys.technikon.domain.PropertyOwner;
 import com.scytalys.technikon.domain.User;
-import com.scytalys.technikon.dto.UserCreationDto;
-import com.scytalys.technikon.dto.UserResponseDto;
-import com.scytalys.technikon.dto.UserSearchDto;
-import com.scytalys.technikon.dto.UserUpdateDto;
+import com.scytalys.technikon.dto.*;
 import com.scytalys.technikon.mapper.OwnerMapper;
 import com.scytalys.technikon.repository.PropertyOwnerRepository;
 import com.scytalys.technikon.service.PropertyOwnerService;
@@ -17,6 +14,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.regex.Pattern;
 
 @Service
 @AllArgsConstructor
@@ -37,6 +36,7 @@ public class PropertyOwnerServiceImpl implements PropertyOwnerService {
     @Override
     public PropertyOwner createDBUser(UserCreationDto dto) {
         PropertyOwner user = ownerMapper.userCreationDtoToPropertyOwner(dto);
+        user.setEmail(user.getEmail().toLowerCase());
         try {
             propertyOwnerRepository.save(user);
             return user;
@@ -69,7 +69,10 @@ public class PropertyOwnerServiceImpl implements PropertyOwnerService {
      * @throws IllegalArgumentException if the provided DTO is invalid or contains incomplete information.
      */
     public void UpdateUser(UserUpdateDto dto){
-        int res =propertyOwnerRepository.update(dto.tin(), dto.email(), dto.address(), dto.password(), dto.version());
+        String verifiedEmail = Optional.ofNullable(dto.email())
+                .filter(email -> Pattern.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$", email))
+                .orElseThrow(() -> new IllegalArgumentException("Invalid email format"));
+        int res =propertyOwnerRepository.update(dto.tin(), verifiedEmail, dto.address(), dto.password(), dto.version());
         if (res==0) throw new DataAccessResourceFailureException("Update failed: User not found, or resource is busy.");
     }
 
@@ -80,11 +83,10 @@ public class PropertyOwnerServiceImpl implements PropertyOwnerService {
      */
 
     public void deleteUser(String tin) {
-        try {
-            propertyOwnerRepository.deleteByTin(tin);
-        }catch (Exception e){
-            throw new EntityNotFoundException("User not found.");
-        }
+        int res = propertyOwnerRepository.deleteByTin(tin);
+
+        if (res==0)  throw new EntityNotFoundException("User not found.");
+
     }
 
     /**
@@ -96,7 +98,8 @@ public class PropertyOwnerServiceImpl implements PropertyOwnerService {
 
     public int softDeleteUser(String tin, long version){
       int res = propertyOwnerRepository.softDeleteByTin(tin,version);
-      if (res==0) throw new DataAccessResourceFailureException("User not found, or resource is busy.0");
+      if (res==0) throw new DataAccessResourceFailureException("User not found, or resource is busy. " +
+              "If the error persists please contact an administrator.");
       return res;
     }
 
@@ -123,6 +126,17 @@ public class PropertyOwnerServiceImpl implements PropertyOwnerService {
         return !results.isEmpty(); // Return true if the list of property IDs is not empty
     }
 
+    /**
+     * Creates a Dto containing the user info and the properties associated with him.
+     * @param user the user
+     * @return a userSearchResponse record containing the information.
+     */
+    @Override
+    public UserSearchResponseDto createSearchResponse(User user){
+        List<String> results=propertyOwnerRepository.findPropertyIdsByUserId(user.getTin());
+
+        return ownerMapper.userToUserSearchResponseDto(user, results);
+    }
 
 }
 
