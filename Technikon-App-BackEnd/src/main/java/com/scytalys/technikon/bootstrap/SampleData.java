@@ -3,12 +3,10 @@ package com.scytalys.technikon.bootstrap;
 
 import com.scytalys.technikon.domain.Property;
 import com.scytalys.technikon.domain.PropertyOwner;
-import com.scytalys.technikon.domain.PropertyRepair;
 import com.scytalys.technikon.domain.category.PropertyType;
 import com.scytalys.technikon.domain.category.RepairStatus;
 import com.scytalys.technikon.domain.category.RepairType;
-import com.scytalys.technikon.dto.PropertyRepairCreationDto;
-import com.scytalys.technikon.dto.PropertyRepairDto;
+import com.scytalys.technikon.dto.repair.PropertyRepairDto;
 import com.scytalys.technikon.service.PropertyOwnerService;
 import com.scytalys.technikon.service.PropertyRepairService;
 import com.scytalys.technikon.service.PropertyService;
@@ -21,7 +19,6 @@ import org.springframework.context.annotation.Configuration;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.Date;
 
 @AllArgsConstructor
 @Configuration
@@ -33,11 +30,12 @@ public class SampleData {
     private final PropertyOwnerService propertyOwnerService;
     @Autowired
     private final PropertyService propertyService;
+
     @Bean
-    public CommandLineRunner myCommandLineRunner(){
+    public CommandLineRunner myCommandLineRunner() {
         return args -> {
             PropertyOwner propertyOwner = new PropertyOwner();
-            propertyOwner.setId(2L); // id
+            propertyOwner.setId(1); // id
             propertyOwner.setName("John"); // name
             propertyOwner.setSurname("Doe"); // surname
             propertyOwner.setEmail("JDE@hotmail.com"); // email
@@ -47,28 +45,40 @@ public class SampleData {
             propertyOwner.setPhoneNumber(999582486);
             propertyOwnerService.createUser(propertyOwner);
 
-            propertyOwnerService.searchUserById(1L);
+            propertyOwnerService.searchUserById(1);
 
             Property property = new Property();
             property.setAddress("Filellinon 12");
             property.setPropertyOwner(propertyOwner);
-            property.setId(1L);
+            property.setId(1);
             property.setPropertyType(PropertyType.MAISONETTE);
             property.setLatitude(13.5);
             property.setLongitude(34.54);
             property.setConstructionYear(LocalDate.of(1998, 10, 12));
             propertyService.createProperty(property);
 
-            PropertyRepairCreationDto propertyRepairCreationDto = new PropertyRepairCreationDto(
+            Property property2 = new Property();
+            property2.setAddress("Mesologgiou 12");
+            property2.setPropertyOwner(propertyOwner);
+            property2.setId(2);
+            property2.setPropertyType(PropertyType.APARTMENT_BUILDING);
+            property2.setLatitude(13);
+            property2.setLongitude(13);
+            property2.setConstructionYear(LocalDate.of(2000, 02, 02));
+            propertyService.createProperty(property2);
+
+
+            PropertyRepairDto propertyRepairDto = new PropertyRepairDto(
+                    1,
                     propertyOwner.getId(),
                     property.getId(),
-                    LocalDate.of(2024, 8, 15),
-                    "Plumb work",
-                    RepairType.PLUMBING,
+                    LocalDate.of(2025, 5, 5),
+                    "short for repair",
+                    RepairType.ELECTRICAL_WORK,
                     RepairStatus.SCHEDULED,
-                    new BigDecimal("12.0"),
-                    "Describing with details the work to be done");
-            propertyRepairService.createPropertyRepair(propertyRepairCreationDto);
+                    new BigDecimal(170),
+                    "looong");
+            propertyRepairService.createPropertyRepair(propertyRepairDto);
         };
     }
-}
+    }

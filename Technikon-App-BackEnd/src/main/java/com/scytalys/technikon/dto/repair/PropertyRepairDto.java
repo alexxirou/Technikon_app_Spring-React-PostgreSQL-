@@ -1,4 +1,4 @@
-package com.scytalys.technikon.dto;
+package com.scytalys.technikon.dto.repair;
 
 import com.scytalys.technikon.domain.category.RepairStatus;
 import com.scytalys.technikon.domain.category.RepairType;
@@ -9,9 +9,9 @@ import java.util.Date;
 import java.util.UUID;
 
 public record PropertyRepairDto(
-        Long propertyRepairId,
-        Long propertyOwnerId,
-        Long propertyId,
+        long id,
+        long propertyOwnerId,
+        long propertyId,
         LocalDate dateOfRepair,
         String shortDescription,
         RepairType repairType,
