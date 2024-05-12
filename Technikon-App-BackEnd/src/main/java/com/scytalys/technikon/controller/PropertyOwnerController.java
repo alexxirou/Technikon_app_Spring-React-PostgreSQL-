@@ -56,10 +56,9 @@ public class PropertyOwnerController {
             @RequestParam(required = false) String email
     ) {
         UserSearchDto searchRequest = new UserSearchDto(tin, username, email);
-        User user = propertyOwnerService.searchUser(searchRequest);
-        if (user==null) throw new EntityNotFoundException("Requested user not found. Please check the provided TIN, Username, or Email.");
-        UserSearchResponseDto userInfo = propertyOwnerService.createSearchResponse(user);
-        HttpHeaders headers= HeaderUtility.createHeaders("Success-Header", userInfo.tin());
+        UserSearchResponseDto userInfo = propertyOwnerService.searchUser(searchRequest);
+        if (userInfo==null) throw new EntityNotFoundException("Requested user not found. Please check the provided TIN, Username, or Email.");
+        HttpHeaders headers= HeaderUtility.createHeaders("Success-Header", userInfo.getTin());
         return new ResponseEntity<>(userInfo, headers, HttpStatus.OK);
     }
 

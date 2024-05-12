@@ -12,7 +12,6 @@ import org.springframework.dao.DataAccessResourceFailureException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.regex.Pattern;
@@ -53,9 +52,8 @@ public class PropertyOwnerServiceImpl implements PropertyOwnerService {
      * @return The found user or null if not found or inactive.
      */
     @Override
-    public User searchUser(UserSearchDto dto) {
-        return propertyOwnerRepository.search(dto.username(), dto.Email(), dto.tin())
-                .filter(User::isActive)
+    public UserSearchResponseDto searchUser(UserSearchDto dto) {
+        return propertyOwnerRepository.searchUserAndFindPropertyIds(dto.tin(),dto.username(), dto.Email())
                 .orElse(null);
     }
 
@@ -126,17 +124,7 @@ public class PropertyOwnerServiceImpl implements PropertyOwnerService {
         return !results.isEmpty(); // Return true if the list of property IDs is not empty
     }
 
-    /**
-     * Creates a Dto containing the user info and the properties associated with him.
-     * @param user the user
-     * @return a userSearchResponse record containing the information.
-     */
-    @Override
-    public UserSearchResponseDto createSearchResponse(User user){
-        List<String> results=propertyOwnerRepository.findPropertyIdsByUserId(user.getTin());
 
-        return ownerMapper.userToUserSearchResponseDto(user, results);
-    }
 
 }
 

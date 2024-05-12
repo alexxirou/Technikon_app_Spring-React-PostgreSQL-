@@ -55,14 +55,13 @@ public interface PropertyOwnerRepository extends JpaRepository<PropertyOwner, Lo
     @Query("DELETE FROM PropertyOwner p WHERE p.tin = :tin")
     int deleteByTin(@Param("tin") String tin);
 
-    @Query("SELECT DISTINCT new com.scytalys.technikon.dto.UserSearchResponseDto(p.tin, p.username, p.email, p.name, p.surname, p.address, p.phoneNumber, STRING_AGG(prop.tin, ','), p.version) " +
+    @Query("SELECT new com.scytalys.technikon.dto.UserSearchResponseDto(p.tin, p.username, p.email, p.name, p.surname, p.address, p.phoneNumber, p.isActive, FUNCTION('ARRAY_AGG', prop.tin), p.version) " +
             "FROM PropertyOwner p " +
             "LEFT JOIN Property prop ON p.id = prop.propertyOwner.id " +
-            "WHERE (:username IS NOT NULL AND p.username = :username)" +
-            "    OR (:email IS NOT NULL AND p.email = :email)" +
-            "    OR (:tin IS NOT NULL AND p.tin = :tin)" +
-            "GROUP BY p.tin, p.username, p.email, p.name, p.surname, p.address, p.phoneNumber, p.version")
+            "WHERE (:username IS NOT NULL AND p.username = :username) " +
+            "   OR (:email IS NOT NULL AND p.email = :email) " +
+            "   OR (:tin IS NOT NULL AND p.tin = :tin) " +
+            "GROUP BY p.tin, p.username, p.email, p.name, p.surname, p.address, p.phoneNumber, p.isActive, p.version")
+    Optional<UserSearchResponseDto> searchUserAndFindPropertyIds(@Param("tin") String tin, @Param("username") String username, @Param("email") String email);
 
-    UserSearchResponseDto searchUserAndFindPropertyIds(@Param("tin") String tin, @Param("username") String username, @Param("email") String email);
-    
 }

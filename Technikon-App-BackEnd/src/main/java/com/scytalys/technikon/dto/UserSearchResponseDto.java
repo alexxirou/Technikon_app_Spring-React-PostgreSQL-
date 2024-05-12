@@ -1,15 +1,22 @@
 package com.scytalys.technikon.dto;
 
 
+import lombok.*;
+
 import java.util.List;
 
-public record UserSearchResponseDto(String tin,
-                                    String username,
-                                    String email,
-                                    String name,
-                                    String surname,
-                                    String address,
-                                    String phoneNumber,
-                                    List<String> properties,
-                                    long version) {
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@ToString
+public class UserSearchResponseDto{ String tin;
+                                    String username;
+                                    String email;
+                                    String name;
+                                    String surname;
+                                    String address;
+                                    String phoneNumber;
+                                    boolean isActive;
+                                    String[] propertyTin;
+                                    long version;
 }

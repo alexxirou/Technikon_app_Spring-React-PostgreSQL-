@@ -4,12 +4,12 @@ import com.scytalys.technikon.domain.Property;
 import com.scytalys.technikon.domain.PropertyOwner;
 import com.scytalys.technikon.domain.User;
 import com.scytalys.technikon.domain.category.PropertyType;
-import com.scytalys.technikon.dto.UserCreationDto;
-import com.scytalys.technikon.dto.UserSearchDto;
-import com.scytalys.technikon.dto.UserUpdateDto;
+import com.scytalys.technikon.dto.*;
 import com.scytalys.technikon.mapper.OwnerMapper;
 import com.scytalys.technikon.repository.PropertyOwnerRepository;
 import com.scytalys.technikon.repository.PropertyRepository;
+
+import java.sql.Array;
 import java.util.*;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -26,7 +26,6 @@ import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.when;
 
 public class PropertyOwnerServiceImplTest {
-    ;
 
 
     @Mock
@@ -91,11 +90,32 @@ public class PropertyOwnerServiceImplTest {
      */
     @Test
     public void testSearchUserByTin(){
-
-        when(propertyOwnerRepository.search(eq(propertyOwner.getUsername()), eq(propertyOwner.getEmail()), eq(propertyOwner.getTin()))).thenReturn(Optional.of(propertyOwner));
+        UserSearchResponseDto expectedResult= new UserSearchResponseDto(
+                propertyOwner.getTin(),
+                propertyOwner.getUsername(),
+                propertyOwner.getEmail(),
+                propertyOwner.getName(),
+                propertyOwner.getSurname(),
+                propertyOwner.getAddress(),
+                propertyOwner.getPhoneNumber(),
+                propertyOwner.isActive(),
+                new String[0],
+                propertyOwner.getVersion());
+        when(propertyOwnerRepository.searchUserAndFindPropertyIds(eq(propertyOwner.getTin()),eq(propertyOwner.getUsername()), eq(propertyOwner.getEmail()))).thenReturn(Optional.of(expectedResult));
         UserSearchDto searchRequest=new UserSearchDto(propertyOwner.getTin(),propertyOwner.getUsername(),propertyOwner.getEmail());
-        User result = propertyOwnerService.searchUser(searchRequest);
-        assertEquals(propertyOwner, result);
+        UserSearchResponseDto result = propertyOwnerService.searchUser(searchRequest);
+        assertNotNull(result);
+        assertEquals(propertyOwner.getTin(), result.getTin());
+        assertEquals(propertyOwner.getUsername(),result.getUsername());
+        assertEquals(propertyOwner.getName(),result.getName());
+        assertEquals(propertyOwner.getSurname(),result.getSurname());
+        assertEquals(propertyOwner.getAddress(),result.getAddress());
+        assertEquals(propertyOwner.getPhoneNumber(),result.getPhoneNumber());
+        assertEquals(propertyOwner.getEmail(),result.getEmail());
+        assertEquals(propertyOwner.getVersion(),result.getVersion());
+        assertEquals(propertyOwner.isActive(),result.isActive());
+        assertEquals(result.getPropertyTin().length,0);
+
     }
 
     /**
@@ -105,7 +125,7 @@ public class PropertyOwnerServiceImplTest {
     public void testSearchUserByFail(){
         when(propertyOwnerRepository.search(eq(null),eq(null),eq(null))).thenReturn(Optional.ofNullable(null));
         UserSearchDto searchRequest=new UserSearchDto(null,null,null);
-        User result =propertyOwnerService.searchUser(searchRequest);
+        UserSearchResponseDto result =propertyOwnerService.searchUser(searchRequest);
         assertNull(result);
     }
 

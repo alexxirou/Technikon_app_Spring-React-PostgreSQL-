@@ -75,13 +75,11 @@ public class SampleData {
             property.setPropertyOwner(propertyOwner);
             propertyService.createProperty(property);
             Property result = propertyService.searchProperty(1L);
-            System.out.println(result.getId());
 
 
-            UserSearchDto request =new UserSearchDto(propertyOwner.getTin(),propertyOwner.getUsername(),propertyOwner.getEmail());
-            User user =propertyOwnerService.searchUser(request);
-            System.out.println(user);
-            UserSearchResponseDto response = propertyOwnerService.createSearchResponse(user);
+
+            UserSearchDto request =new UserSearchDto("1651614865GR",null,null);
+            UserSearchResponseDto response =propertyOwnerService.searchUser(request);
             System.out.println(response);
         };
     }
