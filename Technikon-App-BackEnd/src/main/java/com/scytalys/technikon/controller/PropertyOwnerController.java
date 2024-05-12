@@ -28,7 +28,6 @@ import java.util.ArrayList;
 
 
 @RestController
-
 @AllArgsConstructor
 @RequestMapping("/api/v2/users/propertyOwners")
 public class PropertyOwnerController {

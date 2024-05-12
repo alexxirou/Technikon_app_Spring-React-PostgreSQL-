@@ -1,5 +1,6 @@
 package com.scytalys.technikon.repository;
 import com.scytalys.technikon.domain.PropertyOwner;
+import com.scytalys.technikon.dto.UserSearchResponseDto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -53,4 +54,27 @@ public interface PropertyOwnerRepository extends JpaRepository<PropertyOwner, Lo
     @Modifying
     @Query("DELETE FROM PropertyOwner p WHERE p.tin = :tin")
     int deleteByTin(@Param("tin") String tin);
+
+    @Query("SELECT DISTINCT NEW com.scytalys.technikon.dto.UserSearchResponseDto(" +
+            "p.tin AS tin, " +
+            "p.username AS username, " +
+            "p.email AS email, " +
+            "p.name AS name, " +
+            "p.surname AS surname, " +
+            "p.address AS address, " +
+            "p.phoneNumber AS phoneNumber, " +
+            "p.isActive AS isActive, " +
+            "STRING_AGG(prop.tin, ',') AS propertyTins, " +
+            "p.version AS version)" +
+            " FROM PropertyOwner p" +
+            " LEFT JOIN Property prop ON p.id = prop.propertyOwner.id" +
+            " WHERE (:username IS NOT NULL AND p.username = :username)" +
+            "    OR (:email IS NOT NULL AND p.email = :email)" +
+            "    OR (:tin IS NOT NULL AND p.tin = :tin)" +
+            " GROUP BY p.tin, p.username, p.email, p.name, p.surname, p.address, p.phoneNumber, p.isActive, p.version")
+    Optional<UserSearchResponseDto> searchUserAndFindPropertyIds(
+            @Param("username") String username,
+            @Param("email") String email,
+            @Param("tin") String tin);
+
 }

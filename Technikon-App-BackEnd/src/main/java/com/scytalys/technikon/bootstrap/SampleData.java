@@ -4,10 +4,13 @@ package com.scytalys.technikon.bootstrap;
 import com.scytalys.technikon.domain.Property;
 import com.scytalys.technikon.domain.PropertyOwner;
 import com.scytalys.technikon.domain.PropertyRepair;
+import com.scytalys.technikon.domain.User;
 import com.scytalys.technikon.domain.category.PropertyType;
 import com.scytalys.technikon.domain.category.RepairStatus;
 import com.scytalys.technikon.domain.category.RepairType;
 import com.scytalys.technikon.dto.UserCreationDto;
+import com.scytalys.technikon.dto.UserSearchDto;
+import com.scytalys.technikon.dto.UserSearchResponseDto;
 import com.scytalys.technikon.mapper.OwnerMapper;
 import com.scytalys.technikon.repository.PropertyRepository;
 import com.scytalys.technikon.service.PropertyOwnerService;
@@ -73,6 +76,13 @@ public class SampleData {
             propertyService.createProperty(property);
             Property result = propertyService.searchProperty(1L);
             System.out.println(result.getId());
+
+
+            UserSearchDto request =new UserSearchDto(propertyOwner.getTin(),propertyOwner.getUsername(),propertyOwner.getEmail());
+            User user =propertyOwnerService.searchUser(request);
+            System.out.println(user);
+            UserSearchResponseDto response = propertyOwnerService.createSearchResponse(user);
+            System.out.println(response);
         };
     }
 }
