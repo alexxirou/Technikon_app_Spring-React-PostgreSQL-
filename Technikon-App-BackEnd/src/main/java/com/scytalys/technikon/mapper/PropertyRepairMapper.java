@@ -2,6 +2,7 @@ package com.scytalys.technikon.mapper;
 
 import com.scytalys.technikon.domain.PropertyRepair;
 import com.scytalys.technikon.dto.repair.PropertyRepairDto;
+import com.scytalys.technikon.dto.repair.PropertyRepairUpdateDto;
 import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
 
@@ -17,5 +18,9 @@ public interface PropertyRepairMapper {
     @Mapping(source = "propertyOwner.id", target = "propertyOwnerId")
     @Mapping(source = "property.id", target = "propertyId")
     PropertyRepairDto RepairToPropertyRepairDto(PropertyRepair propertyRepair);
+
+    PropertyRepairUpdateDto RepairToPropertyRepairUpdateDto(PropertyRepair propertyRepair);
+
+
 
 }

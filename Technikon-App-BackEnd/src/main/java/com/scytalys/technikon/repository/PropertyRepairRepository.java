@@ -35,33 +35,6 @@ public interface PropertyRepairRepository extends JpaRepository<PropertyRepair, 
 
     @Transactional
     @Modifying
-    @Query("UPDATE PropertyRepair p SET p.dateOfRepair= :newDate WHERE p.propertyOwner.id= :propertyOwnerId AND p.property.id= :propertyId AND p.id= :id")
-    int updatePropertyRepairByDate(@Param("propertyOwnerId") long propertyOwnerId, @Param("propertyId") long propertyId, @Param("id") long id, @Param("newDate") LocalDate newDate);
-
-    @Transactional
-    @Modifying
-    @Query("UPDATE PropertyRepair p SET p.shortDescription= :newDesc WHERE p.propertyOwner.id= :propertyOwnerId AND p.property.id= :propertyId AND p.id= :id")
-    int updatePropertyRepairByShortDescription(@Param("propertyOwnerId") long propertyOwnerId, @Param("propertyId") long propertyId, @Param("id") long id, @Param("newDesc") String newDesc);
-
-    @Transactional
-    @Modifying
-    @Query("UPDATE PropertyRepair p SET p.repairType= :newType WHERE p.propertyOwner.id= :propertyOwnerId AND p.property.id= :propertyId AND p.id= :id")
-    int updatePropertyRepairByType(@Param("propertyOwnerId") long propertyOwnerId, @Param("propertyId") long propertyId, @Param("id") long id, @Param("newType") RepairType newType);
-
-
-    @Transactional
-    @Modifying
-    @Query("UPDATE PropertyRepair p SET p.cost= :newCost WHERE p.propertyOwner.id= :propertyOwnerId AND p.property.id= :propertyId AND p.id= :id")
-    int updatePropertyRepairByCost(@Param("propertyOwnerId") long propertyOwnerId, @Param("propertyId") long propertyId, @Param("id") long id, @Param("newCost") BigDecimal newCost);
-
-
-    @Transactional
-    @Modifying
-    @Query("UPDATE PropertyRepair p SET p.longDescription= :newLongDesc WHERE p.propertyOwner.id= :propertyOwnerId AND p.property.id= :propertyId AND p.id= :id")
-    int updatePropertyRepairByLongDescription(@Param("propertyOwnerId") long propertyOwnerId, @Param("propertyId") long propertyId, @Param("id") long id, @Param("newLongDesc") String newLongDesc);
-
-    @Transactional
-    @Modifying
-    @Query("DELETE PropertyRepair p WHERE p.propertyOwner.id= :propertyOwnerId AND p.property.id= :propertyId AND p.id= :id")
-    int deletePropertyRepair(@Param("propertyOwnerId") long propertyOwnerId, @Param("propertyId") long propertyId, @Param("id") long id);
+    @Query("DELETE PropertyRepair p WHERE p.id= :id")
+    int deletePropertyRepair(@Param("id") long id);
 }

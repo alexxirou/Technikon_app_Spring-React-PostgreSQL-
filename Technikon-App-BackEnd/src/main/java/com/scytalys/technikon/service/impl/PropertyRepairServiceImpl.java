@@ -1,6 +1,7 @@
 package com.scytalys.technikon.service.impl;
 
 import com.scytalys.technikon.domain.PropertyRepair;
+import com.scytalys.technikon.domain.category.RepairStatus;
 import com.scytalys.technikon.domain.category.RepairType;
 import com.scytalys.technikon.dto.repair.*;
 import com.scytalys.technikon.exception.InvalidInputException;
@@ -9,7 +10,9 @@ import com.scytalys.technikon.repository.PropertyOwnerRepository;
 import com.scytalys.technikon.repository.PropertyRepairRepository;
 import com.scytalys.technikon.repository.PropertyRepository;
 import com.scytalys.technikon.service.PropertyRepairService;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.dao.DataAccessResourceFailureException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,6 +22,8 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
+
+import static com.scytalys.technikon.domain.category.RepairStatus.DEFAULT_PENDING;
 
 @Service
 @AllArgsConstructor
@@ -91,79 +96,54 @@ public class PropertyRepairServiceImpl implements PropertyRepairService {
                 .collect(Collectors.toList());
     }
 
-
-    /**
-     * Updates the date of a specific property repair in the repository.
-     *
-     * @return The number of rows affected in the database.
-     */
+    @Transactional
     @Override
-    public int updatePropertyRepairByDate(PropertyRepairUpdateByDateDto propertyRepairUpdateByDateDto) {
-        return propertyRepairRepository.updatePropertyRepairByDate(propertyRepairUpdateByDateDto.id(), propertyRepairUpdateByDateDto.propertyOwnerId(), propertyRepairUpdateByDateDto.propertyId(), propertyRepairUpdateByDateDto.dateOfRepair());
-    }
+    public PropertyRepairUpdateDto updatePropertyRepair(long id, PropertyRepairUpdateDto dto) {
+        PropertyRepair propertyRepair = propertyRepairRepository.findById(id).orElse(null);
+        if (propertyRepair == null) {
+            return null;
+        }
 
-
-    /**
-     * Updates the short description of a specific property repair in the repository.
-     *
-     * @return The number of rows affected in the database.
-     */
-    @Override
-    public int updatePropertyRepairByShortDescription(PropertyRepairUpdateByShortDescriptionDto dto) {
-        return propertyRepairRepository.updatePropertyRepairByShortDescription(dto.id(), dto.propertyOwnerId(), dto.propertyId(), dto.shortDescription());
-    }
-
-
-    /**
-     * Updates the repair type of a specific property repair in the repository.
-     *
-     *
-     * @return The number of rows affected in the database.
-     */
-    @Override
-    public int updatePropertyRepairByType(PropertyRepairUpdateByTypeDto dto) {
-        return propertyRepairRepository.updatePropertyRepairByType(dto.id(), dto.propertyOwnerId(), dto.propertyId(), dto.repairType());
-    }
-
-    /**
-     * Updates the cost of a specific property repair in the repository.
-     *
-     *
-     * @return The number of rows affected in the database.
-     */
-
-    @Override
-    public int updatePropertyRepairByCost(PropertyRepairUpdateByCostDto dto) {
-        return propertyRepairRepository.updatePropertyRepairByCost(dto.id(), dto.propertyOwnerId(), dto.propertyId(), dto.cost());
-    }
-
-
-    /**
-     * Updates the long description of a specific property repair in the repository.
-     *
-     *
-     * @return The number of rows affected in the database.
-     */
-    @Override
-    public int updatePropertyRepairByLongDescription(PropertyRepairUpdateByLongDescriptionDto dto) {
-        return propertyRepairRepository.updatePropertyRepairByLongDescription(dto.id(), dto.propertyOwnerId(), dto.propertyId(), dto.longDescription());
+        // Apply updates
+        if(dto.dateOfRepair() != null){
+            propertyRepair.setDateOfRepair(dto.dateOfRepair());
+        }
+        if(dto.shortDescription() !=null){
+            propertyRepair.setShortDescription(dto.shortDescription());
+        }
+        if(dto.repairType()!=null){
+            propertyRepair.setRepairType(dto.repairType());
+        }
+        if(dto.repairStatus()!=null){
+            propertyRepair.setRepairStatus(dto.repairStatus());
+        }
+        if (dto.cost() !=null) {
+            propertyRepair.setCost(dto.cost());
+        }
+        if (dto.longDescription() !=null) {
+            propertyRepair.setLongDescription(dto.longDescription());
+        }
+        propertyRepairRepository.save(propertyRepair);
+        return propertyRepairMapper.RepairToPropertyRepairUpdateDto(propertyRepair);
     }
 
 
     /**
      * Deletes a specific property repair from the repository.
      *
-     * @param propertyOwnerId  The unique identifier of the property owner who scheduled the repair.
+     *
      *
      */
     @Transactional
-    public void deletePropertyRepair(long propertyOwnerId, long propertyId, long id) {
-        int deletedRows = propertyRepairRepository.deletePropertyRepair(propertyOwnerId, propertyId, id);
-        if (deletedRows == 0) {
-            throw new DataAccessResourceFailureException("Failed to delete property repair with id: " + id);
+    public void deletePropertyRepair(long id) {
+        PropertyRepair propertyRepair = propertyRepairRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+       if (propertyRepair.getRepairStatus().equals(DEFAULT_PENDING)){
+            int deletedRows = propertyRepairRepository.deletePropertyRepair(id);
+            if (deletedRows == 0) {
+                throw new DataAccessResourceFailureException("Failed to delete property repair with id: " + id);
+            }
         }
     }
-
 
     private void validatePropertyOwnerExistsOrThrow(long propertyOwnerId) {
         propertyOwnerRepository.findById(propertyOwnerId)

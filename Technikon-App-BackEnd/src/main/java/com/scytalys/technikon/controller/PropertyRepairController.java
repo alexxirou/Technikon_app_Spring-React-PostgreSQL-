@@ -1,6 +1,9 @@
 package com.scytalys.technikon.controller;
 
 
+import com.scytalys.technikon.domain.PropertyRepair;
+import com.scytalys.technikon.domain.category.RepairStatus;
+import com.scytalys.technikon.domain.category.RepairType;
 import com.scytalys.technikon.dto.repair.*;
 import com.scytalys.technikon.exception.InvalidInputException;
 import com.scytalys.technikon.exception.ResourceNotFoundException;
@@ -47,54 +50,14 @@ public class PropertyRepairController {
         return new ResponseEntity<>(propertyRepairService.searchPropertyRepairByDates(propertyRepairSearchByDates), HttpStatus.OK);
     }
 
-    @PutMapping("/update-by-date")
-    public ResponseEntity<String> updatePropertyRepairByDate(@RequestBody PropertyRepairUpdateByDateDto propertyRepairUpdateByDateDto){
-        int res =  propertyRepairService.updatePropertyRepairByDate(propertyRepairUpdateByDateDto);
-        if (res == 0) { //update failed
-            throw new DataAccessResourceFailureException("Failed to update date for property repair with id: " + propertyRepairUpdateByDateDto.id());
-        }
-        return new ResponseEntity<>("Property repair updated", HttpStatus.OK);
+    @PutMapping("/{id}")
+    public PropertyRepairUpdateDto update(@PathVariable long id, @RequestBody PropertyRepairUpdateDto dto){
+        return propertyRepairService.updatePropertyRepair(id, dto);
     }
 
-    @PutMapping("/update-by-shortDescription")
-    public ResponseEntity<String> updatePropertyRepairByShortDescription(@RequestBody PropertyRepairUpdateByShortDescriptionDto dto){
-        int res =  propertyRepairService.updatePropertyRepairByShortDescription(dto);
-        if (res == 0) { //update failed
-            throw new DataAccessResourceFailureException("Failed to update short description for property repair with id: " + dto.id());
-        }
-        return new ResponseEntity<>("Property repair updated", HttpStatus.OK);
-    }
-
-    @PutMapping("/update-by-repairType")
-    public ResponseEntity<String> updatePropertyRepairByType(@RequestBody PropertyRepairUpdateByTypeDto dto){
-        int res =  propertyRepairService.updatePropertyRepairByType(dto);
-        if (res == 0) { //update failed
-            throw new DataAccessResourceFailureException("Failed to update repair type for property repair with id: " + dto.id());
-        }
-        return new ResponseEntity<>("Property repair updated", HttpStatus.OK);
-    }
-
-    @PutMapping("/update-by-cost")
-    public ResponseEntity<String> updatePropertyRepairByCost(PropertyRepairUpdateByCostDto dto){
-        int res =  propertyRepairService.updatePropertyRepairByCost(dto);
-        if (res == 0) { //update failed
-            throw new DataAccessResourceFailureException("Failed to update cost for property repair with id: " + dto.id());
-        }
-        return new ResponseEntity<>("Property repair updated", HttpStatus.OK);
-    }
-
-    @PutMapping("/update-by-longDescription")
-    public ResponseEntity<String> updatePropertyRepairByLongDescription(PropertyRepairUpdateByLongDescriptionDto dto){
-        int res =  propertyRepairService.updatePropertyRepairByLongDescription(dto);
-        if (res == 0) { //update failed
-            throw new DataAccessResourceFailureException("Failed to update long description for property repair with id: " + dto.id());
-        }
-        return new ResponseEntity<>("Property repair updated", HttpStatus.OK);
-    }
-
-    @DeleteMapping("/delete/{propertyOwnerId}/{propertyId}/{id}")
-    public ResponseEntity<Object> deletePropertyRepair(@PathVariable long propertyOwnerId, @PathVariable long propertyId, @PathVariable long id) {
-        propertyRepairService.deletePropertyRepair(propertyOwnerId, propertyId, id);
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<Object> deletePropertyRepair(long id) {
+        propertyRepairService.deletePropertyRepair(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
