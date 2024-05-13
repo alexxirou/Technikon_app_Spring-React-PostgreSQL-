@@ -1,14 +1,10 @@
 package com.scytalys.technikon.mapper;
-import com.scytalys.technikon.domain.Admin;
 import com.scytalys.technikon.domain.PropertyOwner;
 import com.scytalys.technikon.domain.User;
 import com.scytalys.technikon.dto.*;
-import com.scytalys.technikon.repository.PropertyOwnerRepository;
 import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
-import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.regex.Pattern;
@@ -71,12 +67,12 @@ public interface OwnerMapper {
         UserSearchResponseDto userToUserSearchResponseDto(User user, List<String> results);
 
 
-        @Mapping(target = "tin", source = "userUpdateDto.tin")
-        @Mapping(target = "email", source = "userUpdateDto.email")
-        @Mapping(target = "address", source = "userUpdateDto.address")
-        @Mapping(target = "password", source = "userUpdateDto.password")
-        @Mapping(target = "version", source = "userUpdateDto.version")
-        PropertyOwner updateDtoToUser(UserUpdateDto userUpdateDto);
+
+
+        @Mapping(target = "email", source = "userUpdateDto.email", nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+        @Mapping(target = "password", source = "userUpdateDto.password", nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+        @Mapping(target = "address", source = "userUpdateDto.address", nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+        PropertyOwner updateDtoToUser(UserUpdateDto userUpdateDto, @MappingTarget PropertyOwner user);
 
 }
 

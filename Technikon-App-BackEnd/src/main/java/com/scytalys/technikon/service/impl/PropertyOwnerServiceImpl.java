@@ -9,9 +9,13 @@ import com.scytalys.technikon.service.PropertyOwnerService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -33,7 +37,9 @@ public class PropertyOwnerServiceImpl implements PropertyOwnerService {
      * throws IllegalArgumentException if important fields are null;
      * throws DataIntegrityViolationException if unique field constraint violation
      */
+    @CacheEvict(value = "PropertyOwners", allEntries = true)
     @Override
+    @Transactional
     public PropertyOwner createDBUser(UserCreationDto dto) {
         PropertyOwner user = ownerMapper.userCreationDtoToPropertyOwner(dto);
         user.setEmail(user.getEmail().toLowerCase());
@@ -53,6 +59,8 @@ public class PropertyOwnerServiceImpl implements PropertyOwnerService {
      * @return The found user.
      * @throws EntityNotFoundException if the user is not found
      */
+    @Override
+    @Cacheable("PropertyOwners")
     public PropertyOwner searchUser(UserSearchDto dto) {
         Specification<User> spec = Specification.where(null);
         if (dto.tin() != null) {
@@ -78,25 +86,24 @@ public class PropertyOwnerServiceImpl implements PropertyOwnerService {
      * @throws EntityNotFoundException if the user to be updated is not found.
      * @throws IllegalArgumentException if the provided DTO is invalid or contains incomplete information.
      */
-    public void UpdateUser(UserUpdateDto dto){
-        String verifiedEmail = Optional.ofNullable(dto.email())
-                .filter(email -> Pattern.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$", email))
-                .orElseThrow(() -> new IllegalArgumentException("Invalid email format"));
-        PropertyOwner user = searchUser(new UserSearchDto(dto.tin(),null,null));
-        user = ownerMapper.updateDtoToUser(dto);
-        propertyOwnerRepository.save(user);
-
-    }
-
-    /**
-     * Creates a response Dto when from a new User
-     * @param user the newly created user.
-     * @return the dto
-     */
     @Override
-    public UserResponseDto createUserResponseDto(PropertyOwner user) {
-        return ownerMapper.userToUserResponseDto(user);
+    @Transactional
+    @CacheEvict(value = "PropertyOwners", allEntries = true)
+    public void UpdateUser(UserUpdateDto dto){
+
+        PropertyOwner user= searchUser(new UserSearchDto(dto.tin(), null, null));
+        if(user.getVersion()!= dto.version()) throw new OptimisticLockingFailureException("User cannot be updated, please try again later.");
+        PropertyOwner newUser = ownerMapper.updateDtoToUser(dto,user);
+        if(dto.email()!=null) {
+            String verifiedEmail = Optional.ofNullable(dto.email())
+                    .filter(email -> Pattern.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$", email))
+                    .orElseThrow(() -> new IllegalArgumentException("Invalid email format"));
+            user.setEmail(verifiedEmail);
+        }
+        propertyOwnerRepository.save(newUser);
+
     }
+
 
 
     /**
@@ -104,7 +111,9 @@ public class PropertyOwnerServiceImpl implements PropertyOwnerService {
      *
      * @param tin The tin of the user to be deleted.
      */
-
+    @Override
+    @Transactional
+    @CacheEvict(value = "PropertyOwners", allEntries = true)
     public void deleteUser(String tin) {
         PropertyOwner user= searchUser(new UserSearchDto(tin,null,null));
         propertyOwnerRepository.deleteById(user.getId());;
@@ -116,7 +125,9 @@ public class PropertyOwnerServiceImpl implements PropertyOwnerService {
      *
      * @param tin of the row to be deactivated
      */
-
+    @Override
+    @Transactional
+    @CacheEvict(value = "PropertyOwners", allEntries = true)
     public void softDeleteUser(String tin){
       PropertyOwner user= searchUser(new UserSearchDto(tin,null,null));
       user.setActive(false);
@@ -130,7 +141,8 @@ public class PropertyOwnerServiceImpl implements PropertyOwnerService {
      * @param user the User object
      * @return The created UserResponseDto object.
      */
-    public UserResponseDto createUserResponseDto(User user){
+    @Override
+    public UserResponseDto createUserResponseDto(PropertyOwner user){
         return ownerMapper.userToUserResponseDto(user);
     }
 
@@ -142,6 +154,8 @@ public class PropertyOwnerServiceImpl implements PropertyOwnerService {
      * @param tin The tin of the user
      * @return a boolean based on if the user is linked to any property ids
     */
+    @Override
+
     public boolean checkUserHasProperties(String tin){
         List<String> results=propertyOwnerRepository.findPropertyIdsByUserId(tin);
         return !results.isEmpty(); // Return true if the list of property IDs is not empty
@@ -155,7 +169,6 @@ public class PropertyOwnerServiceImpl implements PropertyOwnerService {
     @Override
     public UserSearchResponseDto createSearchResponse(PropertyOwner user){
         List<String> results=propertyOwnerRepository.findPropertyIdsByUserId(user.getTin());
-
         return ownerMapper.userToUserSearchResponseDto(user, results);
     }
 

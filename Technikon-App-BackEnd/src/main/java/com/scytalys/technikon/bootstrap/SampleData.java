@@ -11,6 +11,7 @@ import com.scytalys.technikon.domain.category.RepairType;
 import com.scytalys.technikon.dto.UserCreationDto;
 import com.scytalys.technikon.dto.UserSearchDto;
 import com.scytalys.technikon.dto.UserSearchResponseDto;
+import com.scytalys.technikon.dto.UserUpdateDto;
 import com.scytalys.technikon.mapper.OwnerMapper;
 import com.scytalys.technikon.repository.PropertyRepository;
 import com.scytalys.technikon.service.PropertyOwnerService;
@@ -89,9 +90,14 @@ public class SampleData {
 
             UserSearchDto request =new UserSearchDto("1651614865GR",null,null);
             PropertyOwner resultUser =propertyOwnerService.searchUser(request);
-            logger.info("Searched property owner: {}", resultUser);
+            logger.info("Searched property Owner: {}", resultUser);
             UserSearchResponseDto responseDto=propertyOwnerService.createSearchResponse(resultUser);
             logger.info("Created user search response: {}", responseDto);
+            UserUpdateDto newUpdate = new UserUpdateDto(propertyOwner.getTin(),null,"elsewhere",null, propertyOwner.getVersion());
+            propertyOwnerService.UpdateUser(newUpdate);
+            logger.info("Updated user with: {}", newUpdate);
+            resultUser =propertyOwnerService.searchUser(request);
+            logger.info("Searched property Owner: {}", resultUser);
         };
     }
 }
