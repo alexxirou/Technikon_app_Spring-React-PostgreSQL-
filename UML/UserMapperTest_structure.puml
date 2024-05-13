@@ -129,10 +129,11 @@ PropertyOwnerServiceImpl124484289[
 <TR><TD ALIGN="LEFT" >+ UpdateUser(dto: UserUpdateDto)</TD></TR>
 <TR><TD ALIGN="LEFT" >+ checkUserHasProperties(tin: String): boolean</TD></TR>
 <TR><TD ALIGN="LEFT" >+ createDBUser(dto: UserCreationDto): PropertyOwner</TD></TR>
-<TR><TD ALIGN="LEFT" >+ createUserResponseDto(user: User): UserResponseDto</TD></TR>
+<TR><TD ALIGN="LEFT" >+ createSearchResponse(user: PropertyOwner): UserSearchResponseDto</TD></TR>
+<TR><TD ALIGN="LEFT" >+ createUserResponseDto(user: PropertyOwner): UserResponseDto</TD></TR>
 <TR><TD ALIGN="LEFT" >+ deleteUser(tin: String)</TD></TR>
-<TR><TD ALIGN="LEFT" >+ searchUser(dto: UserSearchDto): User</TD></TR>
-<TR><TD ALIGN="LEFT" >+ softDeleteUser(tin: String, version: long): int</TD></TR>
+<TR><TD ALIGN="LEFT" >+ searchUser(dto: UserSearchDto): PropertyOwner</TD></TR>
+<TR><TD ALIGN="LEFT" >+ softDeleteUser(tin: String)</TD></TR>
 </TABLE>>
 	style=filled
 	margin=0
@@ -222,6 +223,7 @@ UserMapperTest219619911[
 <TR><TD ALIGN="LEFT" >+ testUserCreationDtoToUser()</TD></TR>
 <TR><TD ALIGN="LEFT" >+ testUserCreationDtoToUserFailInvalidFieldEmail()</TD></TR>
 <TR><TD ALIGN="LEFT" >+ testUserCreationDtoToUserFailNullField()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ testUserSearchResponseDtoCreation()</TD></TR>
 <TR><TD ALIGN="LEFT" >+ testUserToUserResponseDto()</TD></TR>
 </TABLE>>
 	style=filled
@@ -254,13 +256,58 @@ UserSearchDto686682215[
 	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
 <TR><TD ALIGN="LEFT" >(C)UserSearchDto</TD></TR>
 <HR/>
-<TR><TD ALIGN="LEFT" >-   Email: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   email: String [0..1]</TD></TR>
 <TR><TD ALIGN="LEFT" >-   tin: String [0..1]</TD></TR>
 <TR><TD ALIGN="LEFT" >-   username: String [0..1]</TD></TR>
 <HR/>
-<TR><TD ALIGN="LEFT" >+ Email(): String</TD></TR>
+<TR><TD ALIGN="LEFT" >+ email(): String</TD></TR>
 <TR><TD ALIGN="LEFT" >+ tin(): String</TD></TR>
 <TR><TD ALIGN="LEFT" >+ username(): String</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+UserSearchResponseDto686682215[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)UserSearchResponseDto</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   address: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   email: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   isActive: Boolean [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   name: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   phoneNumber: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   properties: List&lt;String&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   surname: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   tin: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   username: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   version: long [1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ address(): String</TD></TR>
+<TR><TD ALIGN="LEFT" >+ email(): String</TD></TR>
+<TR><TD ALIGN="LEFT" >+ name(): String</TD></TR>
+<TR><TD ALIGN="LEFT" >+ phoneNumber(): String</TD></TR>
+<TR><TD ALIGN="LEFT" >+ properties(): List&lt;String&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ surname(): String</TD></TR>
+<TR><TD ALIGN="LEFT" >+ tin(): String</TD></TR>
+<TR><TD ALIGN="LEFT" >+ username(): String</TD></TR>
+<TR><TD ALIGN="LEFT" >+ version(): long</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+UserSearchSpecification735909841[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)UserSearchSpecification</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ emailContains(keyword: String): Specification&lt;User&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ tinContains(keyword: String): Specification&lt;User&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ usernameContains(keyword: String): Specification&lt;User&gt;</TD></TR>
 </TABLE>>
 	style=filled
 	margin=0
