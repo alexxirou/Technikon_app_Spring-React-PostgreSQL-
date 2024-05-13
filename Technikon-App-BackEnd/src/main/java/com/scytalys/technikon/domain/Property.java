@@ -30,6 +30,7 @@ public class Property {
     private double longitude;
     private String picture;
     @ManyToOne
+    @NonNull
     private PropertyOwner propertyOwner;
 }
 

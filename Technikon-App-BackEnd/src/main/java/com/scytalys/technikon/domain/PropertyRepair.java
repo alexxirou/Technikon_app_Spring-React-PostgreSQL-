@@ -25,7 +25,9 @@ public class PropertyRepair {
     private String longDescription;
 
     @ManyToOne
+    @NonNull
     private Property property;
     @ManyToOne
+    @NonNull
     private PropertyOwner propertyOwner;
 }
