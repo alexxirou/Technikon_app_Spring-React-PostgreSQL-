@@ -4,6 +4,7 @@ import com.scytalys.technikon.domain.PropertyOwner;
 import com.scytalys.technikon.domain.User;
 import com.scytalys.technikon.dto.UserCreationDto;
 import com.scytalys.technikon.dto.UserResponseDto;
+import com.scytalys.technikon.dto.UserSearchResponseDto;
 import com.scytalys.technikon.dto.UserUpdateDto;
 import com.scytalys.technikon.repository.PropertyOwnerRepository;
 import com.scytalys.technikon.repository.PropertyRepository;
@@ -18,6 +19,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.Spy;
+
+import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -108,7 +111,18 @@ public class UserMapperTest {
         assertEquals(userResponseDto.email(), propertyOwner.getEmail());
         assertEquals(userResponseDto.version(), propertyOwner.getVersion());
     }
-
+    @Test
+    public void testUserSearchResponseDtoCreation(){
+        UserSearchResponseDto dto = OwnerMapper.INSTANCE.userToUserSearchResponseDto(propertyOwner, new ArrayList<>());
+        assertEquals(propertyOwner.getTin(), dto.tin());
+        assertEquals(propertyOwner.getUsername(), dto.username());
+        assertEquals(propertyOwner.getEmail(), dto.email());
+        assertEquals(propertyOwner.getName(), dto.name());
+        assertEquals(propertyOwner.getSurname(), dto.surname());
+        assertEquals(propertyOwner.getAddress(), dto.address());
+        assertEquals(propertyOwner.getPhoneNumber(), dto.phoneNumber());
+        assertEquals(propertyOwner.getVersion(), dto.version());
+    }
 
 }
 

@@ -1,17 +1,14 @@
 package com.scytalys.technikon.service;
-import com.scytalys.technikon.domain.User;
-import com.scytalys.technikon.dto.UserResponseDto;
-import com.scytalys.technikon.dto.UserSearchDto;
-import com.scytalys.technikon.dto.UserUpdateDto;
+import com.scytalys.technikon.dto.*;
 
-public interface UserService {
+public interface UserService<T> {
     //Abstract methods to be used by both types of Users
 
-    int softDeleteUser(String tin, long version);
-    public UserSearchResponseDto searchUser(UserSearchDto dto);
+    void softDeleteUser(String tin);
     void deleteUser(String tin);
     void UpdateUser(UserUpdateDto dto);
-    UserResponseDto createUserResponseDto(User user);
-
-
-    }
+    UserResponseDto createUserResponseDto(T user);
+    UserSearchResponseDto createSearchResponse(T user);
+    T searchUser(UserSearchDto dto);
+    T createDBUser(UserCreationDto dto);
+}

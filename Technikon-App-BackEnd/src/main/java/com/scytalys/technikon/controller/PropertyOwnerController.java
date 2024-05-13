@@ -41,24 +41,29 @@ public class PropertyOwnerController {
     private final OwnerMapper ownerMapper;
 
 
-    @PostMapping("/new")
+    @PostMapping("/")
     public ResponseEntity<UserResponseDto> createPropertyOwner(@RequestBody UserCreationDto newUser) {
         PropertyOwner newDBUser=propertyOwnerService.createDBUser(newUser);
         UserResponseDto userInfo = propertyOwnerService.createUserResponseDto(newDBUser);
         HttpHeaders headers= HeaderUtility.createHeaders("Success-Header", "User registered successfully.");
+        String userLink = ServletUriComponentsBuilder.fromCurrentRequest()
+                .queryParam("tin", newDBUser.getTin())
+                .build()
+                .toUri()
+                .toString();
+        headers.add("Location", userLink);
         return new ResponseEntity<>( userInfo, headers, HttpStatus.CREATED);
     }
 
 
-    @GetMapping("/user")
+    @GetMapping("/")
     public ResponseEntity<UserSearchResponseDto> findUser(
             @RequestParam(required = false) String tin,
             @RequestParam(required = false) String username,
             @RequestParam(required = false) String email
     ) {
         UserSearchDto searchRequest = new UserSearchDto(tin, username, email);
-        User user = propertyOwnerService.searchUser(searchRequest);
-        if (user==null) throw new EntityNotFoundException("Requested user not found. Please check the provided TIN, Username, or Email.");
+        PropertyOwner user = propertyOwnerService.searchUser(searchRequest);
         UserSearchResponseDto userInfo = propertyOwnerService.createSearchResponse(user);
         HttpHeaders headers= HeaderUtility.createHeaders("Success-Header", userInfo.tin());
         return new ResponseEntity<>(userInfo, headers, HttpStatus.OK);
@@ -67,9 +72,7 @@ public class PropertyOwnerController {
 
 
 
-
-
-    @PutMapping("/user/update")
+    @PutMapping("/")
     public ResponseEntity<String> updateUser(UserUpdateDto updateRequest) {
         propertyOwnerService.UpdateUser(updateRequest);
         HttpHeaders headers= HeaderUtility.createHeaders("Success-Header", "User updated.");
@@ -78,13 +81,11 @@ public class PropertyOwnerController {
 
 
 
-
-
-    @DeleteMapping("/unsubscribe{tin}{version}")
+    @DeleteMapping("/{tin}{version}")
     public ResponseEntity<String> deleteUser(@RequestParam String tin, @RequestParam long version) {
         HttpHeaders headers;
         if(propertyOwnerService.checkUserHasProperties(tin)){
-            propertyOwnerService.softDeleteUser(tin,version);
+            propertyOwnerService.softDeleteUser(tin);
             headers= HeaderUtility.createHeaders("Success-Header", "User deactivated.");
         }
         else {

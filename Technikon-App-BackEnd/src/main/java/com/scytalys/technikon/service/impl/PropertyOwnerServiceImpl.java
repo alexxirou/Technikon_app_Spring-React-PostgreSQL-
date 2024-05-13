@@ -1,4 +1,5 @@
 package com.scytalys.technikon.service.impl;
+import com.scytalys.technikon.service.specifications.UserSearchSpecification;
 import com.scytalys.technikon.domain.PropertyOwner;
 import com.scytalys.technikon.domain.User;
 import com.scytalys.technikon.dto.*;
@@ -8,11 +9,10 @@ import com.scytalys.technikon.service.PropertyOwnerService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessResourceFailureException;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.regex.Pattern;
@@ -50,13 +50,24 @@ public class PropertyOwnerServiceImpl implements PropertyOwnerService {
      * Searches for a user in the repository by their username.
      *
      * @param dto The  dto containing search parameters.
-     * @return The found user or null if not found or inactive.
+     * @return The found user.
+     * @throws EntityNotFoundException if the user is not found
      */
-    @Override
-    public UserSearchResponseDto searchUser(UserSearchDto dto) {
-        return propertyOwnerRepository.searchUserAndFindPropertyIds(dto.tin(),dto.username(), dto.Email())
-                .orElse(null);
+    public PropertyOwner searchUser(UserSearchDto dto) {
+        Specification<User> spec = Specification.where(null);
+        if (dto.tin() != null) {
+            spec = spec.and(UserSearchSpecification.tinContains(dto.tin()));
+        }
+        if (dto.username() != null) {
+            spec = spec.and(UserSearchSpecification.usernameContains(dto.username()));
+        }
+        if (dto.email() != null) {
+            spec = spec.and(UserSearchSpecification.emailContains(dto.email()));
+        }
+        return propertyOwnerRepository.findOne(spec)
+                .orElseThrow(() -> new EntityNotFoundException("User not found"));
     }
+
 
 
 
@@ -71,9 +82,22 @@ public class PropertyOwnerServiceImpl implements PropertyOwnerService {
         String verifiedEmail = Optional.ofNullable(dto.email())
                 .filter(email -> Pattern.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$", email))
                 .orElseThrow(() -> new IllegalArgumentException("Invalid email format"));
-        int res =propertyOwnerRepository.update(dto.tin(), verifiedEmail, dto.address(), dto.password(), dto.version());
-        if (res==0) throw new DataAccessResourceFailureException("Update failed: User not found, or resource is busy.");
+        PropertyOwner user = searchUser(new UserSearchDto(dto.tin(),null,null));
+        user = ownerMapper.updateDtoToUser(dto);
+        propertyOwnerRepository.save(user);
+
     }
+
+    /**
+     * Creates a response Dto when from a new User
+     * @param user the newly created user.
+     * @return the dto
+     */
+    @Override
+    public UserResponseDto createUserResponseDto(PropertyOwner user) {
+        return ownerMapper.userToUserResponseDto(user);
+    }
+
 
     /**
      * Deletes a user from the repository by their ID.
@@ -82,9 +106,8 @@ public class PropertyOwnerServiceImpl implements PropertyOwnerService {
      */
 
     public void deleteUser(String tin) {
-        int res = propertyOwnerRepository.deleteByTin(tin);
-
-        if (res==0)  throw new EntityNotFoundException("User not found.");
+        PropertyOwner user= searchUser(new UserSearchDto(tin,null,null));
+        propertyOwnerRepository.deleteById(user.getId());;
 
     }
 
@@ -92,14 +115,13 @@ public class PropertyOwnerServiceImpl implements PropertyOwnerService {
      * Performs a soft delete on a user in the repository if the version matches
      *
      * @param tin of the row to be deactivated
-     * @param version the version sent by the controller
      */
 
-    public int softDeleteUser(String tin, long version){
-      int res = propertyOwnerRepository.softDeleteByTin(tin,version);
-      if (res==0) throw new DataAccessResourceFailureException("User not found, or resource is busy. " +
-              "If the error persists please contact an administrator.");
-      return res;
+    public void softDeleteUser(String tin){
+      PropertyOwner user= searchUser(new UserSearchDto(tin,null,null));
+      user.setActive(false);
+      propertyOwnerRepository.save(user);
+
     }
 
     /**
@@ -131,7 +153,7 @@ public class PropertyOwnerServiceImpl implements PropertyOwnerService {
      * @return a userSearchResponse record containing the information.
      */
     @Override
-    public UserSearchResponseDto createSearchResponse(User user){
+    public UserSearchResponseDto createSearchResponse(PropertyOwner user){
         List<String> results=propertyOwnerRepository.findPropertyIdsByUserId(user.getTin());
 
         return ownerMapper.userToUserSearchResponseDto(user, results);

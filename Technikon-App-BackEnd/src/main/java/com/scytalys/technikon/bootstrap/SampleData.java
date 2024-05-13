@@ -25,6 +25,7 @@ import org.springframework.context.annotation.Configuration;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 
 @AllArgsConstructor
 @Configuration
@@ -79,8 +80,10 @@ public class SampleData {
 
 
             UserSearchDto request =new UserSearchDto("1651614865GR",null,null);
-            UserSearchResponseDto response =propertyOwnerService.searchUser(request);
-            System.out.println(response);
+            PropertyOwner resultUser =propertyOwnerService.searchUser(request);
+            System.out.println(resultUser);
+            UserSearchResponseDto responseDto=propertyOwnerService.createSearchResponse(resultUser);
+            System.out.println(responseDto);
         };
     }
 }
