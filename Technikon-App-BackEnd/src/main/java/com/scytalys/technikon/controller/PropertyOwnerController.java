@@ -45,6 +45,12 @@ public class PropertyOwnerController {
         PropertyOwner newDBUser=propertyOwnerService.createDBUser(newUser);
         UserResponseDto userInfo = propertyOwnerService.createUserResponseDto(newDBUser);
         HttpHeaders headers= HeaderUtility.createHeaders("Success-Header", "User registered successfully.");
+        String userLink = ServletUriComponentsBuilder.fromCurrentRequest()
+                .queryParam("tin", newDBUser.getTin())
+                .build()
+                .toUri()
+                .toString();
+        headers.add("Location", userLink);
         return new ResponseEntity<>( userInfo, headers, HttpStatus.CREATED);
     }
 
