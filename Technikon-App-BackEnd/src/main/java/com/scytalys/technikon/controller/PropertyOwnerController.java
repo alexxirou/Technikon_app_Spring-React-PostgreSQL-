@@ -28,6 +28,7 @@ import java.util.ArrayList;
 
 
 @RestController
+
 @AllArgsConstructor
 @RequestMapping("/api/v2/users/propertyOwners")
 public class PropertyOwnerController {
@@ -45,12 +46,6 @@ public class PropertyOwnerController {
         PropertyOwner newDBUser=propertyOwnerService.createDBUser(newUser);
         UserResponseDto userInfo = propertyOwnerService.createUserResponseDto(newDBUser);
         HttpHeaders headers= HeaderUtility.createHeaders("Success-Header", "User registered successfully.");
-        String userLink = ServletUriComponentsBuilder.fromCurrentRequest()
-                .queryParam("tin", newDBUser.getTin())
-                .build()
-                .toUri()
-                .toString();
-        headers.add("Location", userLink);
         return new ResponseEntity<>( userInfo, headers, HttpStatus.CREATED);
     }
 
@@ -62,9 +57,10 @@ public class PropertyOwnerController {
             @RequestParam(required = false) String email
     ) {
         UserSearchDto searchRequest = new UserSearchDto(tin, username, email);
-        UserSearchResponseDto userInfo = propertyOwnerService.searchUser(searchRequest);
-        if (userInfo==null) throw new EntityNotFoundException("Requested user not found. Please check the provided TIN, Username, or Email.");
-        HttpHeaders headers= HeaderUtility.createHeaders("Success-Header", userInfo.getTin());
+        User user = propertyOwnerService.searchUser(searchRequest);
+        if (user==null) throw new EntityNotFoundException("Requested user not found. Please check the provided TIN, Username, or Email.");
+        UserSearchResponseDto userInfo = propertyOwnerService.createSearchResponse(user);
+        HttpHeaders headers= HeaderUtility.createHeaders("Success-Header", userInfo.tin());
         return new ResponseEntity<>(userInfo, headers, HttpStatus.OK);
     }
 

@@ -222,6 +222,10 @@ public class PropertyOwnerServiceImplTest {
             // Check if the version matches
             if (propertyOwner.getVersion() == version ) {
                 propertyOwner.setVersion(propertyOwner.getVersion() + 1);
+                String tin = invocation.getArgument(0);
+                String email = invocation.getArgument(1);
+                String address = invocation.getArgument(2);
+                String password = invocation.getArgument(3);
                 return 1;
             }
             return 0;

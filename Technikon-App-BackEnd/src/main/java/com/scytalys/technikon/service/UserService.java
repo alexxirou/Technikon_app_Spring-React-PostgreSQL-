@@ -2,7 +2,6 @@ package com.scytalys.technikon.service;
 import com.scytalys.technikon.domain.User;
 import com.scytalys.technikon.dto.UserResponseDto;
 import com.scytalys.technikon.dto.UserSearchDto;
-import com.scytalys.technikon.dto.UserSearchResponseDto;
 import com.scytalys.technikon.dto.UserUpdateDto;
 
 public interface UserService {
