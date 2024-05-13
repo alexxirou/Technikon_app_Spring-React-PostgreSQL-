@@ -70,7 +70,7 @@ config=StructureConfiguration;
     "showPackageLevels": 2,
     "showDetailedClassStructure": true
   },
-  "rootClass": "com.scytalys.technikon.service.impl.PropertyOwnerServiceImpl",
+  "rootClass": "com.scytalys.technikon.controller.PropertyOwnerController",
   "extensionCallbackMethod": "" // qualified.class.name#methodName - signature: public static String method(String)
 }
 diagram meta data end '/
@@ -95,7 +95,19 @@ subgraph cluster_197470096 {
 	fillcolor="#d8d8d8"
 	style=filled
    
-   PropertyOwnerController931943586[
+   HeaderUtility1560718886[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)HeaderUtility</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ createHeaders(headerType: String, message: String): HttpHeaders</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+PropertyOwnerController931943586[
 	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
 <TR><TD ALIGN="LEFT" >(C)PropertyOwnerController</TD></TR>
 <HR/>
@@ -127,22 +139,6 @@ PropertyOwnerServiceImpl124484289[
 <TR><TD ALIGN="LEFT" >+ deleteUser(tin: String)</TD></TR>
 <TR><TD ALIGN="LEFT" >+ searchUser(dto: UserSearchDto): UserSearchResponseDto</TD></TR>
 <TR><TD ALIGN="LEFT" >+ softDeleteUser(tin: String, version: long): int</TD></TR>
-</TABLE>>
-	style=filled
-	margin=0
-	shape=plaintext
-	fillcolor="#FFFFFF"
-];
-
-SampleData2033362088[
-	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
-<TR><TD ALIGN="LEFT" >(C)SampleData</TD></TR>
-<HR/>
-<TR><TD ALIGN="LEFT" >-   propertyOwnerService: PropertyOwnerService [1]</TD></TR>
-<TR><TD ALIGN="LEFT" >-   propertyRepairService: PropertyRepairService [1]</TD></TR>
-<TR><TD ALIGN="LEFT" >-   propertyService: PropertyService [1]</TD></TR>
-<HR/>
-<TR><TD ALIGN="LEFT" >+ myCommandLineRunner(): CommandLineRunner</TD></TR>
 </TABLE>>
 	style=filled
 	margin=0
@@ -221,10 +217,7 @@ UserUpdateDto686682215[
 } 
 
 'edges    
-PropertyOwnerController931943586 -> PropertyOwnerServiceImpl124484289[label="propertyOwnerService
-[1]", arrowhead=none];
-SampleData2033362088 -> PropertyOwnerServiceImpl124484289[label="propertyOwnerService
-[1]", arrowhead=none];
+
     
 }
 @enduml

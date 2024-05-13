@@ -107,28 +107,6 @@ subgraph cluster_197470096 {
 	fillcolor="#FFFFFF"
 ];
 
-Property25216822[
-	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
-<TR><TD ALIGN="LEFT" >(C)Property</TD></TR>
-<HR/>
-<TR><TD ALIGN="LEFT" >-   address: String [0..1]</TD></TR>
-<TR><TD ALIGN="LEFT" >-   constructionYear: LocalDate [0..1]</TD></TR>
-<TR><TD ALIGN="LEFT" >-   id: long [1]</TD></TR>
-<TR><TD ALIGN="LEFT" >-   latitude: double [1]</TD></TR>
-<TR><TD ALIGN="LEFT" >-   longitude: double [1]</TD></TR>
-<TR><TD ALIGN="LEFT" >-   picture: String [0..1]</TD></TR>
-<TR><TD ALIGN="LEFT" >-   propertyOwner: PropertyOwner [0..1]</TD></TR>
-<TR><TD ALIGN="LEFT" >-   propertyType: PropertyType [0..1]</TD></TR>
-<TR><TD ALIGN="LEFT" >-   tin: String [0..1]</TD></TR>
-<HR/>
-<TR><TD ALIGN="LEFT" ># canEqual(other: Object): boolean</TD></TR>
-</TABLE>>
-	style=filled
-	margin=0
-	shape=plaintext
-	fillcolor="#FFFFFF"
-];
-
 PropertyOwner25216822[
 	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
 <TR><TD ALIGN="LEFT" >(C)PropertyOwner</TD></TR>
@@ -153,7 +131,7 @@ PropertyOwnerServiceImpl124484289[
 <TR><TD ALIGN="LEFT" >+ createDBUser(dto: UserCreationDto): PropertyOwner</TD></TR>
 <TR><TD ALIGN="LEFT" >+ createUserResponseDto(user: User): UserResponseDto</TD></TR>
 <TR><TD ALIGN="LEFT" >+ deleteUser(tin: String)</TD></TR>
-<TR><TD ALIGN="LEFT" >+ searchUser(dto: UserSearchDto): User</TD></TR>
+<TR><TD ALIGN="LEFT" >+ searchUser(dto: UserSearchDto): UserSearchResponseDto</TD></TR>
 <TR><TD ALIGN="LEFT" >+ softDeleteUser(tin: String, version: long): int</TD></TR>
 </TABLE>>
 	style=filled
@@ -168,7 +146,6 @@ PropertyOwnerServiceImplTest124484289[
 <HR/>
 <TR><TD ALIGN="LEFT" >-   dto: UserCreationDto [0..1]</TD></TR>
 <TR><TD ALIGN="LEFT" >-   ownerMapper: OwnerMapper [0..1]</TD></TR>
-<TR><TD ALIGN="LEFT" >-   property: Property [0..1]</TD></TR>
 <TR><TD ALIGN="LEFT" >-   propertyOwner: PropertyOwner [0..1]</TD></TR>
 <TR><TD ALIGN="LEFT" >-   propertyOwnerRepository: PropertyOwnerRepository [0..1]</TD></TR>
 <TR><TD ALIGN="LEFT" >-   propertyOwnerService: PropertyOwnerServiceImpl [0..1]</TD></TR>
@@ -303,10 +280,6 @@ UserUpdateDto686682215[
 } 
 
 'edges    
-Property25216822 -> PropertyOwner25216822[label="propertyOwner
-[0..1]"];
-PropertyOwnerServiceImplTest124484289 -> Property25216822[label="property
-[0..1]"];
 PropertyOwnerServiceImplTest124484289 -> PropertyOwner25216822[label="propertyOwner
 [0..1]"];
 PropertyOwnerServiceImplTest124484289 -> PropertyOwnerServiceImpl124484289[label="propertyOwnerService
