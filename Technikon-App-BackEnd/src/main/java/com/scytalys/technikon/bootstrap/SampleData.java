@@ -18,6 +18,8 @@ import com.scytalys.technikon.service.PropertyRepairService;
 import com.scytalys.technikon.service.PropertyService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
@@ -42,6 +44,7 @@ public class SampleData {
     @Bean
     public CommandLineRunner myCommandLineRunner(){
         return args -> {
+            Logger logger = LoggerFactory.getLogger(CommandLineRunner.class); // Replace MyApplication with your class name
             PropertyRepair propertyRepair = new PropertyRepair();
             propertyRepair.setDateOfRepair(LocalDate.of(2024, 6, 14));
             propertyRepair.setShortDescription("Plumb work");
@@ -49,10 +52,11 @@ public class SampleData {
             propertyRepair.setRepairStatus(RepairStatus.SCHEDULED);
             propertyRepair.setCost(new BigDecimal(150));
             propertyRepair.setLongDescription("Describing with details the work to be done");
+
             propertyRepairService.createPropertyRepair(propertyRepair);
+            logger.info("Created property repair: {}", propertyRepair);
 
             PropertyOwner propertyOwner = new PropertyOwner();
-
             propertyOwner.setTin("1651614865GR");// id
             propertyOwner.setName("John"); // name
             propertyOwner.setSurname("Doe"); // surname
@@ -61,10 +65,12 @@ public class SampleData {
             propertyOwner.setPassword("pass"); // password
             propertyOwner.setAddress("somewhere"); // address
             propertyOwner.setPhoneNumber("+30999582486");
+
             UserCreationDto dto =new UserCreationDto(propertyOwner.getTin(), propertyOwner.getName(), propertyOwner.getSurname(), propertyOwner.getEmail(), propertyOwner.getUsername(), propertyOwner.getPassword(), propertyOwner.getAddress(), propertyOwner.getPhoneNumber());
+            logger.info("Created user creation dto: {}", dto);
 
             propertyOwner=propertyOwnerService.createDBUser(dto);
-
+            logger.info("Created property owner: {}", propertyOwner);
 //            propertyOwnerService.updateUserPassword(propertyOwner.getId(),"password", propertyOwner.getVersion());
             Property property = new Property();
 
@@ -74,16 +80,18 @@ public class SampleData {
             property.setLatitude(10.5);
             property.setLongitude(58.4);
             property.setPropertyOwner(propertyOwner);
-            propertyService.createProperty(property);
-            Property result = propertyService.searchProperty(1L);
 
+            propertyService.createProperty(property);
+            logger.info("Created property: {}", property);
+            Property result = propertyService.searchProperty(1L);
+            logger.info("Created result search response: {}", result);
 
 
             UserSearchDto request =new UserSearchDto("1651614865GR",null,null);
             PropertyOwner resultUser =propertyOwnerService.searchUser(request);
-            System.out.println(resultUser);
+            logger.info("Searched property owner: {}", resultUser);
             UserSearchResponseDto responseDto=propertyOwnerService.createSearchResponse(resultUser);
-            System.out.println(responseDto);
+            logger.info("Created user search response: {}", responseDto);
         };
     }
 }

@@ -5,6 +5,8 @@ import com.scytalys.technikon.domain.Property;
 import com.scytalys.technikon.service.PropertyService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @RestController
 @RequestMapping("/property")
