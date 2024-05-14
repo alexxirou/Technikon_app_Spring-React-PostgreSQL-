@@ -10,7 +10,6 @@ public record UserSearchResponseDto(String tin,
                                     String surname,
                                     String address,
                                     String phoneNumber,
-                                    Boolean isActive,
                                     List<String> properties,
                                     long version) {
 }
