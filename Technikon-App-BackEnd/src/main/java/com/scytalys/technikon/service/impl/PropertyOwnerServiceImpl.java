@@ -26,30 +26,9 @@ import java.util.regex.Pattern;
 public class PropertyOwnerServiceImpl implements PropertyOwnerService {
 
     private final PropertyOwnerRepository propertyOwnerRepository;
-    @Autowired
     private final OwnerMapper ownerMapper;
 
-    /**
-     * Creates a new user in the repository as a PropertyOwner type
-     *
-     * @param dto The dto containing information of the user to be created.
-     * @return ResponseDto.
-     * throws IllegalArgumentException if important fields are null;
-     * throws DataIntegrityViolationException if unique field constraint violation
-     */
-    @CacheEvict(value = "PropertyOwners", allEntries = true)
-    @Override
-    @Transactional
-    public PropertyOwner createDBUser(UserCreationDto dto) {
-        PropertyOwner user = ownerMapper.userCreationDtoToPropertyOwner(dto);
-        user.setEmail(user.getEmail().toLowerCase());
-        try {
-            propertyOwnerRepository.save(user);
-            return user;
-        }catch (Exception e){
-            throw new DataIntegrityViolationException("Id, Username, or Email already taken.");
-        }
-    }
+
 
 
     /**
@@ -66,14 +45,17 @@ public class PropertyOwnerServiceImpl implements PropertyOwnerService {
         if (dto.tin() != null) {
             spec = spec.and(UserSearchSpecification.tinContains(dto.tin()));
         }
-        if (dto.username() != null) {
+       else if(dto.username() != null) {
             spec = spec.and(UserSearchSpecification.usernameContains(dto.username()));
         }
-        if (dto.email() != null) {
+       else if (dto.email() != null) {
             spec = spec.and(UserSearchSpecification.emailContains(dto.email()));
         }
-        return propertyOwnerRepository.findOne(spec)
-                .orElseThrow(() -> new EntityNotFoundException("User not found"));
+       else throw new EntityNotFoundException("Invalid search request.");
+        Optional<PropertyOwner> propertyOwnerOptional = propertyOwnerRepository.findOne(spec);
+        return propertyOwnerOptional.filter(PropertyOwner::isActive)
+                .orElseThrow(() -> new EntityNotFoundException("User not found.")); // Throw exception if user is not found or not active
+
     }
 
 

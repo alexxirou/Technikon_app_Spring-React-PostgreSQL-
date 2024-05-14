@@ -12,6 +12,7 @@ import com.scytalys.technikon.repository.PropertyRepository;
 import java.sql.Array;
 import java.util.*;
 
+import com.scytalys.technikon.security.service.UserInfoService;
 import jakarta.persistence.EntityNotFoundException;
 import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.AfterEach;
@@ -46,6 +47,9 @@ public class PropertyOwnerServiceImplTest {
     @Spy
     @InjectMocks
     private PropertyOwnerServiceImpl propertyOwnerService;
+    @Spy
+    @InjectMocks
+    private UserInfoService userInfoService;
 
     @Spy
     private OwnerMapper ownerMapper = OwnerMapper.INSTANCE; // Initialize ownerMapper
@@ -53,6 +57,7 @@ public class PropertyOwnerServiceImplTest {
     private PropertyOwner propertyOwner;
 
     private UserCreationDto dto;
+
 
 
     @BeforeEach
@@ -87,7 +92,7 @@ public class PropertyOwnerServiceImplTest {
     @Test
     public void testCreateUser() {
         when(propertyOwnerRepository.save(eq(propertyOwner))).thenReturn(propertyOwner);
-        PropertyOwner result =  propertyOwnerService.createDBUser(dto);
+        PropertyOwner result =  userInfoService.createDBUser(dto);
         assertEquals(propertyOwner, result);
 
     }
@@ -146,7 +151,7 @@ public class PropertyOwnerServiceImplTest {
         when(propertyOwnerRepository.findOne(any(Specification.class))).thenReturn(Optional.of(propertyOwner));
 
         when(propertyOwnerRepository.save(eq(propertyOwner))).thenReturn(propertyOwner);
-        propertyOwnerService.createDBUser(dto);
+        userInfoService.createDBUser(dto);
         doAnswer(invocation -> {
             propertyOwner.setActive(false); // Set isActive flag to false
             return 1;
@@ -164,7 +169,7 @@ public class PropertyOwnerServiceImplTest {
      */
     @Test
     public  void testSoftDeleteUserFail() {
-        propertyOwnerService.createDBUser(dto);
+        userInfoService.createDBUser(dto);
         assertThrows(EntityNotFoundException.class, ()->propertyOwnerService.softDeleteUser(propertyOwner.getTin()));
 
     }

@@ -14,6 +14,7 @@ import com.scytalys.technikon.dto.UserSearchResponseDto;
 import com.scytalys.technikon.dto.UserUpdateDto;
 import com.scytalys.technikon.mapper.OwnerMapper;
 import com.scytalys.technikon.repository.PropertyRepository;
+import com.scytalys.technikon.security.service.UserInfoService;
 import com.scytalys.technikon.service.PropertyOwnerService;
 import com.scytalys.technikon.service.PropertyRepairService;
 import com.scytalys.technikon.service.PropertyService;
@@ -34,12 +35,15 @@ import java.util.List;
 @Configuration
 @Slf4j
 public class SampleData {
-    @Autowired
+
     private final PropertyRepairService propertyRepairService;
-    @Autowired
+
     private final PropertyOwnerService propertyOwnerService;
-    @Autowired
+
     private final PropertyService propertyService;
+
+    private final UserInfoService userInfoService;
+
 
 
     @Bean
@@ -70,7 +74,7 @@ public class SampleData {
             UserCreationDto dto =new UserCreationDto(propertyOwner.getTin(), propertyOwner.getName(), propertyOwner.getSurname(), propertyOwner.getEmail(), propertyOwner.getUsername(), propertyOwner.getPassword(), propertyOwner.getAddress(), propertyOwner.getPhoneNumber());
             logger.info("Created user creation dto: {}", dto);
 
-            propertyOwner=propertyOwnerService.createDBUser(dto);
+            propertyOwner=userInfoService.createDBUser(dto);
             logger.info("Created property owner: {}", propertyOwner);
 //            propertyOwnerService.updateUserPassword(propertyOwner.getId(),"password", propertyOwner.getVersion());
             Property property = new Property();

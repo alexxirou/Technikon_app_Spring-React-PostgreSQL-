@@ -43,19 +43,7 @@ public class PropertyOwnerController {
     private final OwnerMapper ownerMapper;
 
 
-    @PostMapping("/")
-    public ResponseEntity<UserResponseDto> createPropertyOwner(@RequestBody UserCreationDto newUser) {
-        PropertyOwner newDBUser=propertyOwnerService.createDBUser(newUser);
-        UserResponseDto userInfo = propertyOwnerService.createUserResponseDto(newDBUser);
-        HttpHeaders headers= HeaderUtility.createHeaders("Success-Header", "User registered successfully.");
-        String userLink = ServletUriComponentsBuilder.fromCurrentRequest()
-                .queryParam("tin", newDBUser.getTin())
-                .build()
-                .toUri()
-                .toString();
-        headers.add("Location", userLink);
-        return new ResponseEntity<>( userInfo, headers, HttpStatus.CREATED);
-    }
+
 
 
     @GetMapping("/")

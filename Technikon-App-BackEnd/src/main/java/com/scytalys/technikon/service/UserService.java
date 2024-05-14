@@ -10,5 +10,5 @@ public interface UserService<T> {
     UserResponseDto createUserResponseDto(T user);
     UserSearchResponseDto createSearchResponse(T user);
     T searchUser(UserSearchDto dto);
-    T createDBUser(UserCreationDto dto);
+
 }
