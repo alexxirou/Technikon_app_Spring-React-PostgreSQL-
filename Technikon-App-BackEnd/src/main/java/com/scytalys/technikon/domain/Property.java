@@ -2,16 +2,22 @@ package com.scytalys.technikon.domain;
 import com.scytalys.technikon.domain.category.PropertyType;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
 import org.antlr.v4.runtime.misc.NotNull;
 
 import java.time.LocalDate;
 
 @Entity
 @Data
+@NoArgsConstructor
 public class Property {
     @Id
-    @Column(unique = true)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+    @Column(unique = true)
+    @NonNull
+    private String tin;
     private String address;
     private LocalDate constructionYear;
     private PropertyType propertyType;
@@ -19,7 +25,7 @@ public class Property {
     private double longitude;
     private String picture;
     @ManyToOne
-    @NotNull
+    @NonNull
     private PropertyOwner propertyOwner;
 }
 

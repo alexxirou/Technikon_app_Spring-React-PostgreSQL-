@@ -1,0 +1,212 @@
+@startuml
+
+/' diagram meta data start
+config=StructureConfiguration;
+{
+  "projectClassification": {
+    "searchMode": "OpenProject", // OpenProject, AllProjects
+    "includedProjects": "",
+    "pathEndKeywords": "*.impl",
+    "isClientPath": "",
+    "isClientName": "",
+    "isTestPath": "",
+    "isTestName": "",
+    "isMappingPath": "",
+    "isMappingName": "",
+    "isDataAccessPath": "",
+    "isDataAccessName": "",
+    "isDataStructurePath": "",
+    "isDataStructureName": "",
+    "isInterfaceStructuresPath": "",
+    "isInterfaceStructuresName": "",
+    "isEntryPointPath": "",
+    "isEntryPointName": "",
+    "treatFinalFieldsAsMandatory": false
+  },
+  "graphRestriction": {
+    "classPackageExcludeFilter": "",
+    "classPackageIncludeFilter": "",
+    "classNameExcludeFilter": "",
+    "classNameIncludeFilter": "",
+    "methodNameExcludeFilter": "",
+    "methodNameIncludeFilter": "",
+    "removeByInheritance": "", // inheritance/annotation based filtering is done in a second step
+    "removeByAnnotation": "",
+    "removeByClassPackage": "", // cleanup the graph after inheritance/annotation based filtering is done
+    "removeByClassName": "",
+    "cutMappings": false,
+    "cutEnum": true,
+    "cutTests": true,
+    "cutClient": true,
+    "cutDataAccess": false,
+    "cutInterfaceStructures": false,
+    "cutDataStructures": false,
+    "cutGetterAndSetter": true,
+    "cutConstructors": true
+  },
+  "graphTraversal": {
+    "forwardDepth": 6,
+    "backwardDepth": 6,
+    "classPackageExcludeFilter": "",
+    "classPackageIncludeFilter": "",
+    "classNameExcludeFilter": "",
+    "classNameIncludeFilter": "",
+    "methodNameExcludeFilter": "",
+    "methodNameIncludeFilter": "",
+    "hideMappings": false,
+    "hideDataStructures": false,
+    "hidePrivateMethods": true,
+    "hideInterfaceCalls": true, // indirection: implementation -> interface (is hidden) -> implementation
+    "onlyShowApplicationEntryPoints": false, // root node is included
+    "useMethodCallsForStructureDiagram": "ForwardOnly" // ForwardOnly, BothDirections, No
+  },
+  "details": {
+    "aggregation": "GroupByClass", // ByClass, GroupByClass, None
+    "showClassGenericTypes": true,
+    "showMethods": true,
+    "showMethodParameterNames": true,
+    "showMethodParameterTypes": true,
+    "showMethodReturnType": true,
+    "showPackageLevels": 2,
+    "showDetailedClassStructure": true
+  },
+  "rootClass": "com.scytalys.technikon.mapper.OwnerMapper",
+  "extensionCallbackMethod": "" // qualified.class.name#methodName - signature: public static String method(String)
+}
+diagram meta data end '/
+
+
+
+digraph g {
+    rankdir="TB"
+    splines=polyline
+    
+
+'nodes 
+subgraph cluster_197470096 { 
+   	label=scytalys
+	labeljust=l
+	fillcolor="#ececec"
+	style=filled
+   
+   subgraph cluster_882458853 { 
+   	label=technikon
+	labeljust=l
+	fillcolor="#d8d8d8"
+	style=filled
+   
+   OwnerMapper219619911[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(I)OwnerMapper</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ checkForInvalid(userCreationDto: UserCreationDto)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ checkForNull(userCreationDto: UserCreationDto)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ updateDtoToUser(userUpdateDto: UserUpdateDto, user: PropertyOwner): PropertyOwner</TD></TR>
+<TR><TD ALIGN="LEFT" >+ userCreationDtoToPropertyOwner(userCreationDto: UserCreationDto): PropertyOwner</TD></TR>
+<TR><TD ALIGN="LEFT" >+ userToUserResponseDto(user: User): UserResponseDto</TD></TR>
+<TR><TD ALIGN="LEFT" >+ userToUserSearchResponseDto(user: User, results: List&lt;String&gt;): UserSearchResponseDto</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#F1E5FD"
+];
+
+PropertyOwnerController931943586[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)PropertyOwnerController</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   ownerMapper: OwnerMapper [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   propertyOwnerService: PropertyOwnerService [1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ createPropertyOwner(newUser: UserCreationDto): ResponseEntity&lt;UserResponseDto&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ deleteUser(tin: String, version: long): ResponseEntity&lt;String&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ findUser(tin: String, username: String, email: String): ResponseEntity&lt;UserSearchResponseDto&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ updateUser(updateRequest: UserUpdateDto): ResponseEntity&lt;String&gt;</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+PropertyOwnerServiceImpl124484289[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)PropertyOwnerServiceImpl</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   ownerMapper: OwnerMapper [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   propertyOwnerRepository: PropertyOwnerRepository [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ UpdateUser(dto: UserUpdateDto)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ checkUserHasProperties(tin: String): boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >+ createDBUser(dto: UserCreationDto): PropertyOwner</TD></TR>
+<TR><TD ALIGN="LEFT" >+ createSearchResponse(user: PropertyOwner): UserSearchResponseDto</TD></TR>
+<TR><TD ALIGN="LEFT" >+ createUserResponseDto(user: PropertyOwner): UserResponseDto</TD></TR>
+<TR><TD ALIGN="LEFT" >+ deleteUser(tin: String)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ searchUser(dto: UserSearchDto): PropertyOwner</TD></TR>
+<TR><TD ALIGN="LEFT" >+ softDeleteUser(tin: String)</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+SampleData2033362088[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)SampleData</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   propertyOwnerService: PropertyOwnerService [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   propertyRepairService: PropertyRepairService [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   propertyService: PropertyService [1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ myCommandLineRunner(): CommandLineRunner</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+UserCreationDto686682215[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)UserCreationDto</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   address: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   email: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   name: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   password: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   phoneNumber: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   surname: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   tin: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   username: String [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ address(): String</TD></TR>
+<TR><TD ALIGN="LEFT" >+ email(): String</TD></TR>
+<TR><TD ALIGN="LEFT" >+ name(): String</TD></TR>
+<TR><TD ALIGN="LEFT" >+ password(): String</TD></TR>
+<TR><TD ALIGN="LEFT" >+ phoneNumber(): String</TD></TR>
+<TR><TD ALIGN="LEFT" >+ surname(): String</TD></TR>
+<TR><TD ALIGN="LEFT" >+ tin(): String</TD></TR>
+<TR><TD ALIGN="LEFT" >+ username(): String</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+} 
+} 
+
+'edges    
+PropertyOwnerController931943586 -> OwnerMapper219619911[label="ownerMapper
+[1]"];
+PropertyOwnerController931943586 -> PropertyOwnerServiceImpl124484289[label="propertyOwnerService
+[1]", arrowhead=none];
+PropertyOwnerServiceImpl124484289 -> OwnerMapper219619911[label="ownerMapper
+[1]"];
+SampleData2033362088 -> PropertyOwnerServiceImpl124484289[label="propertyOwnerService
+[1]", arrowhead=none];
+    
+}
+@enduml

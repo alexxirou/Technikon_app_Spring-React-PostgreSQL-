@@ -1,17 +1,12 @@
 package com.scytalys.technikon.service;
-
-import com.scytalys.technikon.dto.PropertyOwnerDto;
 import com.scytalys.technikon.domain.PropertyOwner;
-import com.scytalys.technikon.dto.PropertyOwnerUpdateDto;
-import com.scytalys.technikon.dto.PropertyRepairDto;
+import com.scytalys.technikon.domain.User;
+import com.scytalys.technikon.dto.UserCreationDto;
+import com.scytalys.technikon.dto.UserSearchDto;
 
-import java.util.UUID;
 
-public interface PropertyOwnerService {
+public interface PropertyOwnerService extends UserService<PropertyOwner> {
 
-    public PropertyOwnerDto createPropertyOwner(PropertyOwner propertyOwner);
-    public PropertyOwner searchPropertyOwner(PropertyRepairDto propertyOwnerDto);
-    public boolean updatePropertyOwner(PropertyOwnerUpdateDto propertyOwnerUpdateDto);
-    public boolean deletePropertyOwner(long propertyOwnerId);
+    boolean checkUserHasProperties(String tin);
 
 }

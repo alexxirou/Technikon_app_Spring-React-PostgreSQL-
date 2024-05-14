@@ -1,0 +1,311 @@
+@startuml
+
+/' diagram meta data start
+config=StructureConfiguration;
+{
+  "projectClassification": {
+    "searchMode": "OpenProject", // OpenProject, AllProjects
+    "includedProjects": "",
+    "pathEndKeywords": "*.impl",
+    "isClientPath": "",
+    "isClientName": "",
+    "isTestPath": "",
+    "isTestName": "",
+    "isMappingPath": "",
+    "isMappingName": "",
+    "isDataAccessPath": "",
+    "isDataAccessName": "",
+    "isDataStructurePath": "",
+    "isDataStructureName": "",
+    "isInterfaceStructuresPath": "",
+    "isInterfaceStructuresName": "",
+    "isEntryPointPath": "",
+    "isEntryPointName": "",
+    "treatFinalFieldsAsMandatory": false
+  },
+  "graphRestriction": {
+    "classPackageExcludeFilter": "",
+    "classPackageIncludeFilter": "",
+    "classNameExcludeFilter": "",
+    "classNameIncludeFilter": "",
+    "methodNameExcludeFilter": "",
+    "methodNameIncludeFilter": "",
+    "removeByInheritance": "", // inheritance/annotation based filtering is done in a second step
+    "removeByAnnotation": "",
+    "removeByClassPackage": "", // cleanup the graph after inheritance/annotation based filtering is done
+    "removeByClassName": "",
+    "cutMappings": false,
+    "cutEnum": true,
+    "cutTests": true,
+    "cutClient": true,
+    "cutDataAccess": false,
+    "cutInterfaceStructures": false,
+    "cutDataStructures": false,
+    "cutGetterAndSetter": true,
+    "cutConstructors": true
+  },
+  "graphTraversal": {
+    "forwardDepth": 6,
+    "backwardDepth": 6,
+    "classPackageExcludeFilter": "",
+    "classPackageIncludeFilter": "",
+    "classNameExcludeFilter": "",
+    "classNameIncludeFilter": "",
+    "methodNameExcludeFilter": "",
+    "methodNameIncludeFilter": "",
+    "hideMappings": false,
+    "hideDataStructures": false,
+    "hidePrivateMethods": true,
+    "hideInterfaceCalls": true, // indirection: implementation -> interface (is hidden) -> implementation
+    "onlyShowApplicationEntryPoints": false, // root node is included
+    "useMethodCallsForStructureDiagram": "ForwardOnly" // ForwardOnly, BothDirections, No
+  },
+  "details": {
+    "aggregation": "GroupByClass", // ByClass, GroupByClass, None
+    "showClassGenericTypes": true,
+    "showMethods": true,
+    "showMethodParameterNames": true,
+    "showMethodParameterTypes": true,
+    "showMethodReturnType": true,
+    "showPackageLevels": 2,
+    "showDetailedClassStructure": true
+  },
+  "rootClass": "com.scytalys.technikon.service.impl.PropertyOwnerServiceImplTest",
+  "extensionCallbackMethod": "" // qualified.class.name#methodName - signature: public static String method(String)
+}
+diagram meta data end '/
+
+
+
+digraph g {
+    rankdir="TB"
+    splines=polyline
+    
+
+'nodes 
+subgraph cluster_197470096 { 
+   	label=scytalys
+	labeljust=l
+	fillcolor="#ececec"
+	style=filled
+   
+   subgraph cluster_882458853 { 
+   	label=technikon
+	labeljust=l
+	fillcolor="#d8d8d8"
+	style=filled
+   
+   Admin25216822[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)Admin</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" ># canEqual(other: Object): boolean</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+PropertyOwner25216822[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)PropertyOwner</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" ># canEqual(other: Object): boolean</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+PropertyOwnerServiceImpl124484289[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)PropertyOwnerServiceImpl</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   ownerMapper: OwnerMapper [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   propertyOwnerRepository: PropertyOwnerRepository [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ UpdateUser(dto: UserUpdateDto)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ checkUserHasProperties(tin: String): boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >+ createDBUser(dto: UserCreationDto): PropertyOwner</TD></TR>
+<TR><TD ALIGN="LEFT" >+ createSearchResponse(user: PropertyOwner): UserSearchResponseDto</TD></TR>
+<TR><TD ALIGN="LEFT" >+ createUserResponseDto(user: PropertyOwner): UserResponseDto</TD></TR>
+<TR><TD ALIGN="LEFT" >+ deleteUser(tin: String)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ searchUser(dto: UserSearchDto): PropertyOwner</TD></TR>
+<TR><TD ALIGN="LEFT" >+ softDeleteUser(tin: String)</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+PropertyOwnerServiceImplTest124484289[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)PropertyOwnerServiceImplTest</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   dto: UserCreationDto [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   ownerMapper: OwnerMapper [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   propertyOwner: PropertyOwner [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   propertyOwnerRepository: PropertyOwnerRepository [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   propertyOwnerService: PropertyOwnerServiceImpl [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   propertyRepository: PropertyRepository [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   propertyService: PropertyServiceImpl [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ findPropertiesForUser()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ tearDown()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ testCreateUser()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ testDeleteUser()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ testFindUsersWithPropertiesFail()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ testSearchUserByFail()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ testSearchUserByTin()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ testSoftDeleteUser()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ testSoftDeleteUserFail()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ whenConcurrentUpdate_thenThrowException()</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+PropertyServiceImpl124484289[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)PropertyServiceImpl</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   propertyRepository: PropertyRepository [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ createProperty(property: Property): Property</TD></TR>
+<TR><TD ALIGN="LEFT" >+ searchProperty(propertyId: long): Property</TD></TR>
+<TR><TD ALIGN="LEFT" >+ updateProperty(propertyDto: PropertyDto): Property</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+User25216822[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)User</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   address: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   email: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   id: Long [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   isActive: boolean [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   name: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   password: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   phoneNumber: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   surname: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   tin: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   username: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   version: long [1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" ># canEqual(other: Object): boolean</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+UserCreationDto686682215[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)UserCreationDto</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   address: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   email: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   name: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   password: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   phoneNumber: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   surname: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   tin: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   username: String [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ address(): String</TD></TR>
+<TR><TD ALIGN="LEFT" >+ email(): String</TD></TR>
+<TR><TD ALIGN="LEFT" >+ name(): String</TD></TR>
+<TR><TD ALIGN="LEFT" >+ password(): String</TD></TR>
+<TR><TD ALIGN="LEFT" >+ phoneNumber(): String</TD></TR>
+<TR><TD ALIGN="LEFT" >+ surname(): String</TD></TR>
+<TR><TD ALIGN="LEFT" >+ tin(): String</TD></TR>
+<TR><TD ALIGN="LEFT" >+ username(): String</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+UserSearchDto686682215[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)UserSearchDto</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   email: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   tin: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   username: String [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ email(): String</TD></TR>
+<TR><TD ALIGN="LEFT" >+ tin(): String</TD></TR>
+<TR><TD ALIGN="LEFT" >+ username(): String</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+UserSearchSpecification735909841[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)UserSearchSpecification</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ emailContains(keyword: String): Specification&lt;User&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ tinContains(keyword: String): Specification&lt;User&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ usernameContains(keyword: String): Specification&lt;User&gt;</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+UserUpdateDto686682215[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)UserUpdateDto</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   address: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   email: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   password: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   tin: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   version: long [1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ address(): String</TD></TR>
+<TR><TD ALIGN="LEFT" >+ email(): String</TD></TR>
+<TR><TD ALIGN="LEFT" >+ password(): String</TD></TR>
+<TR><TD ALIGN="LEFT" >+ tin(): String</TD></TR>
+<TR><TD ALIGN="LEFT" >+ version(): long</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+} 
+} 
+
+'edges    
+PropertyOwnerServiceImplTest124484289 -> PropertyOwner25216822[label="propertyOwner
+[0..1]"];
+PropertyOwnerServiceImplTest124484289 -> PropertyOwnerServiceImpl124484289[label="propertyOwnerService
+[0..1]"];
+PropertyOwnerServiceImplTest124484289 -> PropertyServiceImpl124484289[label="propertyService
+[0..1]"];
+PropertyOwnerServiceImplTest124484289 -> UserCreationDto686682215[label="dto
+[0..1]"];
+PropertyOwnerServiceImplTest124484289 -> UserUpdateDto686682215[label="whenConcurrentUpdate_thenThrowException() -> version()"];
+User25216822 -> Admin25216822[arrowhead=none, arrowtail=empty, dir=both];
+User25216822 -> PropertyOwner25216822[arrowhead=none, arrowtail=empty, dir=both];
+    
+}
+@enduml
