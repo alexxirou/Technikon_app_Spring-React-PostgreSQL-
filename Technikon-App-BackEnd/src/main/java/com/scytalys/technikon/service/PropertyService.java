@@ -4,8 +4,12 @@ import com.scytalys.technikon.dto.PropertyDto;
 import com.scytalys.technikon.domain.Property;
 
 public interface PropertyService {
-    public Property createProperty(Property property);
-    public Property searchProperty(PropertyDto propertyDto);
-    public Property updateProperty(PropertyDto propertyDto);
+    Property findAllPropertyName(Property property);
+    Property createProperty(Property property);
+    Property searchProperty(PropertyDto propertyDto);
+    Property updateProperty(PropertyDto propertyDto);
+    Property deactivateProperty(PropertyDto propertyDto);
+
+
 
 }

@@ -4,15 +4,20 @@ import com.scytalys.technikon.dto.PropertyDto;
 import com.scytalys.technikon.domain.Property;
 import com.scytalys.technikon.repository.PropertyRepository;
 import com.scytalys.technikon.service.PropertyService;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-
-import java.util.UUID;
 
 @Service
 @AllArgsConstructor
+@Slf4j
 public class PropertyServiceImpl implements PropertyService {
     private final PropertyRepository propertyRepository;
+
+    @Override
+    @Transactional
+    public Property findAllPropertyName(Property property) {return null;}
 
     @Override
     public Property searchProperty(PropertyDto propertyDto) {
@@ -22,11 +27,17 @@ public class PropertyServiceImpl implements PropertyService {
 
     @Override
     public Property createProperty(Property property) {
-        return null;
+        propertyRepository.save(property);
+        return property;
     }
 
     @Override
     public Property updateProperty(PropertyDto propertyDto) {
         return null;
     }
+
+    @Override
+    public Property deactivateProperty(PropertyDto propertyDto) { return null;}
+
+
 }
