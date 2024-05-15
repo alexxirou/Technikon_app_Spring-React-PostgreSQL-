@@ -51,9 +51,9 @@ public interface PropertyOwnerRepository extends JpaRepository<PropertyOwner, Lo
 
 
 
+    Optional<PropertyOwner> findByTin(String tin);
 
-
-    Optional<PropertyOwner> findOne(Specification<User> spec);
+    Optional<List<PropertyOwner>> findAll(Specification<User> spec);
 
 //    @Query("SELECT new com.scytalys.technikon.dto.UserSearchResponseDto(p.tin, p.username, p.email, p.name, p.surname, p.address, p.phoneNumber, p.isActive, FUNCTION('ARRAY_AGG', prop.tin), p.version) " +
 //            "FROM PropertyOwner p " +
