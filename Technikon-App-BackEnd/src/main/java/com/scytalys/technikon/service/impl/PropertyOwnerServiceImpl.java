@@ -1,19 +1,26 @@
 package com.scytalys.technikon.service.impl;
+import com.scytalys.technikon.service.specifications.UserSearchSpecification;
 import com.scytalys.technikon.domain.PropertyOwner;
 import com.scytalys.technikon.domain.User;
-
-import com.scytalys.technikon.dto.UserResponseDto;
+import com.scytalys.technikon.dto.*;
+import com.scytalys.technikon.mapper.OwnerMapper;
 import com.scytalys.technikon.repository.PropertyOwnerRepository;
 import com.scytalys.technikon.service.PropertyOwnerService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.OptimisticLockingFailureException;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
-
+import java.util.Optional;
+import java.util.regex.Pattern;
 
 @Service
 @AllArgsConstructor
@@ -21,204 +28,183 @@ public class PropertyOwnerServiceImpl implements PropertyOwnerService {
 
     private final PropertyOwnerRepository propertyOwnerRepository;
 
+    private final OwnerMapper ownerMapper;
+
+
     /**
      * Creates a new user in the repository as a PropertyOwner type
      *
-     * @param user The user to be created.
-     * @return The created user.
+     * @param dto The dto containing information of the user to be created.
+     * @return ResponseDto.
+     * throws IllegalArgumentException if important fields are null;
+     * throws DataIntegrityViolationException if unique field constraint violation
      */
+    @CacheEvict(value = "PropertyOwners", allEntries = true)
     @Override
     @Transactional
-    public PropertyOwner createUser(PropertyOwner user) {
-        return propertyOwnerRepository.save(user);
+    public PropertyOwner createDBUser(UserCreationDto dto) {
+        PropertyOwner user = ownerMapper.userCreationDtoToPropertyOwner(dto);
+        user.setEmail(user.getEmail().toLowerCase());
+        try {
+            propertyOwnerRepository.save(user);
+            return user;
+        }catch (Exception e){
+            throw new DataIntegrityViolationException("Id, Username, or Email already taken.");
+        }
     }
 
     /**
-     * Searches for a user in the repository by their ID.
+     * Finds a user in the repository of PropertyOwner type
      *
-     * @param id The ID of the user to be searched.
-     * @return The found user or null
+     * @param tin of the user
+     * @return the user optional
+     * throws EntityNotFoundException if a user is not found.
      *
      */
+
     @Override
-    public PropertyOwner searchUserById(long id) {
-        return propertyOwnerRepository.findById(id).filter(PropertyOwner::isActive)
-                .orElse(null);
+    public PropertyOwner findUser(String tin) {
+        return propertyOwnerRepository.findByTin(tin).filter(User::isActive).orElseThrow(() -> new EntityNotFoundException("User not found."));
     }
+
 
     /**
      * Searches for a user in the repository by their username.
      *
-     * @param username The username of the user to be searched.
-     * @return The found user or null.
-     *
+     * @param dto The  dto containing search parameters.
+     * @return The found user.
+     * @throws EntityNotFoundException if the user is not found
      */
     @Override
-    public PropertyOwner searchUserByUsername(String username) {
-        return propertyOwnerRepository.findByUsername(username).filter(PropertyOwner::isActive)
-                .orElse(null);
+    @Cacheable("PropertyOwners")
+    public List<PropertyOwner> searchUser(UserSearchDto dto) {
+        Specification<User> spec = Specification.where(null);
+        if (dto.tin() != null) {
+            spec = spec.and(UserSearchSpecification.tinContains(dto.tin()));
+        }
+        if(dto.username() != null) {
+            spec = spec.and(UserSearchSpecification.usernameContains(dto.username()));
+        }
+        if (dto.email() != null) {
+            spec = spec.and(UserSearchSpecification.emailContains(dto.email()));
+        }
+
+        return propertyOwnerRepository.findAll(spec).orElseThrow(()->new EntityNotFoundException("User not found."));
+
     }
 
+
+
+
     /**
-     * Searches for a user in the repository by their username.
+     * Updates a user in the database.
      *
-     * @param email The email of the user to be searched.
-     * @return The found user or null
-     *
+     * @param dto The DTO containing update information.
+     * @throws EntityNotFoundException if the user to be updated is not found.
+     * @throws IllegalArgumentException if the provided DTO is invalid or contains incomplete information.
      */
     @Override
-    public PropertyOwner searchUserByEmail(String email) {
-        return propertyOwnerRepository.findByEmail(email).filter(PropertyOwner::isActive)
-                .orElse(null);
-    }
-
-    /**
-     * Verify if the user is null.
-     *
-     * @param propertyOwner the user.
-     * @throws EntityNotFoundException if user is null
-     */
-
-    public void verifySearchResult(User propertyOwner){
-        if (propertyOwner==null) throw new EntityNotFoundException("User not found.");
-    }
-
-    /**
-     * Updates the email of a user in the repository.
-     *
-     * @param email the email column
-     * @param id the id of row to update.
-     * @param version checks the record is updated correctly.
-     *
-     */
-
-    public int updateUserEmail(long id, String email, long version) {
-        email=email.toLowerCase();
-        return propertyOwnerRepository.updateEmail(id, email, version);
-
-    }
-
-    /**
-     * Updates the address of a user in the repository.
-     *
-     * @param address the address column
-     * @param id the id of row to update.
-     * @param version   checks the record is updated correctly.
-     */
     @Transactional
-    public int updateUserAddress(long id, String address, long version) {
-        return propertyOwnerRepository.updateAddress(id, address, version);
+    @CacheEvict(value = "PropertyOwners", allEntries = true)
+    public void UpdateUser(String tin, UserUpdateDto dto){
+
+        PropertyOwner user= findUser(tin);
+        if(user.getVersion()!= dto.version()) throw new OptimisticLockingFailureException("User cannot be updated, please try again later.");
+        PropertyOwner newUser = ownerMapper.updateDtoToUser(dto,user);
+        if(dto.email()!=null) {
+            String verifiedEmail = Optional.of(dto.email())
+                    .filter(email -> Pattern.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$", email))
+                    .orElseThrow(() -> new IllegalArgumentException("Invalid email format"));
+            user.setEmail(verifiedEmail);
+        }
+        propertyOwnerRepository.save(newUser);
+
     }
 
 
-    /**
-     * Updates the password of a user in the repository.
-     *
-     * @param password the password column
-     * @param id of the row to update
-     * @param version   checks the record is updated correctly.
-     */
-
-    public int updateUserPassword(long id, String password, long version) {
-        return propertyOwnerRepository.updatePassword(id, password, version);
-    }
 
     /**
      * Deletes a user from the repository by their ID.
      *
-     * @param propertyOwnerId The ID of the user to be deleted.
+     * @param tin The tin of the user to be deleted.
      */
+    @Override
+    @Transactional
+    @CacheEvict(value = "PropertyOwners", allEntries = true)
+    public void deleteUser(String tin) {
+        PropertyOwner user= findUser(tin);
+        propertyOwnerRepository.deleteById(user.getId());;
 
-
-    public void deleteUser(long propertyOwnerId) {
-        propertyOwnerRepository.deleteById(propertyOwnerId);
     }
 
     /**
-     * Performs a soft delete on a user in the repository
+     * Performs a soft delete on a user in the repository if the version matches
      *
-     * @param id of the row to be deactivated
-     * @param version the version of the row to be soft deleted
+     * @param tin of the row to be deactivated
      */
+    @Override
+    @Transactional
+    @CacheEvict(value = "PropertyOwners", allEntries = true)
+    public void softDeleteUser(String tin){
+        PropertyOwner user= propertyOwnerRepository.findByTin(tin).orElseThrow(() -> new EntityNotFoundException("User not found."));
+        user.setActive(false);
+        propertyOwnerRepository.save(user);
 
-    public int softDeleteUser(long id, long version){
-
-        return propertyOwnerRepository.softDeleteByid(id,version);
     }
 
     /**
      * Creates a UserResponseDto object for a user  operation.
      *
-     * @param id The ID of the user to be searched.
-     * @param username The username of the user to be searched.
-     * @param email The email of the user to be searched.
-     *
-     * @return The created UserResponseToSearchDto object.
+     * @param user the User object
+     * @return The created UserResponseDto object.
      */
-    public UserResponseDto createUserResponseDto(long id, String username, String email , long version){
-        return new UserResponseDto(
-                id,
-                username,
-                email,
-                version);
+    @Override
+    public UserResponseDto createUserResponseDto(PropertyOwner user){
+        return ownerMapper.userToUserResponseDto(user);
     }
 
-
-    /**
-     * Verifies that the object does not have duplicate fields that should be unique in the db
-     *
-     * @param id the id column
-     * @throws DataIntegrityViolationException If an unique field matches the db
-     */
-    public void verifyConstraintsId(Long id){
-        PropertyOwner test= propertyOwnerRepository.findById(id).orElse(null);
-        if (test!=null) throw new DataIntegrityViolationException("User id already exists.");
-
-    }
-
-    /**
-     * Verifies that the object does not have duplicate fields that should be unique in the db
-     *
-     * @param username the username column
-     * @throws DataIntegrityViolationException If an unique field matches the db
-     */
-    public void verifyConstraintsUsername(String username){
-        PropertyOwner test= propertyOwnerRepository.findByUsername(username).orElse(null);
-        if (test!=null) throw new DataIntegrityViolationException("Username already exists.");
-
-    }
-
-    /**
-     * Verifies that the object does not have duplicate fields that should be unique in the db
-     *
-     * @param email the email column
-     * @throws DataIntegrityViolationException If an unique field matches the db
-     */
-    public void verifyConstraintsEmail(String email){
-        PropertyOwner test= propertyOwnerRepository.findByEmail(email).orElse(null);
-        if (test!=null) throw new DataIntegrityViolationException("Email already exists.");
-
-    }
-
-    /**
-     *Returns the ids of properties linked to a  User
-     * @param userId the id of the user
-     * @return a list of the property ids linked to a User
-     */
-    public ArrayList<Long> findPropertiesForUser(long userId){
-        return propertyOwnerRepository.findPropertyIdsByUserId(userId);
-
-    }
 
 
 
     /**
-     * Verify if a user is linked to a property
-     * @param results the list of property ids linked to a user.
-     * @return a boolean based on if the propertyId list is empty or not
+     *Returns the ids of properties linked to a  User
+     * @param tin The tin of the user
+     * @return a boolean based on if the user is linked to any property ids
      */
-    public boolean checkUserHasProperties(List<Long> results){
+    @Override
 
+    public boolean checkUserHasProperties(String tin){
+        List<String> results=propertyOwnerRepository.findPropertyIdsByUserId(tin);
         return !results.isEmpty(); // Return true if the list of property IDs is not empty
     }
+
+    /**
+     * Creates a List of dtos with the relevant user info for each user.
+     * @param users the list of users
+     * @return a List of  userSearchResponse records containing the information.
+     */
+    @Override
+    public List<UserSearchResponseDto> createSearchResponse(List<PropertyOwner> users){
+        return users.stream().map(ownerMapper::userToUserSearchResponseDto).toList();
+    }
+
+    /**
+     * Method that takes a user object and returns important information from that object and the property tins linked to him.
+     * @param user the user to convert to dto
+     * @return a response dto containing the userInfo and the property tins associated with him.
+     */
+
+    @Override
+    public UserDetails userDetails(PropertyOwner user){
+        UserSearchResponseDto details = ownerMapper.userToUserSearchResponseDto(user);
+        List<String> properties = propertyOwnerRepository.findPropertyIdsByUserId(user.getTin());
+        return new UserDetails(details, properties);
+    }
+
 }
+
+
+
+
+
+

@@ -1,9 +1,13 @@
 package com.scytalys.technikon.domain;
 import jakarta.persistence.Entity;
-import lombok.Data;
+import lombok.*;
 
 @Entity
-@Data
+@ToString(callSuper = true)
+
 public class PropertyOwner extends User {
+
+
+
 
 }
