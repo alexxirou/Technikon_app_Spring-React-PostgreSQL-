@@ -53,6 +53,19 @@ public class PropertyOwnerServiceImpl implements PropertyOwnerService {
         }
     }
 
+    /**
+     * Finds a user in the repository of PropertyOwner type
+     *
+     * @param tin of the user
+     * @return the user optional
+     * throws EntityNotFoundException if a user is not found.
+     *
+     */
+
+    @Override
+    public PropertyOwner findUser(String tin) {
+        return propertyOwnerRepository.findByTin(tin).filter(User::isActive).orElseThrow(() -> new EntityNotFoundException("User not found."));
+    }
 
 
     /**
@@ -78,8 +91,6 @@ public class PropertyOwnerServiceImpl implements PropertyOwnerService {
 
         return propertyOwnerRepository.findAll(spec).orElseThrow(()->new EntityNotFoundException("User not found."));
 
-
-
     }
 
 
@@ -97,7 +108,7 @@ public class PropertyOwnerServiceImpl implements PropertyOwnerService {
     @CacheEvict(value = "PropertyOwners", allEntries = true)
     public void UpdateUser(String tin, UserUpdateDto dto){
 
-        PropertyOwner user= propertyOwnerRepository.findByTin(tin).orElseThrow(() -> new EntityNotFoundException("User not found."));
+        PropertyOwner user= findUser(tin);
         if(user.getVersion()!= dto.version()) throw new OptimisticLockingFailureException("User cannot be updated, please try again later.");
         PropertyOwner newUser = ownerMapper.updateDtoToUser(dto,user);
         if(dto.email()!=null) {
@@ -121,7 +132,7 @@ public class PropertyOwnerServiceImpl implements PropertyOwnerService {
     @Transactional
     @CacheEvict(value = "PropertyOwners", allEntries = true)
     public void deleteUser(String tin) {
-        PropertyOwner user= propertyOwnerRepository.findByTin(tin).orElseThrow(() -> new EntityNotFoundException("User not found."));
+        PropertyOwner user= findUser(tin);
         propertyOwnerRepository.deleteById(user.getId());;
 
     }
@@ -175,6 +186,19 @@ public class PropertyOwnerServiceImpl implements PropertyOwnerService {
     @Override
     public List<UserSearchResponseDto> createSearchResponse(List<PropertyOwner> users){
         return users.stream().map(ownerMapper::userToUserSearchResponseDto).toList();
+    }
+
+    /**
+     * Method that takes a user object and returns important information from that object and the property tins linked to him.
+     * @param user the user to convert to dto
+     * @return a response dto containing the userInfo and the property tins associated with him.
+     */
+
+    @Override
+    public UserDetails userDetails(PropertyOwner user){
+        UserSearchResponseDto details = ownerMapper.userToUserSearchResponseDto(user);
+        List<String> properties = propertyOwnerRepository.findPropertyIdsByUserId(user.getTin());
+        return new UserDetails(details, properties);
     }
 
 }

@@ -1,4 +1,5 @@
 package com.scytalys.technikon.service;
+import com.scytalys.technikon.domain.PropertyOwner;
 import com.scytalys.technikon.dto.*;
 
 import java.util.List;
@@ -13,4 +14,6 @@ public interface UserService<T> {
     List<UserSearchResponseDto> createSearchResponse(List<T> users);
     List<T> searchUser(UserSearchDto dto);
     T createDBUser(UserCreationDto dto);
+    T findUser(String tin);
+    UserDetails userDetails(T user);
 }

@@ -73,7 +73,12 @@ public class PropertyOwnerController {
     }
 
 
-
+    @GetMapping("/{tin}")
+    public ResponseEntity<UserDetails> showUser(@RequestParam String tin) {
+        UserDetails userInfo=propertyOwnerService.userDetails(propertyOwnerService.findUser(tin));
+        HttpHeaders headers= HeaderUtility.createHeaders("Success-Header", "User with tin found.");
+        return new ResponseEntity<>(userInfo, headers, HttpStatus.OK);
+    }
 
     @PutMapping("/{tin}")
     public ResponseEntity<String> updateUser(@RequestParam String tin, @RequestBody UserUpdateDto updateRequest) {
