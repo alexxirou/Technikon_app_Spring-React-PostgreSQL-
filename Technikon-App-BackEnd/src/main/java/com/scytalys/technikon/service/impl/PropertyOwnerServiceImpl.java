@@ -13,6 +13,7 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.OptimisticLockingFailureException;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,8 +27,9 @@ import java.util.regex.Pattern;
 public class PropertyOwnerServiceImpl implements PropertyOwnerService {
 
     private final PropertyOwnerRepository propertyOwnerRepository;
-    @Autowired
+
     private final OwnerMapper ownerMapper;
+
 
     /**
      * Creates a new user in the repository as a PropertyOwner type
@@ -51,6 +53,20 @@ public class PropertyOwnerServiceImpl implements PropertyOwnerService {
         }
     }
 
+    /**
+     * Finds a user in the repository of PropertyOwner type
+     *
+     * @param tin of the user
+     * @return the user optional
+     * throws EntityNotFoundException if a user is not found.
+     *
+     */
+
+    @Override
+    public PropertyOwner findUser(String tin) {
+        return propertyOwnerRepository.findByTin(tin).filter(User::isActive).orElseThrow(() -> new EntityNotFoundException("User not found."));
+    }
+
 
     /**
      * Searches for a user in the repository by their username.
@@ -61,19 +77,20 @@ public class PropertyOwnerServiceImpl implements PropertyOwnerService {
      */
     @Override
     @Cacheable("PropertyOwners")
-    public PropertyOwner searchUser(UserSearchDto dto) {
+    public List<PropertyOwner> searchUser(UserSearchDto dto) {
         Specification<User> spec = Specification.where(null);
         if (dto.tin() != null) {
             spec = spec.and(UserSearchSpecification.tinContains(dto.tin()));
         }
-        if (dto.username() != null) {
+        if(dto.username() != null) {
             spec = spec.and(UserSearchSpecification.usernameContains(dto.username()));
         }
         if (dto.email() != null) {
             spec = spec.and(UserSearchSpecification.emailContains(dto.email()));
         }
-        return propertyOwnerRepository.findOne(spec)
-                .orElseThrow(() -> new EntityNotFoundException("User not found"));
+
+        return propertyOwnerRepository.findAll(spec).orElseThrow(()->new EntityNotFoundException("User not found."));
+
     }
 
 
@@ -89,13 +106,13 @@ public class PropertyOwnerServiceImpl implements PropertyOwnerService {
     @Override
     @Transactional
     @CacheEvict(value = "PropertyOwners", allEntries = true)
-    public void UpdateUser(UserUpdateDto dto){
+    public void UpdateUser(String tin, UserUpdateDto dto){
 
-        PropertyOwner user= searchUser(new UserSearchDto(dto.tin(), null, null));
+        PropertyOwner user= findUser(tin);
         if(user.getVersion()!= dto.version()) throw new OptimisticLockingFailureException("User cannot be updated, please try again later.");
         PropertyOwner newUser = ownerMapper.updateDtoToUser(dto,user);
         if(dto.email()!=null) {
-            String verifiedEmail = Optional.ofNullable(dto.email())
+            String verifiedEmail = Optional.of(dto.email())
                     .filter(email -> Pattern.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$", email))
                     .orElseThrow(() -> new IllegalArgumentException("Invalid email format"));
             user.setEmail(verifiedEmail);
@@ -115,7 +132,7 @@ public class PropertyOwnerServiceImpl implements PropertyOwnerService {
     @Transactional
     @CacheEvict(value = "PropertyOwners", allEntries = true)
     public void deleteUser(String tin) {
-        PropertyOwner user= searchUser(new UserSearchDto(tin,null,null));
+        PropertyOwner user= findUser(tin);
         propertyOwnerRepository.deleteById(user.getId());;
 
     }
@@ -129,9 +146,9 @@ public class PropertyOwnerServiceImpl implements PropertyOwnerService {
     @Transactional
     @CacheEvict(value = "PropertyOwners", allEntries = true)
     public void softDeleteUser(String tin){
-      PropertyOwner user= searchUser(new UserSearchDto(tin,null,null));
-      user.setActive(false);
-      propertyOwnerRepository.save(user);
+        PropertyOwner user= propertyOwnerRepository.findByTin(tin).orElseThrow(() -> new EntityNotFoundException("User not found."));
+        user.setActive(false);
+        propertyOwnerRepository.save(user);
 
     }
 
@@ -153,7 +170,7 @@ public class PropertyOwnerServiceImpl implements PropertyOwnerService {
      *Returns the ids of properties linked to a  User
      * @param tin The tin of the user
      * @return a boolean based on if the user is linked to any property ids
-    */
+     */
     @Override
 
     public boolean checkUserHasProperties(String tin){
@@ -162,17 +179,32 @@ public class PropertyOwnerServiceImpl implements PropertyOwnerService {
     }
 
     /**
-     * Creates a Dto containing the user info and the properties associated with him.
-     * @param user the user
-     * @return a userSearchResponse record containing the information.
+     * Creates a List of dtos with the relevant user info for each user.
+     * @param users the list of users
+     * @return a List of  userSearchResponse records containing the information.
      */
     @Override
-    public UserSearchResponseDto createSearchResponse(PropertyOwner user){
-        List<String> results=propertyOwnerRepository.findPropertyIdsByUserId(user.getTin());
-        return ownerMapper.userToUserSearchResponseDto(user, results);
+    public List<UserSearchResponseDto> createSearchResponse(List<PropertyOwner> users){
+        return users.stream().map(ownerMapper::userToUserSearchResponseDto).toList();
+    }
+
+    /**
+     * Method that takes a user object and returns important information from that object and the property tins linked to him.
+     * @param user the user to convert to dto
+     * @return a response dto containing the userInfo and the property tins associated with him.
+     */
+
+    @Override
+    public UserDetails userDetails(PropertyOwner user){
+        UserSearchResponseDto details = ownerMapper.userToUserSearchResponseDto(user);
+        List<String> properties = propertyOwnerRepository.findPropertyIdsByUserId(user.getTin());
+        return new UserDetails(details, properties);
     }
 
 }
+
+
+
 
 
 

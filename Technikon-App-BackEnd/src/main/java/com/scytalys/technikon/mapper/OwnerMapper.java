@@ -55,16 +55,15 @@ public interface OwnerMapper {
         @Mapping(source = "version", target = "version")
         UserResponseDto userToUserResponseDto(User user);
 
-        @Mapping(source = "user.tin", target = "tin")
-        @Mapping(source = "user.username", target = "username")
-        @Mapping(source = "user.email", target = "email")
-        @Mapping(source = "user.name", target = "name")
-        @Mapping(source = "user.surname", target = "surname")
-        @Mapping(source = "user.address", target = "address")
-        @Mapping(source = "user.phoneNumber", target = "phoneNumber")
-        @Mapping(target = "properties", source = "results")
-        @Mapping(source = "user.version", target = "version")
-        UserSearchResponseDto userToUserSearchResponseDto(User user, List<String> results);
+        @Mapping(source = "tin", target = "tin")
+        @Mapping(source = "username", target = "username")
+        @Mapping(source = "email", target = "email")
+        @Mapping(source = "name", target = "name")
+        @Mapping(source = "surname", target = "surname")
+        @Mapping(source = "address", target = "address")
+        @Mapping(source = "phoneNumber", target = "phoneNumber")
+        @Mapping(source = "active", target = "isActive")
+        UserSearchResponseDto userToUserSearchResponseDto(User user);
 
 
 
