@@ -45,17 +45,6 @@ public class PropertyRepairController {
         return new ResponseEntity<>(propertyRepairService.getPropertyRepairsByOwner(propertyOwnerId), HttpStatus.OK);
     }
 
-    @GetMapping("/search")
-    public List<PropertyRepairDto> search(
-            @RequestParam(required = false) LocalDate date,
-            @RequestParam(required = false) LocalDate firstDate,
-            @RequestParam(required = false) LocalDate lastDate
-    ) {
-        return propertyRepairService.search(
-                new PropertyRepairSearchDto (date, firstDate, lastDate));
-    }
-
-
     //Spring Boot does not allow to use GetMapping with RequestBody
     @PostMapping("get-by-date")
     public ResponseEntity<List<PropertyRepairDto>> searchPropertyRepairByDate(@RequestBody PropertyRepairSearchByDateDto propertyRepairSearchByDateDto) {

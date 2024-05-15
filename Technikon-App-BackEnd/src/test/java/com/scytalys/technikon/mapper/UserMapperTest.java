@@ -1,24 +1,17 @@
 package com.scytalys.technikon.mapper;
-import com.scytalys.technikon.domain.Property;
 import com.scytalys.technikon.domain.PropertyOwner;
-import com.scytalys.technikon.domain.User;
 import com.scytalys.technikon.dto.UserCreationDto;
 import com.scytalys.technikon.dto.UserResponseDto;
 import com.scytalys.technikon.dto.UserSearchResponseDto;
-import com.scytalys.technikon.dto.UserUpdateDto;
 import com.scytalys.technikon.repository.PropertyOwnerRepository;
-import com.scytalys.technikon.repository.PropertyRepository;
 import com.scytalys.technikon.service.impl.PropertyOwnerServiceImpl;
 import com.scytalys.technikon.service.impl.PropertyServiceImpl;
-import jakarta.validation.UnexpectedTypeException;
-import lombok.NoArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.mockito.Spy;
 
 import java.util.ArrayList;
 

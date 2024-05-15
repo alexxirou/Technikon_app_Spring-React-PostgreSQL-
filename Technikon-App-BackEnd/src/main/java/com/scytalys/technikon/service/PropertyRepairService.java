@@ -11,8 +11,6 @@ public interface PropertyRepairService {
     PropertyRepairDto getPropertyRepair(long repairId);
     List<PropertyRepairDto> getAllPropertyRepairs();
     List<PropertyRepairDto> getPropertyRepairsByOwner(long propertyOwnerId);
-    List<PropertyRepairDto> search(Specification<PropertyRepair> spec);
-    List<PropertyRepairDto> search(PropertyRepairSearchDto propertyRepairSearchDto);
     List<PropertyRepairDto> searchPropertyRepairByDate(PropertyRepairSearchByDateDto propertyRepairSearchByDateDto);
     List<PropertyRepairDto> searchPropertyRepairByDates(PropertyRepairSearchByDatesDto propertyRepairSearchByDatesDto);
     PropertyRepairUpdateDto updatePropertyRepair(long id, PropertyRepairUpdateDto propertyRepairUpdateDto);
