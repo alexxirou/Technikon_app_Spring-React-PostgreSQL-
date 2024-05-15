@@ -64,7 +64,7 @@ public class SampleData {
             property2.setPropertyType(PropertyType.APARTMENT_BUILDING);
             property2.setLatitude(13);
             property2.setLongitude(13);
-            property2.setConstructionYear(LocalDate.of(2000, 02, 02));
+            property2.setConstructionYear(LocalDate.of(2000, 2, 2));
             propertyService.createProperty(property2);
 
             PropertyRepairDto propertyRepairDto1 = new PropertyRepairDto(
