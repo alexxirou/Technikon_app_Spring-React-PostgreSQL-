@@ -107,17 +107,32 @@ subgraph cluster_197470096 {
 	fillcolor="#FFFFFF"
 ];
 
+OwnerMapperImpl219619911[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)OwnerMapperImpl</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ updateDtoToUser(userUpdateDto: UserUpdateDto, user: PropertyOwner): PropertyOwner</TD></TR>
+<TR><TD ALIGN="LEFT" >+ userCreationDtoToPropertyOwner(userCreationDto: UserCreationDto): PropertyOwner</TD></TR>
+<TR><TD ALIGN="LEFT" >+ userToUserResponseDto(user: User): UserResponseDto</TD></TR>
+<TR><TD ALIGN="LEFT" >+ userToUserSearchResponseDto(user: User): UserSearchResponseDto</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
 PropertyOwnerController931943586[
 	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
 <TR><TD ALIGN="LEFT" >(C)PropertyOwnerController</TD></TR>
 <HR/>
-<TR><TD ALIGN="LEFT" >-   ownerMapper: OwnerMapper [1]</TD></TR>
-<TR><TD ALIGN="LEFT" >-   propertyOwnerService: PropertyOwnerService [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   propertyOwnerService: PropertyOwnerService [0..1]</TD></TR>
 <HR/>
 <TR><TD ALIGN="LEFT" >+ createPropertyOwner(newUser: UserCreationDto): ResponseEntity&lt;UserResponseDto&gt;</TD></TR>
 <TR><TD ALIGN="LEFT" >+ deleteUser(tin: String, version: long): ResponseEntity&lt;String&gt;</TD></TR>
-<TR><TD ALIGN="LEFT" >+ findUser(tin: String, username: String, email: String): ResponseEntity&lt;UserSearchResponseDto&gt;</TD></TR>
-<TR><TD ALIGN="LEFT" >+ updateUser(updateRequest: UserUpdateDto): ResponseEntity&lt;String&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ findUsers(tin: String, username: String, email: String): ResponseEntity&lt;List&lt;UserSearchResponseDto&gt;&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ showUser(tin: String): ResponseEntity&lt;UserDetails&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ updateUser(tin: String, updateRequest: UserUpdateDto): ResponseEntity&lt;String&gt;</TD></TR>
 </TABLE>>
 	style=filled
 	margin=0
@@ -129,16 +144,19 @@ PropertyOwnerServiceImpl124484289[
 	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
 <TR><TD ALIGN="LEFT" >(C)PropertyOwnerServiceImpl</TD></TR>
 <HR/>
-<TR><TD ALIGN="LEFT" >-   ownerMapper: OwnerMapper [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   ownerMapper: OwnerMapper [0..1]</TD></TR>
 <TR><TD ALIGN="LEFT" >-   propertyOwnerRepository: PropertyOwnerRepository [0..1]</TD></TR>
 <HR/>
-<TR><TD ALIGN="LEFT" >+ UpdateUser(dto: UserUpdateDto)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ UpdateUser(tin: String, dto: UserUpdateDto)</TD></TR>
 <TR><TD ALIGN="LEFT" >+ checkUserHasProperties(tin: String): boolean</TD></TR>
 <TR><TD ALIGN="LEFT" >+ createDBUser(dto: UserCreationDto): PropertyOwner</TD></TR>
-<TR><TD ALIGN="LEFT" >+ createUserResponseDto(user: User): UserResponseDto</TD></TR>
+<TR><TD ALIGN="LEFT" >+ createSearchResponse(users: List&lt;PropertyOwner&gt;): List&lt;UserSearchResponseDto&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ createUserResponseDto(user: PropertyOwner): UserResponseDto</TD></TR>
 <TR><TD ALIGN="LEFT" >+ deleteUser(tin: String)</TD></TR>
-<TR><TD ALIGN="LEFT" >+ searchUser(dto: UserSearchDto): UserSearchResponseDto</TD></TR>
-<TR><TD ALIGN="LEFT" >+ softDeleteUser(tin: String, version: long): int</TD></TR>
+<TR><TD ALIGN="LEFT" >+ findUser(tin: String): PropertyOwner</TD></TR>
+<TR><TD ALIGN="LEFT" >+ searchUser(dto: UserSearchDto): List&lt;PropertyOwner&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ softDeleteUser(tin: String)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ userDetails(user: PropertyOwner): UserDetails</TD></TR>
 </TABLE>>
 	style=filled
 	margin=0
@@ -178,13 +196,27 @@ UserSearchDto686682215[
 	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
 <TR><TD ALIGN="LEFT" >(C)UserSearchDto</TD></TR>
 <HR/>
-<TR><TD ALIGN="LEFT" >-   Email: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   email: String [0..1]</TD></TR>
 <TR><TD ALIGN="LEFT" >-   tin: String [0..1]</TD></TR>
 <TR><TD ALIGN="LEFT" >-   username: String [0..1]</TD></TR>
 <HR/>
-<TR><TD ALIGN="LEFT" >+ Email(): String</TD></TR>
+<TR><TD ALIGN="LEFT" >+ email(): String</TD></TR>
 <TR><TD ALIGN="LEFT" >+ tin(): String</TD></TR>
 <TR><TD ALIGN="LEFT" >+ username(): String</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+UserSearchSpecification735909841[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)UserSearchSpecification</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ emailContains(keyword: String): Specification&lt;User&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ tinContains(keyword: String): Specification&lt;User&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ usernameContains(keyword: String): Specification&lt;User&gt;</TD></TR>
 </TABLE>>
 	style=filled
 	margin=0
@@ -199,13 +231,11 @@ UserUpdateDto686682215[
 <TR><TD ALIGN="LEFT" >-   address: String [0..1]</TD></TR>
 <TR><TD ALIGN="LEFT" >-   email: String [0..1]</TD></TR>
 <TR><TD ALIGN="LEFT" >-   password: String [0..1]</TD></TR>
-<TR><TD ALIGN="LEFT" >-   tin: String [0..1]</TD></TR>
 <TR><TD ALIGN="LEFT" >-   version: long [1]</TD></TR>
 <HR/>
 <TR><TD ALIGN="LEFT" >+ address(): String</TD></TR>
 <TR><TD ALIGN="LEFT" >+ email(): String</TD></TR>
 <TR><TD ALIGN="LEFT" >+ password(): String</TD></TR>
-<TR><TD ALIGN="LEFT" >+ tin(): String</TD></TR>
 <TR><TD ALIGN="LEFT" >+ version(): long</TD></TR>
 </TABLE>>
 	style=filled
@@ -217,7 +247,7 @@ UserUpdateDto686682215[
 } 
 
 'edges    
-
+PropertyOwnerServiceImpl124484289 -> OwnerMapperImpl219619911[arrowhead=none];
     
 }
 @enduml

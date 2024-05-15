@@ -62,7 +62,7 @@ public class UserMapperTest {
     }
 
     @AfterEach
-    public void teardown() {
+    public void tearDown() {
 
         propertyOwner = null;
         createUserDto = null;
@@ -113,7 +113,7 @@ public class UserMapperTest {
     }
     @Test
     public void testUserSearchResponseDtoCreation(){
-        UserSearchResponseDto dto = OwnerMapper.INSTANCE.userToUserSearchResponseDto(propertyOwner, new ArrayList<>());
+        UserSearchResponseDto dto = OwnerMapper.INSTANCE.userToUserSearchResponseDto(propertyOwner);
         assertEquals(propertyOwner.getTin(), dto.tin());
         assertEquals(propertyOwner.getUsername(), dto.username());
         assertEquals(propertyOwner.getEmail(), dto.email());
@@ -121,7 +121,7 @@ public class UserMapperTest {
         assertEquals(propertyOwner.getSurname(), dto.surname());
         assertEquals(propertyOwner.getAddress(), dto.address());
         assertEquals(propertyOwner.getPhoneNumber(), dto.phoneNumber());
-        assertEquals(propertyOwner.getVersion(), dto.version());
+
     }
 
 }

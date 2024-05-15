@@ -104,7 +104,7 @@ subgraph cluster_197470096 {
 <TR><TD ALIGN="LEFT" >+ updateDtoToUser(userUpdateDto: UserUpdateDto, user: PropertyOwner): PropertyOwner</TD></TR>
 <TR><TD ALIGN="LEFT" >+ userCreationDtoToPropertyOwner(userCreationDto: UserCreationDto): PropertyOwner</TD></TR>
 <TR><TD ALIGN="LEFT" >+ userToUserResponseDto(user: User): UserResponseDto</TD></TR>
-<TR><TD ALIGN="LEFT" >+ userToUserSearchResponseDto(user: User, results: List&lt;String&gt;): UserSearchResponseDto</TD></TR>
+<TR><TD ALIGN="LEFT" >+ userToUserSearchResponseDto(user: User): UserSearchResponseDto</TD></TR>
 </TABLE>>
 	style=filled
 	margin=0
@@ -112,17 +112,32 @@ subgraph cluster_197470096 {
 	fillcolor="#F1E5FD"
 ];
 
+OwnerMapperImpl219619911[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)OwnerMapperImpl</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ updateDtoToUser(userUpdateDto: UserUpdateDto, user: PropertyOwner): PropertyOwner</TD></TR>
+<TR><TD ALIGN="LEFT" >+ userCreationDtoToPropertyOwner(userCreationDto: UserCreationDto): PropertyOwner</TD></TR>
+<TR><TD ALIGN="LEFT" >+ userToUserResponseDto(user: User): UserResponseDto</TD></TR>
+<TR><TD ALIGN="LEFT" >+ userToUserSearchResponseDto(user: User): UserSearchResponseDto</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
 PropertyOwnerController931943586[
 	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
 <TR><TD ALIGN="LEFT" >(C)PropertyOwnerController</TD></TR>
 <HR/>
-<TR><TD ALIGN="LEFT" >-   ownerMapper: OwnerMapper [1]</TD></TR>
-<TR><TD ALIGN="LEFT" >-   propertyOwnerService: PropertyOwnerService [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   propertyOwnerService: PropertyOwnerService [0..1]</TD></TR>
 <HR/>
 <TR><TD ALIGN="LEFT" >+ createPropertyOwner(newUser: UserCreationDto): ResponseEntity&lt;UserResponseDto&gt;</TD></TR>
 <TR><TD ALIGN="LEFT" >+ deleteUser(tin: String, version: long): ResponseEntity&lt;String&gt;</TD></TR>
-<TR><TD ALIGN="LEFT" >+ findUser(tin: String, username: String, email: String): ResponseEntity&lt;UserSearchResponseDto&gt;</TD></TR>
-<TR><TD ALIGN="LEFT" >+ updateUser(updateRequest: UserUpdateDto): ResponseEntity&lt;String&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ findUsers(tin: String, username: String, email: String): ResponseEntity&lt;List&lt;UserSearchResponseDto&gt;&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ showUser(tin: String): ResponseEntity&lt;UserDetails&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ updateUser(tin: String, updateRequest: UserUpdateDto): ResponseEntity&lt;String&gt;</TD></TR>
 </TABLE>>
 	style=filled
 	margin=0
@@ -134,17 +149,19 @@ PropertyOwnerServiceImpl124484289[
 	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
 <TR><TD ALIGN="LEFT" >(C)PropertyOwnerServiceImpl</TD></TR>
 <HR/>
-<TR><TD ALIGN="LEFT" >-   ownerMapper: OwnerMapper [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   ownerMapper: OwnerMapper [0..1]</TD></TR>
 <TR><TD ALIGN="LEFT" >-   propertyOwnerRepository: PropertyOwnerRepository [0..1]</TD></TR>
 <HR/>
-<TR><TD ALIGN="LEFT" >+ UpdateUser(dto: UserUpdateDto)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ UpdateUser(tin: String, dto: UserUpdateDto)</TD></TR>
 <TR><TD ALIGN="LEFT" >+ checkUserHasProperties(tin: String): boolean</TD></TR>
 <TR><TD ALIGN="LEFT" >+ createDBUser(dto: UserCreationDto): PropertyOwner</TD></TR>
-<TR><TD ALIGN="LEFT" >+ createSearchResponse(user: PropertyOwner): UserSearchResponseDto</TD></TR>
+<TR><TD ALIGN="LEFT" >+ createSearchResponse(users: List&lt;PropertyOwner&gt;): List&lt;UserSearchResponseDto&gt;</TD></TR>
 <TR><TD ALIGN="LEFT" >+ createUserResponseDto(user: PropertyOwner): UserResponseDto</TD></TR>
 <TR><TD ALIGN="LEFT" >+ deleteUser(tin: String)</TD></TR>
-<TR><TD ALIGN="LEFT" >+ searchUser(dto: UserSearchDto): PropertyOwner</TD></TR>
+<TR><TD ALIGN="LEFT" >+ findUser(tin: String): PropertyOwner</TD></TR>
+<TR><TD ALIGN="LEFT" >+ searchUser(dto: UserSearchDto): List&lt;PropertyOwner&gt;</TD></TR>
 <TR><TD ALIGN="LEFT" >+ softDeleteUser(tin: String)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ userDetails(user: PropertyOwner): UserDetails</TD></TR>
 </TABLE>>
 	style=filled
 	margin=0
@@ -195,16 +212,35 @@ UserCreationDto686682215[
 	shape=plaintext
 	fillcolor="#FFFFFF"
 ];
+
+UserUpdateDto686682215[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)UserUpdateDto</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   address: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   email: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   password: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   version: long [1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ address(): String</TD></TR>
+<TR><TD ALIGN="LEFT" >+ email(): String</TD></TR>
+<TR><TD ALIGN="LEFT" >+ password(): String</TD></TR>
+<TR><TD ALIGN="LEFT" >+ version(): long</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
 } 
 } 
 
 'edges    
-PropertyOwnerController931943586 -> OwnerMapper219619911[label="ownerMapper
-[1]"];
+OwnerMapper219619911 -> OwnerMapperImpl219619911[arrowhead=none, arrowtail=empty, dir=both];
 PropertyOwnerController931943586 -> PropertyOwnerServiceImpl124484289[label="propertyOwnerService
-[1]", arrowhead=none];
+[0..1]", arrowhead=none];
 PropertyOwnerServiceImpl124484289 -> OwnerMapper219619911[label="ownerMapper
-[1]"];
+[0..1]"];
 SampleData2033362088 -> PropertyOwnerServiceImpl124484289[label="propertyOwnerService
 [1]", arrowhead=none];
     
