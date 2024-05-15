@@ -9,7 +9,6 @@ public record UserSearchResponseDto(String tin,
                                     String name,
                                     String surname,
                                     String address,
-                                    String phoneNumber,
-                                    List<String> properties,
-                                    long version) {
+                                    String phoneNumber
+                                    ) {
 }

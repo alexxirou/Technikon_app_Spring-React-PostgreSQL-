@@ -27,6 +27,7 @@ import java.net.URI;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.List;
 
 
 @RestController
@@ -47,24 +48,24 @@ public class PropertyOwnerController {
 
 
     @GetMapping("/")
-    public ResponseEntity<UserSearchResponseDto> findUser(
+    public ResponseEntity< List<UserSearchResponseDto>>  findUsers(
             @RequestParam(required = false) String tin,
             @RequestParam(required = false) String username,
             @RequestParam(required = false) String email
     ) {
         UserSearchDto searchRequest = new UserSearchDto(tin, username, email);
-        PropertyOwner user = propertyOwnerService.searchUser(searchRequest);
-        UserSearchResponseDto userInfo = propertyOwnerService.createSearchResponse(user);
-        HttpHeaders headers= HeaderUtility.createHeaders("Success-Header", userInfo.tin());
+        List<PropertyOwner> users = propertyOwnerService.searchUser(searchRequest);
+        List<UserSearchResponseDto> userInfo =propertyOwnerService.createSearchResponse(users);
+        HttpHeaders headers= HeaderUtility.createHeaders("Success-Header", "Users found.");
         return new ResponseEntity<>(userInfo, headers, HttpStatus.OK);
     }
 
 
 
 
-    @PutMapping("/")
-    public ResponseEntity<String> updateUser(UserUpdateDto updateRequest) {
-        propertyOwnerService.UpdateUser(updateRequest);
+    @PutMapping("/{tin}")
+    public ResponseEntity<String> updateUser(@RequestParam String tin, @RequestBody UserUpdateDto updateRequest) {
+        propertyOwnerService.UpdateUser(tin, updateRequest);
         HttpHeaders headers= HeaderUtility.createHeaders("Success-Header", "User updated.");
         return new ResponseEntity<>(headers, HttpStatus.ACCEPTED);
         }
