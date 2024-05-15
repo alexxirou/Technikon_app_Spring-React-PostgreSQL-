@@ -1,32 +1,14 @@
 package com.scytalys.technikon.controller;
-
 import com.scytalys.technikon.domain.PropertyOwner;
-import com.scytalys.technikon.domain.User;
 import com.scytalys.technikon.dto.*;
-import com.scytalys.technikon.mapper.OwnerMapper;
 import com.scytalys.technikon.service.PropertyOwnerService;
-
-import com.scytalys.technikon.service.UserService;
 import com.scytalys.technikon.utility.HeaderUtility;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessResourceFailureException;
-import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.hateoas.EntityModel;
-import org.springframework.hateoas.Link;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-
-import java.net.URI;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -36,12 +18,7 @@ import java.util.List;
 @RequestMapping("/api/v2/users/propertyOwners")
 public class PropertyOwnerController {
 
-
-    @Autowired
     private final PropertyOwnerService propertyOwnerService;
-
-    @Autowired
-    private final OwnerMapper ownerMapper;
 
 
 
@@ -61,7 +38,12 @@ public class PropertyOwnerController {
     }
 
 
-
+    @GetMapping("/{tin}")
+    public ResponseEntity<UserDetails> showUser(@RequestParam String tin) {
+        UserDetails userInfo=propertyOwnerService.userDetails(propertyOwnerService.findUser(tin));
+        HttpHeaders headers= HeaderUtility.createHeaders("Success-Header", "User with tin found.");
+        return new ResponseEntity<>(userInfo, headers, HttpStatus.OK);
+    }
 
     @PutMapping("/{tin}")
     public ResponseEntity<String> updateUser(@RequestParam String tin, @RequestBody UserUpdateDto updateRequest) {
