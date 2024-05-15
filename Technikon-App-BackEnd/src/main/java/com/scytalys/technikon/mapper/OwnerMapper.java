@@ -62,9 +62,7 @@ public interface OwnerMapper {
         @Mapping(source = "user.surname", target = "surname")
         @Mapping(source = "user.address", target = "address")
         @Mapping(source = "user.phoneNumber", target = "phoneNumber")
-        @Mapping(target = "properties", source = "results")
-        @Mapping(source = "user.version", target = "version")
-        UserSearchResponseDto userToUserSearchResponseDto(User user, List<String> results);
+        UserSearchResponseDto userToUserSearchResponseDto(User user);
 
 
 
