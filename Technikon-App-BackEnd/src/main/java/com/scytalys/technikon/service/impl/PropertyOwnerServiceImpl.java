@@ -27,9 +27,8 @@ import java.util.regex.Pattern;
 public class PropertyOwnerServiceImpl implements PropertyOwnerService {
 
     private final PropertyOwnerRepository propertyOwnerRepository;
+
     private final OwnerMapper ownerMapper;
-
-
 
 
     /**
@@ -46,17 +45,16 @@ public class PropertyOwnerServiceImpl implements PropertyOwnerService {
         if (dto.tin() != null) {
             spec = spec.and(UserSearchSpecification.tinContains(dto.tin()));
         }
-       if(dto.username() != null) {
+        if(dto.username() != null) {
             spec = spec.and(UserSearchSpecification.usernameContains(dto.username()));
         }
-       if (dto.email() != null) {
+        if (dto.email() != null) {
             spec = spec.and(UserSearchSpecification.emailContains(dto.email()));
         }
 
-        List<PropertyOwner> propertyOwners = propertyOwnerRepository.findAll((Sort) spec);
+        return propertyOwnerRepository.findAll(spec).orElseThrow(()->new EntityNotFoundException("User not found."));
 
-        if (propertyOwners.isEmpty())  throw new EntityNotFoundException("User not found.");
-        return propertyOwners;
+
 
     }
 
@@ -116,6 +114,7 @@ public class PropertyOwnerServiceImpl implements PropertyOwnerService {
         PropertyOwner user= propertyOwnerRepository.findByTin(tin).orElseThrow(() -> new EntityNotFoundException("User not found."));
         user.setActive(false);
       propertyOwnerRepository.save(user);
+
 
     }
 

@@ -48,7 +48,7 @@ public class PropertyOwnerController {
 
 
     @GetMapping("/")
-    public ResponseEntity< List<UserSearchResponseDto>>  findUsers(
+    public ResponseEntity<List<UserSearchResponseDto>>  findUsers(
             @RequestParam(required = false) String tin,
             @RequestParam(required = false) String username,
             @RequestParam(required = false) String email
@@ -68,7 +68,7 @@ public class PropertyOwnerController {
         propertyOwnerService.UpdateUser(tin, updateRequest);
         HttpHeaders headers= HeaderUtility.createHeaders("Success-Header", "User updated.");
         return new ResponseEntity<>(headers, HttpStatus.ACCEPTED);
-        }
+    }
 
 
 
