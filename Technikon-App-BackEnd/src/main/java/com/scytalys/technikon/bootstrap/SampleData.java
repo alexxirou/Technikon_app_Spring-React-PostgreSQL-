@@ -68,7 +68,7 @@ public class SampleData {
             propertyService.createProperty(property2);
 
 
-            PropertyRepairDto propertyRepairDto = new PropertyRepairDto(
+            PropertyRepairDto propertyRepairDto1 = new PropertyRepairDto(
                     1,
                     propertyOwner.getId(),
                     property.getId(),
@@ -78,7 +78,32 @@ public class SampleData {
                     RepairStatus.SCHEDULED,
                     new BigDecimal(170),
                     "looong");
-            propertyRepairService.createPropertyRepair(propertyRepairDto);
+            propertyRepairService.createPropertyRepair(propertyRepairDto1);
+
+            PropertyRepairDto propertyRepairDto2 = new PropertyRepairDto(
+                    2,
+                    propertyOwner.getId(),
+                    property.getId(),
+                    LocalDate.of(2024, 9, 9),
+                    "short for repairrrrrr",
+                    RepairType.ELECTRICAL_WORK,
+                    RepairStatus.DEFAULT_PENDING,
+                    new BigDecimal(80),
+                    "lllll");
+            propertyRepairService.createPropertyRepair(propertyRepairDto2);
+
+
+            PropertyRepairDto propertyRepairDto3 = new PropertyRepairDto(
+                    3,
+                    propertyOwner.getId(),
+                    2,
+                    LocalDate.of(2026, 10, 10),
+                    "short for repairrrrrr",
+                    RepairType.PLUMBING,
+                    RepairStatus.DEFAULT_PENDING,
+                    new BigDecimal(80),
+                    "lllll");
+            propertyRepairService.createPropertyRepair(propertyRepairDto3);
         };
     }
     }

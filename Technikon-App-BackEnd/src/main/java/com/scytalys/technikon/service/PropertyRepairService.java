@@ -1,16 +1,18 @@
 package com.scytalys.technikon.service;
 
-
 import com.scytalys.technikon.domain.PropertyRepair;
-import com.scytalys.technikon.domain.category.RepairStatus;
 import com.scytalys.technikon.dto.repair.*;
+import org.springframework.data.jpa.domain.Specification;
 
 import java.util.List;
 
 public interface PropertyRepairService {
     PropertyRepairDto createPropertyRepair(PropertyRepairDto propertyRepairDto);
-    PropertyRepairDto searchPropertyRepair(long propertyOwnerId, long propertyId,long repairId);
-    List<PropertyRepairDto> searchPropertyRepairs(long propertyOwnerId, long propertyId);
+    PropertyRepairDto getPropertyRepair(long repairId);
+    List<PropertyRepairDto> getAllPropertyRepairs();
+    List<PropertyRepairDto> getPropertyRepairsByOwner(long propertyOwnerId);
+    List<PropertyRepairDto> search(Specification<PropertyRepair> spec);
+    List<PropertyRepairDto> search(PropertyRepairSearchDto propertyRepairSearchDto);
     List<PropertyRepairDto> searchPropertyRepairByDate(PropertyRepairSearchByDateDto propertyRepairSearchByDateDto);
     List<PropertyRepairDto> searchPropertyRepairByDates(PropertyRepairSearchByDatesDto propertyRepairSearchByDatesDto);
     PropertyRepairUpdateDto updatePropertyRepair(long id, PropertyRepairUpdateDto propertyRepairUpdateDto);

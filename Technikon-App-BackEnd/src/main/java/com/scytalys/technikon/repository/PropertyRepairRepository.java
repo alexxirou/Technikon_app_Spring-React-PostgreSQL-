@@ -4,6 +4,7 @@ import com.scytalys.technikon.domain.PropertyRepair;
 import com.scytalys.technikon.domain.category.RepairStatus;
 import com.scytalys.technikon.domain.category.RepairType;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -19,19 +20,16 @@ import java.util.Date;
 import java.util.List;
 
 @Repository
-public interface PropertyRepairRepository extends JpaRepository<PropertyRepair, Long> {
+public interface PropertyRepairRepository extends JpaRepository<PropertyRepair, Long>, JpaSpecificationExecutor<PropertyRepair> {
 
-    @Query("SELECT p FROM PropertyRepair p WHERE p.propertyOwner.id= :propertyOwnerId AND p.property.id= :propertyId AND p.id= :repairId")
-    PropertyRepair getPropertyRepair(@Param("propertyOwnerId") long propertyOwnerId, @Param("propertyId") long propertyId, @Param("repairId") long repairId);
+    @Query("SELECT p FROM PropertyRepair p WHERE p.propertyOwner.id= :propertyOwnerId")
+    List<PropertyRepair> getPropertyRepairsByOwner(@Param("propertyOwnerId") long propertyOwnerId);
 
-    @Query("SELECT p FROM PropertyRepair p WHERE p.propertyOwner.id= :propertyOwnerId AND p.property.id= :propertyId")
-    List<PropertyRepair> getPropertyRepairs(@Param("propertyOwnerId") long propertyOwnerId, @Param("propertyId") long propertyId);
+    @Query("SELECT p FROM PropertyRepair p WHERE p.propertyOwner.id= :propertyOwnerId AND p.dateOfRepair= :date")
+    List<PropertyRepair> getPropertyRepairByDate(@Param("propertyOwnerId") long propertyOwnerId, @Param("date") LocalDate date);
 
-    @Query("SELECT p FROM PropertyRepair p WHERE p.propertyOwner.id= :propertyOwnerId AND p.property.id= :propertyId AND p.dateOfRepair= :date")
-    List<PropertyRepair> getPropertyRepairByDate(@Param("propertyOwnerId") long propertyOwnerId, @Param("propertyId") long propertyId, @Param("date") LocalDate date);
-
-    @Query("SELECT p FROM PropertyRepair p WHERE p.propertyOwner.id= :propertyOwnerId AND p.property.id= :propertyId AND p.dateOfRepair>= :firstDate AND p.dateOfRepair<= :lastDate")
-    List<PropertyRepair> getPropertyRepairByDates(@Param("propertyOwnerId") long propertyOwnerId, @Param("propertyId") long propertyId, @Param("firstDate") LocalDate firstDate, @Param("lastDate") LocalDate lastDate);
+    @Query("SELECT p FROM PropertyRepair p WHERE p.propertyOwner.id= :propertyOwnerId AND p.dateOfRepair>= :firstDate AND p.dateOfRepair<= :lastDate")
+    List<PropertyRepair> getPropertyRepairByDates(@Param("propertyOwnerId") long propertyOwnerId, @Param("firstDate") LocalDate firstDate, @Param("lastDate") LocalDate lastDate);
 
     @Transactional
     @Modifying

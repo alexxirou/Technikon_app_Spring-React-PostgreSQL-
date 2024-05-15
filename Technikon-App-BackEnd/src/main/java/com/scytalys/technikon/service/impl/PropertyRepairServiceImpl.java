@@ -5,20 +5,24 @@ import com.scytalys.technikon.domain.category.RepairStatus;
 import com.scytalys.technikon.domain.category.RepairType;
 import com.scytalys.technikon.dto.repair.*;
 import com.scytalys.technikon.exception.InvalidInputException;
+import com.scytalys.technikon.exception.ResourceNotFoundException;
 import com.scytalys.technikon.mapper.PropertyRepairMapper;
 import com.scytalys.technikon.repository.PropertyOwnerRepository;
 import com.scytalys.technikon.repository.PropertyRepairRepository;
+import com.scytalys.technikon.repository.PropertyRepairSpecifications;
 import com.scytalys.technikon.repository.PropertyRepository;
 import com.scytalys.technikon.service.PropertyRepairService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.dao.DataAccessResourceFailureException;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Collections;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
@@ -50,10 +54,17 @@ public class PropertyRepairServiceImpl implements PropertyRepairService {
         return propertyRepairMapper.RepairToPropertyRepairDto(converted);
     }
 
-    @Override
-    public PropertyRepairDto searchPropertyRepair(long propertyOwnerId, long propertyId, long repairId){
-        PropertyRepair propertyRepair = propertyRepairRepository.getPropertyRepair(propertyOwnerId, propertyId, repairId);
+
+    public PropertyRepairDto getPropertyRepair(long id){
+        PropertyRepair propertyRepair = propertyRepairRepository.findById(id).orElseThrow();
         return propertyRepairMapper.RepairToPropertyRepairDto(propertyRepair);
+    }
+
+    public List<PropertyRepairDto> getAllPropertyRepairs() {
+        return propertyRepairRepository.findAll()
+                .stream()
+                .map(propertyRepairMapper::RepairToPropertyRepairDto)
+                .collect(Collectors.toList());
     }
 
 
@@ -63,10 +74,38 @@ public class PropertyRepairServiceImpl implements PropertyRepairService {
      * @return A list of all property repairs that were scheduled by the specified property owner. If no repairs were found for the given owner, an empty list is returned.
      */
     @Override
-    public List<PropertyRepairDto> searchPropertyRepairs(long propertyOwnerId, long propertyId) {
-        return propertyRepairRepository.getPropertyRepairs(propertyOwnerId, propertyId).stream()
+    public List<PropertyRepairDto> getPropertyRepairsByOwner(long propertyOwnerId) {
+        return propertyRepairRepository.getPropertyRepairsByOwner(propertyOwnerId)
+                .stream()
                 .map(propertyRepairMapper::RepairToPropertyRepairDto)
                 .collect(Collectors.toList());
+    }
+
+
+    @Override
+    public List<PropertyRepairDto> search(Specification<PropertyRepair> spec) {
+        return propertyRepairRepository.findAll()
+                .stream()
+                .map(propertyRepairMapper::RepairToPropertyRepairDto)
+                .collect(Collectors.toList());
+    }
+
+
+    /**
+     * @return
+     */
+    public List<PropertyRepairDto> search(PropertyRepairSearchDto dto) {
+        Specification<PropertyRepair> spec = Specification.where(null);
+        if (dto.date() != null) {
+            spec = spec.and(PropertyRepairSpecifications.dateContains(dto.date()));
+        }
+        if (dto.firstDate() != null) {
+            spec = spec.and(PropertyRepairSpecifications.firstDateContains(dto.firstDate()));
+        }
+        if (dto.lastDate() != null) {
+            spec = spec.and(PropertyRepairSpecifications.lastDateContains(dto.lastDate()));
+        }
+        return search(spec);
     }
 
 
@@ -77,7 +116,7 @@ public class PropertyRepairServiceImpl implements PropertyRepairService {
      */
     @Override
     public List<PropertyRepairDto> searchPropertyRepairByDate(PropertyRepairSearchByDateDto propertyRepairSearchByDateDto) {
-        return propertyRepairRepository.getPropertyRepairByDate(propertyRepairSearchByDateDto.propertyOwnerId(), propertyRepairSearchByDateDto.propertyId(), propertyRepairSearchByDateDto.dateOfRepair())
+        return propertyRepairRepository.getPropertyRepairByDate(propertyRepairSearchByDateDto.propertyOwnerId(), propertyRepairSearchByDateDto.dateOfRepair())
                 .stream()
                 .map(propertyRepairMapper::RepairToPropertyRepairDto)
                 .collect(Collectors.toList());
@@ -90,7 +129,7 @@ public class PropertyRepairServiceImpl implements PropertyRepairService {
      */
     @Override
     public List<PropertyRepairDto> searchPropertyRepairByDates (PropertyRepairSearchByDatesDto propertyRepairSearchByDatesDto) {
-        return propertyRepairRepository.getPropertyRepairByDates(propertyRepairSearchByDatesDto.propertyOwnerId(), propertyRepairSearchByDatesDto.propertyId(), propertyRepairSearchByDatesDto.firstDate(), propertyRepairSearchByDatesDto.lastDate())
+        return propertyRepairRepository.getPropertyRepairByDates(propertyRepairSearchByDatesDto.propertyOwnerId(), propertyRepairSearchByDatesDto.firstDate(), propertyRepairSearchByDatesDto.lastDate())
                 .stream()
                 .map(propertyRepairMapper::RepairToPropertyRepairDto)
                 .collect(Collectors.toList());

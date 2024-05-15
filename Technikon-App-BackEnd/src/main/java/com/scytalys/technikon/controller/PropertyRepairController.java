@@ -14,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -27,16 +28,33 @@ public class PropertyRepairController {
         return new ResponseEntity<>(propertyRepairService.createPropertyRepair(propertyRepairDto), HttpStatus.CREATED);
     }
 
-    @GetMapping("/{propertyOwnerId}/{propertyId}/{repairId}")
-    public ResponseEntity<PropertyRepairDto> read(@PathVariable long propertyOwnerId, @PathVariable long propertyId, @PathVariable long repairId){
-        PropertyRepairDto propertyRepairDto = propertyRepairService.searchPropertyRepair(propertyOwnerId, propertyId, repairId);
+    @GetMapping("/{repairId}")
+    public ResponseEntity<PropertyRepairDto> readOne(@PathVariable long repairId){
+        PropertyRepairDto propertyRepairDto = propertyRepairService.getPropertyRepair(repairId);
         return propertyRepairDto == null? ResponseEntity.notFound().build(): ResponseEntity.ok(propertyRepairDto);
     }
 
-    @GetMapping("/{propertyOwnerId}/{propertyId}")
-    public ResponseEntity<List<PropertyRepairDto>> readAll(@PathVariable long propertyOwnerId, @PathVariable long propertyId) {
-        return new ResponseEntity<>(propertyRepairService.searchPropertyRepairs(propertyOwnerId, propertyId), HttpStatus.OK);
+    @GetMapping("/all")
+    public ResponseEntity<List<PropertyRepairDto>> readAll(){
+        List<PropertyRepairDto> propertyRepairDtos = propertyRepairService.getAllPropertyRepairs();
+        return propertyRepairDtos == null? ResponseEntity.notFound().build(): ResponseEntity.ok(propertyRepairDtos);
     }
+
+    @GetMapping("/all-by-owner/{propertyOwnerId}")
+    public ResponseEntity<List<PropertyRepairDto>> readAllByOwner(@PathVariable long propertyOwnerId) {
+        return new ResponseEntity<>(propertyRepairService.getPropertyRepairsByOwner(propertyOwnerId), HttpStatus.OK);
+    }
+
+    @GetMapping("/search")
+    public List<PropertyRepairDto> search(
+            @RequestParam(required = false) LocalDate date,
+            @RequestParam(required = false) LocalDate firstDate,
+            @RequestParam(required = false) LocalDate lastDate
+    ) {
+        return propertyRepairService.search(
+                new PropertyRepairSearchDto (date, firstDate, lastDate));
+    }
+
 
     //Spring Boot does not allow to use GetMapping with RequestBody
     @PostMapping("get-by-date")
@@ -51,8 +69,8 @@ public class PropertyRepairController {
     }
 
     @PutMapping("/{id}")
-    public PropertyRepairUpdateDto update(@PathVariable long id, @RequestBody PropertyRepairUpdateDto dto){
-        return propertyRepairService.updatePropertyRepair(id, dto);
+    public ResponseEntity<PropertyRepairUpdateDto> update(@PathVariable long id, @RequestBody PropertyRepairUpdateDto dto){
+        return new ResponseEntity<>(propertyRepairService.updatePropertyRepair(id, dto), HttpStatus.OK);
     }
 
     @DeleteMapping("/delete/{id}")
