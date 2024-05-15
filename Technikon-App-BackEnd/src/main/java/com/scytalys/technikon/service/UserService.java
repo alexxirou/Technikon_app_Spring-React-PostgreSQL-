@@ -13,5 +13,5 @@ public interface UserService<T> {
     List<UserSearchResponseDto> createSearchResponse(List<T> users);
     List<T> searchUser(UserSearchDto dto);
     T findUser(String tin);
-    UserDetails userDetails(T user);
+    UserDetailsDto userDetails(T user);
 }

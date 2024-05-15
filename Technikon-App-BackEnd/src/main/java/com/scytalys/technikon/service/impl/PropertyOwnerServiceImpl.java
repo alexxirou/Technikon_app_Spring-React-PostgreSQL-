@@ -8,12 +8,9 @@ import com.scytalys.technikon.repository.PropertyOwnerRepository;
 import com.scytalys.technikon.service.PropertyOwnerService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.OptimisticLockingFailureException;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -171,10 +168,10 @@ public class PropertyOwnerServiceImpl implements PropertyOwnerService {
      */
 
     @Override
-    public UserDetails userDetails(PropertyOwner user){
+    public UserDetailsDto userDetails(PropertyOwner user){
         UserSearchResponseDto details = ownerMapper.userToUserSearchResponseDto(user);
         List<String> properties = propertyOwnerRepository.findPropertyIdsByUserId(user.getTin());
-        return new UserDetails(details, properties);
+        return new UserDetailsDto(details, properties);
     }
 
 }

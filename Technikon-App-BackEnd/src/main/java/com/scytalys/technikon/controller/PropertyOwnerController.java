@@ -8,7 +8,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
 import java.util.List;
 
 
@@ -39,8 +39,8 @@ public class PropertyOwnerController {
 
 
     @GetMapping("/{tin}")
-    public ResponseEntity<UserDetails> showUser(@RequestParam String tin) {
-        UserDetails userInfo=propertyOwnerService.userDetails(propertyOwnerService.findUser(tin));
+    public ResponseEntity<UserDetailsDto> showUser(@RequestParam String tin) {
+        UserDetailsDto userInfo=propertyOwnerService.userDetails(propertyOwnerService.findUser(tin));
         HttpHeaders headers= HeaderUtility.createHeaders("Success-Header", "User with tin found.");
         return new ResponseEntity<>(userInfo, headers, HttpStatus.OK);
     }
