@@ -8,7 +8,8 @@ public record UserSearchResponseDto(String tin,
                                     String name,
                                     String surname,
                                     String address,
-                                    String phoneNumber
+                                    String phoneNumber,
+                                    boolean isActive
 ) {
 }
 
