@@ -76,10 +76,9 @@ public class PropertyOwnerServiceImpl implements PropertyOwnerService {
             spec = spec.and(UserSearchSpecification.emailContains(dto.email()));
         }
 
-        List<PropertyOwner> propertyOwners = propertyOwnerRepository.findAll((Sort) spec);
+        return propertyOwnerRepository.findAll(spec).orElseThrow(()->new EntityNotFoundException("User not found."));
 
-        if (propertyOwners.isEmpty())  throw new EntityNotFoundException("User not found.");
-        return propertyOwners;
+
 
     }
 
