@@ -67,7 +67,6 @@ public class SampleData {
             property2.setConstructionYear(LocalDate.of(2000, 02, 02));
             propertyService.createProperty(property2);
 
-
             PropertyRepairDto propertyRepairDto1 = new PropertyRepairDto(
                     1,
                     propertyOwner.getId(),
@@ -91,7 +90,6 @@ public class SampleData {
                     new BigDecimal(80),
                     "lllll");
             propertyRepairService.createPropertyRepair(propertyRepairDto2);
-
 
             PropertyRepairDto propertyRepairDto3 = new PropertyRepairDto(
                     3,
