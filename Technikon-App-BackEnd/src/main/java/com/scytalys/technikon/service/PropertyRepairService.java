@@ -14,5 +14,5 @@ public interface PropertyRepairService {
     List<PropertyRepairDto> searchPropertyRepairByDate(PropertyRepairSearchByDateDto propertyRepairSearchByDateDto);
     List<PropertyRepairDto> searchPropertyRepairByDates(PropertyRepairSearchByDatesDto propertyRepairSearchByDatesDto);
     PropertyRepairUpdateDto updatePropertyRepair(long id, PropertyRepairUpdateDto propertyRepairUpdateDto);
-    void deletePropertyRepair(long id);
+    void deletePropertyRepair(long id) throws IllegalAccessException;
 }

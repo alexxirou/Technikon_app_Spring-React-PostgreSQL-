@@ -10,8 +10,6 @@ import com.scytalys.technikon.repository.PropertyRepository;
 import com.scytalys.technikon.service.PropertyRepairService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
-import org.springframework.dao.DataAccessResourceFailureException;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,7 +23,6 @@ import static com.scytalys.technikon.domain.category.RepairStatus.DEFAULT_PENDIN
 @Service
 @AllArgsConstructor
 public class PropertyRepairServiceImpl implements PropertyRepairService {
-
     private final PropertyRepairRepository propertyRepairRepository;
     private final PropertyOwnerRepository propertyOwnerRepository;
     private final PropertyRepository propertyRepository;
@@ -42,6 +39,7 @@ public class PropertyRepairServiceImpl implements PropertyRepairService {
 //        validatePropertyOwnerExistsOrThrow(propertyRepairCreationDto.propertyOwnerId());
 //        validatePropertyExistsOrThrow(propertyRepairCreationDto.propertyId());
 //        validateDateInput(propertyRepairCreationDto.dateOfRepair());
+
         PropertyRepair converted = propertyRepairMapper.RepairDtoToPropertyRepair(propertyRepairDto);
         propertyRepairRepository.save(converted);
         return propertyRepairMapper.RepairToPropertyRepairDto(converted);
@@ -49,7 +47,7 @@ public class PropertyRepairServiceImpl implements PropertyRepairService {
 
 
     public PropertyRepairDto getPropertyRepair(long id){
-        PropertyRepair propertyRepair = propertyRepairRepository.findById(id).orElseThrow();
+        PropertyRepair propertyRepair = propertyRepairRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Property repair with id "+ id+ " not found"));
         return propertyRepairMapper.RepairToPropertyRepairDto(propertyRepair);
     }
 
@@ -140,14 +138,13 @@ public class PropertyRepairServiceImpl implements PropertyRepairService {
      *
      */
     @Transactional
-    public void deletePropertyRepair(long id) {
-        PropertyRepair propertyRepair = propertyRepairRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+    public void deletePropertyRepair(long id) throws IllegalAccessException {
+        PropertyRepair propertyRepair = propertyRepairRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Property repair with id "+ id+ " not found"));
        if (propertyRepair.getRepairStatus().equals(DEFAULT_PENDING)){
-            int deletedRows = propertyRepairRepository.deletePropertyRepair(id);
-            if (deletedRows == 0) {
-                throw new DataAccessResourceFailureException("Failed to delete property repair with id: " + id);
-            }
-        }
+            propertyRepairRepository.deleteById(id);
+       }else {
+           throw new IllegalAccessException("Cannot delete a property repair with this status");
+       }
     }
 
     private void validatePropertyOwnerExistsOrThrow(long propertyOwnerId) {

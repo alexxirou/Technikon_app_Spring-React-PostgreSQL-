@@ -58,7 +58,7 @@ public class PropertyRepairController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Object> deletePropertyRepair(long id) {
+    public ResponseEntity<Object> deletePropertyRepair(long id) throws IllegalAccessException {
         propertyRepairService.deletePropertyRepair(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
