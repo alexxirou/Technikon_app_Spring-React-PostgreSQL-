@@ -54,21 +54,19 @@ public class UserAuthenticationController {
         if (authentication.isAuthenticated()) {
             String token = jwtService.generateToken(authRequest.getUsername());
             return ResponseEntity.ok(token);
-        } else {
-            throw new BadCredentialsException("Invalid credentials");
-        }
+        } else throw new BadCredentialsException("Invalid credentials");
+
     }
 
     @PostMapping("/admin/login")
     public ResponseEntity<String> adminLogin(@RequestBody AuthRequest authRequest) {
-        try {
-            Authentication authentication = authenticationManager.authenticate(
+        Authentication authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword()));
+        if (authentication.isAuthenticated()) {
             String token = jwtService.generateToken(authRequest.getUsername());
             return ResponseEntity.ok(token);
-        } catch (AuthenticationException e) {
-            throw new BadCredentialsException("Invalid credentials");
-        }
+        } else throw new BadCredentialsException("Invalid credentials");
+
     }
 
 }
