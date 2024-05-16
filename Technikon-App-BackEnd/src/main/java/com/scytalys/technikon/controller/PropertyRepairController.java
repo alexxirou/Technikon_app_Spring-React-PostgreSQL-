@@ -1,9 +1,5 @@
 package com.scytalys.technikon.controller;
 
-
-import com.scytalys.technikon.domain.PropertyRepair;
-import com.scytalys.technikon.domain.category.RepairStatus;
-import com.scytalys.technikon.domain.category.RepairType;
 import com.scytalys.technikon.dto.repair.*;
 import com.scytalys.technikon.exception.InvalidInputException;
 import com.scytalys.technikon.exception.ResourceNotFoundException;
@@ -14,7 +10,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @RestController
