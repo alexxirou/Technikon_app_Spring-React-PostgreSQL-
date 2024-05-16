@@ -22,7 +22,7 @@ public class UserInfoDetails implements UserDetails {
     private final boolean enabled = true;
 
         public UserInfoDetails(User user)  {
-            username = user.getName();
+            username = user.getTin();
             password = user.getPassword();
 
             // Determine authority based on the type of user

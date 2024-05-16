@@ -23,14 +23,16 @@ public class JwtServiceImpl implements JwtService {
     private int MINUTES;
 
     @Override
-    public String generateToken(String userName) {
+    public String generateToken( String tin) {
         Map<String, Object> claims = new HashMap<>();
-        return createToken(claims, userName);
+        return createToken(claims, tin);
     }
 
+
+
     @Override
-    public String extractUsername(String token) {
-        return extractClaim(token,  claim -> claim.getSubject());
+    public String extractTin(String token) {
+        return extractClaim(token, Claims::getSubject);
     }
 
     @Override
@@ -46,14 +48,14 @@ public class JwtServiceImpl implements JwtService {
 
     @Override
     public Boolean validateToken(String token, UserDetails userDetails) {
-        final String username = extractUsername(token);
+        final String username = extractTin(token);
         return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
     }
 
-    private String createToken(Map<String, Object> claims, String userName) {
+    private String createToken(Map<String, Object> claims, String tin) {
         return Jwts.builder()
                 .setClaims(claims)
-                .setSubject(userName)
+                .setSubject(tin)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + (long) 1000 * 60 * MINUTES))
                 .signWith(getSignKey(), SignatureAlgorithm.HS256).compact();

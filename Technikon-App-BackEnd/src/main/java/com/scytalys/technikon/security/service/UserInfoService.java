@@ -25,10 +25,10 @@ public class UserInfoService implements UserDetailsService {
 
 
     @Override
-    public UserInfoDetails loadUserByUsername(String username)  {
-        PropertyOwner user = propertyOwnerRepository.findByName(username).orElseThrow(() ->new IllegalArgumentException("Username does not exist."));
+    public UserInfoDetails loadUserByUsername(String tin)  {
+        PropertyOwner user = propertyOwnerRepository.findByTin(tin).orElseThrow(() ->new IllegalArgumentException("Username does not exist."));
         Optional<UserInfoDetails> result = Optional.of(new UserInfoDetails(user));
-        return result.orElseThrow(() -> new BadCredentialsException("User not found " + username));
+        return result.orElseThrow(() -> new BadCredentialsException("User not found " + tin));
     }
 
 

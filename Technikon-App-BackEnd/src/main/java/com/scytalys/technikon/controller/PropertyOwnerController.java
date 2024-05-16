@@ -19,7 +19,7 @@ import java.util.List;
 @RestController
 
 @AllArgsConstructor
-@RequestMapping("/api/v2/users/propertyOwners")
+@RequestMapping("/api/v2/propertyOwners")
 public class PropertyOwnerController {
 
     private final PropertyOwnerService propertyOwnerService;
@@ -44,7 +44,10 @@ public class PropertyOwnerController {
     @PreAuthorize("hasRole('ROLE_USER')")
     @GetMapping("/{tin}")
     public ResponseEntity<UserDetailsDto> showUser(@PathVariable String tin, Authentication authentication) {
-        UserDetailsDto userInfo=propertyOwnerService.userDetails(propertyOwnerService.findUser(tin), authentication);
+        String authTin = authentication.getName();
+        if (!authTin.equals(tin)) throw new AccessDeniedException("You are not authorized to search another user.");
+
+        UserDetailsDto userInfo=propertyOwnerService.userDetails(propertyOwnerService.findUser(tin));
         HttpHeaders headers= HeaderUtility.createHeaders("Success-Header", "User with tin found.");
         return new ResponseEntity<>(userInfo, headers, HttpStatus.OK);
     }
@@ -52,8 +55,9 @@ public class PropertyOwnerController {
     @PreAuthorize("hasRole('ROLE_USER')")
     @PutMapping("/{tin}")
     public ResponseEntity<String> updateUser(@PathVariable String tin, @RequestBody UserUpdateDto updateRequest, Authentication authentication) {
-
-        propertyOwnerService.updateUser(tin, updateRequest, authentication);
+        String authTin = authentication.getName();
+        if (!authTin.equals(tin)) throw new AccessDeniedException("You are not authorized to update another user.");
+        propertyOwnerService.updateUser(tin, updateRequest);
 
 
         HttpHeaders headers= HeaderUtility.createHeaders("Success-Header", "User updated.");
@@ -64,13 +68,15 @@ public class PropertyOwnerController {
     @PreAuthorize("hasRole('ROLE_USER')")
     @DeleteMapping("/{tin}{version}")
     public ResponseEntity<String> deleteUser(@PathVariable String tin, @RequestParam long version, Authentication authentication) {
+        String authTin = authentication.getName();
+        if (!authTin.equals(tin)) throw new AccessDeniedException("You are not authorized to delete another user.");
         HttpHeaders headers;
         if(propertyOwnerService.checkUserHasProperties(tin)){
-            propertyOwnerService.softDeleteUser(tin ,authentication);
+            propertyOwnerService.softDeleteUser(tin);
             headers= HeaderUtility.createHeaders("Success-Header", "User deactivated.");
         }
         else {
-            propertyOwnerService.deleteUser(tin, authentication);
+            propertyOwnerService.deleteUser(tin);
             headers = HeaderUtility.createHeaders("Success-Header", "User deleted.");
         }
         return new ResponseEntity<>(headers, HttpStatus.ACCEPTED);

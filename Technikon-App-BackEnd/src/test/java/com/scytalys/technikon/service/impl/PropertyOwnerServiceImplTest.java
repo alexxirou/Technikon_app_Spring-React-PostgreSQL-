@@ -96,7 +96,15 @@ public class PropertyOwnerServiceImplTest {
     public void testCreateUser() {
         when(propertyOwnerRepository.save(eq(propertyOwner))).thenReturn(propertyOwner);
         PropertyOwner result =  userInfoService.createDBUser(dto);
-        assertEquals(propertyOwner, result);
+        assertEquals(result.getTin(), propertyOwner.getTin());
+        assertEquals(result.getName(), propertyOwner.getName());
+        assertEquals(result.getSurname(), propertyOwner.getSurname());
+        assertEquals(result.getEmail(), propertyOwner.getEmail());
+        assertEquals(result.getUsername(), propertyOwner.getUsername());
+        assertEquals(result.getPassword(), propertyOwner.getPassword());
+        assertEquals(result.getAddress(), propertyOwner.getAddress());
+        assertEquals(result.getPhoneNumber(), propertyOwner.getPhoneNumber());
+        assertEquals(result.getVersion(), propertyOwner.getVersion());
 
     }
 
@@ -152,8 +160,8 @@ public class PropertyOwnerServiceImplTest {
         doAnswer(invocation -> {
             propertyOwner.setActive(false); // Set isActive flag to false
             return 1;
-        }).when(propertyOwnerService).softDeleteUser(eq(propertyOwner.getTin()), eq(authentication));
-        propertyOwnerService.softDeleteUser(propertyOwner.getTin(), authentication);
+        }).when(propertyOwnerService).softDeleteUser(eq(propertyOwner.getTin()));
+        propertyOwnerService.softDeleteUser(propertyOwner.getTin());
         assertFalse(propertyOwner.isActive());
     }
 
@@ -166,7 +174,7 @@ public class PropertyOwnerServiceImplTest {
     @Test
     public  void testSoftDeleteUserFail() {
         userInfoService.createDBUser(dto);
-        assertThrows(EntityNotFoundException.class, ()->propertyOwnerService.softDeleteUser(propertyOwner.getTin(), authentication));
+        assertThrows(EntityNotFoundException.class, ()->propertyOwnerService.softDeleteUser(propertyOwner.getTin()));
 
     }
 
@@ -225,9 +233,9 @@ public class PropertyOwnerServiceImplTest {
             return null;
         }).when(propertyOwnerRepository).save(propertyOwner);
 
-        propertyOwnerService.updateUser(propertyOwner.getTin(), updateRequest, authentication);
+        propertyOwnerService.updateUser(propertyOwner.getTin(), updateRequest);
 
-        assertThrows(OptimisticLockingFailureException.class, () -> propertyOwnerService.updateUser(propertyOwner.getTin(),updateRequest2, authentication));
+        assertThrows(OptimisticLockingFailureException.class, () -> propertyOwnerService.updateUser(propertyOwner.getTin(),updateRequest2));
     }
 
     /**
@@ -248,8 +256,8 @@ public class PropertyOwnerServiceImplTest {
             }
             return null;
         }).when(propertyOwnerRepository).save(propertyOwner);
-        propertyOwnerService.updateUser(propertyOwner.getTin(), updateRequest, authentication);
-        assertDoesNotThrow(() -> propertyOwnerService.updateUser(propertyOwner.getTin(),updateRequest, authentication));
+        propertyOwnerService.updateUser(propertyOwner.getTin(), updateRequest);
+        assertDoesNotThrow(() -> propertyOwnerService.updateUser(propertyOwner.getTin(),updateRequest));
         assertEquals(propertyOwner.getEmail(),updateRequest.email());
 
     }
@@ -272,7 +280,7 @@ public class PropertyOwnerServiceImplTest {
             return null;
         }).when(propertyOwnerRepository).save(propertyOwner);
 
-        assertThrows(IllegalArgumentException.class, () -> propertyOwnerService.updateUser(propertyOwner.getTin(),updateRequest, authentication));
+        assertThrows(IllegalArgumentException.class, () -> propertyOwnerService.updateUser(propertyOwner.getTin(),updateRequest));
 
 
     }
@@ -294,7 +302,7 @@ public class PropertyOwnerServiceImplTest {
         when(ownerMapper.userToUserSearchResponseDto(propertyOwner)).thenReturn(userDto);
 
 
-        UserDetailsDto userDetails = propertyOwnerService.userDetails(propertyOwner, authentication);
+        UserDetailsDto userDetails = propertyOwnerService.userDetails(propertyOwner);
 
         assertEquals(userDto, userDetails.userInfo());
         assertEquals(properties, userDetails.properties());
@@ -315,7 +323,7 @@ public class PropertyOwnerServiceImplTest {
         when(ownerMapper.userToUserSearchResponseDto(propertyOwner)).thenReturn(userDto);
 
 
-        UserDetailsDto userDetails = propertyOwnerService.userDetails(propertyOwner, authentication);
+        UserDetailsDto userDetails = propertyOwnerService.userDetails(propertyOwner);
 
 
         assertEquals(userDto, userDetails.userInfo());

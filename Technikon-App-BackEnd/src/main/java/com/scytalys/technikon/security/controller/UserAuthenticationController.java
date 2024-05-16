@@ -50,9 +50,9 @@ public class UserAuthenticationController {
 
     @PostMapping("/login")
     public ResponseEntity<String> authenticateAndGetToken(@RequestBody com.scytalys.technikon.security.dto.AuthRequest authRequest) {
-        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authRequest.username(), authRequest.password()));
+        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authRequest.tin(), authRequest.password()));
         if (authentication.isAuthenticated()) {
-            String token = jwtService.generateToken(authRequest.username());
+            String token = jwtService.generateToken( authRequest.tin());
             return ResponseEntity.ok(token);
         } else throw new BadCredentialsException("Invalid credentials");
 
@@ -61,9 +61,9 @@ public class UserAuthenticationController {
     @PostMapping("/admin/login")
     public ResponseEntity<String> adminLogin(@RequestBody AuthRequest authRequest) {
         Authentication authentication = authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(authRequest.username(), authRequest.password()));
+                    new UsernamePasswordAuthenticationToken(authRequest.tin(), authRequest.password()));
         if (authentication.isAuthenticated()) {
-            String token = jwtService.generateToken(authRequest.username());
+            String token = jwtService.generateToken(authRequest.tin());
             return ResponseEntity.ok(token);
         } else throw new BadCredentialsException("Invalid credentials");
 
