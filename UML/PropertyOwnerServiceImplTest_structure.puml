@@ -107,6 +107,21 @@ subgraph cluster_197470096 {
 	fillcolor="#FFFFFF"
 ];
 
+OwnerMapperImpl219619911[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)OwnerMapperImpl</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ updateDtoToUser(userUpdateDto: UserUpdateDto, user: PropertyOwner): PropertyOwner</TD></TR>
+<TR><TD ALIGN="LEFT" >+ userCreationDtoToPropertyOwner(userCreationDto: UserCreationDto): PropertyOwner</TD></TR>
+<TR><TD ALIGN="LEFT" >+ userToUserResponseDto(user: User): UserResponseDto</TD></TR>
+<TR><TD ALIGN="LEFT" >+ userToUserSearchResponseDto(user: User): UserSearchResponseDto</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
 PropertyOwner25216822[
 	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
 <TR><TD ALIGN="LEFT" >(C)PropertyOwner</TD></TR>
@@ -123,17 +138,19 @@ PropertyOwnerServiceImpl124484289[
 	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
 <TR><TD ALIGN="LEFT" >(C)PropertyOwnerServiceImpl</TD></TR>
 <HR/>
-<TR><TD ALIGN="LEFT" >-   ownerMapper: OwnerMapper [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   ownerMapper: OwnerMapper [0..1]</TD></TR>
 <TR><TD ALIGN="LEFT" >-   propertyOwnerRepository: PropertyOwnerRepository [0..1]</TD></TR>
 <HR/>
-<TR><TD ALIGN="LEFT" >+ UpdateUser(dto: UserUpdateDto)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ UpdateUser(tin: String, dto: UserUpdateDto)</TD></TR>
 <TR><TD ALIGN="LEFT" >+ checkUserHasProperties(tin: String): boolean</TD></TR>
 <TR><TD ALIGN="LEFT" >+ createDBUser(dto: UserCreationDto): PropertyOwner</TD></TR>
-<TR><TD ALIGN="LEFT" >+ createSearchResponse(user: PropertyOwner): UserSearchResponseDto</TD></TR>
+<TR><TD ALIGN="LEFT" >+ createSearchResponse(users: List&lt;PropertyOwner&gt;): List&lt;UserSearchResponseDto&gt;</TD></TR>
 <TR><TD ALIGN="LEFT" >+ createUserResponseDto(user: PropertyOwner): UserResponseDto</TD></TR>
 <TR><TD ALIGN="LEFT" >+ deleteUser(tin: String)</TD></TR>
-<TR><TD ALIGN="LEFT" >+ searchUser(dto: UserSearchDto): PropertyOwner</TD></TR>
+<TR><TD ALIGN="LEFT" >+ findUser(tin: String): PropertyOwner</TD></TR>
+<TR><TD ALIGN="LEFT" >+ searchUser(dto: UserSearchDto): List&lt;PropertyOwner&gt;</TD></TR>
 <TR><TD ALIGN="LEFT" >+ softDeleteUser(tin: String)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ userDetails(user: PropertyOwner): UserDetails</TD></TR>
 </TABLE>>
 	style=filled
 	margin=0
@@ -154,14 +171,20 @@ PropertyOwnerServiceImplTest124484289[
 <TR><TD ALIGN="LEFT" >#   propertyService: PropertyServiceImpl [0..1]</TD></TR>
 <HR/>
 <TR><TD ALIGN="LEFT" >+ findPropertiesForUser()</TD></TR>
+<TR><TD ALIGN="LEFT" ># findUser_ReturnsActiveUser_WhenUserExistsAndIsActive()</TD></TR>
+<TR><TD ALIGN="LEFT" ># findUser_ThrowsEntityNotFoundException_WhenUserDoesNotExist()</TD></TR>
+<TR><TD ALIGN="LEFT" ># findUser_ThrowsEntityNotFoundException_WhenUserExistsButIsNotActive()</TD></TR>
 <TR><TD ALIGN="LEFT" >+ tearDown()</TD></TR>
 <TR><TD ALIGN="LEFT" >+ testCreateUser()</TD></TR>
-<TR><TD ALIGN="LEFT" >+ testDeleteUser()</TD></TR>
 <TR><TD ALIGN="LEFT" >+ testFindUsersWithPropertiesFail()</TD></TR>
 <TR><TD ALIGN="LEFT" >+ testSearchUserByFail()</TD></TR>
 <TR><TD ALIGN="LEFT" >+ testSearchUserByTin()</TD></TR>
 <TR><TD ALIGN="LEFT" >+ testSoftDeleteUser()</TD></TR>
 <TR><TD ALIGN="LEFT" >+ testSoftDeleteUserFail()</TD></TR>
+<TR><TD ALIGN="LEFT" ># testUpdateUser()</TD></TR>
+<TR><TD ALIGN="LEFT" ># testUpdateUserFailWrongEmailFormat()</TD></TR>
+<TR><TD ALIGN="LEFT" ># userDetails_ReturnsUserDetailsWithEmptyProperties_WhenPropertyOwnerDoesNotExist()</TD></TR>
+<TR><TD ALIGN="LEFT" ># userDetails_ReturnsUserDetails_WhenPropertyOwnerExists()</TD></TR>
 <TR><TD ALIGN="LEFT" >+ whenConcurrentUpdate_thenThrowException()</TD></TR>
 </TABLE>>
 	style=filled
@@ -238,6 +261,22 @@ UserCreationDto686682215[
 	fillcolor="#FFFFFF"
 ];
 
+UserDetails686682215[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)UserDetails</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   properties: List&lt;String&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   userInfo: UserSearchResponseDto [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ properties(): List&lt;String&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ userInfo(): UserSearchResponseDto</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
 UserSearchDto686682215[
 	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
 <TR><TD ALIGN="LEFT" >(C)UserSearchDto</TD></TR>
@@ -247,6 +286,33 @@ UserSearchDto686682215[
 <TR><TD ALIGN="LEFT" >-   username: String [0..1]</TD></TR>
 <HR/>
 <TR><TD ALIGN="LEFT" >+ email(): String</TD></TR>
+<TR><TD ALIGN="LEFT" >+ tin(): String</TD></TR>
+<TR><TD ALIGN="LEFT" >+ username(): String</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+UserSearchResponseDto686682215[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)UserSearchResponseDto</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   address: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   email: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   isActive: boolean [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   name: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   phoneNumber: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   surname: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   tin: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   username: String [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ address(): String</TD></TR>
+<TR><TD ALIGN="LEFT" >+ email(): String</TD></TR>
+<TR><TD ALIGN="LEFT" >+ name(): String</TD></TR>
+<TR><TD ALIGN="LEFT" >+ phoneNumber(): String</TD></TR>
+<TR><TD ALIGN="LEFT" >+ surname(): String</TD></TR>
 <TR><TD ALIGN="LEFT" >+ tin(): String</TD></TR>
 <TR><TD ALIGN="LEFT" >+ username(): String</TD></TR>
 </TABLE>>
@@ -277,13 +343,11 @@ UserUpdateDto686682215[
 <TR><TD ALIGN="LEFT" >-   address: String [0..1]</TD></TR>
 <TR><TD ALIGN="LEFT" >-   email: String [0..1]</TD></TR>
 <TR><TD ALIGN="LEFT" >-   password: String [0..1]</TD></TR>
-<TR><TD ALIGN="LEFT" >-   tin: String [0..1]</TD></TR>
 <TR><TD ALIGN="LEFT" >-   version: long [1]</TD></TR>
 <HR/>
 <TR><TD ALIGN="LEFT" >+ address(): String</TD></TR>
 <TR><TD ALIGN="LEFT" >+ email(): String</TD></TR>
 <TR><TD ALIGN="LEFT" >+ password(): String</TD></TR>
-<TR><TD ALIGN="LEFT" >+ tin(): String</TD></TR>
 <TR><TD ALIGN="LEFT" >+ version(): long</TD></TR>
 </TABLE>>
 	style=filled
@@ -295,6 +359,7 @@ UserUpdateDto686682215[
 } 
 
 'edges    
+PropertyOwnerServiceImplTest124484289 -> OwnerMapperImpl219619911[arrowhead=none];
 PropertyOwnerServiceImplTest124484289 -> PropertyOwner25216822[label="propertyOwner
 [0..1]"];
 PropertyOwnerServiceImplTest124484289 -> PropertyOwnerServiceImpl124484289[label="propertyOwnerService
@@ -303,9 +368,10 @@ PropertyOwnerServiceImplTest124484289 -> PropertyServiceImpl124484289[label="pro
 [0..1]"];
 PropertyOwnerServiceImplTest124484289 -> UserCreationDto686682215[label="dto
 [0..1]"];
-PropertyOwnerServiceImplTest124484289 -> UserUpdateDto686682215[label="whenConcurrentUpdate_thenThrowException() -> version()"];
 User25216822 -> Admin25216822[arrowhead=none, arrowtail=empty, dir=both];
 User25216822 -> PropertyOwner25216822[arrowhead=none, arrowtail=empty, dir=both];
+UserDetails686682215 -> UserSearchResponseDto686682215[label="userInfo
+[0..1]"];
     
 }
 @enduml
