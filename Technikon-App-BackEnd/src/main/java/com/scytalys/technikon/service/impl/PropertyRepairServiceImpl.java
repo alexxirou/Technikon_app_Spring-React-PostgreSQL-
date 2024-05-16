@@ -7,6 +7,7 @@ import com.scytalys.technikon.repository.PropertyOwnerRepository;
 import com.scytalys.technikon.repository.PropertyRepairRepository;
 import com.scytalys.technikon.repository.PropertyRepository;
 import com.scytalys.technikon.domain.Property;
+import com.scytalys.technikon.service.PropertyOwnerService;
 import com.scytalys.technikon.service.PropertyRepairService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
@@ -28,6 +29,7 @@ public class PropertyRepairServiceImpl implements PropertyRepairService {
     private final PropertyOwnerRepository propertyOwnerRepository;
     private final PropertyRepository propertyRepository;
     private final PropertyRepairMapper propertyRepairMapper;
+    private final PropertyOwnerService propertyOwnerService;
 
 
     /**
@@ -69,7 +71,9 @@ public class PropertyRepairServiceImpl implements PropertyRepairService {
      */
     @Override
     public List<PropertyRepairDto> getPropertyRepairsByOwner(long propertyOwnerId) {
-        return propertyRepairRepository.getPropertyRepairsByOwner(propertyOwnerId)
+        propertyOwnerRepository.findById(propertyOwnerId).orElseThrow(()-> new EntityNotFoundException("Property owner with id "+ propertyOwnerId+ " not found"));
+       List<PropertyRepair> propertyRepairs = propertyRepairRepository.getPropertyRepairsByOwner(propertyOwnerId);
+        return propertyRepairs
                 .stream()
                 .map(propertyRepairMapper::RepairToPropertyRepairDto)
                 .collect(Collectors.toList());
