@@ -12,6 +12,8 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -79,9 +81,11 @@ public class PropertyOwnerServiceImpl implements PropertyOwnerService {
     @Override
     @Transactional
     @CacheEvict(value = "PropertyOwners", allEntries = true)
-    public void updateUser(String tin, UserUpdateDto dto){
+    public void updateUser(String tin, UserUpdateDto dto, Authentication authentication){
 
         PropertyOwner user= findUser(tin);
+        String authenticatedUsername = authentication.getName();
+        if (!authenticatedUsername.equals(user.getUsername())) throw new AccessDeniedException("You are not authorized to update another user.");
         if(user.getVersion()!= dto.version()) throw new OptimisticLockingFailureException("User cannot be updated, please try again later.");
         PropertyOwner newUser = ownerMapper.updateDtoToUser(dto,user);
         if(dto.email()!=null) {
@@ -104,8 +108,10 @@ public class PropertyOwnerServiceImpl implements PropertyOwnerService {
     @Override
     @Transactional
     @CacheEvict(value = "PropertyOwners", allEntries = true)
-    public void deleteUser(String tin) {
+    public void deleteUser(String tin ,Authentication authentication) {
         PropertyOwner user= findUser(tin);
+        String authenticatedUsername = authentication.getName();
+        if (!authenticatedUsername.equals(user.getUsername())) throw new AccessDeniedException("You are not authorized to delete another user.");
         propertyOwnerRepository.deleteById(user.getId());;
 
     }
@@ -118,8 +124,11 @@ public class PropertyOwnerServiceImpl implements PropertyOwnerService {
     @Override
     @Transactional
     @CacheEvict(value = "PropertyOwners", allEntries = true)
-    public void softDeleteUser(String tin){
+    public void softDeleteUser(String tin, Authentication authentication){
         PropertyOwner user= propertyOwnerRepository.findByTin(tin).orElseThrow(() -> new EntityNotFoundException("User not found."));
+        String authenticatedUsername = authentication.getName();
+        if (!authenticatedUsername.equals(user.getUsername())) throw new AccessDeniedException("You are not authorized to delete another user.");
+
         user.setActive(false);
         propertyOwnerRepository.save(user);
 
@@ -168,7 +177,9 @@ public class PropertyOwnerServiceImpl implements PropertyOwnerService {
      */
 
     @Override
-    public UserDetailsDto userDetails(PropertyOwner user){
+    public UserDetailsDto userDetails(PropertyOwner user, Authentication authentication){
+        String authenticatedUsername = authentication.getName();
+        if (!authenticatedUsername.equals(user.getUsername())) throw new AccessDeniedException("You are not authorized to delete another user.");
         UserSearchResponseDto details = ownerMapper.userToUserSearchResponseDto(user);
         List<String> properties = propertyOwnerRepository.findPropertyIdsByUserId(user.getTin());
         return new UserDetailsDto(details, properties);

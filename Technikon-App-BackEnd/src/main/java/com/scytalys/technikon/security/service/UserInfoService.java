@@ -8,6 +8,7 @@ import com.scytalys.technikon.repository.PropertyOwnerRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -27,7 +28,7 @@ public class UserInfoService implements UserDetailsService {
     public UserInfoDetails loadUserByUsername(String username)  {
         PropertyOwner user = propertyOwnerRepository.findByName(username).orElseThrow(() ->new IllegalArgumentException("Username does not exist."));
         Optional<UserInfoDetails> result = Optional.of(new UserInfoDetails(user));
-        return result.orElseThrow(() -> new UsernameNotFoundException("User not found " + username));
+        return result.orElseThrow(() -> new BadCredentialsException("User not found " + username));
     }
 
 

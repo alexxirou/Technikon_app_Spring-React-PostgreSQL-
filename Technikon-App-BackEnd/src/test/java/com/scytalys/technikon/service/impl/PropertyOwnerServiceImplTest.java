@@ -2,19 +2,20 @@ package com.scytalys.technikon.service.impl;
 
 import com.scytalys.technikon.domain.Property;
 import com.scytalys.technikon.domain.PropertyOwner;
-import com.scytalys.technikon.domain.User;
+
 import com.scytalys.technikon.domain.category.PropertyType;
 import com.scytalys.technikon.dto.*;
 import com.scytalys.technikon.mapper.OwnerMapper;
 import com.scytalys.technikon.repository.PropertyOwnerRepository;
 import com.scytalys.technikon.repository.PropertyRepository;
 
-import java.sql.Array;
+
 import java.util.*;
 
 import com.scytalys.technikon.security.service.UserInfoService;
+import com.scytalys.technikon.utility.AuthenticationUtils;
 import jakarta.persistence.EntityNotFoundException;
-import org.jetbrains.annotations.NotNull;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -22,11 +23,11 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.Spy;
-import org.springframework.dao.DataAccessResourceFailureException;
-import org.springframework.dao.DataIntegrityViolationException;
+
 import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.data.jpa.domain.Specification;
-import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.Authentication;
+
 
 import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.*;
@@ -56,6 +57,7 @@ public class PropertyOwnerServiceImplTest {
     private OwnerMapper ownerMapper = OwnerMapper.INSTANCE; // Initialize ownerMapper
     @Spy
     private PropertyOwner propertyOwner;
+    private Authentication authentication;
 
     private UserCreationDto dto;
 
@@ -77,7 +79,7 @@ public class PropertyOwnerServiceImplTest {
         propertyOwner.setPhoneNumber("+30999582486");// phoneNumber
         propertyOwner.setVersion(0);
         dto =new UserCreationDto(propertyOwner.getTin(), propertyOwner.getName(), propertyOwner.getSurname(), propertyOwner.getEmail(), propertyOwner.getUsername(), propertyOwner.getPassword(), propertyOwner.getAddress(), propertyOwner.getPhoneNumber());
-
+        authentication= AuthenticationUtils.createAuthentication(propertyOwner.getUsername(), propertyOwner.getPassword());
 
 
     }
@@ -146,11 +148,12 @@ public class PropertyOwnerServiceImplTest {
 
         when(propertyOwnerRepository.save(eq(propertyOwner))).thenReturn(propertyOwner);
         userInfoService.createDBUser(dto);
+        // Set isActive flag to false
         doAnswer(invocation -> {
             propertyOwner.setActive(false); // Set isActive flag to false
             return 1;
-        }).when(propertyOwnerService).softDeleteUser(eq(propertyOwner.getTin()));
-        propertyOwnerService.softDeleteUser(propertyOwner.getTin());
+        }).when(propertyOwnerService).softDeleteUser(eq(propertyOwner.getTin()), eq(authentication));
+        propertyOwnerService.softDeleteUser(propertyOwner.getTin(), authentication);
         assertFalse(propertyOwner.isActive());
     }
 
@@ -163,7 +166,7 @@ public class PropertyOwnerServiceImplTest {
     @Test
     public  void testSoftDeleteUserFail() {
         userInfoService.createDBUser(dto);
-        assertThrows(EntityNotFoundException.class, ()->propertyOwnerService.softDeleteUser(propertyOwner.getTin()));
+        assertThrows(EntityNotFoundException.class, ()->propertyOwnerService.softDeleteUser(propertyOwner.getTin(), authentication));
 
     }
 
@@ -222,9 +225,9 @@ public class PropertyOwnerServiceImplTest {
             return null;
         }).when(propertyOwnerRepository).save(propertyOwner);
 
-        propertyOwnerService.UpdateUser(propertyOwner.getTin(), updateRequest);
+        propertyOwnerService.updateUser(propertyOwner.getTin(), updateRequest, authentication);
 
-        assertThrows(OptimisticLockingFailureException.class, () -> propertyOwnerService.UpdateUser(propertyOwner.getTin(),updateRequest2));
+        assertThrows(OptimisticLockingFailureException.class, () -> propertyOwnerService.updateUser(propertyOwner.getTin(),updateRequest2, authentication));
     }
 
     /**
@@ -245,8 +248,8 @@ public class PropertyOwnerServiceImplTest {
             }
             return null;
         }).when(propertyOwnerRepository).save(propertyOwner);
-        propertyOwnerService.UpdateUser(propertyOwner.getTin(), updateRequest);
-        assertDoesNotThrow(() -> propertyOwnerService.UpdateUser(propertyOwner.getTin(),updateRequest));
+        propertyOwnerService.updateUser(propertyOwner.getTin(), updateRequest, authentication);
+        assertDoesNotThrow(() -> propertyOwnerService.updateUser(propertyOwner.getTin(),updateRequest, authentication));
         assertEquals(propertyOwner.getEmail(),updateRequest.email());
 
     }
@@ -269,7 +272,7 @@ public class PropertyOwnerServiceImplTest {
             return null;
         }).when(propertyOwnerRepository).save(propertyOwner);
 
-        assertThrows(IllegalArgumentException.class, () -> propertyOwnerService.UpdateUser(propertyOwner.getTin(),updateRequest));
+        assertThrows(IllegalArgumentException.class, () -> propertyOwnerService.updateUser(propertyOwner.getTin(),updateRequest, authentication));
 
 
     }
@@ -291,7 +294,7 @@ public class PropertyOwnerServiceImplTest {
         when(ownerMapper.userToUserSearchResponseDto(propertyOwner)).thenReturn(userDto);
 
 
-        UserDetailsDto userDetails = propertyOwnerService.userDetails(propertyOwner);
+        UserDetailsDto userDetails = propertyOwnerService.userDetails(propertyOwner, authentication);
 
         assertEquals(userDto, userDetails.userInfo());
         assertEquals(properties, userDetails.properties());
@@ -312,7 +315,7 @@ public class PropertyOwnerServiceImplTest {
         when(ownerMapper.userToUserSearchResponseDto(propertyOwner)).thenReturn(userDto);
 
 
-        UserDetailsDto userDetails = propertyOwnerService.userDetails(propertyOwner);
+        UserDetailsDto userDetails = propertyOwnerService.userDetails(propertyOwner, authentication);
 
 
         assertEquals(userDto, userDetails.userInfo());

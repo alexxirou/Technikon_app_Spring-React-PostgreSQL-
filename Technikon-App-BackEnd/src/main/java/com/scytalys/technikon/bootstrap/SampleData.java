@@ -18,6 +18,7 @@ import com.scytalys.technikon.security.service.UserInfoService;
 import com.scytalys.technikon.service.PropertyOwnerService;
 import com.scytalys.technikon.service.PropertyRepairService;
 import com.scytalys.technikon.service.PropertyService;
+import com.scytalys.technikon.utility.AuthenticationUtils;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
@@ -26,6 +27,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.core.Authentication;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -43,6 +45,7 @@ public class SampleData {
     private final PropertyService propertyService;
 
     private final UserInfoService userInfoService;
+    private Authentication authentication;
 
 
 
@@ -77,6 +80,7 @@ public class SampleData {
             propertyOwner=userInfoService.createDBUser(dto);
             logger.info("Created property owner: {}", propertyOwner);
 //            propertyOwnerService.updateUserPassword(propertyOwner.getId(),"password", propertyOwner.getVersion());
+            authentication = AuthenticationUtils.createAuthentication(propertyOwner.getUsername(), propertyOwner.getPassword());
             Property property = new Property();
 
             property.setTin("15161651616fr");
@@ -98,9 +102,9 @@ public class SampleData {
             List<UserSearchResponseDto> responseDto=propertyOwnerService.createSearchResponse(resultUser);
             logger.info("Created user search response: {}", responseDto);
             UserUpdateDto newUpdate = new UserUpdateDto(null,"elsewhere",null, propertyOwner.getVersion());
-            propertyOwnerService.updateUser(propertyOwner.getTin(), newUpdate);
+            propertyOwnerService.updateUser(propertyOwner.getTin(), newUpdate, authentication);
             logger.info("Updated user with: {}", newUpdate);
-            resultUser =propertyOwnerService.searchUser(request);
+            resultUser =propertyOwnerService.searchUser(request );
             logger.info("Searched property Owner: {}", resultUser);
         };
     }
