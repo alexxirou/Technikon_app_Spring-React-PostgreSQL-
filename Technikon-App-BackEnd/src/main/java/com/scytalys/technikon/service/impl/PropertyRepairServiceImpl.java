@@ -2,7 +2,6 @@ package com.scytalys.technikon.service.impl;
 
 import com.scytalys.technikon.domain.PropertyRepair;
 import com.scytalys.technikon.dto.repair.*;
-import com.scytalys.technikon.exception.InvalidInputException;
 import com.scytalys.technikon.mapper.PropertyRepairMapper;
 import com.scytalys.technikon.repository.PropertyOwnerRepository;
 import com.scytalys.technikon.repository.PropertyRepairRepository;
@@ -11,13 +10,13 @@ import com.scytalys.technikon.domain.Property;
 import com.scytalys.technikon.service.PropertyRepairService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
+import org.springframework.dao.DataAccessResourceFailureException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 import static com.scytalys.technikon.domain.category.RepairStatus.DEFAULT_PENDING;
@@ -140,17 +139,14 @@ public class PropertyRepairServiceImpl implements PropertyRepairService {
     /**
      * Deletes a specific property repair from the repository.
      *
-     *
-     *
      */
     @Transactional
-    public void deletePropertyRepair(long id) throws IllegalAccessException {
+    public void deletePropertyRepair(long id) {
         PropertyRepair propertyRepair = propertyRepairRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Property repair with id "+ id+ " not found"));
-       if (propertyRepair.getRepairStatus().equals(DEFAULT_PENDING)){
-            propertyRepairRepository.deleteById(id);
-       }else {
-           throw new IllegalAccessException("Cannot delete a property repair with this status");
+       if (!propertyRepair.getRepairStatus().equals(DEFAULT_PENDING)) {
+           throw new DataAccessResourceFailureException("Cannot delete a property repair with this status");
        }
+       propertyRepairRepository.deleteById(id);
     }
 
     // VALIDATIONS
@@ -165,29 +161,29 @@ public class PropertyRepairServiceImpl implements PropertyRepairService {
 
     private void validatePropertyRepairExistsOrThrow(long propertyRepairId) {
         propertyRepository.findById(propertyRepairId).orElseThrow(() ->
-                new NoSuchElementException("Property repair with id " + propertyRepairId + " not found"));
+                new EntityNotFoundException("Property repair with id " + propertyRepairId + " not found"));
     }
 
     private void validateDateIsBeforeConstructionOrThrow(long propertyId, LocalDate date) {
         if (date.isBefore(LocalDate.now())){
-            throw new InvalidInputException("Date of repair must not be in the past");
+            throw new IllegalArgumentException("Date of repair must not be in the past");
         }
         Property property = propertyRepository.findById(propertyId)
                 .orElseThrow(() -> new EntityNotFoundException("Property not found"));
         if (date.isBefore(property.getConstructionYear())) {
-            throw new InvalidInputException("Date of repair must not be before the construction year of the property");
+            throw new IllegalArgumentException("Date of repair must not be before the construction year of the property");
         }
     }
 
     private void validateDateInputOrThrow(LocalDate date) {
         if (date.isBefore(LocalDate.now())){
-            throw new InvalidInputException("Date of repair must not be in the past");
+            throw new IllegalArgumentException("Date of repair must not be in the past");
         }
     }
 
     private void validateDatesInputOrThrow(LocalDate date1, LocalDate date2){
         if (date2.isBefore(date1)){
-            throw  new InvalidInputException("Invalid range of dates");
+            throw  new IllegalArgumentException("Invalid range of dates");
         }
     }
 

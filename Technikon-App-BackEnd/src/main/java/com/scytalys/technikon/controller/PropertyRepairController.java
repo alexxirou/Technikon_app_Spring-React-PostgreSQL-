@@ -1,8 +1,6 @@
 package com.scytalys.technikon.controller;
 
 import com.scytalys.technikon.dto.repair.*;
-import com.scytalys.technikon.exception.InvalidInputException;
-import com.scytalys.technikon.exception.ResourceNotFoundException;
 import com.scytalys.technikon.service.PropertyRepairService;
 import lombok.AllArgsConstructor;
 import org.springframework.dao.DataAccessResourceFailureException;
@@ -59,25 +57,8 @@ public class PropertyRepairController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Object> deletePropertyRepair(long id) throws IllegalAccessException {
+    public ResponseEntity<Object> deletePropertyRepair(long id) {
         propertyRepairService.deletePropertyRepair(id);
         return new ResponseEntity<>(HttpStatus.OK);
-    }
-
-    @ExceptionHandler(DataAccessResourceFailureException.class)
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ResponseEntity<String> handleDataAccessResourceFailureException(DataAccessResourceFailureException e) {
-        return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
-    }
-    @ExceptionHandler(InvalidInputException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ResponseEntity<String> handleInvalidInputException(InvalidInputException e) {
-        return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
-    }
-
-    @ExceptionHandler(ResourceNotFoundException.class)
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ResponseEntity<String> handleResourceNotFoundException(ResourceNotFoundException e) {
-        return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
     }
 }
