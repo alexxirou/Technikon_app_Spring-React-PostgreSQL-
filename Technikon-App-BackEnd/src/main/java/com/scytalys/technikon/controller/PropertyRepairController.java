@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -41,15 +42,15 @@ public class PropertyRepairController {
     }
 
     //Spring Boot does not allow to use GetMapping with RequestBody
-    @PostMapping("get-by-date")
-    public ResponseEntity<List<PropertyRepairDto>> searchPropertyRepairByDate(@RequestBody PropertyRepairSearchByDateDto propertyRepairSearchByDateDto) {
-        return new ResponseEntity<>(propertyRepairService.searchPropertyRepairByDate(propertyRepairSearchByDateDto), HttpStatus.OK);
+    @GetMapping("get-by-date")
+    public ResponseEntity<List<PropertyRepairDto>> searchPropertyRepairByDate(@RequestParam long propertyOwnerId, @RequestParam LocalDate date) {
+        return new ResponseEntity<>(propertyRepairService.searchPropertyRepairByDate(propertyOwnerId, date), HttpStatus.OK);
     }
 
     //Spring Boot does not allow to use GetMapping with RequestBody
-    @PostMapping("get-by-dates")
-    public ResponseEntity<List<PropertyRepairDto>> searchPropertyRepairByDates(@RequestBody PropertyRepairSearchByDatesDto propertyRepairSearchByDates) {
-        return new ResponseEntity<>(propertyRepairService.searchPropertyRepairByDates(propertyRepairSearchByDates), HttpStatus.OK);
+    @GetMapping("get-by-dates")
+    public ResponseEntity<List<PropertyRepairDto>> searchPropertyRepairsByDates(@RequestParam long propertyOwnerId, @RequestParam LocalDate firstDate, @RequestParam LocalDate lastDate) {
+        return new ResponseEntity<>(propertyRepairService.searchPropertyRepairsByDates(propertyOwnerId, firstDate, lastDate), HttpStatus.OK);
     }
 
     @PutMapping("/{id}")

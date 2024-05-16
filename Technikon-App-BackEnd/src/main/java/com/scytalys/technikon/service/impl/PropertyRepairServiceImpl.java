@@ -7,12 +7,14 @@ import com.scytalys.technikon.mapper.PropertyRepairMapper;
 import com.scytalys.technikon.repository.PropertyOwnerRepository;
 import com.scytalys.technikon.repository.PropertyRepairRepository;
 import com.scytalys.technikon.repository.PropertyRepository;
+import com.scytalys.technikon.domain.Property;
 import com.scytalys.technikon.service.PropertyRepairService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -36,10 +38,12 @@ public class PropertyRepairServiceImpl implements PropertyRepairService {
      */
     @Override
     public PropertyRepairDto createPropertyRepair(PropertyRepairDto propertyRepairDto) {
-//        validatePropertyOwnerExistsOrThrow(propertyRepairCreationDto.propertyOwnerId());
-//        validatePropertyExistsOrThrow(propertyRepairCreationDto.propertyId());
-//        validateDateInput(propertyRepairCreationDto.dateOfRepair());
-
+        validatePropertyOwnerExistsOrThrow(propertyRepairDto.propertyOwnerId());
+        validatePropertyExistsOrThrow(propertyRepairDto.propertyId());
+        validateDateIsBeforeConstructionOrThrow(propertyRepairDto.propertyId(), propertyRepairDto.dateOfRepair());
+        validateDateInputOrThrow(propertyRepairDto.dateOfRepair());
+        validateCostInputOrThrow(propertyRepairDto.cost());
+        validateShortDescription(propertyRepairDto.shortDescription());
         PropertyRepair converted = propertyRepairMapper.RepairDtoToPropertyRepair(propertyRepairDto);
         propertyRepairRepository.save(converted);
         return propertyRepairMapper.RepairToPropertyRepairDto(converted);
@@ -79,8 +83,9 @@ public class PropertyRepairServiceImpl implements PropertyRepairService {
      * @return The found property repair or null.
      */
     @Override
-    public List<PropertyRepairDto> searchPropertyRepairByDate(PropertyRepairSearchByDateDto propertyRepairSearchByDateDto) {
-        return propertyRepairRepository.getPropertyRepairByDate(propertyRepairSearchByDateDto.propertyOwnerId(), propertyRepairSearchByDateDto.dateOfRepair())
+    public List<PropertyRepairDto> searchPropertyRepairByDate(long propertyOwnerId, LocalDate date) {
+        validateDateInputOrThrow(date);
+        return propertyRepairRepository.getPropertyRepairByDate(propertyOwnerId, date)
                 .stream()
                 .map(propertyRepairMapper::RepairToPropertyRepairDto)
                 .collect(Collectors.toList());
@@ -92,8 +97,11 @@ public class PropertyRepairServiceImpl implements PropertyRepairService {
      * @return A list of property repairs that fall within the specified date range and were scheduled by the specified property owner. If no repairs match the criteria, an empty list is returned.
      */
     @Override
-    public List<PropertyRepairDto> searchPropertyRepairByDates (PropertyRepairSearchByDatesDto propertyRepairSearchByDatesDto) {
-        return propertyRepairRepository.getPropertyRepairByDates(propertyRepairSearchByDatesDto.propertyOwnerId(), propertyRepairSearchByDatesDto.firstDate(), propertyRepairSearchByDatesDto.lastDate())
+    public List<PropertyRepairDto> searchPropertyRepairsByDates (long propertyOwnerId, LocalDate firstDate, LocalDate lastDate) {
+        validateDateInputOrThrow(firstDate);
+        validateDateInputOrThrow(lastDate);
+        validateDatesInputOrThrow(firstDate, lastDate);
+        return propertyRepairRepository.getPropertyRepairsByDates(propertyOwnerId, firstDate, lastDate)
                 .stream()
                 .map(propertyRepairMapper::RepairToPropertyRepairDto)
                 .collect(Collectors.toList());
@@ -102,13 +110,11 @@ public class PropertyRepairServiceImpl implements PropertyRepairService {
     @Transactional
     @Override
     public PropertyRepairUpdateDto updatePropertyRepair(long id, PropertyRepairUpdateDto dto) {
-        PropertyRepair propertyRepair = propertyRepairRepository.findById(id).orElse(null);
-        if (propertyRepair == null) {
-            return null;
-        }
+        PropertyRepair propertyRepair = propertyRepairRepository.findById(id).orElseThrow(()-> new EntityNotFoundException("Property repair with id "+ id +" not found"));
 
         // Apply updates
         if(dto.dateOfRepair() != null){
+            validateDateInputOrThrow(dto.dateOfRepair());
             propertyRepair.setDateOfRepair(dto.dateOfRepair());
         }
         if(dto.shortDescription() !=null){
@@ -147,14 +153,14 @@ public class PropertyRepairServiceImpl implements PropertyRepairService {
        }
     }
 
+    // VALIDATIONS
+
     private void validatePropertyOwnerExistsOrThrow(long propertyOwnerId) {
-        propertyOwnerRepository.findById(propertyOwnerId)
-                .orElseThrow(() -> new NoSuchElementException("Property owner with id: " + propertyOwnerId + " not found"));
+        propertyOwnerRepository.findById(propertyOwnerId).orElseThrow(() -> new EntityNotFoundException("Property owner with id: " + propertyOwnerId + " not found"));
     }
 
     private void validatePropertyExistsOrThrow(long propertyId){
-        propertyRepository.findById(propertyId).orElseThrow(() ->
-                new NoSuchElementException("Property with id " + propertyId + " not found"));
+        propertyRepository.findById(propertyId).orElseThrow(() -> new EntityNotFoundException("Property with id " + propertyId + " not found"));
     }
 
     private void validatePropertyRepairExistsOrThrow(long propertyRepairId) {
@@ -162,11 +168,40 @@ public class PropertyRepairServiceImpl implements PropertyRepairService {
                 new NoSuchElementException("Property repair with id " + propertyRepairId + " not found"));
     }
 
-
-    private void validateDateInput(LocalDate date) {
-        if (date.isBefore(LocalDate.now())) {
+    private void validateDateIsBeforeConstructionOrThrow(long propertyId, LocalDate date) {
+        if (date.isBefore(LocalDate.now())){
             throw new InvalidInputException("Date of repair must not be in the past");
         }
-
+        Property property = propertyRepository.findById(propertyId)
+                .orElseThrow(() -> new EntityNotFoundException("Property not found"));
+        if (date.isBefore(property.getConstructionYear())) {
+            throw new InvalidInputException("Date of repair must not be before the construction year of the property");
+        }
     }
+
+    private void validateDateInputOrThrow(LocalDate date) {
+        if (date.isBefore(LocalDate.now())){
+            throw new InvalidInputException("Date of repair must not be in the past");
+        }
+    }
+
+    private void validateDatesInputOrThrow(LocalDate date1, LocalDate date2){
+        if (date2.isBefore(date1)){
+            throw  new InvalidInputException("Invalid range of dates");
+        }
+    }
+
+    private void validateCostInputOrThrow(BigDecimal cost) {
+        if (cost.compareTo(BigDecimal.ZERO) <= 0) {
+            throw new IllegalArgumentException("Cost must be greater than 0");
+        }
+    }
+
+    private void validateShortDescription(String shortDescription){
+        if (!shortDescription.matches(".{0,50}")) {
+            throw new IllegalArgumentException("Short description must be 50 characters or less");
+        }
+    }
+
+
 }

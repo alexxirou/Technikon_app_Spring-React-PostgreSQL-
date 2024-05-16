@@ -62,6 +62,7 @@ public class SampleData {
             property.setTin("15161651616fr");
             property.setAddress("somewhere");
             property.setPropertyType(PropertyType.values()[1]);
+            property.setConstructionYear(LocalDate.ofEpochDay(2000));
             property.setLatitude(10.5);
             property.setLongitude(58.4);
             property.setPropertyOwner(propertyOwner);
