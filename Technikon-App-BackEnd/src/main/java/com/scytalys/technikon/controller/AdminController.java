@@ -14,7 +14,7 @@ public class AdminController {
 
     @GetMapping("/")
     String findOwners() {
-        return "STUB";
+        return "another  STUB";
     }
 
 }
