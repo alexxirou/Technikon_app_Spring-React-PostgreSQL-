@@ -275,7 +275,7 @@ public class PropertyOwnerServiceImplTest {
     @Test
     void userDetails_ReturnsUserDetails_WhenPropertyOwnerExists() {
 
-        UserSearchResponseDto userDto = new UserSearchResponseDto(propertyOwner.getTin(),propertyOwner.getUsername(),propertyOwner.getEmail(),propertyOwner.getName(),propertyOwner.getSurname(),propertyOwner.getAddress(),propertyOwner.getPhoneNumber(),true);
+        UserSearchResponseDto userDto = new UserSearchResponseDto( propertyOwner.getId(),propertyOwner.getTin(),propertyOwner.getUsername(),propertyOwner.getEmail(),propertyOwner.getName(),propertyOwner.getSurname(),propertyOwner.getAddress(),propertyOwner.getPhoneNumber(),true);
 
         when(propertyOwnerRepository.findPropertyIdsByUserId(propertyOwner.getTin())).thenReturn(Collections.emptyList());
         when(ownerMapper.userToUserSearchResponseDto(propertyOwner)).thenReturn(userDto);
@@ -300,7 +300,7 @@ public class PropertyOwnerServiceImplTest {
     @Test
     void userDetails_ReturnsUserDetailsWithEmptyProperties_WhenPropertyOwnerDoesNotExist() {
 
-        UserSearchResponseDto userDto = new UserSearchResponseDto(propertyOwner.getTin(),propertyOwner.getUsername(),propertyOwner.getEmail(),propertyOwner.getName(),propertyOwner.getSurname(),propertyOwner.getAddress(),propertyOwner.getPhoneNumber(),true);
+        UserSearchResponseDto userDto = new UserSearchResponseDto(propertyOwner.getId(),propertyOwner.getTin(),propertyOwner.getUsername(),propertyOwner.getEmail(),propertyOwner.getName(),propertyOwner.getSurname(),propertyOwner.getAddress(),propertyOwner.getPhoneNumber(),true);
 
         when(propertyOwnerRepository.findPropertyIdsByUserId(propertyOwner.getTin())).thenReturn(Collections.emptyList());
         when(ownerMapper.userToUserSearchResponseDto(propertyOwner)).thenReturn(userDto);
