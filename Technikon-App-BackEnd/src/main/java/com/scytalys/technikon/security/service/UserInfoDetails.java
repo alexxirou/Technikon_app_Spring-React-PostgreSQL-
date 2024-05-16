@@ -27,7 +27,7 @@ public class UserInfoDetails implements UserDetails {
 
             // Determine authority based on the type of user
             if (user instanceof Admin) {
-                authorities = List.of(new SimpleGrantedAuthority("ROLE_ADMIN"));
+                authorities = List.of(new SimpleGrantedAuthority("ROLE_ADMIN"),new SimpleGrantedAuthority("ROLE_USER"));
             } else {
                 authorities = List.of(new SimpleGrantedAuthority("ROLE_USER"));
             }

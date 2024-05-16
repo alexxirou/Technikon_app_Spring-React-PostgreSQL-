@@ -3,6 +3,7 @@ package com.scytalys.technikon.security.controller;
 import com.scytalys.technikon.domain.PropertyOwner;
 import com.scytalys.technikon.dto.UserCreationDto;
 import com.scytalys.technikon.dto.UserResponseDto;
+import com.scytalys.technikon.security.dto.AuthRequest;
 import com.scytalys.technikon.security.service.JwtService;
 import com.scytalys.technikon.security.service.UserInfoService;
 import com.scytalys.technikon.service.PropertyOwnerService;
@@ -12,8 +13,10 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -52,7 +55,19 @@ public class UserAuthenticationController {
             String token = jwtService.generateToken(authRequest.getUsername());
             return ResponseEntity.ok(token);
         } else {
-            throw new UsernameNotFoundException("Invalid user request!");
+            throw new BadCredentialsException("Invalid credentials");
+        }
+    }
+
+    @PostMapping("/admin/login")
+    public ResponseEntity<String> adminLogin(@RequestBody AuthRequest authRequest) {
+        try {
+            Authentication authentication = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword()));
+            String token = jwtService.generateToken(authRequest.getUsername());
+            return ResponseEntity.ok(token);
+        } catch (AuthenticationException e) {
+            throw new BadCredentialsException("Invalid credentials");
         }
     }
 

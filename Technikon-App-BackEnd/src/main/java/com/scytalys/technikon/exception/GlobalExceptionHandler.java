@@ -10,8 +10,13 @@ import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+
+import java.time.LocalDateTime;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
@@ -57,5 +62,14 @@ public class GlobalExceptionHandler {
                 .header("Error-Message", "Request resource is busy: " + e.getMessage())
                 .body("Failed to modify resource because of high traffic. Please try again.");
     }
+
+    @ExceptionHandler(BadCredentialsException.class)
+    public ResponseEntity<Object> handleBadCredentialsException(BadCredentialsException e) {
+        logger.error("BadCredentialsException occurred: {}", e.getMessage());
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                .header("Error-Message", "Login failed: " + e.getMessage())
+                .body("Authentication failed: Invalid username or password.");
+    }
+
 
 }

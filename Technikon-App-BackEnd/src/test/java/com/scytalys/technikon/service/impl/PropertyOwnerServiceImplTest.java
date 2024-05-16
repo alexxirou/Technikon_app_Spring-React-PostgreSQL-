@@ -26,6 +26,7 @@ import org.springframework.dao.DataAccessResourceFailureException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.*;
@@ -290,7 +291,7 @@ public class PropertyOwnerServiceImplTest {
         when(ownerMapper.userToUserSearchResponseDto(propertyOwner)).thenReturn(userDto);
 
 
-        UserDetails userDetails = propertyOwnerService.userDetails(propertyOwner);
+        UserDetailsDto userDetails = propertyOwnerService.userDetails(propertyOwner);
 
         assertEquals(userDto, userDetails.userInfo());
         assertEquals(properties, userDetails.properties());
@@ -311,7 +312,7 @@ public class PropertyOwnerServiceImplTest {
         when(ownerMapper.userToUserSearchResponseDto(propertyOwner)).thenReturn(userDto);
 
 
-        UserDetails userDetails = propertyOwnerService.userDetails(propertyOwner);
+        UserDetailsDto userDetails = propertyOwnerService.userDetails(propertyOwner);
 
 
         assertEquals(userDto, userDetails.userInfo());
