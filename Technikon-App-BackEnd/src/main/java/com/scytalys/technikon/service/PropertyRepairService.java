@@ -13,7 +13,7 @@ public interface PropertyRepairService {
     PropertyRepairDto getPropertyRepair(long repairId);
     List<PropertyRepairDto> getAllPropertyRepairs();
     List<PropertyRepairDto> getPropertyRepairsByOwner(long propertyOwnerId);
-    List<PropertyRepairDto> searchPropertyRepairByDate(long propertyOwnerId, LocalDate date);
+    List<PropertyRepairDto> searchPropertyRepairsByDate(long propertyOwnerId, LocalDate date);
     List<PropertyRepairDto> searchPropertyRepairsByDates(long propertyOwnerId, LocalDate firstDate, LocalDate lastDate);
     PropertyRepairUpdateDto updatePropertyRepair(long id, PropertyRepairUpdateDto propertyRepairUpdateDto);
     void deletePropertyRepair(long id);

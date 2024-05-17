@@ -11,6 +11,8 @@ import com.scytalys.technikon.service.PropertyOwnerService;
 import com.scytalys.technikon.service.PropertyRepairService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.dao.DataAccessResourceFailureException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -37,7 +39,9 @@ public class PropertyRepairServiceImpl implements PropertyRepairService {
      *
      * @return The created property repair.
      */
+
     @Override
+    @CacheEvict(value = "PropertyRepairs", allEntries = true)
     public PropertyRepairDto createPropertyRepair(PropertyRepairDto propertyRepairDto) {
         validatePropertyOwnerExistsOrThrow(propertyRepairDto.propertyOwnerId());
         validatePropertyExistsOrThrow(propertyRepairDto.propertyId());
@@ -56,6 +60,7 @@ public class PropertyRepairServiceImpl implements PropertyRepairService {
         return propertyRepairMapper.RepairToPropertyRepairDto(propertyRepair);
     }
 
+    @Cacheable("PropertyRepairs")
     public List<PropertyRepairDto> getAllPropertyRepairs() {
         return propertyRepairRepository.findAll()
                 .stream()
@@ -69,7 +74,9 @@ public class PropertyRepairServiceImpl implements PropertyRepairService {
      *
      * @return A list of all property repairs that were scheduled by the specified property owner. If no repairs were found for the given owner, an empty list is returned.
      */
+
     @Override
+    @Cacheable("PropertyRepairs")
     public List<PropertyRepairDto> getPropertyRepairsByOwner(long propertyOwnerId) {
         propertyOwnerRepository.findById(propertyOwnerId).orElseThrow(()-> new EntityNotFoundException("Property owner with id "+ propertyOwnerId+ " not found"));
        List<PropertyRepair> propertyRepairs = propertyRepairRepository.getPropertyRepairsByOwner(propertyOwnerId);
@@ -86,7 +93,8 @@ public class PropertyRepairServiceImpl implements PropertyRepairService {
      * @return The found property repair or null.
      */
     @Override
-    public List<PropertyRepairDto> searchPropertyRepairByDate(long propertyOwnerId, LocalDate date) {
+    @Cacheable("PropertyRepairs")
+    public List<PropertyRepairDto> searchPropertyRepairsByDate(long propertyOwnerId, LocalDate date) {
         validateDateInputOrThrow(date);
         return propertyRepairRepository.getPropertyRepairByDate(propertyOwnerId, date)
                 .stream()
@@ -100,6 +108,7 @@ public class PropertyRepairServiceImpl implements PropertyRepairService {
      * @return A list of property repairs that fall within the specified date range and were scheduled by the specified property owner. If no repairs match the criteria, an empty list is returned.
      */
     @Override
+    @Cacheable("PropertyRepairs")
     public List<PropertyRepairDto> searchPropertyRepairsByDates (long propertyOwnerId, LocalDate firstDate, LocalDate lastDate) {
         validateDateInputOrThrow(firstDate);
         validateDateInputOrThrow(lastDate);
@@ -112,6 +121,7 @@ public class PropertyRepairServiceImpl implements PropertyRepairService {
 
     @Transactional
     @Override
+    @CacheEvict(value = "PropertyRepairs", allEntries = true)
     public PropertyRepairUpdateDto updatePropertyRepair(long id, PropertyRepairUpdateDto dto) {
         PropertyRepair propertyRepair = propertyRepairRepository.findById(id).orElseThrow(()-> new EntityNotFoundException("Property repair with id "+ id +" not found"));
 
@@ -145,6 +155,7 @@ public class PropertyRepairServiceImpl implements PropertyRepairService {
      *
      */
     @Transactional
+    @CacheEvict(value = "PropertyRepairs", allEntries = true)
     public void deletePropertyRepair(long id) {
         PropertyRepair propertyRepair = propertyRepairRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Property repair with id "+ id+ " not found"));
        if (!propertyRepair.getRepairStatus().equals(DEFAULT_PENDING)) {

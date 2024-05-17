@@ -48,24 +48,28 @@ public class PropertyRepairController {
 
     //Spring Boot does not allow to use GetMapping with RequestBody
     @GetMapping("get-by-date")
-    public ResponseEntity<List<PropertyRepairDto>> searchPropertyRepairByDate(@RequestParam long propertyOwnerId, @RequestParam LocalDate date) {
-        return new ResponseEntity<>(propertyRepairService.searchPropertyRepairByDate(propertyOwnerId, date), HttpStatus.OK);
+    public ResponseEntity<List<PropertyRepairDto>> searchPropertyRepairsByDate(@RequestParam long propertyOwnerId, @RequestParam LocalDate date) {
+        HttpHeaders headers= HeaderUtility.createHeaders("Success-Header", "Property repairs found.");
+        return new ResponseEntity<>(propertyRepairService.searchPropertyRepairsByDate(propertyOwnerId, date), headers, HttpStatus.OK);
     }
 
     //Spring Boot does not allow to use GetMapping with RequestBody
     @GetMapping("get-by-dates")
     public ResponseEntity<List<PropertyRepairDto>> searchPropertyRepairsByDates(@RequestParam long propertyOwnerId, @RequestParam LocalDate firstDate, @RequestParam LocalDate lastDate) {
-        return new ResponseEntity<>(propertyRepairService.searchPropertyRepairsByDates(propertyOwnerId, firstDate, lastDate), HttpStatus.OK);
+        HttpHeaders headers= HeaderUtility.createHeaders("Success-Header", "Property repairs found.");
+        return new ResponseEntity<>(propertyRepairService.searchPropertyRepairsByDates(propertyOwnerId, firstDate, lastDate), headers, HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<PropertyRepairUpdateDto> update(@PathVariable long id, @RequestBody PropertyRepairUpdateDto dto){
-        return new ResponseEntity<>(propertyRepairService.updatePropertyRepair(id, dto), HttpStatus.OK);
+        HttpHeaders headers= HeaderUtility.createHeaders("Success-Header", "Property repair updated.");
+        return new ResponseEntity<>(propertyRepairService.updatePropertyRepair(id, dto), headers, HttpStatus.OK);
     }
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Object> deletePropertyRepair(long id) {
+        HttpHeaders headers= HeaderUtility.createHeaders("Success-Header", "Property repair deleted.");
         propertyRepairService.deletePropertyRepair(id);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(headers,HttpStatus.OK);
     }
 }
