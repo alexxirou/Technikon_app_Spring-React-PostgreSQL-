@@ -9,7 +9,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.util.UUID;
+import java.util.List;
 
 @Service
 @AllArgsConstructor
@@ -19,7 +19,8 @@ public class PropertyServiceImpl implements PropertyService {
 
     @Override
     @Transactional
-    public Property findAllPropertyName(Property property) {return null;}
+    public List<Property> findAllPropertyName(Property property) {
+        return propertyRepository.findAll(); }
 
     @Override
     public Property searchProperty(PropertyDto propertyDto) {

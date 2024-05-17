@@ -3,8 +3,10 @@ package com.scytalys.technikon.service;
 import com.scytalys.technikon.dto.PropertyDto;
 import com.scytalys.technikon.domain.Property;
 
+import java.util.List;
+
 public interface PropertyService {
-    Property findAllPropertyName(Property property);
+    List<Property> findAllPropertyName(Property property);
     Property createProperty(Property property);
     Property searchProperty(PropertyDto propertyDto);
     Property updateProperty(PropertyDto propertyDto);
