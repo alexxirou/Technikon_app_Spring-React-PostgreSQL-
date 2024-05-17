@@ -55,6 +55,7 @@ public interface OwnerMapper {
         @Mapping(source = "version", target = "version")
         UserResponseDto userToUserResponseDto(User user);
 
+        @Mapping(source = "id", target ="id")
         @Mapping(source = "tin", target = "tin")
         @Mapping(source = "username", target = "username")
         @Mapping(source = "email", target = "email")

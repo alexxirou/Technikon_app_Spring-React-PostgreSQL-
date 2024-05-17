@@ -2,7 +2,8 @@ package com.scytalys.technikon.dto;
 
 
 import java.util.List;
-public record UserSearchResponseDto(String tin,
+public record UserSearchResponseDto(Long id,
+                                    String tin,
                                     String username,
                                     String email,
                                     String name,
