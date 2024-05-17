@@ -47,14 +47,14 @@ public class PropertyRepairController {
     }
 
     //Spring Boot does not allow to use GetMapping with RequestBody
-    @GetMapping("get-by-date")
+    @GetMapping("/get-by-date")
     public ResponseEntity<List<PropertyRepairDto>> searchPropertyRepairsByDate(@RequestParam long propertyOwnerId, @RequestParam LocalDate date) {
         HttpHeaders headers= HeaderUtility.createHeaders("Success-Header", "Property repairs found.");
         return new ResponseEntity<>(propertyRepairService.searchPropertyRepairsByDate(propertyOwnerId, date), headers, HttpStatus.OK);
     }
 
     //Spring Boot does not allow to use GetMapping with RequestBody
-    @GetMapping("get-by-dates")
+    @GetMapping("/get-by-dates")
     public ResponseEntity<List<PropertyRepairDto>> searchPropertyRepairsByDates(@RequestParam long propertyOwnerId, @RequestParam LocalDate firstDate, @RequestParam LocalDate lastDate) {
         HttpHeaders headers= HeaderUtility.createHeaders("Success-Header", "Property repairs found.");
         return new ResponseEntity<>(propertyRepairService.searchPropertyRepairsByDates(propertyOwnerId, firstDate, lastDate), headers, HttpStatus.OK);
