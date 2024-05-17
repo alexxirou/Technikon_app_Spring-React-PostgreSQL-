@@ -48,7 +48,7 @@ public class PropertyOwnerController {
         if (authentication.getAuthorities().stream().noneMatch(a -> a.getAuthority().equals("ROLE_ADMIN")))  {
             UserInfoDetails userInfoDetails = (UserInfoDetails) authentication.getPrincipal();
             //long id = userInfoDetails.getId();
-            String authTin = userInfoDetails.getUsername();
+            String authTin = userInfoDetails.getTin();
             if (!authTin.equals(tin)) throw new AccessDeniedException("You are not authorized to update another user.");
         }
         UserDetailsDto userInfo=propertyOwnerService.userDetails(propertyOwnerService.findUser(tin));
@@ -62,7 +62,7 @@ public class PropertyOwnerController {
         if (authentication.getAuthorities().stream().noneMatch(a -> a.getAuthority().equals("ROLE_ADMIN")))  {
             UserInfoDetails userInfoDetails = (UserInfoDetails) authentication.getPrincipal();
             //long id = userInfoDetails.getId();
-            String authTin = userInfoDetails.getUsername();
+            String authTin = userInfoDetails.getTin();
             if (!authTin.equals(tin)) throw new AccessDeniedException("You are not authorized to update another user.");
         }
         propertyOwnerService.updateUser(tin, updateRequest);
@@ -76,8 +76,7 @@ public class PropertyOwnerController {
     public ResponseEntity<String> deleteUser(@PathVariable String tin, @RequestParam long version, Authentication authentication) {
         if (authentication.getAuthorities().stream().noneMatch(a -> a.getAuthority().equals("ROLE_ADMIN")))  {
             UserInfoDetails userInfoDetails = (UserInfoDetails) authentication.getPrincipal();
-            //long id = userInfoDetails.getId();
-            String authTin = userInfoDetails.getUsername();
+            String authTin = userInfoDetails.getTin();
             if (!authTin.equals(tin)) throw new AccessDeniedException("You are not authorized to update another user.");
         }
         HttpHeaders headers;
