@@ -1,6 +1,6 @@
 package com.scytalys.technikon.service;
-import com.scytalys.technikon.domain.PropertyOwner;
 import com.scytalys.technikon.dto.*;
+import org.springframework.security.core.Authentication;
 
 import java.util.List;
 
@@ -9,11 +9,10 @@ public interface UserService<T> {
 
     void softDeleteUser(String tin);
     void deleteUser(String tin);
-    void UpdateUser(String tin, UserUpdateDto dto);
+    void updateUser(String tin, UserUpdateDto dto);
     UserResponseDto createUserResponseDto(T user);
     List<UserSearchResponseDto> createSearchResponse(List<T> users);
     List<T> searchUser(UserSearchDto dto);
-    T createDBUser(UserCreationDto dto);
     T findUser(String tin);
-    UserDetails userDetails(T user);
+    UserDetailsDto userDetails(T user);
 }
