@@ -5,6 +5,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
@@ -20,7 +21,7 @@ public class JwtServiceImpl implements JwtService {
     @Value("${jwt.secret}")
     private String SECRET;
     @Value("${jwt.minutes}")
-    private int MINUTES;
+    private long MINUTES;
 
     @Override
     public String generateToken(String tin, String username, long id) {
@@ -39,7 +40,7 @@ public class JwtServiceImpl implements JwtService {
 
     @Override
     public long extractId(String token) {
-        return extractClaim(token, claims -> claims.get("id", long.class));
+        return extractClaim(token, claims -> claims.get("id", Long.class));
     }
 
     @Override
@@ -64,25 +65,28 @@ public class JwtServiceImpl implements JwtService {
         return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
     }
 
-    private String createToken(Map<String, Object> claims) {
+    private Key getSignKey() {
+        byte[] secretBytes = SECRET.getBytes();
+        return Keys.hmacShaKeyFor(secretBytes);
+    }
+
+    public String createToken(Map<String, Object> claims) {
+        Date expirationDate = new Date(System.currentTimeMillis() + (MINUTES * 60 * 1000)); // Set expiration for 30 minutes from now
         return Jwts.builder()
                 .setClaims(claims)
-                .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + (long) 1000 * 60 * MINUTES))
-                .signWith(getSignKey(), SignatureAlgorithm.HS256).compact();
+                .setExpiration(expirationDate)
+                .signWith(getSignKey(), SignatureAlgorithm.HS256)
+                .compact();
     }
 
-    private Key getSignKey() {
-       return Keys.secretKeyFor(SignatureAlgorithm.HS256);
-    }
-
-    private Claims extractAllClaims(String token) {
+    public Claims extractAllClaims(String token) {
         return Jwts.parserBuilder()
                 .setSigningKey(getSignKey())
                 .build()
                 .parseClaimsJws(token)
                 .getBody();
     }
+
 
     private Boolean isTokenExpired(String token) {
         return extractExpiration(token).before(new Date());

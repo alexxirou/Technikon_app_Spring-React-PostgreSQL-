@@ -79,7 +79,6 @@ public class PropertyOwnerServiceImplTest {
         propertyOwner.setPhoneNumber("+30999582486");// phoneNumber
         propertyOwner.setVersion(0);
         dto =new UserCreationDto(propertyOwner.getTin(), propertyOwner.getName(), propertyOwner.getSurname(), propertyOwner.getEmail(), propertyOwner.getUsername(), propertyOwner.getPassword(), propertyOwner.getAddress(), propertyOwner.getPhoneNumber());
-        authentication= AuthenticationUtils.createAuthentication(propertyOwner.getUsername(), propertyOwner.getPassword());
 
 
     }
