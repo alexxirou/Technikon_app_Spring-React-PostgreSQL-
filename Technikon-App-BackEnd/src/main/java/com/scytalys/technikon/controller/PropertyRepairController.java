@@ -4,7 +4,6 @@ import com.scytalys.technikon.dto.repair.*;
 import com.scytalys.technikon.service.PropertyRepairService;
 import com.scytalys.technikon.utility.HeaderUtility;
 import lombok.AllArgsConstructor;
-import org.springframework.dao.DataAccessResourceFailureException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
