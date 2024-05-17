@@ -59,7 +59,7 @@ public class PropertyOwnerController {
 
     @PutMapping("/{tin}")
     public ResponseEntity<String> updateUser(@RequestParam String tin, @RequestBody UserUpdateDto updateRequest) {
-        propertyOwnerService.UpdateUser(tin, updateRequest);
+        propertyOwnerService.updateUser(tin, updateRequest);
         HttpHeaders headers= HeaderUtility.createHeaders("Success-Header", "User updated.");
         return new ResponseEntity<>(headers, HttpStatus.ACCEPTED);
     }

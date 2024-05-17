@@ -32,7 +32,7 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public void UpdateUser(String tin, UserUpdateDto dto) {
+    public void updateUser(String tin, UserUpdateDto dto) {
 
     }
 

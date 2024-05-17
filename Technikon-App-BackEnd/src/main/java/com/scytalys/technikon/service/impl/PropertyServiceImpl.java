@@ -17,10 +17,10 @@ import java.util.List;
 public class PropertyServiceImpl implements PropertyService {
     private final PropertyRepository propertyRepository;
 
-    @Override
-    @Transactional
-    public List<Property> findAllPropertyName(Property property) {
-        return propertyRepository.findAll(); }
+//    @Override
+//    @Transactional
+////    public List<Property> findAllPropertyName(Property property) {
+////        return propertyRepository.findAll(); }
 
     @Override
     public Property searchProperty(PropertyDto propertyDto) {

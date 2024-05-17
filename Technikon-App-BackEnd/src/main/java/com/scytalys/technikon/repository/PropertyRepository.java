@@ -13,8 +13,4 @@ import java.util.List;
 @Repository
 public interface PropertyRepository extends JpaRepository<Property, Long> {
 
-    @Transactional
-    @Modifying
-//    @Query("select  p from Product p where p.quantity = :quantity")
-    List<Property> findAllPropertyName(@Param("address") String address);
 }

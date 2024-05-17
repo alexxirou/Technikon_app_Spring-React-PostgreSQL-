@@ -216,9 +216,9 @@ public class PropertyOwnerServiceImplTest {
             return null;
         }).when(propertyOwnerRepository).save(propertyOwner);
 
-        propertyOwnerService.UpdateUser(propertyOwner.getTin(), updateRequest);
+        propertyOwnerService.updateUser(propertyOwner.getTin(), updateRequest);
 
-        assertThrows(OptimisticLockingFailureException.class, () -> propertyOwnerService.UpdateUser(propertyOwner.getTin(),updateRequest2));
+        assertThrows(OptimisticLockingFailureException.class, () -> propertyOwnerService.updateUser(propertyOwner.getTin(),updateRequest2));
     }
 
     /**
@@ -239,8 +239,8 @@ public class PropertyOwnerServiceImplTest {
             }
             return null;
         }).when(propertyOwnerRepository).save(propertyOwner);
-        propertyOwnerService.UpdateUser(propertyOwner.getTin(), updateRequest);
-        assertDoesNotThrow(() -> propertyOwnerService.UpdateUser(propertyOwner.getTin(),updateRequest));
+        propertyOwnerService.updateUser(propertyOwner.getTin(), updateRequest);
+        assertDoesNotThrow(() -> propertyOwnerService.updateUser(propertyOwner.getTin(),updateRequest));
         assertEquals(propertyOwner.getEmail(),updateRequest.email());
 
     }
@@ -263,7 +263,7 @@ public class PropertyOwnerServiceImplTest {
             return null;
         }).when(propertyOwnerRepository).save(propertyOwner);
 
-        assertThrows(IllegalArgumentException.class, () -> propertyOwnerService.UpdateUser(propertyOwner.getTin(),updateRequest));
+        assertThrows(IllegalArgumentException.class, () -> propertyOwnerService.updateUser(propertyOwner.getTin(),updateRequest));
 
 
     }

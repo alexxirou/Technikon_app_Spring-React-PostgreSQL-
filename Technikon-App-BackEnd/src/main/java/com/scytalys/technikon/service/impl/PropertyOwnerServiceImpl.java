@@ -106,7 +106,7 @@ public class PropertyOwnerServiceImpl implements PropertyOwnerService {
     @Override
     @Transactional
     @CacheEvict(value = "PropertyOwners", allEntries = true)
-    public void UpdateUser(String tin, UserUpdateDto dto){
+    public void updateUser(String tin, UserUpdateDto dto){
 
         PropertyOwner user= findUser(tin);
         if(user.getVersion()!= dto.version()) throw new OptimisticLockingFailureException("User cannot be updated, please try again later.");

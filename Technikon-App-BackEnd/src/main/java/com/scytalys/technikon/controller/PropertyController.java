@@ -29,7 +29,7 @@ public class PropertyController {
     @PostMapping
     public Property updateProperty(@RequestBody PropertyDto propertyDto){return null;}
 
-    @PostMapping
+    @PostMapping("/q")
     public Property deactivateProperty(@RequestBody PropertyDto propertyDto){return null;}
 
 
