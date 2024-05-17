@@ -14,6 +14,7 @@ import com.scytalys.technikon.dto.UserSearchResponseDto;
 import com.scytalys.technikon.dto.UserUpdateDto;
 import com.scytalys.technikon.mapper.OwnerMapper;
 import com.scytalys.technikon.repository.PropertyRepository;
+import com.scytalys.technikon.security.service.JwtService;
 import com.scytalys.technikon.security.service.UserInfoService;
 import com.scytalys.technikon.service.PropertyOwnerService;
 import com.scytalys.technikon.service.PropertyRepairService;
@@ -45,7 +46,7 @@ public class SampleData {
     private final PropertyService propertyService;
 
     private final UserInfoService userInfoService;
-    private Authentication authentication;
+    private JwtService jwtService;
 
 
 
@@ -74,13 +75,16 @@ public class SampleData {
             propertyOwner.setAddress("somewhere"); // address
             propertyOwner.setPhoneNumber("+30999582486");
 
+
             UserCreationDto dto =new UserCreationDto(propertyOwner.getTin(), propertyOwner.getName(), propertyOwner.getSurname(), propertyOwner.getEmail(), propertyOwner.getUsername(), propertyOwner.getPassword(), propertyOwner.getAddress(), propertyOwner.getPhoneNumber());
             logger.info("Created user creation dto: {}", dto);
 
             propertyOwner=userInfoService.createDBUser(dto);
             logger.info("Created property owner: {}", propertyOwner);
+            String token = jwtService.generateToken("1651614865GR", "JDEdfezv", propertyOwner.getId());
+            logger.info("Created jwt token: {}", token);
 //            propertyOwnerService.updateUserPassword(propertyOwner.getId(),"password", propertyOwner.getVersion());
-            authentication = AuthenticationUtils.createAuthentication(propertyOwner.getUsername(), propertyOwner.getPassword());
+            //authentication = AuthenticationUtils.createAuthentication(propertyOwner.getUsername(), propertyOwner.getPassword());
             Property property = new Property();
 
             property.setTin("15161651616fr");

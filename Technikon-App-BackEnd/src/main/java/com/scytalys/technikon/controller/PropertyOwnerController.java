@@ -2,6 +2,7 @@ package com.scytalys.technikon.controller;
 import com.scytalys.technikon.domain.PropertyOwner;
 import com.scytalys.technikon.dto.*;
 import com.scytalys.technikon.security.dto.AuthRequest;
+import com.scytalys.technikon.security.service.UserInfoDetails;
 import com.scytalys.technikon.service.PropertyOwnerService;
 import com.scytalys.technikon.utility.HeaderUtility;
 import lombok.AllArgsConstructor;
@@ -27,7 +28,7 @@ public class PropertyOwnerController {
 
 
 
-    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
+    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     @GetMapping("/")
     public ResponseEntity<List<UserSearchResponseDto>>  findUsers(
             @RequestParam(required = false) String tin,
@@ -41,35 +42,44 @@ public class PropertyOwnerController {
         return new ResponseEntity<>(userInfo, headers, HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('ROLE_USER')")
+    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     @GetMapping("/{tin}")
     public ResponseEntity<UserDetailsDto> showUser(@PathVariable String tin, Authentication authentication) {
-        String authTin = authentication.getName();
-        if (!authTin.equals(tin)) throw new AccessDeniedException("You are not authorized to search another user.");
-
+        if (authentication.getAuthorities().stream().noneMatch(a -> a.getAuthority().equals("ROLE_ADMIN")))  {
+            UserInfoDetails userInfoDetails = (UserInfoDetails) authentication.getPrincipal();
+            //long id = userInfoDetails.getId();
+            String authTin = userInfoDetails.getUsername();
+            if (!authTin.equals(tin)) throw new AccessDeniedException("You are not authorized to update another user.");
+        }
         UserDetailsDto userInfo=propertyOwnerService.userDetails(propertyOwnerService.findUser(tin));
         HttpHeaders headers= HeaderUtility.createHeaders("Success-Header", "User with tin found.");
         return new ResponseEntity<>(userInfo, headers, HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('ROLE_USER')")
+    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     @PutMapping("/{tin}")
     public ResponseEntity<String> updateUser(@PathVariable String tin, @RequestBody UserUpdateDto updateRequest, Authentication authentication) {
-        String authTin = authentication.getName();
-        if (!authTin.equals(tin)) throw new AccessDeniedException("You are not authorized to update another user.");
+        if (authentication.getAuthorities().stream().noneMatch(a -> a.getAuthority().equals("ROLE_ADMIN")))  {
+            UserInfoDetails userInfoDetails = (UserInfoDetails) authentication.getPrincipal();
+            //long id = userInfoDetails.getId();
+            String authTin = userInfoDetails.getUsername();
+            if (!authTin.equals(tin)) throw new AccessDeniedException("You are not authorized to update another user.");
+        }
         propertyOwnerService.updateUser(tin, updateRequest);
-
-
         HttpHeaders headers= HeaderUtility.createHeaders("Success-Header", "User updated.");
         return new ResponseEntity<>(headers, HttpStatus.ACCEPTED);
     }
 
 
-    @PreAuthorize("hasRole('ROLE_USER')")
+    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     @DeleteMapping("/{tin}{version}")
     public ResponseEntity<String> deleteUser(@PathVariable String tin, @RequestParam long version, Authentication authentication) {
-        String authTin = authentication.getName();
-        if (!authTin.equals(tin)) throw new AccessDeniedException("You are not authorized to delete another user.");
+        if (authentication.getAuthorities().stream().noneMatch(a -> a.getAuthority().equals("ROLE_ADMIN")))  {
+            UserInfoDetails userInfoDetails = (UserInfoDetails) authentication.getPrincipal();
+            //long id = userInfoDetails.getId();
+            String authTin = userInfoDetails.getUsername();
+            if (!authTin.equals(tin)) throw new AccessDeniedException("You are not authorized to update another user.");
+        }
         HttpHeaders headers;
         if(propertyOwnerService.checkUserHasProperties(tin)){
             propertyOwnerService.softDeleteUser(tin);

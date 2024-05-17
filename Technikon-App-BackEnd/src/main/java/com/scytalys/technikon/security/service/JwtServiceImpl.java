@@ -23,16 +23,28 @@ public class JwtServiceImpl implements JwtService {
     private int MINUTES;
 
     @Override
-    public String generateToken( String tin) {
+    public String generateToken(String tin, String username, long id) {
         Map<String, Object> claims = new HashMap<>();
-        return createToken(claims, tin);
+        claims.put("tin", tin);
+        claims.put("username", username);
+        claims.put("id",id);
+        return createToken(claims);
     }
-
 
 
     @Override
     public String extractTin(String token) {
-        return extractClaim(token, Claims::getSubject);
+        return extractClaim(token, claims -> claims.get("tin", String.class));
+    }
+
+    @Override
+    public long extractId(String token) {
+        return extractClaim(token, claims -> claims.get("id", long.class));
+    }
+
+    @Override
+    public String extractUsername(String token) {
+        return extractClaim(token, claims -> claims.get("username", String.class));
     }
 
     @Override
@@ -48,27 +60,24 @@ public class JwtServiceImpl implements JwtService {
 
     @Override
     public Boolean validateToken(String token, UserDetails userDetails) {
-        final String username = extractTin(token);
+        final String username = extractUsername(token);
         return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
     }
 
-    private String createToken(Map<String, Object> claims, String tin) {
+    private String createToken(Map<String, Object> claims) {
         return Jwts.builder()
                 .setClaims(claims)
-                .setSubject(tin)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + (long) 1000 * 60 * MINUTES))
                 .signWith(getSignKey(), SignatureAlgorithm.HS256).compact();
     }
 
     private Key getSignKey() {
-        byte[] keyBytes= Decoders.BASE64.decode(SECRET);
-        return Keys.hmacShaKeyFor(keyBytes);
+       return Keys.secretKeyFor(SignatureAlgorithm.HS256);
     }
 
     private Claims extractAllClaims(String token) {
-        return Jwts
-                .parserBuilder()
+        return Jwts.parserBuilder()
                 .setSigningKey(getSignKey())
                 .build()
                 .parseClaimsJws(token)

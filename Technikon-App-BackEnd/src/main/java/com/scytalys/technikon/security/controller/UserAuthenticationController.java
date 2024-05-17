@@ -5,6 +5,7 @@ import com.scytalys.technikon.dto.UserCreationDto;
 import com.scytalys.technikon.dto.UserResponseDto;
 import com.scytalys.technikon.security.dto.AuthRequest;
 import com.scytalys.technikon.security.service.JwtService;
+import com.scytalys.technikon.security.service.UserInfoDetails;
 import com.scytalys.technikon.security.service.UserInfoService;
 import com.scytalys.technikon.service.PropertyOwnerService;
 import com.scytalys.technikon.utility.HeaderUtility;
@@ -17,6 +18,7 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -49,24 +51,29 @@ public class UserAuthenticationController {
 
 
     @PostMapping("/login")
-    public ResponseEntity<String> authenticateAndGetToken(@RequestBody com.scytalys.technikon.security.dto.AuthRequest authRequest) {
-        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authRequest.tin(), authRequest.password()));
+    public ResponseEntity<String> propertyOwnerLogin(@RequestBody AuthRequest authRequest) {
+        Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(authRequest.username(), authRequest.password()));
         if (authentication.isAuthenticated()) {
-            String token = jwtService.generateToken( authRequest.tin());
+            UserInfoDetails userDetails = userInfoService.loadUserByUsername(authRequest.username());
+            String token = jwtService.generateToken(userDetails.getTin(), userDetails.getUsername(), userDetails.getId());
             return ResponseEntity.ok(token);
-        } else throw new BadCredentialsException("Invalid credentials");
-
+        } else {
+            throw new  BadCredentialsException("Invalid credentials");
+        }
     }
+
 
     @PostMapping("/admin/login")
     public ResponseEntity<String> adminLogin(@RequestBody AuthRequest authRequest) {
         Authentication authentication = authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(authRequest.tin(), authRequest.password()));
+                new UsernamePasswordAuthenticationToken(authRequest.username(), authRequest.password()));
         if (authentication.isAuthenticated()) {
-            String token = jwtService.generateToken(authRequest.tin());
+            UserInfoDetails userDetails = userInfoService.loadUserByUsername(authRequest.username());
+            String token = jwtService.generateToken(userDetails.getTin(), userDetails.getUsername(), userDetails.getId());
             return ResponseEntity.ok(token);
-        } else throw new BadCredentialsException("Invalid credentials");
-
+        } else {
+            throw new  BadCredentialsException("Invalid credentials");
+        }
     }
-
 }

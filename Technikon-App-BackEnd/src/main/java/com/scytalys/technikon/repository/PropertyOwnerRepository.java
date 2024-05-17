@@ -52,7 +52,7 @@ public interface PropertyOwnerRepository extends JpaRepository<PropertyOwner, Lo
 
 
     Optional<PropertyOwner> findByTin(String tin);
-
+    Optional<PropertyOwner> findByUsername(String username);
     Optional<List<PropertyOwner>> findAll(Specification<User> spec);
 
 
