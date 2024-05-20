@@ -1,7 +1,9 @@
 package com.scytalys.technikon.controller;
 
 import com.scytalys.technikon.domain.Admin;
+import com.scytalys.technikon.domain.Property;
 import com.scytalys.technikon.domain.PropertyOwner;
+import com.scytalys.technikon.domain.PropertyRepair;
 import com.scytalys.technikon.service.AdminService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,4 +35,15 @@ public class AdminController {
 
         return adminService.getRegisteredOwners(from, to);
     }
+
+    @GetMapping("/find-properties/{ownerTin}/")
+    List<Property> findProperties(@PathVariable String ownerTin) {
+        return adminService.getRegisteredProperties(adminService.findOwner(ownerTin));
+    }
+
+    @GetMapping("/find-repairs/{propertyTin}/")
+    List<PropertyRepair> findRepairs(@PathVariable String propertyTin) {
+        return adminService.getDueRepairs(adminService.findProperty(propertyTin));
+    }
+
 }

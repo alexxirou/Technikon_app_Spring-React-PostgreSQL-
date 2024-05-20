@@ -32,8 +32,6 @@ public class Property {
     @ManyToOne
     @NonNull
     private PropertyOwner propertyOwner;
-    @NonNull
-    private LocalDate registrationDate;
 }
 
 

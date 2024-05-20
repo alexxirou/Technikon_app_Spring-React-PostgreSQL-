@@ -22,6 +22,9 @@ public interface PropertyRepairRepository extends JpaRepository<PropertyRepair, 
     @Query("SELECT p FROM PropertyRepair p WHERE p.propertyOwner.id= :id")
     List<PropertyRepair> getPropertyRepairs(@Param("id") long propertyOwnerId);
 
+    @Query("SELECT p FROM PropertyRepair p WHERE p.property.id= :id")
+    List<PropertyRepair> getPropertyRepairsByProperty(@Param("id") long propertyId);
+
     @Query("UPDATE PropertyRepair p SET p.dateOfRepair= :date WHERE p.id= :id")
     boolean updatePropertyRepairByDate(@Param("id")long propertyRepairId, @Param("date") LocalDate date);
 
