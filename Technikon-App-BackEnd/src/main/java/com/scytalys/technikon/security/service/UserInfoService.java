@@ -1,18 +1,16 @@
 package com.scytalys.technikon.security.service;
 
 
-import com.scytalys.technikon.domain.Admin;
 import com.scytalys.technikon.domain.PropertyOwner;
 import com.scytalys.technikon.dto.UserCreationDto;
 import com.scytalys.technikon.mapper.OwnerMapper;
-import com.scytalys.technikon.repository.AdminRepository;
 import com.scytalys.technikon.repository.PropertyOwnerRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,6 +21,7 @@ import java.util.Optional;
 public class UserInfoService implements UserDetailsService {
     private final PropertyOwnerRepository propertyOwnerRepository;
     //private final AdminRepository adminRepository;
+    private final PasswordEncoder passwordEncoder;
 
 
 
@@ -57,6 +56,7 @@ public class UserInfoService implements UserDetailsService {
     public PropertyOwner createDBUser(UserCreationDto dto) {
         PropertyOwner newDbUser = OwnerMapper.INSTANCE.userCreationDtoToPropertyOwner(dto);
         newDbUser.setEmail(newDbUser.getEmail().toLowerCase());
+        newDbUser.setPassword(passwordEncoder.encode(newDbUser.getPassword()));
         try {
             propertyOwnerRepository.save(newDbUser);
             return newDbUser;

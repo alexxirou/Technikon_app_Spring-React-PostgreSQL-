@@ -10,6 +10,7 @@ import com.scytalys.technikon.security.service.UserInfoService;
 import com.scytalys.technikon.service.PropertyOwnerService;
 import com.scytalys.technikon.utility.HeaderUtility;
 import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +21,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,12 +32,11 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 @RequestMapping("/auth")
 @AllArgsConstructor
 public class UserAuthenticationController {
-    private final UserInfoService service;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
     private final UserInfoService userInfoService;
     private final PropertyOwnerService propertyOwnerService;
-
+    private final PasswordEncoder passwordEncoder;
     @PostMapping("/signup")
     public ResponseEntity<UserResponseDto> createPropertyOwner(@RequestBody UserCreationDto newUser) {
         PropertyOwner newDBUser=userInfoService.createDBUser(newUser);
@@ -52,8 +53,11 @@ public class UserAuthenticationController {
 
     @PostMapping("/login")
     public ResponseEntity<String> propertyOwnerLogin(@RequestBody AuthRequest authRequest) {
+
+
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(authRequest.username(), authRequest.password()));
+
         if (authentication.isAuthenticated()) {
             UserInfoDetails userDetails = userInfoService.loadUserByUsername(authRequest.username());
             String token = jwtService.generateToken(userDetails.getTin(), userDetails.getUsername(), userDetails.getId());

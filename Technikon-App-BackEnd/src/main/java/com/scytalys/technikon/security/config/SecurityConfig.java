@@ -1,8 +1,11 @@
 package com.scytalys.technikon.security.config;
 
+import com.scytalys.technikon.domain.PropertyOwner;
+import com.scytalys.technikon.repository.AdminRepository;
 import com.scytalys.technikon.repository.PropertyOwnerRepository;
 import com.scytalys.technikon.security.filter.JwtAuthFilter;
 import com.scytalys.technikon.security.service.UserInfoService;
+import com.scytalys.technikon.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -50,11 +53,11 @@ public class SecurityConfig {
     }
 
     @Bean
-    public AuthenticationProvider authenticationProvider() {
-        DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
-        provider.setUserDetailsService(userInfoService); // Set userInfoService as the UserDetailsService
-        provider.setPasswordEncoder(passwordEncoder());
-        return provider;
+    public AuthenticationProvider authenticationProvider(UserDetailsService userDetailsService, PasswordEncoder passwordEncoder) {
+        DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
+        authenticationProvider.setUserDetailsService(userDetailsService);
+        authenticationProvider.setPasswordEncoder(passwordEncoder);
+        return authenticationProvider;
     }
 
     @Bean
@@ -62,9 +65,8 @@ public class SecurityConfig {
         return config.getAuthenticationManager();
     }
 
-    // Define password encoder bean if not already defined
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+
+
+
+
 }
