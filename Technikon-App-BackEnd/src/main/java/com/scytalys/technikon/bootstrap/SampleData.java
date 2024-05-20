@@ -96,8 +96,8 @@ public class SampleData {
 
             propertyService.createProperty(property);
             logger.info("Created property: {}", property);
-            Property result = propertyService.searchProperty(1L);
-            logger.info("Created result search response: {}", result);
+//            Property result = propertyService.searchProperty();
+//            logger.info("Created result search response: {}", result);
 
 
             UserSearchDto request =new UserSearchDto("1651614865GR",null,null);
