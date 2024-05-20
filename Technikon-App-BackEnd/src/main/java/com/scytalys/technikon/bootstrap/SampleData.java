@@ -62,8 +62,8 @@ public class SampleData {
             propertyRepair.setCost(new BigDecimal(150));
             propertyRepair.setLongDescription("Describing with details the work to be done");
 
-            propertyRepairService.createPropertyRepair(propertyRepair);
-            logger.info("Created property repair: {}", propertyRepair);
+//            propertyRepairService.createPropertyRepair(propertyRepair);
+//            logger.info("Created property repair: {}", propertyRepair);
 
             PropertyOwner propertyOwner = new PropertyOwner();
             propertyOwner.setTin("1651614865GR");// id

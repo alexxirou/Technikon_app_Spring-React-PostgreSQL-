@@ -27,7 +27,6 @@ public class PropertyOwnerController {
 
 
 
-
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     @GetMapping("/")
     public ResponseEntity<List<UserSearchResponseDto>>  findUsers(
