@@ -1,7 +1,7 @@
 package com.scytalys.technikon.controller;
 
-import com.scytalys.technikon.dto.PropertyDto;
 import com.scytalys.technikon.domain.Property;
+import com.scytalys.technikon.dto.PropertyDto;
 import com.scytalys.technikon.service.PropertyService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
