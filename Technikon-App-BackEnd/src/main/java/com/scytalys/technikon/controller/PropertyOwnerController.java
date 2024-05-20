@@ -20,7 +20,7 @@ import java.util.List;
 @RestController
 
 @AllArgsConstructor
-@RequestMapping("/api/v2/propertyOwners")
+@RequestMapping("/api/propertyOwners")
 public class PropertyOwnerController {
 
     private final PropertyOwnerService propertyOwnerService;
