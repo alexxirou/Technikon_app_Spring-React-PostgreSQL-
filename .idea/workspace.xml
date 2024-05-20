@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="f3732d33-421a-415d-ba42-6d0b12488ca7" name="Changes" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Interface" />
+        <option value="Record" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="AuthenticationFeature" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 8
+}</component>
+  <component name="ProjectId" id="2gRyZvF8UqipS140oIWiphPa7Cm" />
+  <component name="ProjectViewState">
+    <option name="showLibraryContents" value="true" />
+    <option name="showMembers" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.TechnikonApplication.executor": "Run",
+    "JUnit.JwtServiceTest.executor": "Run",
+    "JUnit.JwtServiceTest.testGenerateTokenAndVerify.executor": "Run",
+    "JUnit.JwtServiceTest.testVerifyJwtToken.executor": "Run",
+    "JUnit.PropertyOwnerServiceImplTest.executor": "Run",
+    "JUnit.PropertyOwnerServiceImplTest.testCreateUser.executor": "Run",
+    "JUnit.PropertyOwnerServiceImplTest.testSearchUserByFail.executor": "Run",
+    "JUnit.PropertyOwnerServiceImplTest.testUpdateUser.executor": "Run",
+    "JUnit.PropertyOwnerServiceImplTest.testUpdateUserFailWrongEmailFormat.executor": "Run",
+    "JUnit.PropertyOwnerServiceImplTest.userDetails_ReturnsUserDetailsWithEmptyProperties_WhenPropertyOwnerDoesNotExist.executor": "Run",
+    "JUnit.PropertyOwnerServiceImplTest.userDetails_ReturnsUserDetails_WhenPropertyOwnerExists.executor": "Run",
+    "JUnit.PropertyOwnerServiceImplTest.whenConcurrentUpdate_thenThrowException.executor": "Run",
+    "JUnit.UserMapperTest.executor": "Run",
+    "JUnit.UserMapperTest.testUserSearchResponseDtoCreation.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "FrontendLoginFeature",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/alexandrosx/Documents/Project",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0"
+  }
+}]]></component>
+  <component name="RunManager" selected="JUnit.JwtServiceTest.testGenerateTokenAndVerify">
+    <configuration name="JwtServiceTest.testGenerateTokenAndVerify" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Technikon-App-BackEnd" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.scytalys.technikon.service.impl.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.scytalys.technikon.service.impl" />
+      <option name="MAIN_CLASS_NAME" value="com.scytalys.technikon.service.impl.JwtServiceTest" />
+      <option name="METHOD_NAME" value="testGenerateTokenAndVerify" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="JwtServiceTest.testVerifyJwtToken" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Technikon-App-BackEnd" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.scytalys.technikon.service.impl.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.scytalys.technikon.service.impl" />
+      <option name="MAIN_CLASS_NAME" value="com.scytalys.technikon.service.impl.JwtServiceTest" />
+      <option name="METHOD_NAME" value="testVerifyJwtToken" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="PropertyOwnerServiceImplTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Technikon-App-BackEnd" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.scytalys.technikon.service.impl.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.scytalys.technikon.service.impl" />
+      <option name="MAIN_CLASS_NAME" value="com.scytalys.technikon.service.impl.PropertyOwnerServiceImplTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="PropertyOwnerServiceImplTest.testCreateUser" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Technikon-App-BackEnd" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.scytalys.technikon.service.impl.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.scytalys.technikon.service.impl" />
+      <option name="MAIN_CLASS_NAME" value="com.scytalys.technikon.service.impl.PropertyOwnerServiceImplTest" />
+      <option name="METHOD_NAME" value="testCreateUser" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="PropertyOwnerServiceImplTest.userDetails_ReturnsUserDetailsWithEmptyProperties_WhenPropertyOwnerDoesNotExist" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Technikon-App-BackEnd" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.scytalys.technikon.service.impl.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.scytalys.technikon.service.impl" />
+      <option name="MAIN_CLASS_NAME" value="com.scytalys.technikon.service.impl.PropertyOwnerServiceImplTest" />
+      <option name="METHOD_NAME" value="userDetails_ReturnsUserDetailsWithEmptyProperties_WhenPropertyOwnerDoesNotExist" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="JetRunConfigurationType">
+      <module name="Project" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <module name="Project" />
+      <option name="filePath" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JUnit.PropertyOwnerServiceImplTest.userDetails_ReturnsUserDetailsWithEmptyProperties_WhenPropertyOwnerDoesNotExist" />
+        <item itemvalue="JUnit.PropertyOwnerServiceImplTest.testCreateUser" />
+        <item itemvalue="JUnit.PropertyOwnerServiceImplTest" />
+        <item itemvalue="JUnit.JwtServiceTest.testVerifyJwtToken" />
+        <item itemvalue="JUnit.JwtServiceTest.testGenerateTokenAndVerify" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="f3732d33-421a-415d-ba42-6d0b12488ca7" name="Changes" comment="" />
+      <created>1715674744479</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1715674744479</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="UnknownFeatures">
+    <option featureType="dependencySupport" implementationName="java:org.springframework:spring-core" />
+    <option featureType="dependencySupport" implementationName="executable:docker" />
+    <option featureType="dependencySupport" implementationName="java:jakarta.validation:jakarta.validation-api" />
+    <option featureType="dependencySupport" implementationName="java:jakarta.persistence:jakarta.persistence-api" />
+    <option featureType="dependencySupport" implementationName="executable:kubectl" />
+    <option featureType="dependencySupport" implementationName="java:org.springframework.data:spring-data-commons" />
+    <option featureType="dependencySupport" implementationName="java:org.springframework.boot:spring-boot" />
+    <option featureType="dependencySupport" implementationName="java:org.springframework:spring-webmvc" />
+    <option featureType="dependencySupport" implementationName="java:org.projectlombok:lombok" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>
