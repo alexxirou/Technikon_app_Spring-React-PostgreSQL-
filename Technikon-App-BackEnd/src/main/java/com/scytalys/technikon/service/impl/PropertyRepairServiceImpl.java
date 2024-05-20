@@ -43,7 +43,6 @@ public class PropertyRepairServiceImpl implements PropertyRepairService {
     public PropertyRepairDto createPropertyRepair(PropertyRepairDto propertyRepairDto) {
         validatePropertyOwnerExistsOrThrow(propertyRepairDto.propertyOwnerId());
         validatePropertyExistsOrThrow(propertyRepairDto.propertyId());
-        validateDateIsBeforeConstructionOrThrow(propertyRepairDto.propertyId(), propertyRepairDto.dateOfRepair());
         validateDateInputOrThrow(propertyRepairDto.dateOfRepair());
         validateCostInputOrThrow(propertyRepairDto.cost());
         validateShortDescription(propertyRepairDto.shortDescription());
@@ -223,26 +222,6 @@ public class PropertyRepairServiceImpl implements PropertyRepairService {
     private PropertyRepair validatePropertyRepairExistsOrThrow(long propertyRepairId) {
         return propertyRepairRepository.findById(propertyRepairId).orElseThrow(() ->
                 new EntityNotFoundException("Property repair with id " + propertyRepairId + " not found"));
-    }
-
-
-    /**
-     * Validates if the date of repair is not in the past and is not before the construction year of the property.
-     *
-     * @param propertyId The ID of the property.
-     * @param date The date of the repair.
-     * @throws IllegalArgumentException if the date of repair is in the past or if it is before the construction year of the property.
-     * @throws EntityNotFoundException if the property does not exist.
-     */
-    private void validateDateIsBeforeConstructionOrThrow(long propertyId, LocalDate date) {
-        if (date.isBefore(LocalDate.now())){
-            throw new IllegalArgumentException("Date of repair must not be in the past");
-        }
-        Property property = propertyRepository.findById(propertyId)
-                .orElseThrow(() -> new EntityNotFoundException("Property not found"));
-        if (date.isBefore(property.getConstructionYear())) {
-            throw new IllegalArgumentException("Date of repair must not be before the construction year of the property");
-        }
     }
 
 
