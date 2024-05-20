@@ -9,27 +9,45 @@ import org.springframework.web.bind.annotation.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/property")
 @AllArgsConstructor
 public class PropertyController {
     private final PropertyService propertyService;
 
-    @PostMapping("/property")
+    //Get Property (entity,id)
+    @GetMapping("/{propertyId}")
+    public ResponseEntity<Property> read(@PathVariable long propertyId){
+        Property property = propertyService.findProperty(propertyId);
+        return property == null ? ResponseEntity.notFound().build() :ResponseEntity.ok(property);
+    }
+
+    @GetMapping("/product/")
+    public List<Property> findAllProperties(){
+        return propertyService.findAllProperties();
+    }
+
+
+
+    //Create
+    @PostMapping("")
     public ResponseEntity<Property> createProperty(@RequestBody Property property){
         return ResponseEntity.ok(propertyService.createProperty(property));
     }
 
+    //Search
     @GetMapping("/propertySearch")
     public Property searchProperty(@RequestBody PropertyDto propertyDto){
         return null;
 //        return propertyService.searchProperty(propertyDto.propertyId());
     }
 
-    @PostMapping
+    @PostMapping("/propertyUpdate")
     public Property updateProperty(@RequestBody PropertyDto propertyDto){return null;}
 
-    @PostMapping("/q")
+    @PostMapping("/propertyDeactivate")
     public Property deactivateProperty(@RequestBody PropertyDto propertyDto){return null;}
 
 

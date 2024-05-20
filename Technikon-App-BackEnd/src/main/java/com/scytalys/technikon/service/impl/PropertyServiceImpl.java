@@ -16,12 +16,17 @@ import java.util.List;
 @Slf4j
 public class PropertyServiceImpl implements PropertyService {
     private final PropertyRepository propertyRepository;
+//Get Property (entity,table_id)
+    @Override
+    public Property findProperty(long id) {
+        return propertyRepository.findById(id).orElse(null);
+    }
+    @Override
+    @Transactional
+    public List<Property> findAllProperties() {
+       return propertyRepository.findAll(); }
 
-//    @Override
-//    @Transactional
-////    public List<Property> findAllPropertyName(Property property) {
-////        return propertyRepository.findAll(); }
-
+//CRUD
     @Override
     public Property searchProperty(PropertyDto propertyDto) {
         long propertyId = propertyDto.propertyId();
@@ -42,5 +47,12 @@ public class PropertyServiceImpl implements PropertyService {
     @Override
     public Property deactivateProperty(PropertyDto propertyDto) { return null;}
 
+    @Override
+    public Property deleteProperty(PropertyDto propertyDto) {
+        return null;
+    }
+
 
 }
+
+
