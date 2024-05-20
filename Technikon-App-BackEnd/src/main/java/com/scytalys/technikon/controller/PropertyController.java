@@ -4,6 +4,7 @@ import com.scytalys.technikon.domain.Property;
 import com.scytalys.technikon.dto.PropertyDto;
 import com.scytalys.technikon.service.PropertyService;
 import lombok.AllArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,13 +15,22 @@ import org.slf4j.LoggerFactory;
 public class PropertyController {
     private final PropertyService propertyService;
 
-    @GetMapping()
-    public Property searchProperty(@RequestBody PropertyDto propertyDto){
-        return propertyService.searchProperty(propertyDto.propertyId());
+    @PostMapping("/property")
+    public ResponseEntity<Property> createProperty(@RequestBody Property property){
+        return ResponseEntity.ok(propertyService.createProperty(property));
     }
 
-//    @PostMapping
-//    public Property createProperty(@RequestBody PropertyDto propertyDto)
+    @GetMapping("/propertySearch")
+    public Property searchProperty(@RequestBody PropertyDto propertyDto){
+        return null;
+//        return propertyService.searchProperty(propertyDto.propertyId());
+    }
+
+    @PostMapping
+    public Property updateProperty(@RequestBody PropertyDto propertyDto){return null;}
+
+    @PostMapping("/q")
+    public Property deactivateProperty(@RequestBody PropertyDto propertyDto){return null;}
 
 
 }

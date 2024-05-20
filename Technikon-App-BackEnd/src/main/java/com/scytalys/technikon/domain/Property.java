@@ -1,17 +1,11 @@
 package com.scytalys.technikon.domain;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.scytalys.technikon.domain.category.PropertyType;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
-import org.antlr.v4.runtime.misc.NotNull;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
 
 @Entity
 @Data

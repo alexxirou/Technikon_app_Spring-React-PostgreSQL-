@@ -69,8 +69,8 @@ public class SampleData {
 
             propertyService.createProperty(property);
             logger.info("Created property: {}", property);
-            Property result = propertyService.searchProperty(1L);
-            logger.info("Created result search response: {}", result);
+//            Property result = propertyService.searchProperty();
+//            logger.info("Created result search response: {}", result);
 
 
             UserSearchDto request =new UserSearchDto("1651614865GR",null,null);
@@ -79,7 +79,7 @@ public class SampleData {
             List<UserSearchResponseDto> responseDto=propertyOwnerService.createSearchResponse(resultUser);
             logger.info("Created user search response: {}", responseDto);
             UserUpdateDto newUpdate = new UserUpdateDto(null,"elsewhere",null, propertyOwner.getVersion());
-            propertyOwnerService.UpdateUser(propertyOwner.getTin(), newUpdate);
+            propertyOwnerService.updateUser(propertyOwner.getTin(), newUpdate);
             logger.info("Updated user with: {}", newUpdate);
             resultUser =propertyOwnerService.searchUser(request);
             logger.info("Searched property Owner: {}", resultUser);

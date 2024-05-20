@@ -9,7 +9,7 @@ public interface UserService<T> {
 
     void softDeleteUser(String tin);
     void deleteUser(String tin);
-    void UpdateUser(String tin, UserUpdateDto dto);
+    void updateUser(String tin, UserUpdateDto dto);
     UserResponseDto createUserResponseDto(T user);
     List<UserSearchResponseDto> createSearchResponse(List<T> users);
     List<T> searchUser(UserSearchDto dto);
