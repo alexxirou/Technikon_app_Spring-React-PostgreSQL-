@@ -1,10 +1,7 @@
 package com.scytalys.technikon.bootstrap;
 
 
-import com.scytalys.technikon.domain.Property;
-import com.scytalys.technikon.domain.PropertyOwner;
-import com.scytalys.technikon.domain.PropertyRepair;
-import com.scytalys.technikon.domain.User;
+import com.scytalys.technikon.domain.*;
 import com.scytalys.technikon.domain.category.PropertyType;
 import com.scytalys.technikon.domain.category.RepairStatus;
 import com.scytalys.technikon.domain.category.RepairType;
@@ -14,6 +11,7 @@ import com.scytalys.technikon.dto.UserSearchResponseDto;
 import com.scytalys.technikon.dto.UserUpdateDto;
 import com.scytalys.technikon.mapper.OwnerMapper;
 import com.scytalys.technikon.repository.PropertyRepository;
+import com.scytalys.technikon.service.AdminService;
 import com.scytalys.technikon.service.PropertyOwnerService;
 import com.scytalys.technikon.service.PropertyRepairService;
 import com.scytalys.technikon.service.PropertyService;
@@ -34,12 +32,10 @@ import java.util.List;
 @Configuration
 @Slf4j
 public class SampleData {
-    @Autowired
     private final PropertyRepairService propertyRepairService;
-    @Autowired
     private final PropertyOwnerService propertyOwnerService;
-    @Autowired
     private final PropertyService propertyService;
+    private final AdminService adminService;
 
 
     @Bean
@@ -57,6 +53,19 @@ public class SampleData {
             propertyRepairService.createPropertyRepair(propertyRepair);
             logger.info("Created property repair: {}", propertyRepair);
 
+            Admin theAdmin = new Admin();
+            theAdmin.setTin("1751614865GR");// id
+            theAdmin.setName("Admin"); // name
+            theAdmin.setSurname("Administeridis"); // surname
+            theAdmin.setEmail("adminphile@hotmail.com"); // email
+            theAdmin.setUsername("admin"); // username
+            theAdmin.setPassword("pass"); // password
+            theAdmin.setAddress("over here"); // address
+            theAdmin.setPhoneNumber("+30999582486");
+            theAdmin.setRegistrationDate(LocalDate.of(2010, 11, 21));
+            adminService.create(theAdmin);
+
+
             PropertyOwner propertyOwner = new PropertyOwner();
             propertyOwner.setTin("1651614865GR");// id
             propertyOwner.setName("John"); // name
@@ -66,11 +75,13 @@ public class SampleData {
             propertyOwner.setPassword("pass"); // password
             propertyOwner.setAddress("somewhere"); // address
             propertyOwner.setPhoneNumber("+30999582486");
+            propertyOwner.setRegistrationDate(LocalDate.of(2012, 9, 11));
+            adminService.createOwner(propertyOwner);
+//            UserCreationDto dto =new UserCreationDto(propertyOwner.getTin(), propertyOwner.getName(), propertyOwner.getSurname(), propertyOwner.getEmail(), propertyOwner.getUsername(), propertyOwner.getPassword(), propertyOwner.getAddress(), propertyOwner.getPhoneNumber());
 
-            UserCreationDto dto =new UserCreationDto(propertyOwner.getTin(), propertyOwner.getName(), propertyOwner.getSurname(), propertyOwner.getEmail(), propertyOwner.getUsername(), propertyOwner.getPassword(), propertyOwner.getAddress(), propertyOwner.getPhoneNumber());
-            logger.info("Created user creation dto: {}", dto);
+ //           logger.info("Created user creation dto: {}", dto);
 
-            propertyOwner=propertyOwnerService.createDBUser(dto);
+  //          propertyOwner=propertyOwnerService.createDBUser(dto);
             logger.info("Created property owner: {}", propertyOwner);
 //            propertyOwnerService.updateUserPassword(propertyOwner.getId(),"password", propertyOwner.getVersion());
             Property property = new Property();
