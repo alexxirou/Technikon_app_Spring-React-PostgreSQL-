@@ -10,14 +10,14 @@ import org.springframework.web.bind.annotation.RestController;
 import java.time.LocalDate;
 import java.util.List;
 
-//@RestController
-//@AllArgsConstructor
-//@RequestMapping("/api/v2/users/admins")
-//public class AdminController {
-//    private final AdminService adminService;
-//
-//    @GetMapping("/")
-//    List<PropertyOwner> findOwners(LocalDate from, LocalDate to) {
-//        return adminService.getRegisteredOwners(LocalDate.now(), LocalDate.now());
-//    }
-//}
+@RestController
+@AllArgsConstructor
+@RequestMapping("/api/v2/users/admins")
+public class AdminController {
+    private final AdminService adminService;
+
+    @GetMapping("/")
+    List<PropertyOwner> findOwners(LocalDate from, LocalDate to) {
+        return adminService.getRegisteredOwners(LocalDate.now(), LocalDate.now());
+    }
+}
