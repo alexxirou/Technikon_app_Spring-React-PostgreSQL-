@@ -1,7 +1,7 @@
 package com.scytalys.technikon.service;
 
-import com.scytalys.technikon.dto.PropertyDto;
 import com.scytalys.technikon.domain.Property;
+import com.scytalys.technikon.dto.PropertyDto;
 
 import java.util.List;
 

@@ -14,9 +14,11 @@ public class CacheConfig {
     public CacheManager cacheManager() {
         // Create a ConcurrentMapCacheManager with 'myProducts' cache
         ConcurrentMapCacheManager cacheManager =
-                new ConcurrentMapCacheManager("PropertyOwners");
+                new ConcurrentMapCacheManager("PropertyOwners", "PropertyRepairs");
         // You can configure additional caches here if needed
         // cacheManager.setCacheNames(Collections.singleton("myOtherCache"));
         return cacheManager;
     }
+
+
 }

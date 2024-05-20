@@ -12,6 +12,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
+
+import java.time.format.DateTimeParseException;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
@@ -58,4 +61,10 @@ public class GlobalExceptionHandler {
                 .body("Failed to modify resource because of high traffic. Please try again.");
     }
 
+    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
+    public ResponseEntity<String> handleMethodArgumentTypeMismatchException(MethodArgumentTypeMismatchException e) {
+        return ResponseEntity.status(HttpStatus.CONFLICT)
+                .header("Error-Message", "Invalid date format: " + e.getMessage())
+                .body("Invalid date format. Please use the format yyyy-MM-dd.");
+    }
 }
