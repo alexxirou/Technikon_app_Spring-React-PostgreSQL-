@@ -5,16 +5,19 @@ import jakarta.persistence.EntityNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataAccessResourceFailureException;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.OptimisticLockingFailureException;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
-import java.time.format.DateTimeParseException;
+import java.time.LocalDateTime;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
@@ -53,6 +56,15 @@ public class GlobalExceptionHandler {
                 .build();
     }
 
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public ResponseEntity<String> handleDataIntegrityViolation(DataIntegrityViolationException e) {
+        logger.error("DataIntegrityViolationException occurred: {}", e.getMessage());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .header("Error-Message", "Database integrity violation: " + e.getMessage())
+                .build();
+
+    }
+
     @ExceptionHandler(OptimisticLockingFailureException.class)
     public ResponseEntity<String> handleOptimisticLockingFailureException(OptimisticLockingFailureException e) {
         logger.error("OptimisticLockingFailureException occurred: {}", e.getMessage());
@@ -61,10 +73,13 @@ public class GlobalExceptionHandler {
                 .body("Failed to modify resource because of high traffic. Please try again.");
     }
 
-    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
-    public ResponseEntity<String> handleMethodArgumentTypeMismatchException(MethodArgumentTypeMismatchException e) {
-        return ResponseEntity.status(HttpStatus.CONFLICT)
-                .header("Error-Message", "Invalid date format: " + e.getMessage())
-                .body("Invalid date format. Please use the format yyyy-MM-dd.");
+    @ExceptionHandler(BadCredentialsException.class)
+    public ResponseEntity<Object> handleBadCredentialsException(BadCredentialsException e) {
+        logger.error("BadCredentialsException occurred: {}", e.getMessage());
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                .header("Error-Message", "Login failed: " + e.getMessage())
+                .body("Authentication failed: Invalid username or password.");
     }
+
+
 }

@@ -8,13 +8,12 @@ import com.scytalys.technikon.repository.PropertyOwnerRepository;
 import com.scytalys.technikon.service.PropertyOwnerService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.OptimisticLockingFailureException;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,29 +29,6 @@ public class PropertyOwnerServiceImpl implements PropertyOwnerService {
 
     private final OwnerMapper ownerMapper;
 
-
-    /**
-     * Creates a new user in the repository as a PropertyOwner type
-     *
-     * @param dto The dto containing information of the user to be created.
-     * @return ResponseDto.
-     * throws IllegalArgumentException if important fields are null;
-     * throws DataIntegrityViolationException if unique field constraint violation
-     */
-    @CacheEvict(value = "PropertyOwners", allEntries = true)
-    @Override
-    @Transactional
-    public PropertyOwner createDBUser(UserCreationDto dto) {
-        PropertyOwner user = ownerMapper.userCreationDtoToPropertyOwner(dto);
-        user.setEmail(user.getEmail().toLowerCase());
-        try {
-            propertyOwnerRepository.save(user);
-            return user;
-        }catch (Exception e){
-            throw new DataIntegrityViolationException("Id, Username, or Email already taken.");
-        }
-    }
-
     /**
      * Finds a user in the repository of PropertyOwner type
      *
@@ -66,7 +42,6 @@ public class PropertyOwnerServiceImpl implements PropertyOwnerService {
     public PropertyOwner findUser(String tin) {
         return propertyOwnerRepository.findByTin(tin).filter(User::isActive).orElseThrow(() -> new EntityNotFoundException("User not found."));
     }
-
 
     /**
      * Searches for a user in the repository by their username.
@@ -109,6 +84,7 @@ public class PropertyOwnerServiceImpl implements PropertyOwnerService {
     public void updateUser(String tin, UserUpdateDto dto){
 
         PropertyOwner user= findUser(tin);
+
         if(user.getVersion()!= dto.version()) throw new OptimisticLockingFailureException("User cannot be updated, please try again later.");
         PropertyOwner newUser = ownerMapper.updateDtoToUser(dto,user);
         if(dto.email()!=null) {
@@ -131,8 +107,9 @@ public class PropertyOwnerServiceImpl implements PropertyOwnerService {
     @Override
     @Transactional
     @CacheEvict(value = "PropertyOwners", allEntries = true)
-    public void deleteUser(String tin) {
+    public void deleteUser(String tin ) {
         PropertyOwner user= findUser(tin);
+
         propertyOwnerRepository.deleteById(user.getId());;
 
     }
@@ -147,6 +124,7 @@ public class PropertyOwnerServiceImpl implements PropertyOwnerService {
     @CacheEvict(value = "PropertyOwners", allEntries = true)
     public void softDeleteUser(String tin){
         PropertyOwner user= propertyOwnerRepository.findByTin(tin).orElseThrow(() -> new EntityNotFoundException("User not found."));
+
         user.setActive(false);
         propertyOwnerRepository.save(user);
 
@@ -195,10 +173,11 @@ public class PropertyOwnerServiceImpl implements PropertyOwnerService {
      */
 
     @Override
-    public UserDetails userDetails(PropertyOwner user){
+    public UserDetailsDto userDetails(PropertyOwner user){
+
         UserSearchResponseDto details = ownerMapper.userToUserSearchResponseDto(user);
         List<String> properties = propertyOwnerRepository.findPropertyIdsByUserId(user.getTin());
-        return new UserDetails(details, properties);
+        return new UserDetailsDto(details, properties);
     }
 
 }

@@ -1,41 +1,33 @@
 package com.scytalys.technikon.controller;
 import com.scytalys.technikon.domain.PropertyOwner;
 import com.scytalys.technikon.dto.*;
+import com.scytalys.technikon.security.dto.AuthRequest;
+import com.scytalys.technikon.security.service.UserInfoDetails;
 import com.scytalys.technikon.service.PropertyOwnerService;
 import com.scytalys.technikon.utility.HeaderUtility;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
 import java.util.List;
 
 
 @RestController
 
 @AllArgsConstructor
-@RequestMapping("/api/v2/users/propertyOwners")
+@RequestMapping("/api/v2/propertyOwners")
 public class PropertyOwnerController {
 
     private final PropertyOwnerService propertyOwnerService;
 
 
-    @PostMapping("/")
-    public ResponseEntity<UserResponseDto> createPropertyOwner(@RequestBody UserCreationDto newUser) {
-        PropertyOwner newDBUser=propertyOwnerService.createDBUser(newUser);
-        UserResponseDto userInfo = propertyOwnerService.createUserResponseDto(newDBUser);
-        HttpHeaders headers= HeaderUtility.createHeaders("Success-Header", "User registered successfully.");
-        String userLink = ServletUriComponentsBuilder.fromCurrentRequest()
-                .queryParam("tin", newDBUser.getTin())
-                .build()
-                .toUri()
-                .toString();
-        headers.add("Location", userLink);
-        return new ResponseEntity<>( userInfo, headers, HttpStatus.CREATED);
-    }
 
-
+    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     @GetMapping("/")
     public ResponseEntity<List<UserSearchResponseDto>>  findUsers(
             @RequestParam(required = false) String tin,
@@ -49,25 +41,43 @@ public class PropertyOwnerController {
         return new ResponseEntity<>(userInfo, headers, HttpStatus.OK);
     }
 
-
+    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     @GetMapping("/{tin}")
-    public ResponseEntity<UserDetails> showUser(@RequestParam String tin) {
-        UserDetails userInfo=propertyOwnerService.userDetails(propertyOwnerService.findUser(tin));
+    public ResponseEntity<UserDetailsDto> showUser(@PathVariable String tin, Authentication authentication) {
+        if (authentication.getAuthorities().stream().noneMatch(a -> a.getAuthority().equals("ROLE_ADMIN")))  {
+            UserInfoDetails userInfoDetails = (UserInfoDetails) authentication.getPrincipal();
+            //long id = userInfoDetails.getId();
+            String authTin = userInfoDetails.getTin();
+            if (!authTin.equals(tin)) throw new AccessDeniedException("You are not authorized to update another user.");
+        }
+        UserDetailsDto userInfo=propertyOwnerService.userDetails(propertyOwnerService.findUser(tin));
         HttpHeaders headers= HeaderUtility.createHeaders("Success-Header", "User with tin found.");
         return new ResponseEntity<>(userInfo, headers, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     @PutMapping("/{tin}")
-    public ResponseEntity<String> updateUser(@RequestParam String tin, @RequestBody UserUpdateDto updateRequest) {
+    public ResponseEntity<String> updateUser(@PathVariable String tin, @RequestBody UserUpdateDto updateRequest, Authentication authentication) {
+        if (authentication.getAuthorities().stream().noneMatch(a -> a.getAuthority().equals("ROLE_ADMIN")))  {
+            UserInfoDetails userInfoDetails = (UserInfoDetails) authentication.getPrincipal();
+            //long id = userInfoDetails.getId();
+            String authTin = userInfoDetails.getTin();
+            if (!authTin.equals(tin)) throw new AccessDeniedException("You are not authorized to update another user.");
+        }
         propertyOwnerService.updateUser(tin, updateRequest);
         HttpHeaders headers= HeaderUtility.createHeaders("Success-Header", "User updated.");
         return new ResponseEntity<>(headers, HttpStatus.ACCEPTED);
     }
 
 
-
+    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     @DeleteMapping("/{tin}{version}")
-    public ResponseEntity<String> deleteUser(@RequestParam String tin, @RequestParam long version) {
+    public ResponseEntity<String> deleteUser(@PathVariable String tin, @RequestParam long version, Authentication authentication) {
+        if (authentication.getAuthorities().stream().noneMatch(a -> a.getAuthority().equals("ROLE_ADMIN")))  {
+            UserInfoDetails userInfoDetails = (UserInfoDetails) authentication.getPrincipal();
+            String authTin = userInfoDetails.getTin();
+            if (!authTin.equals(tin)) throw new AccessDeniedException("You are not authorized to update another user.");
+        }
         HttpHeaders headers;
         if(propertyOwnerService.checkUserHasProperties(tin)){
             propertyOwnerService.softDeleteUser(tin);
