@@ -1,27 +1,32 @@
-import { useState } from 'react';
+import  { useState, useEffect} from 'react';
 import { useNavigate } from 'react-router-dom';
 import jwtDecode from 'jwt-decode';
-import bcrypt from 'bcryptjs';
-import { useAuth } from '../../components/useAuth';
+import { useAuth } from './useAuth';
+import axios from 'axios';
 
 const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
-  const { setAuthData } = useAuth(); // Use the useAuth hook to access setAuthData
+  const { setAuthData } = useAuth();
 
-  // Function to handle successful authentication
+  // Load isSubmitting state from localStorage or default to false
+  const [isSubmitting, setIsSubmitting] = useState(() => {
+    return localStorage.getItem('isSubmitting') === 'true';
+  });
+
+  useEffect(() => {
+    // Update localStorage whenever isSubmitting changes
+    localStorage.setItem('isSubmitting', isSubmitting);
+  }, [isSubmitting]);
+
   const handleAuthentication = (token) => {
-    // Decode the token to extract additional data
     const decodedToken = jwtDecode(token);
     const { authorities, claims } = decodedToken;
 
-    // Save the necessary data in state or context
-    setAuthData({ id:claims?.id, tin: claims?.tin, roles: authorities });
+    setAuthData({ id: claims?.id, tin: claims?.tin, roles: authorities });
 
-    // Redirect based on user role
     if (authorities.includes('ROLE_ADMIN')) {
       navigate(`/api/v2/admin/${claims?.tin}`);
     } else if (authorities.includes('ROLE_USER')) {
@@ -33,49 +38,45 @@ const Login = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
+  
+    // Prevent multiple submissions
     if (isSubmitting) {
       return;
     }
-
+  
     try {
+      // Set submitting state to true
       setIsSubmitting(true);
-
-      const hashedPassword = await bcrypt.hash(password, 10); 
-
-      if (!hashedPassword) {
-        throw new Error('Failed to hash password');
-      }
-
-      const response = await fetch('/api/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ username, password: hashedPassword, roles: ['ROLE_USER'] }), // Include roles in the request
+  
+      // Send login request
+      const response = await axios.post('http://localhost:5001/login', {
+        username,
+        password,
       });
-
-      if (!response.ok) {
-        const errorMessage = response.headers.get('Error-Message') || 'Login failed';
+  
+      // Check response status
+      if (response.status === 200) {
+        // Login successful
+        const data = response.data;
+        if (data.token) {
+          handleAuthentication(data.token);
+        } else {
+          setError('Login failed: Invalid response');
+        }
+      } else {
+        // Handle other status codes
+        const errorMessage = response.data.message || 'Login failed';
         throw new Error(errorMessage);
       }
-
-      const data = await response.json();
-
-      if (data.token) {
-        // Call function to handle successful authentication
-        handleAuthentication(data.token);
-      } else {
-        setError('Login failed: Invalid response');
-      }
     } catch (error) {
+      // Handle errors
       setError(error.message || 'An unexpected error occurred');
       console.error('Error:', error);
     } finally {
+      // Set submitting state to false
       setIsSubmitting(false);
     }
   };
-
   return (
     <div className="login-container">
       <h2>Login</h2>

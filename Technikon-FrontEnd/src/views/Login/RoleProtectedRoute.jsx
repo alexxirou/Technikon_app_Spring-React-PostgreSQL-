@@ -1,5 +1,3 @@
-// src/components/RoleProtectedRoute.js
-import React from 'react';
 import PropTypes from 'prop-types';
 import { Navigate } from 'react-router-dom';
 import jwtDecode from 'jwt-decode';
