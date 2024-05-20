@@ -1,8 +1,8 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import jwtDecode from 'jwt-decode';
 import bcrypt from 'bcryptjs';
-import './Login.css';
+import { useAuth } from '../../components/useAuth';
 
 const Login = () => {
   const [username, setUsername] = useState('');
@@ -10,6 +10,26 @@ const Login = () => {
   const [error, setError] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
+  const { setAuthData } = useAuth(); // Use the useAuth hook to access setAuthData
+
+  // Function to handle successful authentication
+  const handleAuthentication = (token) => {
+    // Decode the token to extract additional data
+    const decodedToken = jwtDecode(token);
+    const { authorities, claims } = decodedToken;
+
+    // Save the necessary data in state or context
+    setAuthData({ id:claims?.id, tin: claims?.tin, roles: authorities });
+
+    // Redirect based on user role
+    if (authorities.includes('ROLE_ADMIN')) {
+      navigate(`/api/v2/admin/${claims?.tin}`);
+    } else if (authorities.includes('ROLE_USER')) {
+      navigate(`/api/v2/propertyowner/${claims?.tin}`);
+    } else {
+      navigate('/');
+    }
+  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -32,7 +52,7 @@ const Login = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ username, password: hashedPassword }),
+        body: JSON.stringify({ username, password: hashedPassword, roles: ['ROLE_USER'] }), // Include roles in the request
       });
 
       if (!response.ok) {
@@ -43,18 +63,8 @@ const Login = () => {
       const data = await response.json();
 
       if (data.token) {
-        localStorage.setItem('token', data.token);
-        const decodedToken = jwtDecode(data.token);
-        const roles = decodedToken.authorities || [];
-        const tin = decodedToken.claims?.tin;
-
-        if (roles.includes('ROLE_ADMIN')) {
-          navigate(`/api/v2/admin/${tin}`);
-        } else if (roles.includes('ROLE_USER')) {
-          navigate(`/api/v2/propertyowner/${tin}`);
-        } else {
-          navigate('/');
-        }
+        // Call function to handle successful authentication
+        handleAuthentication(data.token);
       } else {
         setError('Login failed: Invalid response');
       }
@@ -65,13 +75,6 @@ const Login = () => {
       setIsSubmitting(false);
     }
   };
-
-  useEffect(() => {
-    // Cleanup function to reset isSubmitting when component is unmounted or refreshed
-    return () => {
-      setIsSubmitting(false);
-    };
-  }, []);
 
   return (
     <div className="login-container">
