@@ -10,6 +10,7 @@ import com.scytalys.technikon.repository.PropertyOwnerRepository;
 import com.scytalys.technikon.repository.PropertyRepository;
 import com.scytalys.technikon.service.AdminService;
 import lombok.AllArgsConstructor;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.util.List;
@@ -36,6 +37,11 @@ public class AdminServiceImpl implements AdminService {
 
     }
 
+//    @Override
+//    public void UpdateUser(String tin, UserUpdateDto dto) {
+//
+//    }
+
     @Override
     public UserResponseDto createUserResponseDto(Admin user) {
         return null;
@@ -51,10 +57,10 @@ public class AdminServiceImpl implements AdminService {
         return List.of();
     }
 
-    @Override
-    public Admin createDBUser(UserCreationDto dto) {
-        return null;
-    }
+//    @Override
+//    public Admin createDBUser(UserCreationDto dto) {
+//        return null;
+//    }
 
     @Override
     public Admin findUser(String tin) {
@@ -62,9 +68,14 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public UserDetails userDetails(Admin user) {
+    public UserDetailsDto userDetails(Admin user) {
         return null;
     }
+
+//    @Override
+//    public UserDetails userDetails(Admin user) {
+//        return null;
+//    }
 
     @Override
     public List<PropertyOwner> getRegisteredOwners(LocalDate from, LocalDate to) {

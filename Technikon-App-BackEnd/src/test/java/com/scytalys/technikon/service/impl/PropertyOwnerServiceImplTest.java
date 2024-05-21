@@ -2,6 +2,7 @@ package com.scytalys.technikon.service.impl;
 
 import com.scytalys.technikon.domain.Property;
 import com.scytalys.technikon.domain.PropertyOwner;
+
 import com.scytalys.technikon.domain.User;
 import com.scytalys.technikon.domain.category.PropertyType;
 import com.scytalys.technikon.dto.*;
@@ -9,28 +10,38 @@ import com.scytalys.technikon.mapper.OwnerMapper;
 import com.scytalys.technikon.repository.PropertyOwnerRepository;
 import com.scytalys.technikon.repository.PropertyRepository;
 
-import java.sql.Array;
+
 import java.util.*;
 
+import com.scytalys.technikon.security.service.UserInfoService;
+import com.scytalys.technikon.utility.AuthenticationUtils;
 import jakarta.persistence.EntityNotFoundException;
-import org.jetbrains.annotations.NotNull;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.Spy;
-import org.springframework.dao.DataAccessResourceFailureException;
-import org.springframework.dao.DataIntegrityViolationException;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
+
 
 import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.when;
+
 
 public class PropertyOwnerServiceImplTest {
 
@@ -46,13 +57,19 @@ public class PropertyOwnerServiceImplTest {
     @Spy
     @InjectMocks
     private PropertyOwnerServiceImpl propertyOwnerService;
+    @Spy
+    @InjectMocks
+    private UserInfoService userInfoService;
 
     @Spy
     private OwnerMapper ownerMapper = OwnerMapper.INSTANCE; // Initialize ownerMapper
     @Spy
     private PropertyOwner propertyOwner;
-
+    private Authentication authentication;
+    @SpyBean
+    private PasswordEncoder passwordEncoder;
     private UserCreationDto dto;
+
 
 
     @BeforeEach
@@ -60,7 +77,7 @@ public class PropertyOwnerServiceImplTest {
 
         MockitoAnnotations.openMocks(this);
 
-        propertyOwner= new PropertyOwner();; // id
+        propertyOwner= new PropertyOwner();
         propertyOwner.setTin("1651614865GR");
         propertyOwner.setName("Johny"); // name
         propertyOwner.setSurname("Doep"); // surname
@@ -73,7 +90,6 @@ public class PropertyOwnerServiceImplTest {
         dto =new UserCreationDto(propertyOwner.getTin(), propertyOwner.getName(), propertyOwner.getSurname(), propertyOwner.getEmail(), propertyOwner.getUsername(), propertyOwner.getPassword(), propertyOwner.getAddress(), propertyOwner.getPhoneNumber());
 
 
-
     }
     @AfterEach
     public void tearDown(){
@@ -81,16 +97,24 @@ public class PropertyOwnerServiceImplTest {
         dto=null;
     }
 
-    /**
-     * This test verifies that the createUser method correctly  the object when the repository method succeeds.
-     */
-    @Test
-    public void testCreateUser() {
-        when(propertyOwnerRepository.save(eq(propertyOwner))).thenReturn(propertyOwner);
-        PropertyOwner result =  propertyOwnerService.createDBUser(dto);
-        assertEquals(propertyOwner, result);
-
-    }
+//    /**
+//     * This test verifies that the createUser method correctly  the object when the repository method succeeds.
+//     */
+//    @Test
+//    public void testCreateUser() {
+//        when(propertyOwnerRepository.save(eq(propertyOwner))).thenReturn(propertyOwner);
+//        PropertyOwner result =  propertyRepository.save(propertyOwner);
+//        assertEquals(result.getTin(), propertyOwner.getTin());
+//        assertEquals(result.getName(), propertyOwner.getName());
+//        assertEquals(result.getSurname(), propertyOwner.getSurname());
+//        assertEquals(result.getEmail(), propertyOwner.getEmail());
+//        assertEquals(result.getUsername(), propertyOwner.getUsername());
+//        assertEquals(result.getPassword(), propertyOwner.getPassword());
+//        assertEquals(result.getAddress(), propertyOwner.getAddress());
+//        assertEquals(result.getPhoneNumber(), propertyOwner.getPhoneNumber());
+//        assertEquals(result.getVersion(), propertyOwner.getVersion());
+//
+//    }
 
     /**
      * This test verifies the behavior of the searchUser method when the property owner is found in the DB.
@@ -138,8 +162,8 @@ public class PropertyOwnerServiceImplTest {
     public void testSoftDeleteUser() {
         when(propertyOwnerRepository.findByTin(any(String.class))).thenReturn(Optional.of(propertyOwner));
 
-        when(propertyOwnerRepository.save(eq(propertyOwner))).thenReturn(propertyOwner);
-        propertyOwnerService.createDBUser(dto);
+
+        // Set isActive flag to false
         doAnswer(invocation -> {
             propertyOwner.setActive(false); // Set isActive flag to false
             return 1;
@@ -156,7 +180,6 @@ public class PropertyOwnerServiceImplTest {
      */
     @Test
     public  void testSoftDeleteUserFail() {
-        propertyOwnerService.createDBUser(dto);
         assertThrows(EntityNotFoundException.class, ()->propertyOwnerService.softDeleteUser(propertyOwner.getTin()));
 
     }
@@ -285,7 +308,7 @@ public class PropertyOwnerServiceImplTest {
         when(ownerMapper.userToUserSearchResponseDto(propertyOwner)).thenReturn(userDto);
 
 
-        UserDetails userDetails = propertyOwnerService.userDetails(propertyOwner);
+        UserDetailsDto userDetails = propertyOwnerService.userDetails(propertyOwner);
 
         assertEquals(userDto, userDetails.userInfo());
         assertEquals(properties, userDetails.properties());
@@ -306,7 +329,7 @@ public class PropertyOwnerServiceImplTest {
         when(ownerMapper.userToUserSearchResponseDto(propertyOwner)).thenReturn(userDto);
 
 
-        UserDetails userDetails = propertyOwnerService.userDetails(propertyOwner);
+        UserDetailsDto userDetails = propertyOwnerService.userDetails(propertyOwner);
 
 
         assertEquals(userDto, userDetails.userInfo());
