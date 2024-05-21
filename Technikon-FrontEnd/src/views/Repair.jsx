@@ -1,69 +1,84 @@
-import  { useState, useEffect } from 'react';
-import { Container, Typography, Button, TextField, Box } from '@mui/material';
+import  { useState } from 'react';
+import Button from '@mui/material/Button';
+import axios from 'axios';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import Box from '@mui/material/Box';
+import api from '../api/Api';
+import { useAuth } from '../hooks/useAuth';
 
 const Repair = () => {
-    const [repairs, setRepairs] = useState([]);
-    const [searchTerm, setSearchTerm] = useState('');
+    const { authData } = useAuth(); // Move this line up to declare authData first
+    const propertyOwnerId = authData ? authData.id : null;
+    const [repairId, setRepairId] = useState(null);
+    const [propertyRepairDto, setPropertyRepairDto] = useState(null);
 
-    useEffect(() => {
-        fetch('/api/property-repairs/all-by-owner/{propertyOwnerId}') 
-            .then(response => response.json())
-            .then(data => setRepairs(data));
-    }, []);
+    console.log(authData.userId);
 
-    const handleCreateRepair = () => {
-        const newRepair = {
-            dateOfRepair: '2024-05-21',
-            shortDescription: 'New Repair',
-            repairType: 'Type1',
-            repairStatus: 'Status1',
-            cost: 100,
-            longDescription: 'This is a new repair.'
-        };
-
-        fetch('/api/property-repairs', { 
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(newRepair),
-        })
-        .then(response => response.json())
-        .then(data => setRepairs(prevRepairs => [...prevRepairs, data]));
+    const createPropertyRepair = () => {
+        axios.post(`api/property-repairs`, propertyRepairDto)
+            .then(response => {
+                console.log(response.data);
+                setRepairId(response.data.id);
+            })
+            .catch(error => console.error(error));
     };
 
-    const handleDeleteRepair = (id) => {
-        fetch(`/api/property-repairs/{propertyOwnerId}/${id}`, { 
-            method: 'DELETE',
-        })
-        .then(() => setRepairs(prevRepairs => prevRepairs.filter(repair => repair.id !== id)));
+    const getPropertyRepair = () => {
+        api.get(`api/property-repairs/${authData.userId}/${repairId}`)
+            .then(response => console.log(response.data))
+            .catch(error => console.error(error));
     };
 
-    const handleSearch = (event) => {
-        setSearchTerm(event.target.value);
+    const getAllRepairs = () => {
+        api.get(`http://localhost:5001/api/property-repairs/all`)
+            .then(response => console.log(response.data))
+            .catch(error => console.error(error));
+    };
+
+    const updatePropertyRepair = () => {
+        const propertyRepairUpdateDto = {}; // Initialize the update DTO correctly
+        axios.put(`api/property-repairs/${propertyOwnerId}/${repairId}`, propertyRepairUpdateDto)
+            .then(response => console.log(response.data))
+            .catch(error => console.error(error));
+    };
+
+    const deletePropertyRepair = () => {
+        axios.delete(`api/property-repairs/${propertyOwnerId}/${repairId}`)
+            .then(response => console.log(response.data))
+            .catch(error => console.error(error));
     };
 
     return (
-        <Container maxWidth="sm">
-            <Typography variant="h2" align="center" gutterBottom>
-                Property Repairs
-            </Typography>
-            <Box sx={{ mb: 2 }}>
-                <Button variant="contained" color="primary" onClick={handleCreateRepair}>
-                    Create New Repair
-                </Button>
-            </Box>
-            <TextField label="Search Repairs" variant="outlined" fullWidth value={searchTerm} onChange={handleSearch} />
-            {repairs.filter(repair => repair.shortDescription.includes(searchTerm)).map(repair => (
-                <Box key={repair.id} sx={{ mb: 2 }}>
-                    <Typography variant="h6">{repair.shortDescription}</Typography>
-                    <Typography variant="body1">{repair.longDescription}</Typography>
-                    <Button variant="contained" color="secondary" onClick={() => handleDeleteRepair(repair.id)}>
-                        Delete Repair
+        <Box display="flex" flexDirection="column" alignItems="center">
+            <List>
+                <ListItem>
+                    <Button variant="contained" color="primary" onClick={createPropertyRepair}>
+                        Create Property Repair
                     </Button>
-                </Box>
-            ))}
-        </Container>
+                </ListItem>
+                <ListItem>
+                    <Button variant="contained" color="primary" onClick={getPropertyRepair}>
+                        Get Property Repair
+                    </Button>
+                </ListItem>
+                <ListItem>
+                    <Button variant="contained" color="primary" onClick={getAllRepairs}>
+                        Get All Repairs
+                    </Button>
+                </ListItem>
+                <ListItem>
+                    <Button variant="contained" color="primary" onClick={updatePropertyRepair}>
+                        Update a Repair
+                    </Button>
+                </ListItem>
+                <ListItem>
+                    <Button variant="contained" color="primary" onClick={deletePropertyRepair}>
+                        Delete a Repair
+                    </Button>
+                </ListItem>
+            </List>
+        </Box>
     );
 };
 

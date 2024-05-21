@@ -29,14 +29,14 @@ import java.util.Map;
 @RestController
 @RequestMapping("/auth")
 @AllArgsConstructor
-@CrossOrigin(origins = "http://localhost:5173", allowCredentials = "true")
+@CrossOrigin(origins = "http://localhost:5174", allowCredentials = "true")
 public class UserAuthenticationController {
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
     private final UserInfoService userInfoService;
     private final PropertyOwnerService propertyOwnerService;
 
-    @CrossOrigin(origins = "http://localhost:5173", allowCredentials = "true")
+    @CrossOrigin(origins = "http://localhost:5174", allowCredentials = "true")
     @PostMapping("/signup")
     public ResponseEntity<UserResponseDto> createPropertyOwner(@RequestBody UserCreationDto newUser) {
         PropertyOwner newDBUser=userInfoService.createDBUser(newUser);
@@ -50,7 +50,7 @@ public class UserAuthenticationController {
         return new ResponseEntity<>( userInfo, headers, HttpStatus.CREATED);
     }
 
-    @CrossOrigin(origins = "http://localhost:5173", allowCredentials = "true")
+    @CrossOrigin(origins = "http://localhost:5174", allowCredentials = "true")
     @PostMapping("/login")
     public ResponseEntity<Map<String, String>> propertyOwnerLogin(@RequestBody AuthRequest authRequest) {
 
@@ -70,7 +70,7 @@ public class UserAuthenticationController {
         }
     }
 
-    @CrossOrigin(origins = "http://localhost:5173", allowCredentials = "true")
+    @CrossOrigin(origins = "http://localhost:5174", allowCredentials = "true")
     @PostMapping("/admin/login")
     public ResponseEntity<String> adminLogin(@RequestBody AuthRequest authRequest) {
         Authentication authentication = authenticationManager.authenticate(
