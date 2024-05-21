@@ -12,7 +12,6 @@ const Repair = () => {
     const { authData } = useAuth();
     const navigate = useNavigate();
     const [repairId, setRepairId] = useState(null);
-    const [propertyRepairDto, setPropertyRepairDto] = useState(null);
 
     if (!authData) {
         return <div>Loading...</div>; // or handle the case when authData is null
