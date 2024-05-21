@@ -30,12 +30,13 @@ const Login = () => {
     };
   }, []);
   
+  // Use useEffect to execute logic dependent on authData
 
- 
+
 
   const  handleAuthentication = async (tin, id, username, authorities, exp) => {
     await setAuthData({ userId:id, userTin:tin, username:username, authorities: authorities, expDate:exp });
-   
+
 
     if (authorities.includes('ROLE_ADMIN')) {
       navigate(`/api/admin}`);
@@ -45,8 +46,6 @@ const Login = () => {
       navigate('/');
     }
   };
-
-  
 
   const handleSubmit = async (event) => {
     event.preventDefault();

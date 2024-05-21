@@ -1,10 +1,9 @@
 import React from 'react';
 import { Container, Typography, Button, Box, Paper } from '@mui/material';
-import { useNavigate } from 'react-router-dom'; // import useNavigate
+import { useNavigate } from 'react-router-dom';
 
 const HomePage = () => {
-  const navigate = useNavigate(); // initialize navigate
-
+  const navigate = useNavigate();
   return (
     <Box
       display="flex"
