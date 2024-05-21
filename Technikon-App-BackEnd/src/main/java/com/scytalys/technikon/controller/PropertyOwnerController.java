@@ -16,17 +16,13 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-
+@CrossOrigin(origins = "http://localhost:5174", allowCredentials = "true")
 @RestController
-
 @AllArgsConstructor
 @RequestMapping("/api/propertyOwners")
 
 public class PropertyOwnerController {
-
     private final PropertyOwnerService propertyOwnerService;
-
-
 
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     @GetMapping("/")
