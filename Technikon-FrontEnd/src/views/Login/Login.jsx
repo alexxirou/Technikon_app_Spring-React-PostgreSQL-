@@ -75,24 +75,26 @@ const Login = () => {
           const authorities = authoritiesArray.map(authority => authority.authority);
 
           handleAuthentication(tin, id, username, authorities, exp);
-        } else {
-          setError('Login failed: Invalid response');
-        }
+        } 
       } else {
-        // Handle other status codes
-        const errorMessage = response.data.message || 'Login failed';
+        const errorMessage = response.data.message || 'Login failed: Invalid response';
         throw new Error(errorMessage);
       }
     } catch (error) {
-      // Handle errors
-      setError(error.message || 'An unexpected error occurred');
       console.error('Error:', error);
+      if (error.response) {
+        const errorMessage = error.response.data || 'Login failed: Invalid response';
+        setError(errorMessage);
+      } else if (error.request) {
+        setError('No response received from the server');
+      } else {
+        setError('An unexpected error occurred');
+      }
     } finally {
-      // Set submitting state to false
       setIsSubmitting(false);
-     
     }
   };
+
   
 
   return (

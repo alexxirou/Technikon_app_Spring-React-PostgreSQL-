@@ -29,7 +29,6 @@ import java.util.Map;
 @RestController
 @RequestMapping("/auth")
 @AllArgsConstructor
-@CrossOrigin(origins = "http://localhost:5174", allowCredentials = "true")
 public class UserAuthenticationController {
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;

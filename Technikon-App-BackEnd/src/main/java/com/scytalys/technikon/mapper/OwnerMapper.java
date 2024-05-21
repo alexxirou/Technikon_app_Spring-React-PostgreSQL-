@@ -43,8 +43,9 @@ public interface OwnerMapper {
                         .filter(username -> username.length() >= 5 && username.length() <= 20)
                         .orElseThrow(() -> new IllegalArgumentException("Username must be between 5 and 20 characters long"));
                 Optional.ofNullable(userCreationDto.tin())
-                        .filter(tin -> tin.length() >= 9 && tin.matches(".*[0-9].*[a-zA-Z].*")) // Check if tin has at least 9 characters and contains both digits and letters
-                        .orElseThrow(() -> new IllegalArgumentException("TIN must contain at least 9 characters with both digits and letters."));
+                        .filter(tin -> tin.length() >= 9 && tin.matches("^[a-zA-Z0-9]+$"))
+                        .orElseThrow(() -> new IllegalArgumentException("TIN must be at least 9 characters long and contain only digits and letters."));
+
 
         }
 

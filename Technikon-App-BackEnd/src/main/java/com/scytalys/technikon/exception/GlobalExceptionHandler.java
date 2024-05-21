@@ -28,57 +28,50 @@ public class GlobalExceptionHandler {
     public ResponseEntity<String> handleIllegalArgumentException(IllegalArgumentException e) {
         logger.error("IllegalArgumentException occurred: {}", e.getMessage());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                .header("Error-Message", e.getMessage())
-                .build();
+                .body(e.getMessage());
     }
 
     @ExceptionHandler(EntityNotFoundException.class)
     public ResponseEntity<String> handleEntityNotFoundException(EntityNotFoundException e) {
         logger.error("EntityNotFoundException occurred: {}", e.getMessage());
-        return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                .header("Error-Message", e.getMessage())
-                .build();
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(e.getMessage());
     }
 
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public ResponseEntity<String> handleHttpMessageNotReadableException(HttpMessageNotReadableException e) {
         logger.error("HttpMessageNotReadableException occurred: {}", e.getMessage());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                .header("Error-Message", "Invalid request body: " + e.getMessage())
-                .build();
+                .body(e.getMessage());
     }
 
     @ExceptionHandler(DataAccessResourceFailureException.class)
     public ResponseEntity<String> handleDatabaseAccessFailure(DataAccessResourceFailureException e){
         logger.error("DataAccessResourceFailureException occurred: {}", e.getMessage());
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .header("Error-Message", "Database resource access failed: " + e.getMessage())
-                .build();
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(e.getMessage());
     }
 
     @ExceptionHandler(DataIntegrityViolationException.class)
     public ResponseEntity<String> handleDataIntegrityViolation(DataIntegrityViolationException e) {
         logger.error("DataIntegrityViolationException occurred: {}", e.getMessage());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                .header("Error-Message", "Database integrity violation: " + e.getMessage())
-                .build();
+                .body(e.getMessage());
 
     }
 
     @ExceptionHandler(OptimisticLockingFailureException.class)
     public ResponseEntity<String> handleOptimisticLockingFailureException(OptimisticLockingFailureException e) {
         logger.error("OptimisticLockingFailureException occurred: {}", e.getMessage());
-        return ResponseEntity.status(HttpStatus.CONFLICT)
-                .header("Error-Message", "Request resource is busy: " + e.getMessage())
-                .body("Failed to modify resource because of high traffic. Please try again.");
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(e.getMessage());
     }
 
     @ExceptionHandler(BadCredentialsException.class)
     public ResponseEntity<Object> handleBadCredentialsException(BadCredentialsException e) {
         logger.error("BadCredentialsException occurred: {}", e.getMessage());
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-                .header("Error-Message", "Login failed: " + e.getMessage())
-                .body("Authentication failed: Invalid username or password.");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(e.getMessage());
     }
 
 

@@ -29,12 +29,12 @@ const Signup = () => {
     return pattern.test(email);
   };
 
-  // Function to validate password strength
   const validatePassword = (password) => {
     // Password validation regex pattern
-    const pattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()-_=+{}|;:,<.>])[A-Za-z\d!@#$%^&*()-_=+{}|;:,<.>.]{8,}$/;
+    const pattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
     return pattern.test(password);
   };
+  
 
   // Function to validate TIN format
   const validateTin = (tin) => {
@@ -114,29 +114,26 @@ const Signup = () => {
         setTimeout(() => {
           navigate('/login');
         }, 1000);
-      } else {
-        const errorMessage = response.headers || response.data.message || 'Signup failed: Invalid response';
+      } 
+      else {
+        const errorMessage = response.data.message || 'Signup failed: Invalid response';
         throw new Error(errorMessage);
       }
     } catch (error) {
       console.error('Error:', error);
-    
       if (error.response) {
-        console.log('Response Data:', error.response);
-        console.log('Response Headers:', error.headers);
-    
-        const errorMessage = error.response.headers['error-message'] || error.response.data.message || 'Signup failed: Invalid response';
+        const errorMessage = error.response.data || 'Signup failed: Invalid response';
         setError(errorMessage);
       } else if (error.request) {
-        console.log('Request made but no response received:', error.request);
         setError('No response received from the server');
       } else {
-        console.log('Error during request setup:', error.message);
         setError('An unexpected error occurred');
-      }} finally {
+      }
+    } finally {
       setIsSubmitting(false);
     }
   };
+
   
 
   return (
