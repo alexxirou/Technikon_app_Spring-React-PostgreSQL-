@@ -1,4 +1,5 @@
-import api from '../api/Api';
+import React from 'react';
+import { Container, Box, Typography } from '@mui/material';
 import { useAuth } from '../hooks/useAuth';
 
 const Owner = () => {
@@ -7,14 +8,34 @@ const Owner = () => {
   console.log(authData);
 
   return (
-    <div>
-      <h1>Owner</h1>
-      <p>User ID: {authData.userId}</p>
-      <p>User TIN: {authData.userTin}</p>
-      <p>Username: {authData.username}</p>
-      <p>Authorities: {authData.authorities?.join(', ')}</p>
-    </div>
+    <Container maxWidth="sm">
+      <Box
+        display="flex"
+        flexDirection="column"
+        alignItems="center"
+        justifyContent="center"
+        minHeight="100vh"
+        textAlign="center"
+      >
+        <Typography variant="h4" component="h1" gutterBottom>
+          Owner
+        </Typography>
+        <Typography variant="body1" gutterBottom>
+          User ID: {authData.userId}
+        </Typography>
+        <Typography variant="body1" gutterBottom>
+          User TIN: {authData.userTin}
+        </Typography>
+        <Typography variant="body1" gutterBottom>
+          Username: {authData.username}
+        </Typography>
+        <Typography variant="body1" gutterBottom>
+          Authorities: {authData.authorities?.join(', ')}
+        </Typography>
+      </Box>
+    </Container>
   );
 };
 
 export default Owner;
+

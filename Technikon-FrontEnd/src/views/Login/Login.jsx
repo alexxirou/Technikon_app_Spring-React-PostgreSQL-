@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { jwtDecode } from "jwt-decode";
 import { useAuth } from '../../hooks/useAuth';
 import axios from 'axios';
-
+import { Container, TextField, Button, Typography, Alert, CircularProgress } from '@mui/material';
 
 
 const Login = () => {
@@ -98,33 +98,47 @@ const Login = () => {
   
 
   return (
-    <div className="login-container" style={{ marginTop: '0' }}>
-      <h2>Login</h2>
-      {error && <p className="error-message">{error}</p>}
-      <form onSubmit={handleSubmit}>
-        <div className="form-group">
-          <label htmlFor="username">Username:</label>
-          <input
-            type="text"
-            id="username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            required
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="password">Password:</label>
-          <input
-            type="password"
-            id="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-        </div>
-        <button type="submit" disabled={isSubmitting}>Login</button>
-      </form>
-    </div>
+    <Container maxWidth="xs">
+      <div style={{ marginTop: '20px', textAlign: 'center' }}>
+        <Typography variant="h4">Login</Typography>
+        {error && <Alert severity="error" style={{ margin: '10px 0' }}>{error}</Alert>}
+        <form onSubmit={handleSubmit} style={{ marginTop: '20px' }}>
+          <div className="form-group">
+            <TextField
+              label="Username"
+              variant="outlined"
+              fullWidth
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              required
+              margin="normal"
+            />
+          </div>
+          <div className="form-group">
+            <TextField
+              label="Password"
+              variant="outlined"
+              type="password"
+              fullWidth
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+              margin="normal"
+            />
+          </div>
+          <Button
+            type="submit"
+            variant="contained"
+            color="primary"
+            disabled={isSubmitting}
+            fullWidth
+            style={{ marginTop: '20px' }}
+          >
+            {isSubmitting ? <CircularProgress size={24} /> : 'Login'}
+          </Button>
+        </form>
+      </div>
+    </Container>
   );
 };
 
