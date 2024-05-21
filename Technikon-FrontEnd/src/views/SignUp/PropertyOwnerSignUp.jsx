@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const Signup = () => {
   const [tin, setTin] = useState('');
@@ -13,6 +14,7 @@ const Signup = () => {
   const [error, setError] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [success, setSuccess] = useState('');
+  const navigate = useNavigate();
 
   useEffect(() => {
     const isSubmittingStored = localStorage.getItem('isSubmitting');
@@ -30,7 +32,7 @@ const Signup = () => {
   // Function to validate password strength
   const validatePassword = (password) => {
     // Password validation regex pattern
-    const pattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    const pattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()-_=+{}|;:,<.>])[A-Za-z\d!@#$%^&*()-_=+{}|;:,<.>.]{8,}$/;
     return pattern.test(password);
   };
 
@@ -50,35 +52,40 @@ const Signup = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
+  
     if (isSubmitting) {
       return;
     }
-
+  
     try {
       setIsSubmitting(true);
-
+  
+      // Validate TIN
       if (!validateTin(tin)) {
         throw new Error('TIN must be at least 9 characters long and consist of alphanumeric characters');
       }
-
+  
+      // Validate username
       if (username.length < 5) {
         throw new Error('Username must be at least 5 characters long');
       }
-
+  
+      // Validate password
       if (!validatePassword(password)) {
         throw new Error('Password must contain at least one uppercase letter, one lowercase letter, one number, one special character, and be at least 8 characters long');
       }
-
+  
+      // Validate email
       if (!validateEmail(email)) {
         throw new Error('Invalid email format');
       }
-
+  
+      // Validate phone number
       if (!validatePhoneNumber(phoneNumber)) {
-        throw new Error('Phone number must be 10 digits long and have a country code');
+        throw new Error('Phone number must be in the format +<country code><number> and contain 10-15 digits');
       }
-
-      const response = await axios.post('http://localhost:5001/signup', {
+  
+      const response = await axios.post('http://localhost:5001/auth/signup', {
         tin,
         name,
         surname,
@@ -87,10 +94,12 @@ const Signup = () => {
         password,
         address,
         phoneNumber,
-      });
-
+      }, {
+        withCredentials: true,});
+  
       if (response.status === 201) {
         setSuccess('Signup successful!');
+        // Reset form fields after successful signup
         setTin('');
         setUsername('');
         setPassword('');
@@ -100,16 +109,35 @@ const Signup = () => {
         setAddress('');
         setPhoneNumber('');
         setError('');
+        
+
+        setTimeout(() => {
+          navigate('/login');
+        }, 1000);
       } else {
-        setError('Signup failed: Invalid response');
+        const errorMessage = response.headers || response.data.message || 'Signup failed: Invalid response';
+        throw new Error(errorMessage);
       }
     } catch (error) {
-      setError(error.message || 'An unexpected error occurred');
       console.error('Error:', error);
-    } finally {
+    
+      if (error.response) {
+        console.log('Response Data:', error.response);
+        console.log('Response Headers:', error.headers);
+    
+        const errorMessage = error.response.headers['error-message'] || error.response.data.message || 'Signup failed: Invalid response';
+        setError(errorMessage);
+      } else if (error.request) {
+        console.log('Request made but no response received:', error.request);
+        setError('No response received from the server');
+      } else {
+        console.log('Error during request setup:', error.message);
+        setError('An unexpected error occurred');
+      }} finally {
       setIsSubmitting(false);
     }
   };
+  
 
   return (
     <div className="signup-container">
