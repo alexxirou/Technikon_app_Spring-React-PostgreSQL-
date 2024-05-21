@@ -67,12 +67,10 @@ public class JwtServiceTest {
 
     @Test
     public void testGenerateTokenAndVerify() {
-        String tin = propertyOwner.getTin();
-        String username = propertyOwner.getUsername();
-        long id = 0L;
 
+        UserInfoDetails userInfoDetails= new UserInfoDetails(propertyOwner);
         // Generate token
-        String token= jwtService.generateToken(tin, username, id);
+        String token= jwtService.generateToken(userInfoDetails);
 
 
 
@@ -87,9 +85,9 @@ public class JwtServiceTest {
         boolean isValid = jwtService.validateToken(token, userDetails);
 
         // Assertions
-        assertEquals(tin, extractedTin);
-        assertEquals(id, extractedId);
-        assertEquals(username, extractedUsername);
+        assertEquals(propertyOwner.getTin(), extractedTin);
+        assertEquals(propertyOwner.getId(), extractedId);
+        assertEquals(propertyOwner.getUsername(), extractedUsername);
         assertTrue(expirationDate.after(new Date())); // Ensure expiration date is in the future
         assertTrue(isValid);
     }

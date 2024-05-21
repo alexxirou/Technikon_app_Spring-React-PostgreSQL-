@@ -36,14 +36,37 @@ Technikon-App-BackEnd/build/
 Technikon-App-BackEnd/!**/src/main/**/build/
 Technikon-App-BackEnd/!**/src/test/**/build/
 
-# Ignore VS Code files
-Technikon-App-BackEnd/.vscode/
 
-# Ignore Mac OS specific files
-Technikon-App-BackEnd/.DS_Store
+#Ignore files for the react frontEnd
 
-# Ignore .env file
-Technikon-App-BackEnd/src/main/resources/.env
+# Logs
+Technikon-FrontEnd/logs/
+Technikon-FrontEnd/*.log
+Technikon-FrontEnd/npm-debug.log*
+Technikon-FrontEnd/yarn-debug.log*
+Technikon-FrontEnd/yarn-error.log*
+Technikon-FrontEnd/pnpm-debug.log*
+Technikon-FrontEnd/lerna-debug.log*
 
-#Ignore .idea folder
-.idea/
+# Dependency directories
+Technikon-FrontEnd/node_modules/
+
+# Build directories
+Technikon-FrontEnd/dist/
+Technikon-FrontEnd/dist-ssr/
+
+# Local files
+*.local
+
+# Editor directories and files
+Technikon-FrontEnd/.vscode/
+!Technikon-FrontEnd/.vscode/extensions.json
+Technikon-FrontEnd/.idea/
+Technikon-FrontEnd/.DS_Store
+
+# Visual Studio specific files
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?

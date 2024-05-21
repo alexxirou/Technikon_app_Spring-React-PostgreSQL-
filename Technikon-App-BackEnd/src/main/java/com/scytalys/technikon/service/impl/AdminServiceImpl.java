@@ -15,65 +15,75 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.util.List;
 
-//@Service
-//@AllArgsConstructor
-//public class AdminServiceImpl implements AdminService {
-//    private final PropertyOwnerRepository propertyOwnerRepository;
-//    private final PropertyRepository propertyRepository;
-//    private final AdminMapper adminMapper;
-//
-//    @Override
-//    public void softDeleteUser(String tin) {
-//
-//    }
-//
-//    @Override
-//    public void deleteUser(String tin) {
-//
-//    }
-//
+@Service
+@AllArgsConstructor
+public class AdminServiceImpl implements AdminService {
+    private final PropertyOwnerRepository propertyOwnerRepository;
+    private final PropertyRepository propertyRepository;
+    private final AdminMapper adminMapper;
+
+    @Override
+    public void softDeleteUser(String tin) {
+
+    }
+
+    @Override
+    public void deleteUser(String tin) {
+
+    }
+
+    @Override
+    public void updateUser(String tin, UserUpdateDto dto) {
+
+    }
+
 //    @Override
 //    public void UpdateUser(String tin, UserUpdateDto dto) {
 //
 //    }
-//
-//    @Override
-//    public UserResponseDto createUserResponseDto(Admin user) {
-//        return null;
-//    }
-//
-//    @Override
-//    public List<UserSearchResponseDto> createSearchResponse(List<Admin> users) {
-//        return List.of();
-//    }
-//
-//    @Override
-//    public List<Admin> searchUser(UserSearchDto dto) {
-//        return List.of();
-//    }
-//
+
+    @Override
+    public UserResponseDto createUserResponseDto(Admin user) {
+        return null;
+    }
+
+    @Override
+    public List<UserSearchResponseDto> createSearchResponse(List<Admin> users) {
+        return List.of();
+    }
+
+    @Override
+    public List<Admin> searchUser(UserSearchDto dto) {
+        return List.of();
+    }
+
 //    @Override
 //    public Admin createDBUser(UserCreationDto dto) {
 //        return null;
 //    }
-//
-//    @Override
-//    public Admin findUser(String tin) {
-//        return null;
-//    }
-//
+
+    @Override
+    public Admin findUser(String tin) {
+        return null;
+    }
+
+    @Override
+    public UserDetailsDto userDetails(Admin user) {
+        return null;
+    }
+
 //    @Override
 //    public UserDetails userDetails(Admin user) {
 //        return null;
 //    }
-//
-//    @Override
-//    public List<PropertyOwner> getRegisteredOwners(LocalDate from, LocalDate to) {
-//        return propertyOwnerRepository.findAll();
-//    }
-//
-//    @Override
-//    public List<Property> getRegisteredProperties(PropertyOwner owner, LocalDate from, LocalDate to) {
-//       return propertyRepository.findAll();
-//    }
-//}
+
+    @Override
+    public List<PropertyOwner> getRegisteredOwners(LocalDate from, LocalDate to) {
+        return propertyOwnerRepository.findAll();
+    }
+
+    @Override
+    public List<Property> getRegisteredProperties(PropertyOwner owner, LocalDate from, LocalDate to) {
+       return propertyRepository.findAll();
+    }
+}

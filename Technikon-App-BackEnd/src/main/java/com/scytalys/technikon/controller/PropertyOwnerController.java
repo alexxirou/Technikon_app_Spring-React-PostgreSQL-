@@ -20,7 +20,8 @@ import java.util.List;
 @RestController
 
 @AllArgsConstructor
-@RequestMapping("/api/v2/propertyOwners")
+@RequestMapping("/api/propertyOwners")
+
 public class PropertyOwnerController {
 
     private final PropertyOwnerService propertyOwnerService;
@@ -71,7 +72,7 @@ public class PropertyOwnerController {
 
 
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
-    @DeleteMapping("/{tin}{version}")
+    @DeleteMapping("/{tin}/{version}")
     public ResponseEntity<String> deleteUser(@PathVariable String tin, @RequestParam long version, Authentication authentication) {
         if (authentication.getAuthorities().stream().noneMatch(a -> a.getAuthority().equals("ROLE_ADMIN")))  {
             UserInfoDetails userInfoDetails = (UserInfoDetails) authentication.getPrincipal();
