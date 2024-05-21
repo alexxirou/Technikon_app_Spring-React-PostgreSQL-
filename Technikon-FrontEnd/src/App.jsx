@@ -6,7 +6,7 @@ import Owner from "./views/Owner";
 import Login from "./views/Login/Login";
 import PropertyOwnerSignUp from "./views/SignUp/PropertyOwnerSignUp"
 import RoleProtectedRoute from './views/Login/RoleProtectedRoute';
-import { AuthProvider } from './views/Login/AuthContext';
+import { AuthProvider } from './context/AuthContext';
 function App() {
   return (
     <AuthProvider>
@@ -25,7 +25,7 @@ function App() {
             }
           />
           <Route
-            path="/api/propertyOwners"
+            path="/api/owner"
             element={
               <RoleProtectedRoute allowedRoles={['ROLE_USER', 'ROLE_ADMIN']}>
                 <Owner />
