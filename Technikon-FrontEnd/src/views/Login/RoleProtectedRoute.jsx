@@ -10,7 +10,8 @@ const RoleProtectedRoute = ({ children, allowedRoles }) => {
   }
 
   const decodedToken = jwtDecode(token);
-  const roles = decodedToken.authorities || [];
+  const { authorities: authoritiesArray } = decodedToken;
+  const roles = authoritiesArray.map(authority => authority.authority);
 
   if (roles.some(role => allowedRoles.includes(role))) {
     return children;

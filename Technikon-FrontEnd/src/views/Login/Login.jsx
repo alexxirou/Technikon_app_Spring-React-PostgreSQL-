@@ -1,8 +1,9 @@
 import  { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { jwtDecode } from "jwt-decode";
-import { useAuth } from './useAuth';
+import { useAuth } from '../../hooks/useAuth';
 import axios from 'axios';
+
 
 
 const Login = () => {
@@ -38,9 +39,9 @@ const Login = () => {
     console.log(authorities);
 
     if (authorities.includes('ROLE_ADMIN')) {
-      navigate(`/api/admin/${tin}`);
+      navigate(`/api/admin}`);
     } else if (authorities.includes('ROLE_USER')) {
-      navigate(`/api/propertyowner/${tin}`);
+      navigate(`/api/owner`);
     } else {
       navigate('/');
     }
