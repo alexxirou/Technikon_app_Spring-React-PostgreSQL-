@@ -1,27 +1,27 @@
-import  { useState } from 'react';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import axios from 'axios';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import Box from '@mui/material/Box';
-import api from '../api/Api';
-import { useAuth } from '../hooks/useAuth';
+import { useAuth } from '../../hooks/useAuth';
+
 
 const Repair = () => {
-    const { authData } = useAuth(); // Move this line up to declare authData first
-    const propertyOwnerId = authData ? authData.id : null;
+    const { authData } = useAuth();
+    const navigate = useNavigate();
     const [repairId, setRepairId] = useState(null);
     const [propertyRepairDto, setPropertyRepairDto] = useState(null);
 
-    console.log(authData.userId);
+    if (!authData) {
+        return <div>Loading...</div>; // or handle the case when authData is null
+    }
+
+    const propertyOwnerId = authData ? authData.id : null;
 
     const createPropertyRepair = () => {
-        axios.post(`api/property-repairs`, propertyRepairDto)
-            .then(response => {
-                console.log(response.data);
-                setRepairId(response.data.id);
-            })
-            .catch(error => console.error(error));
+        navigate('/create-repair');
     };
 
     const getPropertyRepair = () => {

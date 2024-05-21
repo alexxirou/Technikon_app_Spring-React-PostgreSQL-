@@ -7,7 +7,8 @@ import Login from "./views/Login/Login";
 import PropertyOwnerSignUp from "./views/SignUp/PropertyOwnerSignUp"
 import RoleProtectedRoute from './views/Login/RoleProtectedRoute';
 import { AuthProvider } from './context/AuthContext';
-import Repair from "./views/Repair";
+import Repair from "./views/Repair/Repair";
+import CreateRepair from "./views/Repair/CreateRepair";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<PropertyOwnerSignUp />} />
           <Route path="/api/repair" element={<Repair />} />
+          <Route path="/create-repair" element={<CreateRepair />} />
           <Route
             path="/api/admin"
             element={
