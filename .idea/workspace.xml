@@ -4,16 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f3732d33-421a-415d-ba42-6d0b12488ca7" name="Changes" comment="Added security for property repair and removed extra validation">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Technikon-App-BackEnd/src/main/java/com/scytalys/technikon/bootstrap/SampleData.java" beforeDir="false" afterPath="$PROJECT_DIR$/Technikon-App-BackEnd/src/main/java/com/scytalys/technikon/bootstrap/SampleData.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Technikon-FrontEnd/src/App.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/Technikon-FrontEnd/src/App.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Technikon-FrontEnd/src/components/Footer.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/Technikon-FrontEnd/src/components/Footer.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Technikon-FrontEnd/src/components/Header.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/Technikon-FrontEnd/src/components/Header.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Technikon-FrontEnd/src/layouts/MainLayout.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/Technikon-FrontEnd/src/layouts/MainLayout.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Technikon-FrontEnd/src/views/Home/Home.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/Technikon-FrontEnd/src/views/Home/Home.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Technikon-FrontEnd/src/views/Login/Login.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/Technikon-FrontEnd/src/views/Login/Login.jsx" afterDir="false" />
+    <list default="true" id="f3732d33-421a-415d-ba42-6d0b12488ca7" name="Changes" comment="Corrected imports at App.js">
+      <change beforePath="$PROJECT_DIR$/Technikon-FrontEnd/src/views/Repair.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/Technikon-FrontEnd/src/views/Repair.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -186,6 +178,15 @@
       <option name="presentableId" value="Default" />
       <updated>1715674744479</updated>
     </task>
+    <task id="LOCAL-00001" summary="Corrected imports at App.js">
+      <option name="closed" value="true" />
+      <created>1716288065806</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1716288065806</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="UnknownFeatures">
@@ -212,6 +213,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Added security for property repair and removed extra validation" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added security for property repair and removed extra validation" />
+    <MESSAGE value="Corrected imports at App.js" />
+    <option name="LAST_COMMIT_MESSAGE" value="Corrected imports at App.js" />
   </component>
 </project>

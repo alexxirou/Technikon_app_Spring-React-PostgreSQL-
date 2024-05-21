@@ -6,7 +6,7 @@ const Repair = () => {
     const [searchTerm, setSearchTerm] = useState('');
 
     useEffect(() => {
-        fetch('/api/property-repairs/all-by-owner/{propertyOwnerId}') // Replace with your API endpoint
+        fetch('/api/property-repairs/all-by-owner/{propertyOwnerId}') 
             .then(response => response.json())
             .then(data => setRepairs(data));
     }, []);
