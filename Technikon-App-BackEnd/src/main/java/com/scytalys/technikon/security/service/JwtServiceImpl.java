@@ -24,11 +24,12 @@ public class JwtServiceImpl implements JwtService {
     private long MINUTES;
 
     @Override
-    public String generateToken(String tin, String username, long id) {
+    public String generateToken(UserInfoDetails userInfoDetails) {
         Map<String, Object> claims = new HashMap<>();
-        claims.put("tin", tin);
-        claims.put("username", username);
-        claims.put("id",id);
+        claims.put("id", userInfoDetails.getId());
+        claims.put("username", userInfoDetails.getUsername());
+        claims.put("tin", userInfoDetails.getTin());
+        claims.put("authorities", userInfoDetails.getAuthorities());
         return createToken(claims);
     }
 

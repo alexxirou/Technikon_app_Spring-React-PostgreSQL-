@@ -15,6 +15,7 @@ import com.scytalys.technikon.dto.UserUpdateDto;
 import com.scytalys.technikon.mapper.OwnerMapper;
 import com.scytalys.technikon.repository.PropertyRepository;
 import com.scytalys.technikon.security.service.JwtService;
+import com.scytalys.technikon.security.service.UserInfoDetails;
 import com.scytalys.technikon.security.service.UserInfoService;
 import com.scytalys.technikon.service.PropertyOwnerService;
 import com.scytalys.technikon.service.PropertyRepairService;
@@ -81,7 +82,8 @@ public class SampleData {
 
             propertyOwner=userInfoService.createDBUser(dto);
             logger.info("Created property owner: {}", propertyOwner);
-            String token = jwtService.generateToken("1651614865GR", "JDEdfezv", propertyOwner.getId());
+            UserInfoDetails userInfoDetails=new UserInfoDetails(propertyOwner);
+            String token = jwtService.generateToken(userInfoDetails);
             logger.info("Created jwt token: {}", token);
 //            propertyOwnerService.updateUserPassword(propertyOwner.getId(),"password", propertyOwner.getVersion());
             //authentication = AuthenticationUtils.createAuthentication(propertyOwner.getUsername(), propertyOwner.getPassword());

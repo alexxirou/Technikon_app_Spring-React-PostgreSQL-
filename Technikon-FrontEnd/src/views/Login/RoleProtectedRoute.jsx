@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import { Navigate } from 'react-router-dom';
-import jwtDecode from 'jwt-decode';
+import { jwtDecode } from "jwt-decode";
 
 const RoleProtectedRoute = ({ children, allowedRoles }) => {
   const token = localStorage.getItem('token');

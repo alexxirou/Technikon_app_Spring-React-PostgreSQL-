@@ -4,17 +4,20 @@ import Home from "./views/Home/Home";
 import Admin from "./views/Admin";
 import Owner from "./views/Owner";
 import Login from "./views/Login/Login";
-import RoleProtectedRoute from './components/RoleProtectedRoute';
-
+import PropertyOwnerSignUp from "./views/SignUp/PropertyOwnerSignUp"
+import RoleProtectedRoute from './views/Login/RoleProtectedRoute';
+import { AuthProvider } from './views/Login/AuthContext';
 function App() {
   return (
+    <AuthProvider>
     <Router>
       <Routes>
         <Route element={<MainLayout />}>
-          <Route path="/" element={<Home />} />
+        <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<PropertyOwnerSignUp />} />
           <Route
-            path="/api/v2/admin"
+            path="/api/admin"
             element={
               <RoleProtectedRoute allowedRoles={['ROLE_ADMIN']}>
                 <Admin />
@@ -22,7 +25,7 @@ function App() {
             }
           />
           <Route
-            path="/api/v2/propertyOwners"
+            path="/api/propertyOwners"
             element={
               <RoleProtectedRoute allowedRoles={['ROLE_USER', 'ROLE_ADMIN']}>
                 <Owner />
@@ -48,6 +51,7 @@ function App() {
         </Route>
       </Routes>
     </Router>
+    </AuthProvider>
   );
 }
 

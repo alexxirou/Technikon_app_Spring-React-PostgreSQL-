@@ -1,40 +1,52 @@
-import  { useState, useEffect} from 'react';
+import  { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import jwtDecode from 'jwt-decode';
+import { jwtDecode } from "jwt-decode";
 import { useAuth } from './useAuth';
 import axios from 'axios';
+
 
 const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
-  const { setAuthData } = useAuth();
+  const { setAuthData} = useAuth();
 
   // Load isSubmitting state from localStorage or default to false
   const [isSubmitting, setIsSubmitting] = useState(() => {
-    return localStorage.getItem('isSubmitting') === 'true';
+    return localStorage.getItem('isSubmitting')? localStorage.getItem('isSubmitting') === 'true' : false;
   });
 
+
   useEffect(() => {
-    // Update localStorage whenever isSubmitting changes
-    localStorage.setItem('isSubmitting', isSubmitting);
-  }, [isSubmitting]);
+    // Load isSubmitting state from localStorage or default to false
+    const storedValue = localStorage.getItem('isSubmitting');
+    setIsSubmitting(storedValue ? storedValue === 'true' : false);
+    
+    // Set submitting state to false in localStorage when component unmounts
+    return () => {
+      localStorage.setItem('isSubmitting', 'false');
+    };
+  }, []);
+  
+  // Use useEffect to execute logic dependent on authData
 
-  const handleAuthentication = (token) => {
-    const decodedToken = jwtDecode(token);
-    const { authorities, claims } = decodedToken;
 
-    setAuthData({ id: claims?.id, tin: claims?.tin, roles: authorities });
+
+  const handleAuthentication = (tin, id, username, authorities, exp) => {
+    setAuthData({ userId:id, userTin:tin, username:username, authorities: authorities, expDate:exp });
+    console.log(authorities);
 
     if (authorities.includes('ROLE_ADMIN')) {
-      navigate(`/api/v2/admin/${claims?.tin}`);
+      navigate(`/api/admin/${tin}`);
     } else if (authorities.includes('ROLE_USER')) {
-      navigate(`/api/v2/propertyowner/${claims?.tin}`);
+      navigate(`/api/propertyowner/${tin}`);
     } else {
       navigate('/');
     }
   };
+
+  
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -45,21 +57,25 @@ const Login = () => {
     }
   
     try {
-      // Set submitting state to true
       setIsSubmitting(true);
   
-      // Send login request
-      const response = await axios.post('http://localhost:5001/login', {
+      const response = await axios.post('http://localhost:5001/auth/login', {
         username,
         password,
+      }, {
+        withCredentials: true,
       });
   
-      // Check response status
       if (response.status === 200) {
-        // Login successful
-        const data = response.data;
+        const data = await response.data;
         if (data.token) {
-          handleAuthentication(data.token);
+          localStorage.setItem('token', data.token);
+          const decodedToken = jwtDecode(data.token);
+        
+          const { tin, id, username, authorities: authoritiesArray, exp } = decodedToken;
+          const authorities = authoritiesArray.map(authority => authority.authority);
+
+          handleAuthentication(tin, id, username, authorities, exp);
         } else {
           setError('Login failed: Invalid response');
         }
@@ -75,8 +91,11 @@ const Login = () => {
     } finally {
       // Set submitting state to false
       setIsSubmitting(false);
+     
     }
   };
+  
+
   return (
     <div className="login-container">
       <h2>Login</h2>
