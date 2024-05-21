@@ -1,16 +1,18 @@
-import { Outlet } from "react-router-dom";
-import Header from "../components/Header";
-import Footer from "../components/Footer";
+import React from 'react';
+import { Outlet } from 'react-router-dom';
+import { Box } from '@mui/material';
+import Header from '../components/Header';
+import Footer from '../components/Footer';
 
 const MainLayout = () => {
   return (
-    <div id="scytalis-app">
+    <Box id="scytalis-app" display="flex" flexDirection="column" minHeight="100vh">
       <Header />
-      <main>
+      <Box component="main" flexGrow={1}> 
         <Outlet />
-      </main>
+      </Box>
       <Footer />
-    </div>
+    </Box>
   );
 };
 

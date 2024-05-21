@@ -4,7 +4,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f3732d33-421a-415d-ba42-6d0b12488ca7" name="Changes" comment="" />
+    <list default="true" id="f3732d33-421a-415d-ba42-6d0b12488ca7" name="Changes" comment="Added security for property repair and removed extra validation">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Technikon-App-BackEnd/src/main/java/com/scytalys/technikon/bootstrap/SampleData.java" beforeDir="false" afterPath="$PROJECT_DIR$/Technikon-App-BackEnd/src/main/java/com/scytalys/technikon/bootstrap/SampleData.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Technikon-FrontEnd/src/App.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/Technikon-FrontEnd/src/App.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Technikon-FrontEnd/src/components/Footer.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/Technikon-FrontEnd/src/components/Footer.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Technikon-FrontEnd/src/components/Header.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/Technikon-FrontEnd/src/components/Header.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Technikon-FrontEnd/src/layouts/MainLayout.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/Technikon-FrontEnd/src/layouts/MainLayout.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Technikon-FrontEnd/src/views/Home/Home.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/Technikon-FrontEnd/src/views/Home/Home.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Technikon-FrontEnd/src/views/Login/Login.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/Technikon-FrontEnd/src/views/Login/Login.jsx" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -31,36 +41,43 @@
   &quot;associatedIndex&quot;: 8
 }</component>
   <component name="ProjectId" id="2gRyZvF8UqipS140oIWiphPa7Cm" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="showLibraryContents" value="true" />
     <option name="showMembers" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.TechnikonApplication.executor": "Run",
-    "JUnit.JwtServiceTest.executor": "Run",
-    "JUnit.JwtServiceTest.testGenerateTokenAndVerify.executor": "Run",
-    "JUnit.JwtServiceTest.testVerifyJwtToken.executor": "Run",
-    "JUnit.PropertyOwnerServiceImplTest.executor": "Run",
-    "JUnit.PropertyOwnerServiceImplTest.testCreateUser.executor": "Run",
-    "JUnit.PropertyOwnerServiceImplTest.testSearchUserByFail.executor": "Run",
-    "JUnit.PropertyOwnerServiceImplTest.testUpdateUser.executor": "Run",
-    "JUnit.PropertyOwnerServiceImplTest.testUpdateUserFailWrongEmailFormat.executor": "Run",
-    "JUnit.PropertyOwnerServiceImplTest.userDetails_ReturnsUserDetailsWithEmptyProperties_WhenPropertyOwnerDoesNotExist.executor": "Run",
-    "JUnit.PropertyOwnerServiceImplTest.userDetails_ReturnsUserDetails_WhenPropertyOwnerExists.executor": "Run",
-    "JUnit.PropertyOwnerServiceImplTest.whenConcurrentUpdate_thenThrowException.executor": "Run",
-    "JUnit.UserMapperTest.executor": "Run",
-    "JUnit.UserMapperTest.testUserSearchResponseDtoCreation.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "FrontendLoginFeature",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/alexandrosx/Documents/Project",
-    "project.structure.last.edited": "Project",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.0"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.TechnikonApplication.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.JwtServiceTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.JwtServiceTest.testGenerateTokenAndVerify.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.JwtServiceTest.testVerifyJwtToken.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.PropertyOwnerServiceImplTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.PropertyOwnerServiceImplTest.testCreateUser.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.PropertyOwnerServiceImplTest.testSearchUserByFail.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.PropertyOwnerServiceImplTest.testUpdateUser.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.PropertyOwnerServiceImplTest.testUpdateUserFailWrongEmailFormat.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.PropertyOwnerServiceImplTest.userDetails_ReturnsUserDetailsWithEmptyProperties_WhenPropertyOwnerDoesNotExist.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.PropertyOwnerServiceImplTest.userDetails_ReturnsUserDetails_WhenPropertyOwnerExists.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.PropertyOwnerServiceImplTest.whenConcurrentUpdate_thenThrowException.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.UserMapperTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.UserMapperTest.testUserSearchResponseDtoCreation.executor&quot;: &quot;Run&quot;,
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;Spring Boot.TechnikonApplication.executor&quot;: &quot;Run&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;FrontendLoginFeature&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/alexandrosx/Documents/Project&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;
   }
-}]]></component>
-  <component name="RunManager" selected="JUnit.JwtServiceTest.testGenerateTokenAndVerify">
+}</component>
+  <component name="RunManager" selected="Spring Boot.TechnikonApplication">
     <configuration name="JwtServiceTest.testGenerateTokenAndVerify" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="Technikon-App-BackEnd" />
       <extension name="coverage">
@@ -72,22 +89,6 @@
       <option name="PACKAGE_NAME" value="com.scytalys.technikon.service.impl" />
       <option name="MAIN_CLASS_NAME" value="com.scytalys.technikon.service.impl.JwtServiceTest" />
       <option name="METHOD_NAME" value="testGenerateTokenAndVerify" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="JwtServiceTest.testVerifyJwtToken" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="Technikon-App-BackEnd" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.scytalys.technikon.service.impl.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="com.scytalys.technikon.service.impl" />
-      <option name="MAIN_CLASS_NAME" value="com.scytalys.technikon.service.impl.JwtServiceTest" />
-      <option name="METHOD_NAME" value="testVerifyJwtToken" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -153,13 +154,26 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="TechnikonApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
+      <module name="Technikon-App-BackEnd" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.scytalys.technikon.TechnikonApplication" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.scytalys.technikon.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Spring Boot.TechnikonApplication" />
+        <item itemvalue="JUnit.JwtServiceTest.testGenerateTokenAndVerify" />
         <item itemvalue="JUnit.PropertyOwnerServiceImplTest.userDetails_ReturnsUserDetailsWithEmptyProperties_WhenPropertyOwnerDoesNotExist" />
         <item itemvalue="JUnit.PropertyOwnerServiceImplTest.testCreateUser" />
         <item itemvalue="JUnit.PropertyOwnerServiceImplTest" />
-        <item itemvalue="JUnit.JwtServiceTest.testVerifyJwtToken" />
-        <item itemvalue="JUnit.JwtServiceTest.testGenerateTokenAndVerify" />
       </list>
     </recent_temporary>
   </component>
@@ -195,5 +209,9 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Added security for property repair and removed extra validation" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added security for property repair and removed extra validation" />
   </component>
 </project>

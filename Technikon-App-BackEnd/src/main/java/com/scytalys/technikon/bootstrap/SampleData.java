@@ -152,7 +152,7 @@ public class SampleData {
             propertyOwner1.setSurname("Doe"); // surname
             propertyOwner1.setEmail("JDE5@hotmail.com"); // email
             propertyOwner1.setUsername("JDEdfezvkl"); // username
-            propertyOwner1.setPassword("passw"); // password
+            propertyOwner1.setPassword("pass"); // password
             propertyOwner1.setAddress("somewheree"); // address
             propertyOwner1.setPhoneNumber("+30999582487");
 

@@ -3,7 +3,6 @@ import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 
@@ -21,16 +20,21 @@ const Header = () => {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            <Link to="/">Home</Link>
+          <Typography variant="h6" component={Link} to="/" sx={{ flexGrow: 1, textDecoration: 'none', color: 'inherit' }}>
+            Home
           </Typography>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            <Link to="/admin">Admin</Link>
+          <Typography variant="h6" component={Link} to="/admin" sx={{ flexGrow: 1, textDecoration: 'none', color: 'inherit' }}>
+            Admin
           </Typography>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            <Link to="/owner">Owner</Link>
+          <Typography variant="h6" component={Link} to="/owner" sx={{ flexGrow: 1, textDecoration: 'none', color: 'inherit' }}>
+            Owner
           </Typography>
-          <Button color="inherit">Login</Button>
+          <Typography variant="h6" component={Link} to="/repair" sx={{ flexGrow: 1, textDecoration: 'none', color: 'inherit' }}>
+            Repairs
+          </Typography>
+          <Typography variant="h6" component={Link} to="/login" sx={{ textDecoration: 'none', color: 'inherit' }}>
+            Login
+          </Typography>
         </Toolbar>
       </AppBar>
     </Box>
