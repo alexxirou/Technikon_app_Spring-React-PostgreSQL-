@@ -4,7 +4,8 @@ import { useNavigate } from 'react-router-dom'; // import useNavigate
 
 const HomePage = () => {
   const navigate = useNavigate(); // initialize navigate
-
+  const { authData } = useAuth();
+  console.log(authData);
   return (
     <Box
       display="flex"

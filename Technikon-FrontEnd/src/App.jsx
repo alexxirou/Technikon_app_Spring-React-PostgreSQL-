@@ -18,7 +18,7 @@ function App() {
         <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<PropertyOwnerSignUp />} />
-          <Route path="/repair" element={<Repair />} />
+          <Route path="/api/repair" element={<Repair />} />
           <Route
             path="/api/admin"
             element={
@@ -35,22 +35,8 @@ function App() {
               </RoleProtectedRoute>
             }
           />
-          <Route
-          //   path="/api/v2/propertyRepairs"
-          //   element={
-          //     <RoleProtectedRoute allowedRoles={['ROLE_USER', 'ROLE_ADMIN']}>
-          //       <PropertyRepair />
-          //     </RoleProtectedRoute>
-          //   }
-          // />
-          // <Route
-          //   path="/api/v2/properties"
-          //   element={
-          //     <RoleProtectedRoute allowedRoles={['ROLE_USER', 'ROLE_ADMIN']}>
-          //       <Property />
-          //     </RoleProtectedRoute>
-          //   }
-          />
+       
+        
         </Route>
       </Routes>
     </Router>

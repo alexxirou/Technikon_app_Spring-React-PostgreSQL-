@@ -29,7 +29,7 @@ const Header = () => {
           <Typography variant="h6" component={Link} to="/owner" sx={{ flexGrow: 1, textDecoration: 'none', color: 'inherit' }}>
             Owner
           </Typography>
-          <Typography variant="h6" component={Link} to="/repair" sx={{ flexGrow: 1, textDecoration: 'none', color: 'inherit' }}>
+          <Typography variant="h6" component={Link} to="/api/repair" sx={{ flexGrow: 1, textDecoration: 'none', color: 'inherit' }}>
             Repairs
           </Typography>
           <Typography variant="h6" component={Link} to="/login" sx={{ textDecoration: 'none', color: 'inherit' }}>

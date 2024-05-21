@@ -4,7 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f3732d33-421a-415d-ba42-6d0b12488ca7" name="Changes" comment="Corrected imports at App.js">
+    <list default="true" id="f3732d33-421a-415d-ba42-6d0b12488ca7" name="Changes" comment="Corrected something">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Technikon-App-BackEnd/src/main/java/com/scytalys/technikon/controller/PropertyRepairController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Technikon-App-BackEnd/src/main/java/com/scytalys/technikon/controller/PropertyRepairController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Technikon-App-BackEnd/src/main/java/com/scytalys/technikon/mapper/PropertyRepairMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/Technikon-App-BackEnd/src/main/java/com/scytalys/technikon/mapper/PropertyRepairMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Technikon-FrontEnd/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/Technikon-FrontEnd/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Technikon-FrontEnd/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/Technikon-FrontEnd/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Technikon-FrontEnd/src/App.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/Technikon-FrontEnd/src/App.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Technikon-FrontEnd/src/components/Header.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/Technikon-FrontEnd/src/components/Header.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Technikon-FrontEnd/src/views/Login/Login.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/Technikon-FrontEnd/src/views/Login/Login.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Technikon-FrontEnd/src/views/Repair.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/Technikon-FrontEnd/src/views/Repair.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -186,7 +194,15 @@
       <option name="project" value="LOCAL" />
       <updated>1716288065806</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Corrected something">
+      <option name="closed" value="true" />
+      <created>1716289296970</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1716289296970</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="UnknownFeatures">
@@ -214,6 +230,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Added security for property repair and removed extra validation" />
     <MESSAGE value="Corrected imports at App.js" />
-    <option name="LAST_COMMIT_MESSAGE" value="Corrected imports at App.js" />
+    <MESSAGE value="Corrected something" />
+    <option name="LAST_COMMIT_MESSAGE" value="Corrected something" />
   </component>
 </project>
