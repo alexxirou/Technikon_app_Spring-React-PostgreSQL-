@@ -30,7 +30,7 @@ const Header = () => {
             Owner
           </Typography>
           <Typography variant="h6" component={Link} to="/api/repair" sx={{ flexGrow: 1, textDecoration: 'none', color: 'inherit' }}>
-            Repairs
+            Repair
           </Typography>
           <Typography variant="h6" component={Link} to="/login" sx={{ textDecoration: 'none', color: 'inherit' }}>
             Login

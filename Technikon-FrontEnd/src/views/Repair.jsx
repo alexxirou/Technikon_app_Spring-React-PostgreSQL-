@@ -1,28 +1,20 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import Button from '@mui/material/Button';
 import axios from 'axios';
-import { AuthContext } from '../context/AuthContext';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import Box from '@mui/material/Box';
 import api from '../api/Api';
 import { useAuth } from '../hooks/useAuth';
 
-
 const Repair = () => {
+    const { authData } = useAuth(); // Move this line up to declare authData first
     const propertyOwnerId = authData ? authData.id : null;
     const [repairId, setRepairId] = useState(null);
     const [propertyRepairDto, setPropertyRepairDto] = useState(null);
-    const { authData } = useAuth();
 
-  // Now you can use authData in your component.
-  // For example, you might want to render different content based on whether authData is null:
-
-  if (authData === null) {
-    return <div>You are not logged in.</div>;
-  } else {
-    return <div>Welcome back, {authData.username}!</div>;
-  }
+    // Now you can use authData in your component.
+    // For example, you might want to render different content based on whether authData is null:
 
     const createPropertyRepair = () => {
         axios.post(`api/property-repairs`, propertyRepairDto)
@@ -46,7 +38,7 @@ const Repair = () => {
     };
 
     const updatePropertyRepair = () => {
-        const propertyRepairUpdateDto = 
+        const propertyRepairUpdateDto = {}; // Initialize the update DTO correctly
         axios.put(`api/property-repairs/${propertyOwnerId}/${repairId}`, propertyRepairUpdateDto)
             .then(response => console.log(response.data))
             .catch(error => console.error(error));
