@@ -37,7 +37,6 @@ const Login = () => {
   const  handleAuthentication = async (tin, id, username, authorities, exp) => {
     await setAuthData({ userId:id, userTin:tin, username:username, authorities: authorities, expDate:exp });
 
-
     if (authorities.includes('ROLE_ADMIN')) {
       navigate(`/api/admin}`);
     } else if (authorities.includes('ROLE_USER')) {
