@@ -31,4 +31,5 @@ public interface PropertyRepairRepository extends JpaRepository<PropertyRepair, 
 
     @Query("SELECT p FROM PropertyRepair p WHERE p.property.id= :id")
     List<PropertyRepair> getPropertyRepairsByProperty(@Param("id") long propertyId);
+}
 

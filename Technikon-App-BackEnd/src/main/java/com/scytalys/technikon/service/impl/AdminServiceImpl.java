@@ -4,6 +4,7 @@ import com.scytalys.technikon.domain.Admin;
 import com.scytalys.technikon.domain.Property;
 import com.scytalys.technikon.domain.PropertyOwner;
 import com.scytalys.technikon.domain.PropertyRepair;
+import com.scytalys.technikon.dto.UserUpdateDto;
 import com.scytalys.technikon.repository.AdminRepository;
 import com.scytalys.technikon.repository.PropertyOwnerRepository;
 import com.scytalys.technikon.repository.PropertyRepairRepository;
@@ -34,8 +35,6 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public void updateUser(String tin, UserUpdateDto dto) {
-
     public Admin findById(Long id) {
         return adminRepository.findById(id).get();
     }

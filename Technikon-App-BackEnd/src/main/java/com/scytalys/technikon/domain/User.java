@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.NonNull;
 
 
-
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 
@@ -39,7 +39,7 @@ public class User {
     private String phoneNumber;
     @Version
     private long version;
-    private LocalDateTime registrationDate= LocalDateTime.now();
+    private LocalDate registrationDate= LocalDate.now();
 
 
 }
