@@ -11,7 +11,7 @@ import Button from "@mui/material/Button";
 import { useAuth } from '../hooks/useAuth';
 
 const Header = () => {
-  const { authData, handleLogout, authorities } = useAuth();
+  const { authData, handleLogout } = useAuth();
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -40,7 +40,7 @@ const Header = () => {
           </Typography>
           {authData && ( // Check if authData exists
             <>
-              {authorities.includes('ROLE_ADMIN') && ( // Render admin-related button if user is admin
+              {authData.authorities.includes('ROLE_ADMIN') && ( // Render admin-related button if user is admin
                 <Button
                   component={Link}
                   to="/admin"

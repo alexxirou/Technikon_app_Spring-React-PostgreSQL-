@@ -12,6 +12,7 @@ import Owner from './views/Owner';
 import RoleProtectedRoute from './components/RoleProtectedRoute';
 
 const App = () => {
+
   return (
     <Router>
       <AuthProvider>
@@ -31,7 +32,7 @@ const App = () => {
               }
             />
             <Route
-              path="/api/owner"
+              path={`/api/owner/:tin`}
               element={
                 <RoleProtectedRoute allowedRoles={['ROLE_USER', 'ROLE_ADMIN']}>
                   <Owner />

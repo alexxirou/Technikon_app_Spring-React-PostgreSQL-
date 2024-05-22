@@ -41,7 +41,7 @@ const Login = () => {
     if (authorities.includes('ROLE_ADMIN')) {
       navigate(`/api/admin}`);
     } else if (authorities.includes('ROLE_USER')) {
-      navigate(`/api/owner`);
+      navigate(`/api/owner/${tin}`);
     } else {
       navigate('/');
     }

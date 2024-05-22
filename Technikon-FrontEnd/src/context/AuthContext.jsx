@@ -9,8 +9,8 @@ export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [authData,setAuthData] = useState(null);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [authorities, setAuthorities] = useState([]);
+
+ 
 
 
   useEffect(() => {
@@ -26,7 +26,7 @@ export const AuthProvider = ({ children }) => {
           const { tin, id, username, authorities: authoritiesArray, exp } = decodedToken;
           const authorities = authoritiesArray.map(authority => authority.authority);
           setAuthData({ userId:id, userTin:tin, username:username, authorities: authorities, expDate:exp });
-       
+          
        
       } catch (error) {
         console.error('Error decoding token:', error);
@@ -38,7 +38,7 @@ export const AuthProvider = ({ children }) => {
   useTokenExpiration(authData, setAuthData);
 
   return (
-    <AuthContext.Provider value={{ authData, setAuthData, isLoggedIn, authorities, handleLogout }}>
+    <AuthContext.Provider value={{ authData, setAuthData,  handleLogout }}>
       {children}
     </AuthContext.Provider>
   );
