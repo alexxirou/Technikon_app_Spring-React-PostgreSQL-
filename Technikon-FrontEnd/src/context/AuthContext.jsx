@@ -34,7 +34,7 @@ export const AuthProvider = ({ children }) => {
     }
   }, []);
 
-  const handleLogout = useLogout();
+  const handleLogout = useLogout(setAuthData)
   useTokenExpiration(authData, setAuthData);
 
   return (

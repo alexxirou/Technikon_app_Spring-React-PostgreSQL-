@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDate;
 import java.util.List;
-@CrossOrigin(origins = "http://localhost:5174", allowCredentials = "true")
 @RestController
 @AllArgsConstructor
 @RequestMapping("/api/v2/users/admins")

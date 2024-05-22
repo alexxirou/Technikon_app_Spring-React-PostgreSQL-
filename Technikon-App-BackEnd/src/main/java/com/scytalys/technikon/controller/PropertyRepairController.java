@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
 import java.util.List;
 
-@CrossOrigin(origins = "http://localhost:5174", allowCredentials = "true")
+
 @RestController
 @RequestMapping("api/property-repairs")
 @AllArgsConstructor

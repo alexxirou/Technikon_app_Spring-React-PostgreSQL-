@@ -52,7 +52,7 @@ public class PropertyOwnerController {
         return new ResponseEntity<>(userInfo, headers, HttpStatus.OK);
     }
 
-    //@PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     @PutMapping("/{tin}")
     public ResponseEntity<String> updateUser(@PathVariable String tin, @RequestBody UserUpdateDto updateRequest, Authentication authentication) {
         if (authentication.getAuthorities().stream().noneMatch(a -> a.getAuthority().equals("ROLE_ADMIN")))  {
@@ -68,12 +68,12 @@ public class PropertyOwnerController {
 
 
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
-    @DeleteMapping("/{tin}/{version}")
+    @DeleteMapping("/{tin}")
     public ResponseEntity<String> deleteUser(@PathVariable String tin, Authentication authentication) {
         if (authentication.getAuthorities().stream().noneMatch(a -> a.getAuthority().equals("ROLE_ADMIN")))  {
             UserInfoDetails userInfoDetails = (UserInfoDetails) authentication.getPrincipal();
             String authTin = userInfoDetails.getTin();
-            if (!authTin.equals(tin)) throw new AccessDeniedException("You are not authorized to update another user.");
+            if (!authTin.equals(tin)) throw new AccessDeniedException("You are not authorized to delete another user.");
         }
         HttpHeaders headers;
         if(propertyOwnerService.checkUserHasProperties(tin)){

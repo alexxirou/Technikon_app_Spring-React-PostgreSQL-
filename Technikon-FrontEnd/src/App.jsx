@@ -8,7 +8,7 @@ import PropertyOwnerSignUp from './views/SignUp/PropertyOwnerSignUp';
 import Repair from './views/Repair/Repair';
 import CreateRepair from './views/Repair/CreateRepair';
 import Admin from './views/Admin';
-import Owner from './views/Owner';
+import Owner from './views/Owner/Owner';
 import RoleProtectedRoute from './components/RoleProtectedRoute';
 
 const App = () => {
@@ -21,8 +21,8 @@ const App = () => {
             <Route path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<PropertyOwnerSignUp />} />
-            <Route path="/api/repair" element={<Repair />} />
-            <Route path="/create-repair" element={<CreateRepair />} />
+            <Route path="/api/repair/:id" element={<Repair />} />
+            <Route path="/api/create-repair" element={<CreateRepair />} />
             <Route
               path="/api/admin"
               element={
