@@ -1,9 +1,12 @@
 import React from 'react';
 import { Container, Typography, Button, Box, Paper } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../hooks/useAuth';
 
 const HomePage = () => {
   const navigate = useNavigate();
+  const {authData} = useAuth();
+  console.log(authData)
   return (
     <Box
       display="flex"

@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { useState, useEffect } from "react";
+
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -11,14 +11,7 @@ import Button from "@mui/material/Button";
 import { useAuth } from '../hooks/useAuth';
 
 const Header = () => {
-
-
-
-  const { isLoggedIn, handleLogout, authorities } = useAuth();
-
-
-  
-  
+  const { authData, handleLogout, authorities } = useAuth();
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -45,77 +38,52 @@ const Header = () => {
           >
             Home
           </Typography>
-          {isLoggedIn && authorities.includes('ROLE_ADMIN') && (
-            <Typography
-              variant="h6"
-              component={Link}
-              to="/admin"
-              sx={{
-                flexGrow: 1,
-                textDecoration: "none",
-                color: "inherit",
-              }}
-            >
-              Admin
-            </Typography>
-          )}
-          {isLoggedIn && (
-            <Typography
-              variant="h6"
-              component={Link}
-              to="/owner"
-              sx={{
-                flexGrow: 1,
-                textDecoration: "none",
-                color: "inherit",
-              }}
-            >
-              Owner
-            </Typography>
-          )}
-          {isLoggedIn && (
-            <Typography
-              variant="h6"
-              component={Link}
-              to="/api/repair"
-              sx={{
-                flexGrow: 1,
-                textDecoration: "none",
-                color: "inherit",
-              }}
-            >
-              Repair
-            </Typography>
-          )}
-          {isLoggedIn ? (
-            <Button color="inherit" onClick={handleLogout}>
-              Logout
-            </Button>
-          ) : (
+          {authData && ( // Check if authData exists
             <>
-              <Typography
-                variant="h6"
+              {authorities.includes('ROLE_ADMIN') && ( // Render admin-related button if user is admin
+                <Button
+                  component={Link}
+                  to="/admin"
+                  color="inherit"
+                >
+                  Admin
+                </Button>
+              )}
+              <Button
+                component={Link}
+                to="/owner"
+                color="inherit"
+              >
+                Owner
+              </Button>
+              <Button
+                component={Link}
+                to="/api/repair"
+                color="inherit"
+              >
+                Repair
+              </Button>
+              <Button color="inherit" onClick={handleLogout}>
+                Logout
+              </Button>
+            </>
+          )}
+          {!authData && ( // Render signup and login buttons if authData doesn't exist
+            <>
+              <Button
                 component={Link}
                 to="/signup"
-                sx={{
-                  textDecoration: "none",
-                  color: "inherit",
-                  mr: 2,
-                }}
+                color="inherit"
               >
                 Sign Up
-              </Typography>
-              <Typography
-                variant="h6"
+              </Button>
+              <Button
                 component={Link}
                 to="/login"
-                sx={{
-                  textDecoration: "none",
-                  color: "inherit",
-                }}
+                color="inherit"
               >
                 Login
-              </Typography>
+              </Button>
             </>
           )}
         </Toolbar>

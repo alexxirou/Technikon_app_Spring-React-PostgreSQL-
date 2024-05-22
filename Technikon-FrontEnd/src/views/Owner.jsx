@@ -1,11 +1,11 @@
-import React from 'react';
+
 import { Container, Box, Typography } from '@mui/material';
 import { useAuth } from '../hooks/useAuth';
 
 const Owner = () => {
   const { authData } = useAuth();
 
-  console.log(authData);
+
 
   return (
     <Container maxWidth="sm">
