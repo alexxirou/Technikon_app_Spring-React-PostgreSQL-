@@ -13,9 +13,8 @@ import RoleProtectedRoute from './components/RoleProtectedRoute';
 
 const App = () => {
   return (
-    <AuthProvider>
     <Router>
- 
+      <AuthProvider>
         <Routes>
           <Route element={<MainLayout />}>
             <Route path="/" element={<Home />} />
@@ -41,9 +40,8 @@ const App = () => {
             />
           </Route>
         </Routes>
-  
+      </AuthProvider>
     </Router>
-    </AuthProvider>
   );
 };
 

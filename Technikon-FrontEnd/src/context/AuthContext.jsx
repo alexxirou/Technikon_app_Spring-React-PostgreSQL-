@@ -2,6 +2,8 @@ import { createContext, useState, useEffect } from 'react';
 
 import PropTypes from 'prop-types';
 import { jwtDecode } from "jwt-decode";
+import useLogout from '../hooks/useLogout';
+import useTokenExpiration from '../hooks/useTokenExpiration';
 
 export const AuthContext = createContext();
 
@@ -32,28 +34,8 @@ export const AuthProvider = ({ children }) => {
     }
   }, []);
 
-  useEffect(() => {
-    const checkTokenExpiration = () => {
-      if (authData ) {
-        const isTokenExpired = authData.expDate < Date.now() / 1000;
-        if (isTokenExpired) {
-          handleLogout(); // Token expired, logout user
-       
-        }
-      }
-    };
-
-    checkTokenExpiration();
-
-  }, [authData]);
-
-
-  const handleLogout = () => {
-    localStorage.removeItem('authData');
-    setIsLoggedIn(false);
-    setAuthData(null);
-    setAuthorities([]);
-  };
+  const handleLogout = useLogout();
+  useTokenExpiration(authData, setAuthData);
 
   return (
     <AuthContext.Provider value={{ authData, setAuthData, isLoggedIn, authorities, handleLogout }}>
