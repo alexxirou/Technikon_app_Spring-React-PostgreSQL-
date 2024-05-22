@@ -35,6 +35,7 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     if (location.pathname === '/login' || location.pathname === '/signup') {
       clearToken ();
+      navigate(location.pathname);
     }
   }, [location.pathname]);
 
