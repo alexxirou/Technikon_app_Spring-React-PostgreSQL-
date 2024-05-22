@@ -7,7 +7,6 @@ const Owner = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const { authData } = useAuth();
-  const [userVersion, setUserVersion] = useState('');
   const tin = authData.userTin;
   
 
@@ -19,6 +18,7 @@ const Owner = () => {
         
         if (response.status === 200) {
           setOwnerDetails(response.data.userInfo);
+          console.log(response.data.userInfo);
           setLoading(false);
         } else {
           const errorMessage = response.data.message;

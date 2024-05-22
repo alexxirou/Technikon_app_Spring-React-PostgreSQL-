@@ -57,7 +57,7 @@ public class JwtServiceTest {
         propertyOwner.setPassword("pass"); // password
         propertyOwner.setAddress("somewhere"); // address
         propertyOwner.setPhoneNumber("+30999582486");// phoneNumber
-        propertyOwner.setVersion(0);
+
         //dto =new UserCreationDto(propertyOwner.getTin(), propertyOwner.getName(), propertyOwner.getSurname(), propertyOwner.getEmail(), propertyOwner.getUsername(), propertyOwner.getPassword(), propertyOwner.getAddress(), propertyOwner.getPhoneNumber());
 
 

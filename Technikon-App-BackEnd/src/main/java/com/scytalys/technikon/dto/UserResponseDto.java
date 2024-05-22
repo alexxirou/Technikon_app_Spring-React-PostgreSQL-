@@ -3,5 +3,5 @@ package com.scytalys.technikon.dto;
 public record UserResponseDto(Long id,
                               String tin,
                               String username,
-                              String email, long version) {
+                              String email) {
 }

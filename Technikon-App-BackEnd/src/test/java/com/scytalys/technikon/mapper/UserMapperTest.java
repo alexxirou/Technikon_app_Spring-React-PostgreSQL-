@@ -49,7 +49,7 @@ public class UserMapperTest {
         propertyOwner.setPassword("pass"); // password
         propertyOwner.setAddress("somewhere"); // address
         propertyOwner.setPhoneNumber("+309099582486");// phoneNumber
-        propertyOwner.setVersion(0);
+
         createUserDto = new UserCreationDto("3145648468468GR", "Johny", "Doep", "jdee@hotmail.com", "jdeed", "pass", "somewhere", "+309099582486");
 
     }
@@ -104,7 +104,7 @@ public class UserMapperTest {
         assertEquals(userResponseDto.tin(), propertyOwner.getTin());
         assertEquals(userResponseDto.username(), propertyOwner.getUsername());
         assertEquals(userResponseDto.email(), propertyOwner.getEmail());
-        assertEquals(userResponseDto.version(), propertyOwner.getVersion());
+
     }
     @Test
     public void testUserSearchResponseDtoCreation(){

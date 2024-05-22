@@ -69,7 +69,7 @@ public class PropertyOwnerController {
 
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     @DeleteMapping("/{tin}/{version}")
-    public ResponseEntity<String> deleteUser(@PathVariable String tin, @RequestParam long version, Authentication authentication) {
+    public ResponseEntity<String> deleteUser(@PathVariable String tin, Authentication authentication) {
         if (authentication.getAuthorities().stream().noneMatch(a -> a.getAuthority().equals("ROLE_ADMIN")))  {
             UserInfoDetails userInfoDetails = (UserInfoDetails) authentication.getPrincipal();
             String authTin = userInfoDetails.getTin();

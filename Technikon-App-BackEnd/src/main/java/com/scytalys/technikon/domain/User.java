@@ -37,8 +37,6 @@ public class User {
     private String address;
     @NonNull
     private String phoneNumber;
-    @Version
-    private long version;
     private LocalDateTime createdAt= LocalDateTime.now();
 
 }

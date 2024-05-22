@@ -85,7 +85,6 @@ public class PropertyOwnerServiceImpl implements PropertyOwnerService {
 
         PropertyOwner user= findUser(tin);
 
-        if(user.getVersion()!= dto.version()) throw new OptimisticLockingFailureException("User cannot be updated, please try again later.");
         PropertyOwner newUser = ownerMapper.updateDtoToUser(dto,user);
         if(dto.email()!=null) {
             String verifiedEmail = Optional.of(dto.email())

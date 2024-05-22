@@ -86,7 +86,6 @@ public class PropertyOwnerServiceImplTest {
         propertyOwner.setPassword("pass"); // password
         propertyOwner.setAddress("somewhere"); // address
         propertyOwner.setPhoneNumber("+30999582486");// phoneNumber
-        propertyOwner.setVersion(0);
         dto =new UserCreationDto(propertyOwner.getTin(), propertyOwner.getName(), propertyOwner.getSurname(), propertyOwner.getEmail(), propertyOwner.getUsername(), propertyOwner.getPassword(), propertyOwner.getAddress(), propertyOwner.getPhoneNumber());
 
 
@@ -134,7 +133,7 @@ public class PropertyOwnerServiceImplTest {
         assertEquals(propertyOwner.getAddress(),result.get(0).getAddress());
         assertEquals(propertyOwner.getPhoneNumber(),result.get(0).getPhoneNumber());
         assertEquals(propertyOwner.getEmail(),result.get(0).getEmail());
-        assertEquals(propertyOwner.getVersion(),result.get(0).getVersion());
+
         assertEquals(propertyOwner.isActive(),result.get(0).isActive());
 
 
@@ -218,38 +217,14 @@ public class PropertyOwnerServiceImplTest {
 
     }
 
-    /**
-     *
-     * Checks DataAccessResourceFailure is thrown on update operations where there is a version mismatch.
-     *
-     */
-    @Test
-    public void whenConcurrentUpdate_thenThrowException(){
-        UserUpdateDto updateRequest = new UserUpdateDto( "dezfze@fezfez.com", propertyOwner.getAddress(), propertyOwner.getPassword(), 0);
-        UserUpdateDto updateRequest2 = new UserUpdateDto( "dezdefze@fezfez.com", propertyOwner.getAddress(), propertyOwner.getPassword(), 0);
-        when(propertyOwnerRepository.findByTin(any(String.class))).thenReturn(Optional.of(propertyOwner));
-        doAnswer(invocation -> {
 
-
-
-            // Check if the version matches
-            if (propertyOwner.getVersion() == updateRequest.version() ) {
-                propertyOwner.setVersion(propertyOwner.getVersion() + 1);
-            }
-            return null;
-        }).when(propertyOwnerRepository).save(propertyOwner);
-
-        propertyOwnerService.updateUser(propertyOwner.getTin(), updateRequest);
-
-        assertThrows(OptimisticLockingFailureException.class, () -> propertyOwnerService.updateUser(propertyOwner.getTin(),updateRequest2));
-    }
 
     /**
      * This method tests the updateUser does not throw an exception on valid email update and that the email of the object is the same as the one in the update request.
      */
     @Test
     void testUpdateUser(){
-        UserUpdateDto updateRequest = new UserUpdateDto( "dezfze@fezfez.com", propertyOwner.getAddress(), propertyOwner.getPassword(), 0);
+        UserUpdateDto updateRequest = new UserUpdateDto( "dezfze@fezfez.com", propertyOwner.getAddress(), propertyOwner.getPassword());
         when(propertyOwnerRepository.findByTin(any(String.class))).thenReturn(Optional.of(propertyOwner));
         // Stubbing the behavior of propertyOwnerRepository.update
         doAnswer(invocation -> {
@@ -257,9 +232,9 @@ public class PropertyOwnerServiceImplTest {
 
 
             // Check if the version matches
-            if (propertyOwner.getVersion() == updateRequest.version() ) {
+
                 propertyOwner.setEmail(updateRequest.email());
-            }
+
             return null;
         }).when(propertyOwnerRepository).save(propertyOwner);
         propertyOwnerService.updateUser(propertyOwner.getTin(), updateRequest);
@@ -272,7 +247,7 @@ public class PropertyOwnerServiceImplTest {
      */
     @Test
     void testUpdateUserFailWrongEmailFormat(){
-        UserUpdateDto updateRequest = new UserUpdateDto( "dezfzeezfezom", propertyOwner.getAddress(), propertyOwner.getPassword(), 0);
+        UserUpdateDto updateRequest = new UserUpdateDto( "dezfzeezfezom", propertyOwner.getAddress(), propertyOwner.getPassword());
         when(propertyOwnerRepository.findByTin(any(String.class))).thenReturn(Optional.of(propertyOwner));
 
         doAnswer(invocation -> {
@@ -280,9 +255,9 @@ public class PropertyOwnerServiceImplTest {
 
 
             // Check if the version matches
-            if (propertyOwner.getVersion() == updateRequest.version() ) {
+
                 propertyOwner.setEmail(updateRequest.email());
-            }
+
             return null;
         }).when(propertyOwnerRepository).save(propertyOwner);
 
