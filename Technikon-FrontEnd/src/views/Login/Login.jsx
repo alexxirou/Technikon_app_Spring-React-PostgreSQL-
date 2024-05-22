@@ -11,7 +11,7 @@ const Login = () => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
-  const { setAuthData} = useAuth();
+  const { setAuthData, authData, handleLogout} = useAuth();
 
   // Load isSubmitting state from localStorage or default to false
   const [isSubmitting, setIsSubmitting] = useState(() => {
@@ -36,6 +36,7 @@ const Login = () => {
 
   const  handleAuthentication = async (tin, id, username, authorities, exp) => {
     await setAuthData({ userId:id, userTin:tin, username:username, authorities: authorities, expDate:exp });
+    localStorage.setItem('authData', authData);
 
     if (authorities.includes('ROLE_ADMIN')) {
       navigate(`/api/admin}`);

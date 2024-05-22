@@ -7,64 +7,18 @@ import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import Button from "@mui/material/Button";
-import { useNavigate } from 'react-router-dom';
+
 import { useAuth } from '../hooks/useAuth';
-import { jwtDecode } from "jwt-decode";
+
 const Header = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [authorities, setAuthorities] = useState([]);
-  const navigate = useNavigate();
-  const { authData, setAuthData } = useAuth();
 
-  useEffect(() => {
-    // Read token and authData from localStorage on component mount
-    const token = localStorage.getItem("token");
-    const decodedToken = jwtDecode(token);
-        
-    const { tin, id, username, authorities: authoritiesArray, exp } = decodedToken;
-    const authorities = authoritiesArray.map(authority => authority.authority);
-    setAuthData({ userId:id, userTin:tin, username:username, authorities: authorities, expDate:exp });
 
-    if (authData && token) {
-      const isTokenExpired = isExpired(authData.expDate);
-      if (isTokenExpired) {
-        clearToken();
-      } else {
-        setIsLoggedIn(true);
-        setAuthorities(authData.authorities || []);
-      }
-    }
-  }, []);
 
-  useEffect(() => {
-    if (authData) {
-      const isTokenExpired = isExpired(authData.expDate);
-      if (isTokenExpired) {
-        clearToken();
-      } else {
-        setIsLoggedIn(true);
-        setAuthorities(authData.authorities || []);
-      }
-    }
-  }, [authData]);
+  const { isLoggedIn, handleLogout, authorities } = useAuth();
 
-  const isExpired = (exp) => {
-    return exp < Date.now() / 1000;
-  };
 
-  const clearToken = () => {
-    localStorage.removeItem("authData");
-    localStorage.removeItem("token");
-    setIsLoggedIn(false);
-    navigate('/');
-  };
-
-  const handleLogout = () => {
-    localStorage.removeItem("authData");
-    localStorage.removeItem("token");
-    setIsLoggedIn(false);
-    navigate('/');
-  };
+  
+  
 
   return (
     <Box sx={{ flexGrow: 1 }}>

@@ -12,8 +12,9 @@ import CreateRepair from "./views/Repair/CreateRepair";
 
 function App() {
   return (
-    <AuthProvider>
+
     <Router>
+          <AuthProvider>
       <Routes>
         <Route element={<MainLayout />}>
         <Route path="/" element={<Home />} />
@@ -41,8 +42,9 @@ function App() {
         
         </Route>
       </Routes>
+      </AuthProvider>
     </Router>
-    </AuthProvider>
+    
   );
 }
 
