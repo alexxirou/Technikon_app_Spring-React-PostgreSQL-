@@ -11,10 +11,13 @@ const RepairDetails = () => {
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
   const { authData } = useAuth();
-  const propertyOwnerId = authData.userId;
 
 
   useEffect(() => {
+    if (!authData) {
+      return;
+    }
+    const propertyOwnerId = authData.userId;
     const fetchRepair = async () => {
       try {
         const response = await api.get(`/api/property-repairs/${propertyOwnerId}/${repairId}`);
@@ -25,9 +28,8 @@ const RepairDetails = () => {
         setLoading(false);
       }
     };
-
     fetchRepair();
-  }, [propertyOwnerId, repairId]);
+  }, [repairId, authData]);
 
 
   if (loading) {
