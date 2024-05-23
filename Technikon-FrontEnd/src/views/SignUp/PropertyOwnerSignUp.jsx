@@ -1,6 +1,7 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Button } from '@mui/material';
 
 const Signup = () => {
   const [tin, setTin] = useState('');
@@ -13,7 +14,7 @@ const Signup = () => {
   const [phoneNumber, setPhoneNumber] = useState('');
   const [error, setError] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [success, setSuccess] = useState('');
+  const [success, setSuccess] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -34,7 +35,6 @@ const Signup = () => {
     const pattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
     return pattern.test(password);
   };
-  
 
   // Function to validate TIN format
   const validateTin = (tin) => {
@@ -50,41 +50,47 @@ const Signup = () => {
     return pattern.test(phoneNumber);
   };
 
+  const isFormValid = () => {
+    return (
+      validateTin(tin) &&
+      username.length >= 5 &&
+      validatePassword(password) &&
+      validateEmail(email) &&
+      validatePhoneNumber(phoneNumber)
+    );
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
-  
-    // if (isSubmitting) {
-    //   return;
-    // }
-  
+
     try {
       setIsSubmitting(true);
-  
+
       // Validate TIN
       if (!validateTin(tin)) {
         throw new Error('TIN must be at least 9 characters long and consist of alphanumeric characters');
       }
-  
+
       // Validate username
       if (username.length < 5) {
         throw new Error('Username must be at least 5 characters long');
       }
-  
+
       // Validate password
       if (!validatePassword(password)) {
         throw new Error('Password must contain at least one uppercase letter, one lowercase letter, one number, one special character, and be at least 8 characters long');
       }
-  
+
       // Validate email
       if (!validateEmail(email)) {
         throw new Error('Invalid email format');
       }
-  
+
       // Validate phone number
       if (!validatePhoneNumber(phoneNumber)) {
         throw new Error('Phone number must be in the format +<country code><number> and contain 10-15 digits');
       }
-  
+
       const response = await axios.post('http://localhost:5001/auth/signup', {
         tin,
         name,
@@ -95,27 +101,17 @@ const Signup = () => {
         address,
         phoneNumber,
       }, {
-        withCredentials: true,});
-  
+        withCredentials: true,
+      });
+
       if (response.status === 201) {
-        setSuccess('Signup successful!');
-        // // Reset form fields after successful signup
-        // setTin('');
-        // setUsername('');
-        // setPassword('');
-        // setEmail('');
-        // setName('');
-        // setSurname('');
-        // setAddress('');
-        // setPhoneNumber('');
-        // setError('');
-        
+        setSuccess(true);
+        setError('');
 
         setTimeout(() => {
           navigate('/login');
-        }, 1000);
-      } 
-      else {
+        }, 3000); // Redirect after 3 seconds
+      } else {
         const errorMessage = response.data.message || 'Signup failed: Invalid response';
         throw new Error(errorMessage);
       }
@@ -134,13 +130,10 @@ const Signup = () => {
     }
   };
 
-  
-
   return (
     <div className="signup-container">
       <h2>Signup</h2>
       {error && <p className="error-message">{error}</p>}
-      {success && <p className="success-message">{success}</p>}
       <form onSubmit={handleSubmit}>
         <div className="form-group">
           <label htmlFor="tin">TIN:</label>
@@ -237,10 +230,28 @@ const Signup = () => {
             <p className="validation-message">Invalid phone number format</p>
           )}
         </div>
-        <button type="submit" disabled={isSubmitting}>Signup</button>
+        <button type="submit" disabled={isSubmitting || !isFormValid()}>Signup</button>
       </form>
+
+      <Dialog
+        open={success}
+        onClose={() => setSuccess(false)}
+      >
+        <DialogTitle>Signup Successful</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            Your account has been successfully created. You will be redirected to the login page shortly.
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => navigate('/login')} color="primary">
+            Go to Login
+          </Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 };
 
 export default Signup;
+
