@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Box, CircularProgress, Button, Typography, Container } from '@mui/material';
+import { Box, CircularProgress, Button, Typography, Container, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } from '@mui/material';
 import api from '../../api/Api';
 import { PATHS } from '../../lib/constants';
 import { useAuth } from '../../hooks/useAuth';
@@ -8,10 +8,12 @@ import { useAuth } from '../../hooks/useAuth';
 const ShowRepairs = () => {
   const [repairs, setRepairs] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [errorDialogOpen, setErrorDialogOpen] = useState(false);
+  const [errorDialogMessage, setErrorDialogMessage] = useState('');
   const { authData } = useAuth();
   const navigate = useNavigate();
 
-  const propertyOwnerId = authData?.userId; // Access userId once
+  const propertyOwnerId = authData?.userId;
 
   useEffect(() => {
     if (!propertyOwnerId) {
@@ -62,11 +64,20 @@ const ShowRepairs = () => {
       setRepairs(repairs.filter(repair => repair.id !== repairId));
     } catch (error) {
       console.error("Failed to delete repair", error);
+      if (error.response && error.response.status === 400) {
+        setErrorDialogMessage(error.response.data);
+        setErrorDialogOpen(true);
+      }
     }
   };
 
   const handleCreateRepair = () => {
     navigate(PATHS.CREATE_REPAIR);
+  };
+
+  const handleCloseErrorDialog = () => {
+    setErrorDialogOpen(false);
+    setErrorDialogMessage('');
   };
 
   return (
@@ -116,10 +127,19 @@ const ShowRepairs = () => {
           ))
         )}
       </Box>
+      <Dialog open={errorDialogOpen} onClose={handleCloseErrorDialog}>
+        <DialogTitle>Error</DialogTitle>
+        <DialogContent>
+          <DialogContentText>{errorDialogMessage}</DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseErrorDialog} color="primary">
+            OK
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Container>
   );
 };
 
 export default ShowRepairs;
-
-

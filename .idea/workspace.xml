@@ -4,8 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f3732d33-421a-415d-ba42-6d0b12488ca7" name="Changes" comment="Remove Repair component and put create repair button in show repairs page">
+    <list default="true" id="f3732d33-421a-415d-ba42-6d0b12488ca7" name="Changes" comment="Added success message in creation of repair">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Technikon-FrontEnd/src/views/Repair/DeleteRepair.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Technikon-FrontEnd/src/views/Repair/ShowRepairs.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/Technikon-FrontEnd/src/views/Repair/ShowRepairs.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -194,7 +196,7 @@
       <option name="presentableId" value="Default" />
       <updated>1715674744479</updated>
       <workItem from="1716317661578" duration="3644000" />
-      <workItem from="1716452451421" duration="10259000" />
+      <workItem from="1716452451421" duration="11405000" />
     </task>
     <task id="LOCAL-00001" summary="Corrected imports at App.js">
       <option name="closed" value="true" />
@@ -284,7 +286,15 @@
       <option name="project" value="LOCAL" />
       <updated>1716469630914</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="Added success message in creation of repair">
+      <option name="closed" value="true" />
+      <created>1716471068116</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1716471068116</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -327,6 +337,7 @@
     <MESSAGE value="Correct show repair details buttons" />
     <MESSAGE value="Correct show repair details refreshing page" />
     <MESSAGE value="Remove Repair component and put create repair button in show repairs page" />
-    <option name="LAST_COMMIT_MESSAGE" value="Remove Repair component and put create repair button in show repairs page" />
+    <MESSAGE value="Added success message in creation of repair" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added success message in creation of repair" />
   </component>
 </project>
