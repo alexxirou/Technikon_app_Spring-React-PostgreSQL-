@@ -11,13 +11,13 @@ const ShowRepairs = () => {
   const { authData } = useAuth();
   const navigate = useNavigate();
 
-  // Effect to fetch repairs
+  const propertyOwnerId = authData?.userId; // Access userId once
+
   useEffect(() => {
-    if (!authData) {
+    if (!propertyOwnerId) {
       return;
     }
 
-    const propertyOwnerId = authData.userId;
     const fetchRepairs = async () => {
       try {
         const response = await api.get(`/api/property-repairs/all-by-owner/${propertyOwnerId}`);
@@ -30,9 +30,9 @@ const ShowRepairs = () => {
     };
 
     fetchRepairs();
-  }, [authData]);
+  }, [propertyOwnerId]);
 
-  if (!authData || loading) {
+  if (loading) {
     return (
       <Box display="flex" justifyContent="center" alignItems="center" height="100vh">
         <CircularProgress />
@@ -40,7 +40,13 @@ const ShowRepairs = () => {
     );
   }
 
-  const propertyOwnerId = authData.userId;
+  if (!propertyOwnerId) {
+    return (
+      <Typography variant="h6" align="center">
+        User not authenticated.
+      </Typography>
+    );
+  }
 
   const handleShow = (repairId) => {
     navigate(PATHS.REPAIR_DETAILS.replace(':propertyOwnerId', propertyOwnerId).replace(':repairId', repairId));
@@ -52,16 +58,26 @@ const ShowRepairs = () => {
 
   const handleDelete = async (repairId) => {
     try {
-      await api.delete(`/${propertyOwnerId}/delete/${repairId}`);
+      await api.delete(`/api/property-repairs/${propertyOwnerId}/delete/${repairId}`);
       setRepairs(repairs.filter(repair => repair.id !== repairId));
     } catch (error) {
       console.error("Failed to delete repair", error);
     }
   };
 
+  const handleCreateRepair = () => {
+    navigate(PATHS.CREATE_REPAIR);
+  };
+
   return (
     <Container maxWidth="md">
-      <Box mt={2}>
+      <Box mt={2} mb={2} display="flex" justifyContent="space-between" alignItems="center">
+        <Typography variant="h4">Repairs</Typography>
+        <Button variant="contained" color="primary" onClick={handleCreateRepair}>
+          Create Repair
+        </Button>
+      </Box>
+      <Box>
         {repairs.length === 0 ? (
           <Typography variant="h6" align="center">
             No repairs found.
@@ -105,4 +121,5 @@ const ShowRepairs = () => {
 };
 
 export default ShowRepairs;
+
 

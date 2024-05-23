@@ -59,10 +59,10 @@ const Header = () => {
               </Button>
               <Button
                 component={Link}
-                to={PATHS.REPAIR}
+                to={PATHS.SHOW_REPAIRS}
                 color="inherit"
               >
-                Repair
+                Repairs
               </Button>
               <Button color="inherit" onClick={handleLogout}>
                 Logout
