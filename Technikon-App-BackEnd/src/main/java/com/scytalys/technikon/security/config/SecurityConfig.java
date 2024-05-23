@@ -1,11 +1,7 @@
 package com.scytalys.technikon.security.config;
 
-import com.scytalys.technikon.domain.PropertyOwner;
-import com.scytalys.technikon.repository.AdminRepository;
-import com.scytalys.technikon.repository.PropertyOwnerRepository;
 import com.scytalys.technikon.security.filter.JwtAuthFilter;
 import com.scytalys.technikon.security.service.UserInfoService;
-import com.scytalys.technikon.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,7 +16,6 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -30,6 +25,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableMethodSecurity
 @AllArgsConstructor
 public class SecurityConfig {
+
     private final JwtAuthFilter authFilter;
     private final UserInfoService userInfoService;
 
@@ -42,7 +38,8 @@ public class SecurityConfig {
                                 "/swagger-ui/**",
                                 "/auth/signup",
                                 "/auth/login",
-                                "/auth/admin/login").permitAll()
+                                "/auth/logout"  // Allow unauthenticated access to the logout endpoint
+                        ).permitAll()
                         .requestMatchers("/api/**").authenticated()
                 )
                 .authenticationProvider(authenticationProvider)
@@ -63,9 +60,6 @@ public class SecurityConfig {
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
         return config.getAuthenticationManager();
     }
-
-
-
 
 
 }

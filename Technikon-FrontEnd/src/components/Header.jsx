@@ -9,9 +9,10 @@ import MenuIcon from "@mui/icons-material/Menu";
 import Button from "@mui/material/Button";
 import { PATHS } from "../lib/constants";
 import { useAuth } from '../hooks/useAuth';
+import LogoutDialog from "../views/Logout/LogoutDialog";
 
 const Header = () => {
-  const { authData, handleLogout } = useAuth();
+  const { authData, handleLogout, logoutDialogOpen, handleCloseLogoutDialog } = useAuth();
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -88,7 +89,13 @@ const Header = () => {
           )}
         </Toolbar>
       </AppBar>
+      <LogoutDialog
+        open={logoutDialogOpen}
+        onClose={handleCloseLogoutDialog}
+        onConfirm={handleCloseLogoutDialog}
+      />
     </Box>
+    
   );
 };
 
