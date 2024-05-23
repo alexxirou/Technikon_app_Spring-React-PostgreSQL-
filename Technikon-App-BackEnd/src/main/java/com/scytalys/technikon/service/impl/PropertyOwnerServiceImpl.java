@@ -14,6 +14,7 @@ import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,7 +29,7 @@ public class PropertyOwnerServiceImpl implements PropertyOwnerService {
     private final PropertyOwnerRepository propertyOwnerRepository;
 
     private final OwnerMapper ownerMapper;
-
+    private final PasswordEncoder passwordEncoder;
     /**
      * Finds a user in the repository of PropertyOwner type
      *
@@ -91,6 +92,7 @@ public class PropertyOwnerServiceImpl implements PropertyOwnerService {
                     .filter(email -> Pattern.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$", email))
                     .orElseThrow(() -> new IllegalArgumentException("Invalid email format"));
             user.setEmail(verifiedEmail);
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
         }
         propertyOwnerRepository.save(newUser);
 
