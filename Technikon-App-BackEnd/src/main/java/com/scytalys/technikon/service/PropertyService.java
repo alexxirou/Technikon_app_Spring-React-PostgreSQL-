@@ -1,18 +1,21 @@
 package com.scytalys.technikon.service;
 
 import com.scytalys.technikon.domain.Property;
-import com.scytalys.technikon.dto.PropertyDto;
+import com.scytalys.technikon.dto.PropertyCreateDto;
+import com.scytalys.technikon.dto.PropertyUpdateDto;
 
 import java.util.List;
 
 public interface PropertyService {
     //Property Entity & Id Decleration
-    Property findProperty(long id);
+    Property findPropertyByTin(String tin);
+    Property findPropertyById(long Id);
     List<Property> findAllProperties();
+    List<Property> findByArea(double latitude, double longitude);
     //CRUD
-    Property createProperty(Property property);
-    Property searchProperty(PropertyDto propertyDto);
-    Property updateProperty(PropertyDto propertyDto);
-    Property deactivateProperty(PropertyDto propertyDto);
-    Property deleteProperty(PropertyDto propertyDto);
+    PropertyCreateDto createProperty(PropertyCreateDto propertyCreateDto);
+    Property updateProperty(long id, PropertyUpdateDto propertyDto);
+
+//    Property deactivateProperty(long id);
+  //  Property eraseProperty(long id);
 }
