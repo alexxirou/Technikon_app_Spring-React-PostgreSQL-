@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="dataSourceStorageLocal" created-in="IU-233.15026.9">
+    <data-source name="Technikon" uuid="532597d9-24e0-4816-943e-d21c43306d8b">
+      <database-info product="" version="" jdbc-version="" driver-name="" driver-version="" dbms="POSTGRES" />
+      <user-name>${USERNAME}</user-name>
+      <schema-mapping />
+    </data-source>
+  </component>
+</project>

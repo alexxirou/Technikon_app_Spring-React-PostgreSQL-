@@ -19,9 +19,13 @@ export const AuthProvider = ({ children }) => {
   
     // If token is found in local storage, decode it and set the authentication data
     if (token) {
+      console.log("1");
+      console.log(token);
       try {
         // Decode the token (assuming it's a JWT)
         const decodedToken = jwtDecode(token);
+      console.log("2");
+        console.log(decodedToken);
         
           const { tin, id, username, authorities: authoritiesArray, exp } = decodedToken;
           const authorities = authoritiesArray.map(authority => authority.authority);

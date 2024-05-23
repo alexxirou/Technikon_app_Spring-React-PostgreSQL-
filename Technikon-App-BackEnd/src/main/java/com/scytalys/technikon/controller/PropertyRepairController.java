@@ -24,7 +24,7 @@ public class PropertyRepairController {
     private final PropertyRepairService propertyRepairService;
 
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
-    @PostMapping("")
+    @PostMapping("/create")
     public ResponseEntity<PropertyRepairDto> create(@RequestBody PropertyRepairDto propertyRepairDto, Authentication authentication) {
         if (authentication.getAuthorities().stream().noneMatch(a -> a.getAuthority().equals("ROLE_ADMIN")))  {
             UserInfoDetails userInfoDetails = (UserInfoDetails) authentication.getPrincipal();

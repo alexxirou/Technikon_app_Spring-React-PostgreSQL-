@@ -9,7 +9,7 @@ import org.mapstruct.factory.Mappers;
 @Mapper(componentModel = "spring")
 public interface PropertyRepairMapper {
     PropertyRepairMapper INSTANCE = Mappers.getMapper(PropertyRepairMapper.class);
-    @Mapping(source = "id", target= "id")
+//    @Mapping(source = "id", target= "id")
     @Mapping(source = "propertyOwnerId", target = "propertyOwner.id")
     @Mapping(source = "propertyId", target = "property.id")
     PropertyRepair RepairDtoToPropertyRepair(PropertyRepairDto propertyRepairDto);
