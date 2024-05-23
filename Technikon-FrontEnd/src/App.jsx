@@ -21,10 +21,10 @@ const App = () => {
             <Route path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<PropertyOwnerSignUp />} />
-            <Route path="/api/repair/:id" element={<Repair />} />
-            <Route path="/api/create-repair" element={<CreateRepair />} />
+            <Route path="/repair/:id" element={<Repair />} />
+            <Route path="/create-repair" element={<CreateRepair />} />
             <Route
-              path="/api/admin"
+              path="/admin"
               element={
                 <RoleProtectedRoute allowedRoles={['ROLE_ADMIN']}>
                   <Admin />
@@ -32,7 +32,7 @@ const App = () => {
               }
             />
             <Route
-              path={`/api/owner/:tin`}
+              path={`/owner/:tin`}
               element={
                 <RoleProtectedRoute allowedRoles={['ROLE_USER', 'ROLE_ADMIN']}>
                   <Owner />

@@ -53,9 +53,9 @@ const Signup = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
   
-    if (isSubmitting) {
-      return;
-    }
+    // if (isSubmitting) {
+    //   return;
+    // }
   
     try {
       setIsSubmitting(true);
@@ -99,16 +99,16 @@ const Signup = () => {
   
       if (response.status === 201) {
         setSuccess('Signup successful!');
-        // Reset form fields after successful signup
-        setTin('');
-        setUsername('');
-        setPassword('');
-        setEmail('');
-        setName('');
-        setSurname('');
-        setAddress('');
-        setPhoneNumber('');
-        setError('');
+        // // Reset form fields after successful signup
+        // setTin('');
+        // setUsername('');
+        // setPassword('');
+        // setEmail('');
+        // setName('');
+        // setSurname('');
+        // setAddress('');
+        // setPhoneNumber('');
+        // setError('');
         
 
         setTimeout(() => {

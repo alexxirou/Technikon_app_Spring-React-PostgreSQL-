@@ -43,7 +43,7 @@ const Header = () => {
               {authData.authorities.includes('ROLE_ADMIN') && ( // Render admin-related button if user is admin
                 <Button
                   component={Link}
-                  to="/api/admin"
+                  to="/admin"
                   color="inherit"
                 >
                   Admin
@@ -51,14 +51,14 @@ const Header = () => {
               )}
               <Button
                 component={Link}
-                to={`/api/owner/${authData.userTin}`}
+                to={`/owner/${authData.userTin}`}
                 color="inherit"
               >
                 Owner
               </Button>
               <Button
                 component={Link}
-                to="/api/repair"
+                to="/repair"
                 color="inherit"
               >
                 Repair
