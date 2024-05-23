@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { PATHS } from '../../lib/constants';
 
 const OwnerButtons = ({ tin, id, handleDeleteOwner }) => {
   const [confirmDelete, setConfirmDelete] = useState(false);
@@ -27,7 +28,7 @@ const OwnerButtons = ({ tin, id, handleDeleteOwner }) => {
       <Link to={`/properties/${tin}`}>
         <button>View Properties</button>
       </Link>
-      <Link to={`/repair/${id}`}>
+      <Link to={PATHS.SHOW_REPAIRS}>
         <button>View Repair Jobs</button>
       </Link>
     </div>

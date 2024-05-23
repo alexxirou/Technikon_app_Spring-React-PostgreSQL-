@@ -81,7 +81,7 @@ const ShowRepairs = () => {
             </Typography>
           </Box>
           <Box>
-            <Button variant="contained" color="primary" onClick={() => handleShow(propertyOwnerId, index)}>
+            <Button variant="contained" color="primary" onClick={() => handleShow(repair.id)}>
               Show
             </Button>
             <Button variant="contained" color="secondary" onClick={() => handleUpdate(repair.id)} style={{ marginLeft: '8px' }}>
