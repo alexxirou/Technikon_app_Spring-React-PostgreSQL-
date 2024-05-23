@@ -22,6 +22,7 @@ const RepairDetails = () => {
       try {
         const response = await api.get(`/api/property-repairs/${propertyOwnerId}/${repairId}`);
         setRepair(response.data);
+        console.log("Repair details: ", response.data);
       } catch (error) {
         console.error("Failed to fetch repair details", error);
       } finally {
@@ -30,7 +31,6 @@ const RepairDetails = () => {
     };
     fetchRepair();
   }, [repairId, authData]);
-
 
   if (loading) {
     return (

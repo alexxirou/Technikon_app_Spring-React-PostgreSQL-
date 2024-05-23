@@ -50,6 +50,11 @@ const ShowRepairs = () => {
     );
   }
 
+  const handleCreateRepair = () => {
+    navigate(PATHS.CREATE_REPAIR);
+  };
+
+
   const handleShow = (repairId) => {
     navigate(PATHS.REPAIR_DETAILS.replace(':propertyOwnerId', propertyOwnerId).replace(':repairId', repairId));
   };
@@ -59,20 +64,23 @@ const ShowRepairs = () => {
   };
 
   const handleDelete = async (repairId) => {
+    // Get the repair object from the state based on the repairId
+    const repairToDelete = repairs.find(repair => repair.id === repairId);
+    
+    // Check if the repair has a status other than "DEFAULT_PENDING"
+    if (repairToDelete && repairToDelete.repairStatus !== "DEFAULT_PENDING") {
+      setErrorDialogMessage("You cannot delete this repair.");
+      setErrorDialogOpen(true);
+      return; // Exit the function without making the delete request
+    }
+  
+    // If the repair has status "DEFAULT_PENDING", proceed with the delete request
     try {
       await api.delete(`/api/property-repairs/${propertyOwnerId}/delete/${repairId}`);
       setRepairs(repairs.filter(repair => repair.id !== repairId));
     } catch (error) {
       console.error("Failed to delete repair", error);
-      if (error.response && error.response.status === 400) {
-        setErrorDialogMessage(error.response.data);
-        setErrorDialogOpen(true);
-      }
     }
-  };
-
-  const handleCreateRepair = () => {
-    navigate(PATHS.CREATE_REPAIR);
   };
 
   const handleCloseErrorDialog = () => {

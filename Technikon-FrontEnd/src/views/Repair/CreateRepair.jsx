@@ -79,7 +79,7 @@ const CreateRepair = () => {
 
     try {
       const response = await api.post('/api/property-repairs/create', repairData);
-      console.log(response.data);
+      console.log("Created Repair:", response.data); // Log the created repair data
       setSuccess(true); // Show the success dialog
     } catch (error) {
       console.error('Error:', error);
@@ -93,6 +93,7 @@ const CreateRepair = () => {
       }
     }
   };
+
 
   return (
     <Container maxWidth="sm">
