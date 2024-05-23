@@ -14,8 +14,7 @@ const Repair = () => {
         return <div>Loading...</div>; // or handle the case when authData is null
     }
 
-    const propertyOwnerId = authData ? authData.userId : null;
-    console.log(propertyOwnerId);
+    const propertyOwnerId = authData.userId;
 
     const createPropertyRepair = () => {
         navigate('/create-repair');

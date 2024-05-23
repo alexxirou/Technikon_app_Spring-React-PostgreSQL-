@@ -11,7 +11,6 @@ const Owner = () => {
   const { authData, handleLogout } = useAuth();
   const tin = authData.userTin;
   const propertyOwnerId = authData.userId;
-  console.log(propertyOwnerId);
 
   useEffect(() => {
     const fetchOwnerDetails = async () => {

@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f3732d33-421a-415d-ba42-6d0b12488ca7" name="Changes" comment="Edit functionality for show repairss" />
+    <list default="true" id="f3732d33-421a-415d-ba42-6d0b12488ca7" name="Changes" comment="Correct show repair details buttons" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -192,7 +192,7 @@
       <option name="presentableId" value="Default" />
       <updated>1715674744479</updated>
       <workItem from="1716317661578" duration="3644000" />
-      <workItem from="1716452451421" duration="6658000" />
+      <workItem from="1716452451421" duration="7258000" />
     </task>
     <task id="LOCAL-00001" summary="Corrected imports at App.js">
       <option name="closed" value="true" />
@@ -258,7 +258,15 @@
       <option name="project" value="LOCAL" />
       <updated>1716461744102</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="Correct show repair details buttons">
+      <option name="closed" value="true" />
+      <created>1716465689647</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1716465689648</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -298,6 +306,7 @@
     <MESSAGE value="Merge branch 'FrontEndLoginFeature' of https://github.com/alexxirou/Technikon_app_Spring-React-PostgreSQL- into FrontEndLoginFeature" />
     <MESSAGE value="Edit functionality for show repairs" />
     <MESSAGE value="Edit functionality for show repairss" />
-    <option name="LAST_COMMIT_MESSAGE" value="Edit functionality for show repairss" />
+    <MESSAGE value="Correct show repair details buttons" />
+    <option name="LAST_COMMIT_MESSAGE" value="Correct show repair details buttons" />
   </component>
 </project>
