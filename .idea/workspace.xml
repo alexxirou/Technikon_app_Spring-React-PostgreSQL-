@@ -4,18 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f3732d33-421a-415d-ba42-6d0b12488ca7" name="Changes" comment="Link to repairs using property owner id">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Technikon-App-BackEnd/src/main/java/com/scytalys/technikon/bootstrap/SampleData.java" beforeDir="false" afterPath="$PROJECT_DIR$/Technikon-App-BackEnd/src/main/java/com/scytalys/technikon/bootstrap/SampleData.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Technikon-FrontEnd/src/App.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/Technikon-FrontEnd/src/App.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Technikon-FrontEnd/src/components/Header.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/Technikon-FrontEnd/src/components/Header.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Technikon-FrontEnd/src/lib/constants.js" beforeDir="false" afterPath="$PROJECT_DIR$/Technikon-FrontEnd/src/lib/constants.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Technikon-FrontEnd/src/views/Owner/Owner.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/Technikon-FrontEnd/src/views/Owner/Owner.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Technikon-FrontEnd/src/views/Repair/CreateRepair.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/Technikon-FrontEnd/src/views/Repair/CreateRepair.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Technikon-FrontEnd/src/views/Repair/Repair.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/Technikon-FrontEnd/src/views/Repair/Repair.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Technikon-FrontEnd/src/views/Repair/RepairDetails.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/Technikon-FrontEnd/src/views/Repair/RepairDetails.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Technikon-FrontEnd/src/views/Repair/ShowRepairs.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/Technikon-FrontEnd/src/views/Repair/ShowRepairs.jsx" afterDir="false" />
-    </list>
+    <list default="true" id="f3732d33-421a-415d-ba42-6d0b12488ca7" name="Changes" comment="Edit functionality for show repairss" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -203,7 +192,7 @@
       <option name="presentableId" value="Default" />
       <updated>1715674744479</updated>
       <workItem from="1716317661578" duration="3644000" />
-      <workItem from="1716452451421" duration="5046000" />
+      <workItem from="1716452451421" duration="5848000" />
     </task>
     <task id="LOCAL-00001" summary="Corrected imports at App.js">
       <option name="closed" value="true" />
@@ -261,7 +250,15 @@
       <option name="project" value="LOCAL" />
       <updated>1716456729755</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Edit functionality for show repairss">
+      <option name="closed" value="true" />
+      <created>1716461744102</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1716461744102</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -298,6 +295,9 @@
     <MESSAGE value="Used material-ui components in login page and in display of owner fields" />
     <MESSAGE value="Created CreateRepair component with input validations" />
     <MESSAGE value="Link to repairs using property owner id" />
-    <option name="LAST_COMMIT_MESSAGE" value="Link to repairs using property owner id" />
+    <MESSAGE value="Merge branch 'FrontEndLoginFeature' of https://github.com/alexxirou/Technikon_app_Spring-React-PostgreSQL- into FrontEndLoginFeature" />
+    <MESSAGE value="Edit functionality for show repairs" />
+    <MESSAGE value="Edit functionality for show repairss" />
+    <option name="LAST_COMMIT_MESSAGE" value="Edit functionality for show repairss" />
   </component>
 </project>
