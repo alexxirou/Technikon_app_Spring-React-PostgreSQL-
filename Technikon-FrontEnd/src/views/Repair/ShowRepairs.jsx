@@ -38,13 +38,14 @@ const ShowRepairs = () => {
 
   const handleDelete = async (repairId) => {
     try {
-      await api.delete(`/api/property-repairs/${repairId}/delete`);
+      await api.delete(`/${propertyOwnerId}/delete/${repairId}`);
       setRepairs(repairs.filter(repair => repair.id !== repairId));
     } catch (error) {
       console.error("Failed to delete repair", error);
     }
   };
 
+  
   if (loading) {
     return (
       <Box display="flex" justifyContent="center" alignItems="center" height="100vh">

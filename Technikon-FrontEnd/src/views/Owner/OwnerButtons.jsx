@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
-const OwnerButtons = ({ tin, handleDeleteOwner }) => {
+const OwnerButtons = ({ tin, id, handleDeleteOwner }) => {
   const [confirmDelete, setConfirmDelete] = useState(false);
+  
 
   const handleClick = () => {
     if (confirmDelete) {
@@ -17,16 +18,16 @@ const OwnerButtons = ({ tin, handleDeleteOwner }) => {
 
   return (
     <div>
-      <Link to={`/api/update-owner/${tin}`}>
+      <Link to={`/update-owner/${tin}`}>
         <button>Update Owner</button>
       </Link>
       <button onClick={handleClick}>
         {confirmDelete ? 'Double Click to Confirm Deletion' : 'Unsubscribe'}
       </button>
-      <Link to={`/api/properties/${tin}`}>
+      <Link to={`/properties/${tin}`}>
         <button>View Properties</button>
       </Link>
-      <Link to={`/api/repair/${tin}`}>
+      <Link to={`/repair/${id}`}>
         <button>View Repair Jobs</button>
       </Link>
     </div>

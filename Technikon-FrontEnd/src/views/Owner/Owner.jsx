@@ -10,6 +10,8 @@ const Owner = () => {
   const [error, setError] = useState(null);
   const { authData, handleLogout } = useAuth();
   const tin = authData.userTin;
+  const id = authData.userId;
+  console.log(id);
 
   useEffect(() => {
     const fetchOwnerDetails = async () => {
@@ -86,7 +88,7 @@ const Owner = () => {
   return (
     <div>
       <OwnerDetails ownerDetails={ownerDetails} />
-      <OwnerButtons tin={tin} handleDeleteOwner={handleDeleteOwner} />
+      <OwnerButtons tin={tin} id={id} handleDeleteOwner={handleDeleteOwner} />
     </div>
   );
 };

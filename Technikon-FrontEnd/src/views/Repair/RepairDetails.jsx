@@ -70,7 +70,7 @@ const RepairDetails = () => {
           Cost: ${repair.cost}
         </Typography>
         <Box mt={2}>
-          <Button variant="contained" color="primary" onClick={() => navigate('/repairs')}>
+          <Button variant="contained" color="primary" onClick={() => navigate(`/all-by-owner/${propertyOwnerId}`)}>
             Back to Repairs
           </Button>
         </Box>

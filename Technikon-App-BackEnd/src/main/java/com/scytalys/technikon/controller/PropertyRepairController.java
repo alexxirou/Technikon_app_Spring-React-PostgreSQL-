@@ -106,7 +106,7 @@ public class PropertyRepairController {
     }
 
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
-    @DeleteMapping("/{propertyOwnerId}/{propertyRepairId}")
+    @DeleteMapping("/{propertyOwnerId}/delete/{propertyRepairId}")
     public ResponseEntity<Object> deletePropertyRepair(@PathVariable long propertyRepairId,@PathVariable long propertyOwnerId, Authentication authentication) {
         if (authentication.getAuthorities().stream().noneMatch(a -> a.getAuthority().equals("ROLE_ADMIN")))  {
             UserInfoDetails userInfoDetails = (UserInfoDetails) authentication.getPrincipal();
