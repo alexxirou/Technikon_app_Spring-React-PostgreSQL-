@@ -67,9 +67,15 @@ const Login = () => {
   
       if (response.status === 200) {
         const data = await response.data;
+        console.log("data");
+        console.log(data);
         if (data.token) {
+          console.log("TOKEN");
+          console.log(data.token);
           localStorage.setItem('token', data.token);
           const decodedToken = jwtDecode(data.token);
+          console.log("decodedToken");
+          console.log(decodedToken)
         
           const { tin, id, username, authorities: authoritiesArray, exp } = decodedToken;
           const authorities = authoritiesArray.map(authority => authority.authority);
@@ -94,8 +100,6 @@ const Login = () => {
       setIsSubmitting(false);
     }
   };
-
-  
 
   return (
     <Container maxWidth="xs">

@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Container, TextField, Button, MenuItem, Box } from '@mui/material';
-import axios from 'axios';
+import { Container, TextField, Button, MenuItem, Box, Typography } from '@mui/material';
+import api from '../../api/Api';
+import { useAuth } from '../../hooks/useAuth';
 
 const CreateRepair = () => {
   const navigate = useNavigate();
@@ -12,6 +13,9 @@ const CreateRepair = () => {
   const [cost, setCost] = useState('');
   const [longDescription, setLongDescription] = useState('');
   const [errors, setErrors] = useState({});
+  const { authData } = useAuth();
+  const token = localStorage.getItem('token');
+  console.log(token);
 
   const validateCost = (cost) => {
     if (cost <= 0) {
@@ -19,22 +23,50 @@ const CreateRepair = () => {
         ...prevErrors,
         cost: 'Insert a valid cost'
       }));
+      return false;
     } else {
       setErrors((prevErrors) => {
         const { cost, ...rest } = prevErrors;
         return rest;
       });
+      return true;
+    }
+  };
+
+  const validateDate = (date) => {
+    const today = new Date().toISOString().split('T')[0];
+    if (date < today) {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        dateOfRepair: 'Date of repair cannot be in the past'
+      }));
+      return false;
+    } else {
+      setErrors((prevErrors) => {
+        const { dateOfRepair, ...rest } = prevErrors;
+        return rest;
+      });
+      return true;
     }
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    if (!validateCost(cost)) {
+    const isCostValid = validateCost(cost);
+    const isDateValid = validateDate(dateOfRepair);
+
+    if (!isCostValid || !isDateValid) {
       return;
     }
 
+    const propertyOwnerId = authData.userId;
+    console.log(propertyOwnerId);
+    const propertyId = 1;
     const repairData = {
+      id: 0,
+      propertyOwnerId,
+      propertyId,
       dateOfRepair,
       shortDescription,
       repairType,
@@ -44,11 +76,19 @@ const CreateRepair = () => {
     };
 
     try {
-      const response = await axios.post('http://localhost:5001/api/property-repairs', repairData);
+      const response = await api.post('/api/property-repairs/create', repairData);
       console.log(response.data);
-      navigate('/repairs'); // Navigate back to the repairs page after creation
+      navigate('/api/repair'); // Navigate back to the repairs page after creation
     } catch (error) {
-      console.error('Error creating repair:', error);
+      console.error('Error:', error);
+      if (error.response) {
+        const errorMessage = error.response.data;
+        setErrors(errorMessage);
+      } else if (error.request) {
+        setErrors('No response received from the server');
+      } else {
+        setErrors('An unexpected error occurred');
+      }
     }
   };
 
@@ -66,13 +106,18 @@ const CreateRepair = () => {
             label="Date of Repair"
             type="date"
             value={dateOfRepair}
-            onChange={(e) => setDateOfRepair(e.target.value)}
+            onChange={(e) => {
+              setDateOfRepair(e.target.value);
+              validateDate(e.target.value);
+            }}
             fullWidth
             required
             InputLabelProps={{
               shrink: true,
             }}
             margin="normal"
+            error={!!errors.dateOfRepair}
+            helperText={errors.dateOfRepair}
           />
           <TextField
             label="Short Description"
@@ -138,6 +183,11 @@ const CreateRepair = () => {
             rows={4}
             margin="normal"
           />
+          {errors.submit && (
+            <Typography color="error" variant="body2">
+              {errors.submit}
+            </Typography>
+          )}
           <Button
             type="submit"
             variant="contained"

@@ -47,8 +47,8 @@ public class PropertyRepairServiceImpl implements PropertyRepairService {
         validateCostInputOrThrow(propertyRepairDto.cost());
         validateShortDescription(propertyRepairDto.shortDescription());
         PropertyRepair converted = propertyRepairMapper.RepairDtoToPropertyRepair(propertyRepairDto);
-        propertyRepairRepository.save(converted);
-        return propertyRepairMapper.RepairToPropertyRepairDto(converted);
+        PropertyRepair newPropertyRepair = propertyRepairRepository.save(converted);
+        return propertyRepairMapper.RepairToPropertyRepairDto(newPropertyRepair);
     }
 
 

@@ -5,8 +5,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f3732d33-421a-415d-ba42-6d0b12488ca7" name="Changes" comment="Created CreateRepair component with input validations">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Technikon-FrontEnd/src/views/Owner.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/Technikon-FrontEnd/src/views/Owner.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Technikon-App-BackEnd/src/main/java/com/scytalys/technikon/controller/PropertyRepairController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Technikon-App-BackEnd/src/main/java/com/scytalys/technikon/controller/PropertyRepairController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Technikon-App-BackEnd/src/main/java/com/scytalys/technikon/dto/repair/PropertyRepairDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/Technikon-App-BackEnd/src/main/java/com/scytalys/technikon/dto/repair/PropertyRepairDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Technikon-App-BackEnd/src/main/java/com/scytalys/technikon/mapper/PropertyRepairMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/Technikon-App-BackEnd/src/main/java/com/scytalys/technikon/mapper/PropertyRepairMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Technikon-App-BackEnd/src/main/java/com/scytalys/technikon/service/impl/PropertyRepairServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/Technikon-App-BackEnd/src/main/java/com/scytalys/technikon/service/impl/PropertyRepairServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Technikon-FrontEnd/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/Technikon-FrontEnd/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Technikon-FrontEnd/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/Technikon-FrontEnd/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Technikon-FrontEnd/src/App.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/Technikon-FrontEnd/src/App.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Technikon-FrontEnd/src/context/AuthContext.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/Technikon-FrontEnd/src/context/AuthContext.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Technikon-FrontEnd/src/layouts/MainLayout.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/Technikon-FrontEnd/src/layouts/MainLayout.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Technikon-FrontEnd/src/main.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/Technikon-FrontEnd/src/main.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Technikon-FrontEnd/src/views/Home/Home.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/Technikon-FrontEnd/src/views/Home/Home.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Technikon-FrontEnd/src/views/Login/Login.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/Technikon-FrontEnd/src/views/Login/Login.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Technikon-FrontEnd/src/views/Repair/CreateRepair.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/Technikon-FrontEnd/src/views/Repair/CreateRepair.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Technikon-FrontEnd/src/views/Repair/Repair.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/Technikon-FrontEnd/src/views/Repair/Repair.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -66,7 +77,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "Spring Boot.TechnikonApplication.executor": "Run",
-    "git-widget-placeholder": "FrontendLoginFeature",
+    "git-widget-placeholder": "master",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/alexandrosx/Documents/Project",
     "node.js.detected.package.eslint": "true",
@@ -196,6 +207,7 @@
       <option name="presentableId" value="Default" />
       <updated>1715674744479</updated>
       <workItem from="1716317661578" duration="3644000" />
+      <workItem from="1716452451421" duration="424000" />
     </task>
     <task id="LOCAL-00001" summary="Corrected imports at App.js">
       <option name="closed" value="true" />
