@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Button } from '@mui/material';
+import { PATHS } from '../../lib/constants';
 
 const Signup = () => {
   const [tin, setTin] = useState('');
@@ -244,7 +245,7 @@ const Signup = () => {
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => navigate('/login')} color="primary">
+          <Button onClick={() => navigate(PATHS.LOGIN)} color="primary">
             Go to Login
           </Button>
         </DialogActions>

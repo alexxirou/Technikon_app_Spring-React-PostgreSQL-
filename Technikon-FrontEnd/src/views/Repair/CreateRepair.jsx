@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Container, TextField, Button, MenuItem, Box, Typography } from '@mui/material';
+import { Container, TextField, Button, MenuItem, Box, Typography, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
 import api from '../../api/Api';
 import { useAuth } from '../../hooks/useAuth';
 import { PATHS } from '../../lib/constants';
@@ -15,6 +15,7 @@ const CreateRepair = () => {
   const [longDescription, setLongDescription] = useState('');
   const [errors, setErrors] = useState({});
   const { authData } = useAuth();
+  const [success, setSuccess] = useState(false);
   const token = localStorage.getItem('token');
   console.log(token);
 
@@ -62,7 +63,6 @@ const CreateRepair = () => {
     }
 
     const propertyOwnerId = authData.userId;
-    console.log(propertyOwnerId);
     const propertyId = 1;
     const repairData = {
       id: 0,
@@ -79,7 +79,7 @@ const CreateRepair = () => {
     try {
       const response = await api.post('/api/property-repairs/create', repairData);
       console.log(response.data);
-      navigate(PATHS.SHOW_REPAIRS); // Navigate back to the repairs page after creation
+      setSuccess(true); // Show the success dialog
     } catch (error) {
       console.error('Error:', error);
       if (error.response) {
@@ -199,6 +199,22 @@ const CreateRepair = () => {
             Create Repair
           </Button>
         </form>
+        <Dialog
+          open={success}
+          onClose={() => setSuccess(false)}
+        >
+          <DialogTitle>Repair created!</DialogTitle>
+          <DialogContent>
+            <DialogContentText>
+              The property repair has been created successfully. You can now go to the repairs page.
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={() => navigate(PATHS.SHOW_REPAIRS)} color="primary">
+              Go to Repairs
+            </Button>
+          </DialogActions>
+        </Dialog>
       </Box>
     </Container>
   );
