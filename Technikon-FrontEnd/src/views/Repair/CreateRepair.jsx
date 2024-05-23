@@ -79,7 +79,7 @@ const CreateRepair = () => {
     try {
       const response = await api.post('/api/property-repairs/create', repairData);
       console.log(response.data);
-      navigate(PATHS.REPAIR); // Navigate back to the repairs page after creation
+      navigate(PATHS.SHOW_REPAIRS); // Navigate back to the repairs page after creation
     } catch (error) {
       console.error('Error:', error);
       if (error.response) {

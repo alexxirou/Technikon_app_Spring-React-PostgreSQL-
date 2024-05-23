@@ -5,7 +5,6 @@ import MainLayout from './layouts/MainLayout';
 import Home from './views/Home/Home';
 import Login from './views/Login/Login';
 import PropertyOwnerSignUp from './views/SignUp/PropertyOwnerSignUp';
-import Repair from './views/Repair/Repair';
 import CreateRepair from './views/Repair/CreateRepair';
 import Admin from './views/Admin';
 import Owner from './views/Owner/Owner';
@@ -23,7 +22,6 @@ const App = () => {
             <Route path={PATHS.HOME} element={<Home />} />
             <Route path={PATHS.LOGIN} element={<Login />} />
             <Route path={PATHS.SIGNUP} element={<PropertyOwnerSignUp />} />
-            <Route path={PATHS.REPAIR} element={<Repair />} />
             <Route path={PATHS.CREATE_REPAIR} element={<CreateRepair />} />
             <Route path={PATHS.SHOW_REPAIRS} element={<ShowRepairs />} />
             <Route path={PATHS.REPAIR_DETAILS} element={<RepairDetails />} />
