@@ -19,16 +19,16 @@ const OwnerButtons = ({ tin, id, handleDeleteOwner }) => {
 
   return (
     <div>
-      <Link to={`/update-owner/${tin}`}>
+      <Link to={PATHS.UPDATE_OWNER(tin)}>
         <button>Update Owner</button>
       </Link>
       <button onClick={handleClick}>
         {confirmDelete ? 'Double Click to Confirm Deletion' : 'Unsubscribe'}
       </button>
-      <Link to={`/properties/${tin}`}>
+      <Link to={PATHS.PROPERTIES(id)}>
         <button>View Properties</button>
       </Link>
-      <Link to={PATHS.SHOW_REPAIRS}>
+      <Link to={PATHS.SHOW_REPAIRS(id)}>
         <button>View Repair Jobs</button>
       </Link>
     </div>

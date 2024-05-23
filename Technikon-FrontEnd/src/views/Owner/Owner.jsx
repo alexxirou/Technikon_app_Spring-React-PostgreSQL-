@@ -8,7 +8,7 @@ const Owner = () => {
   const [ownerDetails, setOwnerDetails] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const { authData, handleLogout } = useAuth();
+  const { authData, logout } = useAuth();
   const tin = authData.userTin;
   const propertyOwnerId = authData.userId;
 
@@ -49,7 +49,6 @@ const Owner = () => {
 
       if (response.status === 202) {
         console.log('Owner deleted successfully');
-        const logout = handleLogout();
         logout();
       } else {
         const errorMessage = response.data.message;

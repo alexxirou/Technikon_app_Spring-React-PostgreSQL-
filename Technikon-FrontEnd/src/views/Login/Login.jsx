@@ -4,6 +4,7 @@ import { jwtDecode } from "jwt-decode";
 import { useAuth } from '../../hooks/useAuth';
 import axios from 'axios';
 import { Container, TextField, Button, Typography, Alert, CircularProgress } from '@mui/material';
+import { PATHS, ROLES } from '../../lib/constants';
 
 
 const Login = () => {
@@ -38,12 +39,12 @@ const Login = () => {
      setAuthData({ userId:id, userTin:tin, username:username, authorities: authorities, expDate:exp });
    
 
-    if (authorities.includes('ROLE_ADMIN')) {
-      navigate(`/admin}`);
-    } else if (authorities.includes('ROLE_USER')) {
-      navigate(`/owner/${tin}`);
+    if (authorities.includes(ROLES.ADMIN)) {
+      navigate(PATHS.ADMIN);
+    } else if (authorities.includes(ROLES.USER)) {
+      navigate(PATHS.OWNER);
     } else {
-      navigate('/');
+      navigate(PATHS.HOME);
     }
   };
 
@@ -67,15 +68,12 @@ const Login = () => {
   
       if (response.status === 200) {
         const data = await response.data;
-        console.log("data");
-        console.log(data);
+        
         if (data.token) {
-          console.log("TOKEN");
-          console.log(data.token);
+       
           localStorage.setItem('token', data.token);
           const decodedToken = jwtDecode(data.token);
-          console.log("decodedToken");
-          console.log(decodedToken)
+  
         
           const { tin, id, username, authorities: authoritiesArray, exp } = decodedToken;
           const authorities = authoritiesArray.map(authority => authority.authority);

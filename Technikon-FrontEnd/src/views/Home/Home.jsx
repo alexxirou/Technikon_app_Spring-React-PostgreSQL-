@@ -1,11 +1,12 @@
 import { Container, Typography, Button, Box, Paper } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
+import { PATHS } from '../../lib/constants';
 
 const HomePage = () => {
   const navigate = useNavigate();
-  const {authData} = useAuth();
-  console.log(authData)
+  const { authData } = useAuth();
+
   return (
     <Box
       display="flex"
@@ -25,17 +26,35 @@ const HomePage = () => {
             Your one-stop solution for property management. Manage properties, connect with property owners, and handle property repairs seamlessly.
           </Typography>
         </Paper>
-        <Button variant="contained" color="primary" sx={{ mt: 2 }}>
-          Sign Up
-        </Button>
-        <Button 
-          variant="outlined" 
-          color="primary" 
-          sx={{ mt: 2 }}
-          onClick={() => navigate('/login')} // navigate to login page when clicked
-        >
-          Log In
-        </Button>
+        {!authData ? (
+          <>
+            <Button 
+              variant="contained" 
+              color="primary" 
+              sx={{ mt: 2 }} 
+              onClick={() => navigate(PATHS.SIGNUP)}
+            >
+              Sign Up
+            </Button>
+            <Button 
+              variant="outlined" 
+              color="primary" 
+              sx={{ mt: 2 }} 
+              onClick={() => navigate(PATHS.LOGIN)}
+            >
+              Log In
+            </Button>
+          </>
+        ) : (
+          <Button 
+            variant="contained" 
+            color="primary" 
+            sx={{ mt: 2 }} 
+            onClick={() => navigate(PATHS.HOME)}
+          >
+            Go to Dashboard
+          </Button>
+        )}
       </Container>
     </Box>
   );

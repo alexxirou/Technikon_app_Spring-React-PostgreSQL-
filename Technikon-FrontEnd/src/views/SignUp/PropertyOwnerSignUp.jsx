@@ -110,7 +110,7 @@ const Signup = () => {
         setError('');
 
         setTimeout(() => {
-          navigate('/login');
+          navigate(PATHS.LOGIN);
         }, 3000); // Redirect after 3 seconds
       } else {
         const errorMessage = response.data.message || 'Signup failed: Invalid response';
