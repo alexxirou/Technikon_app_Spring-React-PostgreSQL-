@@ -10,35 +10,35 @@ import CreateRepair from './views/Repair/CreateRepair';
 import Admin from './views/Admin';
 import Owner from './views/Owner/Owner';
 import RoleProtectedRoute from './components/RoleProtectedRoute';
+import { PATHS, ROLES } from './lib/constants';
 import ShowRepairs from './views/Repair/ShowRepairs';
 import RepairDetails from './views/Repair/RepairDetails';
 
 const App = () => {
-
   return (
     <Router>
       <AuthProvider>
         <Routes>
           <Route element={<MainLayout />}>
-            <Route path="/" element={<Home />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<PropertyOwnerSignUp />} />
-            <Route path="/repair/:id" element={<Repair />} />
-            <Route path="/create-repair" element={<CreateRepair />} />
-            <Route path="/all-by-owner/:propertyOwnerId" element={<ShowRepairs />} />
-            <Route path="/:propertyOwnerId/:repairId" element={<RepairDetails />} />
+            <Route path={PATHS.HOME} element={<Home />} />
+            <Route path={PATHS.LOGIN} element={<Login />} />
+            <Route path={PATHS.SIGNUP} element={<PropertyOwnerSignUp />} />
+            <Route path={PATHS.REPAIR} element={<Repair />} />
+            <Route path={PATHS.CREATE_REPAIR} element={<CreateRepair />} />
+            <Route path={PATHS.SHOW_REPAIRS} element={<ShowRepairs />} />
+            <Route path={PATHS.REPAIR_DETAILS} element={<RepairDetails />} />
             <Route
-              path="/admin"
+              path={PATHS.ADMIN}
               element={
-                <RoleProtectedRoute allowedRoles={['ROLE_ADMIN']}>
+                <RoleProtectedRoute allowedRoles={[ROLES.ADMIN]}>
                   <Admin />
                 </RoleProtectedRoute>
               }
             />
             <Route
-              path={`/owner/:tin`}
+              path={PATHS.OWNER(':tin')}
               element={
-                <RoleProtectedRoute allowedRoles={['ROLE_USER', 'ROLE_ADMIN']}>
+                <RoleProtectedRoute allowedRoles={[ROLES.USER, ROLES.ADMIN]}>
                   <Owner />
                 </RoleProtectedRoute>
               }

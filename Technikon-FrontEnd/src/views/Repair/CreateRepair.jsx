@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Container, TextField, Button, MenuItem, Box, Typography } from '@mui/material';
 import api from '../../api/Api';
 import { useAuth } from '../../hooks/useAuth';
+import { PATHS } from '../../lib/constants';
 
 const CreateRepair = () => {
   const navigate = useNavigate();
@@ -78,7 +79,7 @@ const CreateRepair = () => {
     try {
       const response = await api.post('/api/property-repairs/create', repairData);
       console.log(response.data);
-      navigate('/api/repair'); // Navigate back to the repairs page after creation
+      navigate(PATHS.REPAIR); // Navigate back to the repairs page after creation
     } catch (error) {
       console.error('Error:', error);
       if (error.response) {

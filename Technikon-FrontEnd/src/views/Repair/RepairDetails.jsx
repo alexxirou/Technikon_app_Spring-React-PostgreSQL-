@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { Box, CircularProgress, Typography, Container, Button } from '@mui/material';
 import api from '../../api/Api';
 import { useAuth } from '../../hooks/useAuth';
+import { PATHS } from '../../lib/constants';
 
 const RepairDetails = () => {
   const { repairId } = useParams();
@@ -11,6 +12,7 @@ const RepairDetails = () => {
   const navigate = useNavigate();
   const { authData } = useAuth();
   const propertyOwnerId = authData.userId;
+
 
   useEffect(() => {
     const fetchRepair = async () => {
@@ -26,6 +28,7 @@ const RepairDetails = () => {
 
     fetchRepair();
   }, [propertyOwnerId, repairId]);
+
 
   if (loading) {
     return (
@@ -70,7 +73,7 @@ const RepairDetails = () => {
           Cost: ${repair.cost}
         </Typography>
         <Box mt={2}>
-          <Button variant="contained" color="primary" onClick={() => navigate(`/all-by-owner/${propertyOwnerId}`)}>
+          <Button variant="contained" color="primary" onClick={() => navigate(PATHS.SHOW_REPAIRS)}>
             Back to Repairs
           </Button>
         </Box>

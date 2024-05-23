@@ -73,8 +73,8 @@ public class SampleData {
             propertyOwner.setName("John"); // name
             propertyOwner.setSurname("Doe"); // surname
             propertyOwner.setEmail("JDE@hotmail.com"); // email
-            propertyOwner.setUsername("JDEdfezv"); // username
-            propertyOwner.setPassword("pass"); // password
+            propertyOwner.setUsername("user1"); // username
+            propertyOwner.setPassword("pass1"); // password
             propertyOwner.setAddress("somewhere"); // address
             propertyOwner.setPhoneNumber("+30999582486");
 
@@ -151,8 +151,8 @@ public class SampleData {
             propertyOwner1.setName("John"); // name
             propertyOwner1.setSurname("Doe"); // surname
             propertyOwner1.setEmail("JDE5@hotmail.com"); // email
-            propertyOwner1.setUsername("JDEdfezvkl"); // username
-            propertyOwner1.setPassword("pass"); // password
+            propertyOwner1.setUsername("user2"); // username
+            propertyOwner1.setPassword("pass2"); // password
             propertyOwner1.setAddress("somewheree"); // address
             propertyOwner1.setPhoneNumber("+30999582487");
 
@@ -180,6 +180,17 @@ public class SampleData {
             propertyRepair3.setShortDescription("short description for repair 3");
             propertyRepair3.setLongDescription("long description for repair3");
             propertyRepairService.createPropertyRepair(propertyRepairMapper.RepairToPropertyRepairDto(propertyRepair3));
+
+            PropertyRepair propertyRepair4 = new PropertyRepair();
+            propertyRepair4.setProperty(property);
+            propertyRepair4.setPropertyOwner(propertyOwner1);
+            propertyRepair4.setCost(new BigDecimal(100));
+            propertyRepair4.setRepairStatus(RepairStatus.IN_PROGRESS);
+            propertyRepair4.setRepairType(RepairType.PAINTING);
+            propertyRepair4.setDateOfRepair(LocalDate.of(2025,11,11));
+            propertyRepair4.setShortDescription("short description for repair 4");
+            propertyRepair4.setLongDescription("long description for repair 4");
+            propertyRepairService.createPropertyRepair(propertyRepairMapper.RepairToPropertyRepairDto(propertyRepair4));
         };
     }
 }

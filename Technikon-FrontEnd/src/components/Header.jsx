@@ -7,7 +7,7 @@ import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import Button from "@mui/material/Button";
-
+import { PATHS } from "../lib/constants";
 import { useAuth } from '../hooks/useAuth';
 
 const Header = () => {
@@ -58,7 +58,7 @@ const Header = () => {
               </Button>
               <Button
                 component={Link}
-                to="/repair"
+                to={PATHS.REPAIR}
                 color="inherit"
               >
                 Repair

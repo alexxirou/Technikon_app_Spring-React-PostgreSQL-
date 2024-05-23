@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button, List, ListItem, Box, Typography } from '@mui/material';
 import { useAuth } from '../../hooks/useAuth';
+import { PATHS } from '../../lib/constants';
 
 
 const Repair = () => {
@@ -22,7 +23,7 @@ const Repair = () => {
 
     const showAllRepairs = () => {
 
-        navigate(`/all-by-owner/${propertyOwnerId}`);
+        navigate(PATHS.SHOW_REPAIRS);
     };
 
     return (

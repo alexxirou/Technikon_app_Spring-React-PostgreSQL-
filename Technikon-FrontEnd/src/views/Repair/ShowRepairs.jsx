@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Box, CircularProgress, Button, Typography, Container } from '@mui/material';
 import api from '../../api/Api';
-
+import { PATHS } from '../../lib/constants';
 import { useAuth } from '../../hooks/useAuth';
 
 const ShowRepairs = () => {
@@ -28,9 +28,9 @@ const ShowRepairs = () => {
     fetchRepairs();
   }, []);
 
-  const handleShow = (propertyOwnerId, repairId) => {
-    navigate(`/${propertyOwnerId}/${repairId}`);
-  };
+  const handleShow = (repairId) => {
+    navigate(PATHS.REPAIR_DETAILS.replace(':propertyOwnerId', propertyOwnerId).replace(':repairId', repairId));
+    };
 
   const handleUpdate = (repairId) => {
     navigate(`/update/${repairId}`);
@@ -45,7 +45,7 @@ const ShowRepairs = () => {
     }
   };
 
-  
+
   if (loading) {
     return (
       <Box display="flex" justifyContent="center" alignItems="center" height="100vh">
@@ -56,46 +56,46 @@ const ShowRepairs = () => {
 
   return (
     <Container maxWidth="md">
-      <Box mt={2}>
-        {repairs.length === 0 ? (
-          <Typography variant="h6" align="center">
-            No repairs found.
-          </Typography>
-        ) : (
-          repairs.map((repair) => (
-            <Box
-              key={repair.id}
-              display="flex"
-              alignItems="center"
-              justifyContent="space-between"
-              p={2}
-              mb={2}
-              border={1}
-              borderRadius={8}
-              borderColor="grey.300"
-            >
-              <Box>
-                <Typography variant="subtitle1">{repair.shortDescription}</Typography>
-                <Typography variant="body2" color="textSecondary">
-                  {repair.repairStatus}
-                </Typography>
-              </Box>
-              <Box>
-                <Button variant="contained" color="primary" onClick={() => handleShow(propertyOwnerId, repair.id)}>
-                  Show
-                </Button>
-                <Button variant="contained" color="secondary" onClick={() => handleUpdate(repair.id)} style={{ marginLeft: '8px' }}>
-                  Update
-                </Button>
-                <Button variant="contained" color="error" onClick={() => handleDelete(repair.id)} style={{ marginLeft: '8px' }}>
-                  Delete
-                </Button>
-              </Box>
-            </Box>
-          ))
-        )}
-      </Box>
-    </Container>
+  <Box mt={2}>
+    {repairs.length === 0 ? (
+      <Typography variant="h6" align="center">
+        No repairs found.
+      </Typography>
+    ) : (
+      repairs.map((repair, index) => (
+        <Box
+          key={repair.id}
+          display="flex"
+          alignItems="center"
+          justifyContent="space-between"
+          p={2}
+          mb={2}
+          border={1}
+          borderRadius={8}
+          borderColor="grey.300"
+        >
+          <Box>
+            <Typography variant="subtitle1">{repair.shortDescription}</Typography>
+            <Typography variant="body2" color="textSecondary">
+              {repair.repairStatus}
+            </Typography>
+          </Box>
+          <Box>
+            <Button variant="contained" color="primary" onClick={() => handleShow(propertyOwnerId, index)}>
+              Show
+            </Button>
+            <Button variant="contained" color="secondary" onClick={() => handleUpdate(repair.id)} style={{ marginLeft: '8px' }}>
+              Update
+            </Button>
+            <Button variant="contained" color="error" onClick={() => handleDelete(repair.id)} style={{ marginLeft: '8px' }}>
+              Delete
+            </Button>
+          </Box>
+        </Box>
+      ))
+    )}
+  </Box>
+</Container>
   );
 };
 
