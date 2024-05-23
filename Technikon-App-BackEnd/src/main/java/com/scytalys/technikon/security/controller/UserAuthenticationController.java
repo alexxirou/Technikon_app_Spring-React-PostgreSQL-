@@ -9,6 +9,8 @@ import com.scytalys.technikon.security.service.UserInfoDetails;
 import com.scytalys.technikon.security.service.UserInfoService;
 import com.scytalys.technikon.service.PropertyOwnerService;
 import com.scytalys.technikon.utility.HeaderUtility;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -80,4 +82,9 @@ public class UserAuthenticationController {
             throw new  BadCredentialsException("Invalid credentials");
         }
     }
+    @PostMapping("/logout")
+    public ResponseEntity<String> logout(HttpServletRequest request, HttpServletResponse response) {
+        HttpHeaders headers= HeaderUtility.createHeaders("Success-Header", "User logout successful.");
+
+        return new ResponseEntity<>("Logout successful. Please delete the token from your client storage.", headers, HttpStatus.OK);    }
 }
