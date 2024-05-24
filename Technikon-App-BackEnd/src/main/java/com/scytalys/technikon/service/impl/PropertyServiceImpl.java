@@ -4,15 +4,19 @@ import com.scytalys.technikon.dto.property.PropertyCreateDto;
 import com.scytalys.technikon.dto.property.PropertyUpdateDto;
 import com.scytalys.technikon.domain.Property;
 import com.scytalys.technikon.mapper.PropertyMapper;
+import com.scytalys.technikon.repository.PropertyRepairRepository;
 import com.scytalys.technikon.repository.PropertyRepository;
+import com.scytalys.technikon.service.PropertyRepairService;
 import com.scytalys.technikon.service.PropertyService;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
 
 @Service
 @AllArgsConstructor
@@ -23,6 +27,9 @@ public class PropertyServiceImpl implements PropertyService {
 
     @Autowired
     private PropertyMapper propertyMapper;
+
+    @Autowired
+    private PropertyRepairService propertyRepairService;
 
     //Get Property (entity,table_id) - Search
     @Override
@@ -50,8 +57,8 @@ public class PropertyServiceImpl implements PropertyService {
     @Override
     public PropertyCreateDto createProperty(PropertyCreateDto propertyCreateDto) {
         Property property = propertyMapper.PropertyCreateDtoToProperty(propertyCreateDto);
-        propertyRepository.save(property);
-        return propertyCreateDto;
+        Property newProperty = propertyRepository.save(property);
+        return propertyMapper.toPropertyCreateDto(newProperty);
     }
 
     @Override
@@ -72,26 +79,22 @@ public class PropertyServiceImpl implements PropertyService {
         return propertyMapper.toPropertyUpdateDto(propertyItem);
     }
 
-//    @Override
-//    public Property deactivateProperty(long id, PropertyDeactivateDto propertyDeactivateDto) {
-//        Property propertyItem = propertyRepository.findById(id)
-//                .orElseThrow(() -> new EntityNotFoundException("Property with id " + id + " not found"));
-//
-//        propertyItem.setActive(false);
-//        propertyRepository.save(propertyItem);
-//
-//        return propertyMapper.propertyToPropertyUpdateDto(propertyItem);
-//    }
-//
-//    @Override
-//    public Property eraseProperty(long id) {
-//        Property propertyItem = propertyRepository.eraseProperty.orElseThrow(() -> new EntityNotFoundException("Property  with id " + id + " not found"));
-//        if (propertyItem == null) {
-//            propertyRepository.delete(property);
-//            return true;
-//        }
-//        return false;
-//    }
+
+    @Transactional
+    public void deactivateProperty(Property property) {
+      property.setActive(false);
+        propertyRepository.save(property);
+    }
+    @Override
+   public boolean checkRelatedEntries(Property property) {
+        return propertyRepairService.getPropertyRepairsByOwner(property.getPropertyOwner().getId()).isEmpty();
+    }
+
+
+    @Override
+    public void eraseProperty(long id) {
+        propertyRepository.deleteById(id);
+    }
 }
 
 

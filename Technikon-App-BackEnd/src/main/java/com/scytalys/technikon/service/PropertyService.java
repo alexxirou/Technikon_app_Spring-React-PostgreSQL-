@@ -16,6 +16,7 @@ public interface PropertyService {
     PropertyCreateDto createProperty(PropertyCreateDto propertyCreateDto);
     PropertyUpdateDto updateProperty(long id, PropertyUpdateDto propertyDto);
 
-//    PropertyDeactivateDto deactivateProperty(long id);
-  //  PropertyErase eraseProperty(long id);
+    void deactivateProperty( Property property);
+    void eraseProperty(long id);
+    boolean checkRelatedEntries(Property property);
 }

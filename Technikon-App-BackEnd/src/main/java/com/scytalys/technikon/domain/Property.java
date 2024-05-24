@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.NonNull;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity(name = "Property")
 @Data
@@ -34,7 +35,6 @@ public class Property {
     private boolean isActive = true;
     @ManyToOne
     @NonNull
-    @JoinColumn(name = "Owner", referencedColumnName = "id")
     private PropertyOwner propertyOwner;
 }
 

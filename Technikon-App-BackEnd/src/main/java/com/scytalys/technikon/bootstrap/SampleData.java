@@ -11,6 +11,7 @@ import com.scytalys.technikon.dto.UserCreationDto;
 import com.scytalys.technikon.dto.UserSearchDto;
 import com.scytalys.technikon.dto.UserSearchResponseDto;
 import com.scytalys.technikon.dto.UserUpdateDto;
+import com.scytalys.technikon.dto.property.PropertyCreateDto;
 import com.scytalys.technikon.mapper.PropertyMapper;
 import com.scytalys.technikon.mapper.PropertyRepairMapper;
 import com.scytalys.technikon.repository.PropertyRepository;
@@ -63,7 +64,6 @@ public class SampleData {
             logger.info("Created property owner: {}", propertyOwner);
 //            propertyOwnerService.updateUserPassword(propertyOwner.getId(),"password", propertyOwner.getVersion());
             Property property = new Property();
-            property.setId(1);
             property.setTin("12345678910");
             property.setAddress("somewhere");
             property.setPropertyType(PropertyType.values()[1]);
@@ -72,7 +72,11 @@ public class SampleData {
             property.setLongitude(58.4);
             property.setPropertyOwner(propertyOwner);
             property.setPicture("fjrehgf");
-            propertyService.createProperty(propertyMapper.toPropertyCreateDto(property));
+            PropertyCreateDto propertyCreateDto = propertyMapper.toPropertyCreateDto(property);
+            propertyService.createProperty(propertyCreateDto);
+            property = propertyService.findPropertyByTin(property.getTin());
+
+
             System.out.println(property.getId());
             System.out.println(property);
             logger.info("Created property: {}", property);
@@ -96,7 +100,6 @@ public class SampleData {
 // DATA FOR PROPERTY REPAIR DEBUGGUING
 
             Property property1 = new Property();
-            property1.setId(2);
             property1.setTin("12345678911");
             property1.setAddress("Filellinon 12");
             property1.setPropertyOwner(propertyOwner);
@@ -106,7 +109,7 @@ public class SampleData {
             property1.setLongitude(34.54);
             property1.setConstructionYear(LocalDate.of(1998, 10, 12));
             propertyService.createProperty(propertyMapper.toPropertyCreateDto(property1));
-
+            property1 = propertyService.findPropertyByTin(property1.getTin());
 
             Property property2 = new Property();
             property2.setId(3);
@@ -118,10 +121,11 @@ public class SampleData {
             property2.setLongitude(13);
             property2.setConstructionYear(LocalDate.of(2000, 2, 2));
             propertyService.createProperty(propertyMapper.toPropertyCreateDto(property2));
+            property2 = propertyService.findPropertyByTin(property2.getTin());
 
             PropertyRepair propertyRepair1 = new PropertyRepair();
             propertyRepair1.setPropertyOwner(propertyOwner);
-            propertyRepair1.setProperty(property);
+            propertyRepair1.setProperty(property2);
             propertyRepair1.setCost(new BigDecimal(150));
             propertyRepair1.setRepairType(RepairType.PLUMBING);
             propertyRepair1.setRepairStatus(RepairStatus.SCHEDULED);

@@ -30,4 +30,5 @@ public interface PropertyRepairRepository extends JpaRepository<PropertyRepair, 
 
     @Query("SELECT p FROM PropertyRepair p WHERE p.propertyOwner.id= :propertyOwnerId AND p.dateOfRepair>= :firstDate AND p.dateOfRepair<= :lastDate")
     List<PropertyRepair> getPropertyRepairsByDates(@Param("propertyOwnerId") long propertyOwnerId, @Param("firstDate") LocalDate firstDate, @Param("lastDate") LocalDate lastDate);
+
 }

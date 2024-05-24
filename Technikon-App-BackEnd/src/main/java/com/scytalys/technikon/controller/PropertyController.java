@@ -49,10 +49,10 @@ public class PropertyController {
     //CRUD
     //Create
     @PostMapping("/create")
-    ResponseEntity<PropertyCreateDto> createProperty(@RequestBody PropertyCreateDto propertyDto) {
+    ResponseEntity<PropertyCreateDto> createProperty(@RequestBody PropertyCreateDto propertyCreateDto) {
         HttpHeaders headers = new HttpHeaders();
         headers.add("message", "Creation of a property");
-        return new ResponseEntity<>(propertyService.createProperty(propertyDto), headers, HttpStatus.CREATED);
+        return new ResponseEntity<>(propertyService.createProperty(propertyCreateDto), headers, HttpStatus.CREATED);
     }
 
     //Update
@@ -73,27 +73,15 @@ public class PropertyController {
         return ResponseEntity.ok(updatedProperty);
     }
 
-//    //Deactivate
-//    @PutMapping("/property/deactivate/{propertyId}")
-//    public ResponseEntity<PropertyUpdateDto> deactivateProperty(
-//            @PathVariable("propertyId") long propertyId,
-//            @RequestBody PropertyDeactivateDto propertyDeactivateDto) {
-//        PropertyUpdateDto deactivatedPropertyDto = propertyService.deactivateProperty(propertyId, propertyDeactivateDto);
-//        if (deactivatedPropertyDto == null) {
-//            return ResponseEntity.notFound().build();
-//        }
-//        return ResponseEntity.ok(deactivatedPropertyDto);
-//    }
-//
-//    //Erase
-//    @DeleteMapping("/property/{propertyId}")
-//    public ResponseEntity<Void> eraseProperty(@PathVariable("propertyId") long propertyId) {
-//        boolean isDeleted = propertyService.eraseProperty(propertyId);
-//        if (isDeleted) {
-//            return ResponseEntity.noContent().build();
-//        } else {
-//            return ResponseEntity.notFound().build();
-//        }
-//    }
+    //EraseOrDeactivate
+    @DeleteMapping("/delete/{propertyId}")
+    public ResponseEntity<Object> eraseProperty(@PathVariable("propertyId") long propertyId) {
+        Property property = propertyService.findPropertyById(propertyId);
+        boolean result =  propertyService.checkRelatedEntries(property);
+        if (result) propertyService.eraseProperty(propertyId);
+        else propertyService.deactivateProperty(property);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
 }
 
