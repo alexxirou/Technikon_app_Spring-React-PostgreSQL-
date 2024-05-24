@@ -66,6 +66,7 @@ public class AdminServiceImpl implements AdminService {
         return propertyOwnerRepository.findByTin(tin).get();
     }
 
+
     @Override
     public List<PropertyRepair> getDueRepairs(Property property) {
         return propertyRepairRepository.getPropertyRepairsByProperty(property.getId());
@@ -86,7 +87,7 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public Property findProperty(String tin) {
-        return propertyRepository.findByTin(tin).get();
+        return propertyRepository.findByTin(tin);
     }
 
     @Override
