@@ -99,8 +99,9 @@ const handleUpdateSubmit = async () => {
     
     // Check if the repair has a status other than "DEFAULT_PENDING"
     if (repairToDelete && repairToDelete.repairStatus !== "DEFAULT_PENDING") {
-      setErrorDialogMessage("You cannot delete this repair.");
+      setErrorDialogMessage("You cannot delete this repair");
       setErrorDialogOpen(true);
+      console.log("Repair with status", repairToDelete.repairStatus, "could not be deleted");
       return; // Exit the function without making the delete request
     }
 
@@ -109,10 +110,12 @@ const handleUpdateSubmit = async () => {
       const response = await api.delete(`/api/property-repairs/${propertyOwnerId}/delete/${repairId}`);
     
         setRepairs(repairs.filter(repair => repair.id !== repairId));
-        console.log("Response status:", response.status); // Log the response status
-      
+        console.log("Response status:", response.status);
+        if(response.status == 200){
+          console.log("Repair deleted successfully");
+        }
     } catch (error) {
-      console.error("Failed to delete repair", error);
+     console.log(error);
     }
   };
  

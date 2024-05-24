@@ -163,6 +163,7 @@ public class PropertyRepairServiceImpl implements PropertyRepairService {
             propertyRepair.setRepairStatus(dto.repairStatus());
         }
         if (dto.cost() !=null) {
+            validateCostInputOrThrow(dto.cost());
             propertyRepair.setCost(dto.cost());
         }
         if (dto.longDescription() !=null) {
