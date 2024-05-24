@@ -1,9 +1,8 @@
 package com.scytalys.technikon.bootstrap;
-
-
 import com.scytalys.technikon.domain.Property;
 import com.scytalys.technikon.domain.PropertyOwner;
 import com.scytalys.technikon.domain.PropertyRepair;
+import com.scytalys.technikon.domain.*;
 import com.scytalys.technikon.domain.category.PropertyType;
 import com.scytalys.technikon.domain.category.RepairStatus;
 import com.scytalys.technikon.domain.category.RepairType;
@@ -15,8 +14,8 @@ import com.scytalys.technikon.dto.property.PropertyCreateDto;
 import com.scytalys.technikon.mapper.PropertyMapper;
 import com.scytalys.technikon.mapper.PropertyRepairMapper;
 import com.scytalys.technikon.repository.PropertyRepository;
+import com.scytalys.technikon.service.AdminService;
 import com.scytalys.technikon.service.PropertyOwnerService;
-import com.scytalys.technikon.dto.repair.PropertyRepairDto;
 import com.scytalys.technikon.service.PropertyRepairService;
 import com.scytalys.technikon.service.PropertyService;
 import lombok.AllArgsConstructor;
@@ -38,14 +37,32 @@ public class SampleData {
     private final PropertyRepairService propertyRepairService;
     private final PropertyOwnerService propertyOwnerService;
     private final PropertyService propertyService;
+
     private final PropertyRepairMapper propertyRepairMapper;
     private final PropertyMapper propertyMapper;
     private final PropertyRepository propertyRepository;
+
+    private final AdminService adminService;
+
 
     @Bean
     public CommandLineRunner myCommandLineRunner() {
         return args -> {
             Logger logger = LoggerFactory.getLogger(CommandLineRunner.class); // Replace MyApplication with your class name
+
+
+            Admin theAdmin = new Admin();
+            theAdmin.setTin("1751614865GR");// id
+            theAdmin.setName("Admin"); // name
+            theAdmin.setSurname("Administeridis"); // surname
+            theAdmin.setEmail("adminphile@hotmail.com"); // email
+            theAdmin.setUsername("admin"); // username
+            theAdmin.setPassword("pass"); // password
+            theAdmin.setAddress("over here"); // address
+            theAdmin.setPhoneNumber("+30999582486");
+            theAdmin.setRegistrationDate(LocalDate.of(2010, 11, 21));
+            adminService.create(theAdmin);
+
 
             PropertyOwner propertyOwner = new PropertyOwner();
             propertyOwner.setTin("1651614865GR");// id
@@ -56,11 +73,13 @@ public class SampleData {
             propertyOwner.setPassword("pass"); // password
             propertyOwner.setAddress("somewhere"); // address
             propertyOwner.setPhoneNumber("+30999582486");
+            propertyOwner.setRegistrationDate(LocalDate.of(2012, 9, 11));
+            adminService.createOwner(propertyOwner);
+//            UserCreationDto dto =new UserCreationDto(propertyOwner.getTin(), propertyOwner.getName(), propertyOwner.getSurname(), propertyOwner.getEmail(), propertyOwner.getUsername(), propertyOwner.getPassword(), propertyOwner.getAddress(), propertyOwner.getPhoneNumber());
 
-            UserCreationDto dto =new UserCreationDto(propertyOwner.getTin(), propertyOwner.getName(), propertyOwner.getSurname(), propertyOwner.getEmail(), propertyOwner.getUsername(), propertyOwner.getPassword(), propertyOwner.getAddress(), propertyOwner.getPhoneNumber());
-            logger.info("Created user creation dto: {}", dto);
+            //           logger.info("Created user creation dto: {}", dto);
 
-            propertyOwner=propertyOwnerService.createDBUser(dto);
+            //          propertyOwner=propertyOwnerService.createDBUser(dto);
             logger.info("Created property owner: {}", propertyOwner);
 //            propertyOwnerService.updateUserPassword(propertyOwner.getId(),"password", propertyOwner.getVersion());
             Property property = new Property();
@@ -82,50 +101,60 @@ public class SampleData {
             logger.info("Created property: {}", property);
             System.out.println(propertyService.findPropertyById(1L));
 //          Property result = propertyService.searchProperty();
+
+//            Property result = propertyService.searchProperty();
 //            logger.info("Created result search response: {}", result);
 
+//            Property result = propertyService.searchProperty(1L);
+//            logger.info("Created result search response: {}", result);
+            PropertyRepair propertyRepair = new PropertyRepair();
+            propertyRepair.setDateOfRepair(LocalDate.of(2024, 6, 14));
+            propertyRepair.setShortDescription("Plumb work");
+            propertyRepair.setRepairType(RepairType.PLUMBING);
+            propertyRepair.setRepairStatus(RepairStatus.SCHEDULED);
+            propertyRepair.setCost(new BigDecimal(150));
+            propertyRepair.setLongDescription("Describing with details the work to be done");
+            propertyRepair.setProperty(property);
 
-            UserSearchDto request =new UserSearchDto("1651614865GR",null,null);
-            List<PropertyOwner> resultUser =propertyOwnerService.searchUser(request);
+
+            //propertyRepairService.createPropertyRepair(propertyRepair);
+            logger.info("Created property repair: {}", propertyRepair);
+
+            UserSearchDto request = new UserSearchDto("1651614865GR", null, null);
+            List<PropertyOwner> resultUser = propertyOwnerService.searchUser(request);
             logger.info("Searched property Owner: {}", resultUser);
-            List<UserSearchResponseDto> responseDto=propertyOwnerService.createSearchResponse(resultUser);
+            List<UserSearchResponseDto> responseDto = propertyOwnerService.createSearchResponse(resultUser);
             logger.info("Created user search response: {}", responseDto);
-            UserUpdateDto newUpdate = new UserUpdateDto(null,"elsewhere",null, propertyOwner.getVersion());
+            UserUpdateDto newUpdate = new UserUpdateDto(null, "elsewhere", null, propertyOwner.getVersion());
             propertyOwnerService.updateUser(propertyOwner.getTin(), newUpdate);
             logger.info("Updated user with: {}", newUpdate);
-            resultUser =propertyOwnerService.searchUser(request);
+            resultUser = propertyOwnerService.searchUser(request);
             logger.info("Searched property Owner: {}", resultUser);
 
 
 // DATA FOR PROPERTY REPAIR DEBUGGUING
 
             Property property1 = new Property();
-            property1.setTin("12345678911");
             property1.setAddress("Filellinon 12");
             property1.setPropertyOwner(propertyOwner);
             property1.setPropertyType(PropertyType.MAISONETTE);
-            property1.setPicture("PICTURE");
             property1.setLatitude(13.5);
             property1.setLongitude(34.54);
             property1.setConstructionYear(LocalDate.of(1998, 10, 12));
-            propertyService.createProperty(propertyMapper.toPropertyCreateDto(property1));
-            property1 = propertyService.findPropertyByTin(property1.getTin());
+            propertyService.createProperty(property1);
 
             Property property2 = new Property();
-            property2.setId(3);
-            property2.setTin("12345678999");
             property2.setAddress("Mesologgiou 12");
             property2.setPropertyOwner(propertyOwner);
             property2.setPropertyType(PropertyType.APARTMENT_BUILDING);
             property2.setLatitude(13);
             property2.setLongitude(13);
             property2.setConstructionYear(LocalDate.of(2000, 2, 2));
-            propertyService.createProperty(propertyMapper.toPropertyCreateDto(property2));
-            property2 = propertyService.findPropertyByTin(property2.getTin());
+            propertyService.createProperty(property2);
 
             PropertyRepair propertyRepair1 = new PropertyRepair();
             propertyRepair1.setPropertyOwner(propertyOwner);
-            propertyRepair1.setProperty(property2);
+            propertyRepair1.setProperty(property);
             propertyRepair1.setCost(new BigDecimal(150));
             propertyRepair1.setRepairType(RepairType.PLUMBING);
             propertyRepair1.setRepairStatus(RepairStatus.SCHEDULED);

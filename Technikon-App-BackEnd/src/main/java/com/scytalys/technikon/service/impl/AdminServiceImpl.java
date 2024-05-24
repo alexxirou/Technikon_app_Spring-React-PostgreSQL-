@@ -3,76 +3,99 @@ package com.scytalys.technikon.service.impl;
 import com.scytalys.technikon.domain.Admin;
 import com.scytalys.technikon.domain.Property;
 import com.scytalys.technikon.domain.PropertyOwner;
-import com.scytalys.technikon.dto.*;
-import com.scytalys.technikon.mapper.AdminMapper;
+import com.scytalys.technikon.domain.PropertyRepair;
+import com.scytalys.technikon.dto.UserUpdateDto;
 import com.scytalys.technikon.repository.AdminRepository;
 import com.scytalys.technikon.repository.PropertyOwnerRepository;
+import com.scytalys.technikon.repository.PropertyRepairRepository;
 import com.scytalys.technikon.repository.PropertyRepository;
 import com.scytalys.technikon.service.AdminService;
 import lombok.AllArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 @Service
 @AllArgsConstructor
 public class AdminServiceImpl implements AdminService {
+    private final AdminRepository adminRepository;
     private final PropertyOwnerRepository propertyOwnerRepository;
     private final PropertyRepository propertyRepository;
-    private final AdminMapper adminMapper;
+    private final PropertyRepairRepository propertyRepairRepository;
+
+    // private final Logger logger = LoggerFactory.getLogger(AdminService.class);
 
     @Override
-    public void softDeleteUser(String tin) {
-
+    public List<Admin> findAll() {
+        return adminRepository.findAll();
     }
 
     @Override
-    public void deleteUser(String tin) {
-
+    public Admin findById(Long id) {
+        return adminRepository.findById(id).get();
     }
 
     @Override
-    public void updateUser(String tin, UserUpdateDto dto) {
-
+    public Admin create(Admin admin) {
+        return adminRepository.save(admin);
     }
 
     @Override
-    public UserResponseDto createUserResponseDto(Admin user) {
-        return null;
+    public Admin update(Long id, Admin admin) {
+        delete(id);
+        return create(admin);
     }
 
     @Override
-    public List<UserSearchResponseDto> createSearchResponse(List<Admin> users) {
-        return List.of();
+    public void delete(Long id) {
+        adminRepository.deleteById(id);
+    }
+
+
+    @Override
+    public PropertyOwner createOwner(PropertyOwner propertyOwner) {
+        return propertyOwnerRepository.save(propertyOwner);
     }
 
     @Override
-    public List<Admin> searchUser(UserSearchDto dto) {
-        return List.of();
+    public PropertyOwner findOwner(String tin) {
+        return propertyOwnerRepository.findByTin(tin).get();
     }
 
     @Override
-    public Admin createDBUser(UserCreationDto dto) {
-        return null;
-    }
-
-    @Override
-    public Admin findUser(String tin) {
-        return null;
-    }
-
-    @Override
-    public UserDetails userDetails(Admin user) {
-        return null;
+    public List<PropertyRepair> getDueRepairs(Property property) {
+        return propertyRepairRepository.getPropertyRepairsByProperty(property.getId());
     }
 
     @Override
     public List<PropertyOwner> getRegisteredOwners(LocalDate from, LocalDate to) {
-        return propertyOwnerRepository.findAll();
+        List<PropertyOwner> owners = propertyOwnerRepository.findAll();
+        List<PropertyOwner> filteredOwners = new LinkedList<>();
+
+        for (PropertyOwner owner : owners)
+            if (!owner.getRegistrationDate().isBefore(from)
+                    && !owner.getRegistrationDate().isAfter(to))
+                filteredOwners.add(owner);
+
+        return filteredOwners;
     }
 
     @Override
-    public List<Property> getRegisteredProperties(PropertyOwner owner, LocalDate from, LocalDate to) {
-       return propertyRepository.findAll();
+    public Property findProperty(String tin) {
+        return propertyRepository.findByTin(tin).get();
+    }
+
+    @Override
+    public List<Property> getRegisteredProperties(PropertyOwner owner) {
+        List<Property> properties = propertyRepository.findAll();
+        List<Property>  filterdProperties = new LinkedList<Property>();
+        for (Property property : properties)
+            if (property.getPropertyOwner().equals(owner))
+                    filterdProperties.add(property);
+        return properties;
     }
 }
