@@ -8,6 +8,7 @@ import { useAuth } from '../../hooks/useAuth';
 import { PATHS } from '../../lib/constants';
 import RepairForm from './RepairForm';
 import SuccessDialog from './SuccessDialog';
+import {createRepair} from './apiRepairService';
 
 const CreateRepair = () => {
   const navigate = useNavigate();
@@ -43,9 +44,9 @@ const CreateRepair = () => {
     };
 
     try {
-      const response = await api.post('/api/property-repairs/create', repairData);
-      console.log("Created Repair:", response.data); // Log the created repair data
-      setSuccess(true); // Show the success dialog
+      const response = await createRepair(authData.userId, repairData);
+    console.log("Created Repair:", response); // Log the created repair data
+    setSuccess(true); // Show the success dialog
     } catch (error) {
       console.error('Error:', error);
       if (error.response) {

@@ -50,7 +50,6 @@ const RepairDetails = () => {
     );
   }
 
-
   const handleBackToRepairs = () => {
     if (authData) {
       navigate(PATHS.SHOW_REPAIRS(authData.userId));

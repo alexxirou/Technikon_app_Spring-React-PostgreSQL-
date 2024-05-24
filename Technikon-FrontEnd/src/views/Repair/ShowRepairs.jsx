@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Box, CircularProgress, Button, Typography, Container, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } from '@mui/material';
-import api from '../../api/Api';
+import { Box, CircularProgress, Button, Typography, Container } from '@mui/material';
+import { fetchRepairs, updateRepair, deleteRepair } from './apiRepairService';
 import { PATHS } from '../../lib/constants';
 import { useAuth } from '../../hooks/useAuth';
-import { TextField } from '@mui/material';
+import UpdateRepairDialog from './UpdateRepairDialog';
+import ErrorDialog from './ErrorDialog';
 
 const ShowRepairs = () => {
   const [repairs, setRepairs] = useState([]);
@@ -23,10 +24,10 @@ const ShowRepairs = () => {
       return;
     }
 
-    const fetchRepairs = async () => {
+    const fetchAndSetRepairs = async () => {
       try {
-        const response = await api.get(`/api/property-repairs/all-by-owner/${propertyOwnerId}`);
-        setRepairs(response.data);
+        const repairs = await fetchRepairs(propertyOwnerId);
+        setRepairs(repairs);
       } catch (error) {
         console.error("Failed to fetch repairs", error);
       } finally {
@@ -34,8 +35,65 @@ const ShowRepairs = () => {
       }
     };
 
-    fetchRepairs();
+    fetchAndSetRepairs();
   }, [propertyOwnerId]);
+
+  const handleCreateRepair = () => {
+    navigate(PATHS.CREATE_REPAIR);
+  };
+
+  const handleShow = (repairId) => {
+    navigate(PATHS.REPAIR_DETAILS(propertyOwnerId, repairId));
+  };
+
+  const handleUpdate = (repairId) => {
+    const selected = repairs.find((repair) => repair.id === repairId);
+    setSelectedRepair(selected);
+    setUpdateDialogOpen(true);
+  };
+
+  const handleCloseUpdateDialog = () => {
+    setUpdateDialogOpen(false);
+    setSelectedRepair(null);
+  };
+
+  const handleUpdateSubmit = async () => {
+    try {
+      await updateRepair(propertyOwnerId, selectedRepair.id, selectedRepair);
+      navigate(PATHS.REPAIR_DETAILS(propertyOwnerId, selectedRepair.id));
+    } catch (error) {
+      console.error("Failed to update repair", error);
+      setErrorDialogMessage('Failed to update repair');
+      setErrorDialogOpen(true);
+    }
+  };
+
+  const handleDelete = async (repairId) => {
+    const repairToDelete = repairs.find((repair) => repair.id === repairId);
+
+    if (repairToDelete && repairToDelete.repairStatus !== 'DEFAULT_PENDING') {
+      setErrorDialogMessage("You cannot delete this repair");
+      console.log("Repair with status:", repairToDelete.repairStatus, "could not be deleted")
+      setErrorDialogOpen(true);
+      return;
+    }
+
+    try {
+      const responseStatus = await deleteRepair(propertyOwnerId, repairId);
+      if (responseStatus === 200) {
+        setRepairs(repairs.filter((repair) => repair.id !== repairId));
+      }
+    } catch (error) {
+      console.error("Failed to delete repair", error);
+      setErrorDialogMessage('Failed to delete repair');
+      setErrorDialogOpen(true);
+    }
+  };
+
+  const handleCloseErrorDialog = () => {
+    setErrorDialogOpen(false);
+    setErrorDialogMessage('');
+  };
 
   if (loading) {
     return (
@@ -52,77 +110,6 @@ const ShowRepairs = () => {
       </Typography>
     );
   }
-
-  const handleCreateRepair = () => {
-    navigate(PATHS.CREATE_REPAIR);
-  };
-
-  
-  const handleShow = (repairId) => {
-    navigate(PATHS.REPAIR_DETAILS(propertyOwnerId,repairId));
-  };
-
-
-  const handleUpdate = (repairId) => {
-    // Find the selected repair based on the repairId
-    const selected = repairs.find(repair => repair.id === repairId);
-    setSelectedRepair(selected);
-    setUpdateDialogOpen(true);
-  };
-
-  const handleCloseUpdateDialog = () => {
-    setUpdateDialogOpen(false);
-    setSelectedRepair(null);
-  };
-
-  // Inside handleUpdateSubmit function in ShowRepairs.js
-
-const handleUpdateSubmit = async () => {
-  try {
-    const response = await api.put(`/api/property-repairs/${propertyOwnerId}/${selectedRepair.id}`, selectedRepair);
-    console.log(response.data); // Log the response data
-
-    // Redirect to another page after successful update
-    navigate(PATHS.REPAIR_DETAILS(propertyOwnerId, selectedRepair.id));
-  } catch (error) {
-    console.error("Failed to update repair", error);
-    setErrorDialogMessage('Failed to update repair');
-    setErrorDialogOpen(true);
-  }
-};
-
-
-
-  const handleDelete = async (repairId) => {
-    // Get the repair object from the state based on the repairId
-    const repairToDelete = repairs.find(repair => repair.id === repairId);
-    
-    // Check if the repair has a status other than "DEFAULT_PENDING"
-    if (repairToDelete && repairToDelete.repairStatus !== "DEFAULT_PENDING") {
-      setErrorDialogMessage("You cannot delete this repair");
-      setErrorDialogOpen(true);
-      console.log("Repair with status", repairToDelete.repairStatus, "could not be deleted");
-      return; // Exit the function without making the delete request
-    }
-
-    // If the repair has status "DEFAULT_PENDING", proceed with the delete request
-    try {
-      const response = await api.delete(`/api/property-repairs/${propertyOwnerId}/delete/${repairId}`);
-    
-        setRepairs(repairs.filter(repair => repair.id !== repairId));
-        console.log("Response status:", response.status);
-        if(response.status == 200){
-          console.log("Repair deleted successfully");
-        }
-    } catch (error) {
-     console.log(error);
-    }
-  };
- 
-  const handleCloseErrorDialog = () => {
-    setErrorDialogOpen(false);
-    setErrorDialogMessage('');
-  };
 
   return (
     <Container maxWidth="md">
@@ -171,76 +158,20 @@ const handleUpdateSubmit = async () => {
           ))
         )}
       </Box>
-      {/* Update Dialog */}
-    <Dialog open={updateDialogOpen} onClose={handleCloseUpdateDialog}>
-      <DialogTitle>Update Repair</DialogTitle>
-      <DialogContent>
-        <DialogContentText>Update the repair details below:</DialogContentText>
-        {/* Form fields for updating repair */}
-        <TextField
-          label="Short Description"
-          value={selectedRepair?.shortDescription || ''}
-          onChange={(e) => setSelectedRepair({ ...selectedRepair, shortDescription: e.target.value })}
-          fullWidth
-          margin="normal"
-        />
-        <TextField
-          label="Date of Repair"
-          type="date"
-          value={selectedRepair?.dateOfRepair || ''}
-          onChange={(e) => setSelectedRepair({ ...selectedRepair, dateOfRepair: e.target.value })}
-          fullWidth
-          margin="normal"
-          InputLabelProps={{
-          shrink: true,
-          }}
-        />
-        <TextField
-          label="Repair Type"
-          value={selectedRepair?.repairType || ''}
-          onChange={(e) => setSelectedRepair({ ...selectedRepair, repairType: e.target.value })}
-          fullWidth
-          margin="normal"
-        />
-        <TextField
-          label="Repair Status"
-          value={selectedRepair?.repairStatus || ''}
-          onChange={(e) => setSelectedRepair({ ...selectedRepair, repairStatus: e.target.value })}
-          fullWidth
-          margin="normal"
-        />
-        <TextField
-          label="Cost"
-          value={selectedRepair?.cost || ''}
-          onChange={(e) => setSelectedRepair({ ...selectedRepair, cost: e.target.value })}
-          fullWidth
-          margin="normal"
-        />
-        <TextField
-          label="Long Description"
-          value={selectedRepair?.longDescription || ''}
-          onChange={(e) => setSelectedRepair({ ...selectedRepair, longDescription: e.target.value })}
-          fullWidth
-          margin="normal"
-        />
-      </DialogContent>
-      <DialogActions>
-        <Button onClick={handleCloseUpdateDialog} color="primary">Cancel</Button>
-        <Button onClick={handleUpdateSubmit} color="primary">Update</Button>
-      </DialogActions>
-    </Dialog>
-      <Dialog open={errorDialogOpen} onClose={handleCloseErrorDialog}>
-        <DialogTitle>Error</DialogTitle>
-        <DialogContent>
-          <DialogContentText>{errorDialogMessage}</DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleCloseErrorDialog} color="primary">
-            OK
-          </Button>
-        </DialogActions>
-      </Dialog>
+      <UpdateRepairDialog
+        open={updateDialogOpen}
+        onClose={handleCloseUpdateDialog}
+        repair={selectedRepair}
+        onChange={setSelectedRepair}
+        onSubmit={handleUpdateSubmit}
+      />
+      <ErrorDialog
+        open={errorDialogOpen}
+        message={errorDialogMessage}
+        onClose={handleCloseErrorDialog}
+      />
     </Container>
-  )}
+  );
+};
 
 export default ShowRepairs;
