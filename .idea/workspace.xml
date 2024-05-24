@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f3732d33-421a-415d-ba42-6d0b12488ca7" name="Changes" comment="Implemented delete repair funcionality" />
+    <list default="true" id="f3732d33-421a-415d-ba42-6d0b12488ca7" name="Changes" comment="Corrected routing for repairs" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -22,7 +22,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="AuthenticationFeature" />
+        <entry key="$PROJECT_DIR$" value="PropertyService_zero" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -39,42 +39,42 @@
     <option name="showLibraryContents" value="true" />
     <option name="showMembers" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.TechnikonApplication.executor": "Run",
-    "JUnit.JwtServiceTest.executor": "Run",
-    "JUnit.JwtServiceTest.testGenerateTokenAndVerify.executor": "Run",
-    "JUnit.JwtServiceTest.testVerifyJwtToken.executor": "Run",
-    "JUnit.PropertyOwnerServiceImplTest.executor": "Run",
-    "JUnit.PropertyOwnerServiceImplTest.testCreateUser.executor": "Run",
-    "JUnit.PropertyOwnerServiceImplTest.testSearchUserByFail.executor": "Run",
-    "JUnit.PropertyOwnerServiceImplTest.testUpdateUser.executor": "Run",
-    "JUnit.PropertyOwnerServiceImplTest.testUpdateUserFailWrongEmailFormat.executor": "Run",
-    "JUnit.PropertyOwnerServiceImplTest.userDetails_ReturnsUserDetailsWithEmptyProperties_WhenPropertyOwnerDoesNotExist.executor": "Run",
-    "JUnit.PropertyOwnerServiceImplTest.userDetails_ReturnsUserDetails_WhenPropertyOwnerExists.executor": "Run",
-    "JUnit.PropertyOwnerServiceImplTest.whenConcurrentUpdate_thenThrowException.executor": "Run",
-    "JUnit.UserMapperTest.executor": "Run",
-    "JUnit.UserMapperTest.testUserSearchResponseDtoCreation.executor": "Run",
-    "RequestMappingsPanelOrder0": "0",
-    "RequestMappingsPanelOrder1": "1",
-    "RequestMappingsPanelWidth0": "75",
-    "RequestMappingsPanelWidth1": "75",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "Spring Boot.TechnikonApplication.executor": "Run",
-    "git-widget-placeholder": "FrontEndLoginFeature",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/alexandrosx/Documents/Project",
-    "node.js.detected.package.eslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Project",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.0",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.TechnikonApplication.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.JwtServiceTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.JwtServiceTest.testGenerateTokenAndVerify.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.JwtServiceTest.testVerifyJwtToken.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.PropertyOwnerServiceImplTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.PropertyOwnerServiceImplTest.testCreateUser.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.PropertyOwnerServiceImplTest.testSearchUserByFail.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.PropertyOwnerServiceImplTest.testUpdateUser.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.PropertyOwnerServiceImplTest.testUpdateUserFailWrongEmailFormat.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.PropertyOwnerServiceImplTest.userDetails_ReturnsUserDetailsWithEmptyProperties_WhenPropertyOwnerDoesNotExist.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.PropertyOwnerServiceImplTest.userDetails_ReturnsUserDetails_WhenPropertyOwnerExists.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.PropertyOwnerServiceImplTest.whenConcurrentUpdate_thenThrowException.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.UserMapperTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.UserMapperTest.testUserSearchResponseDtoCreation.executor&quot;: &quot;Run&quot;,
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;Spring Boot.TechnikonApplication.executor&quot;: &quot;Run&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;FrontEndLoginFeature&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/alexandrosx/Documents/Project&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager" selected="Spring Boot.TechnikonApplication">
     <configuration name="JwtServiceTest.testGenerateTokenAndVerify" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="Technikon-App-BackEnd" />
@@ -168,10 +168,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="Spring Boot.TechnikonApplication" />
-        <item itemvalue="JUnit.JwtServiceTest.testGenerateTokenAndVerify" />
         <item itemvalue="JUnit.PropertyOwnerServiceImplTest.userDetails_ReturnsUserDetailsWithEmptyProperties_WhenPropertyOwnerDoesNotExist" />
         <item itemvalue="JUnit.PropertyOwnerServiceImplTest.testCreateUser" />
         <item itemvalue="JUnit.PropertyOwnerServiceImplTest" />
+        <item itemvalue="JUnit.JwtServiceTest.testGenerateTokenAndVerify" />
       </list>
     </recent_temporary>
   </component>
@@ -193,6 +193,7 @@
       <updated>1715674744479</updated>
       <workItem from="1716317661578" duration="3644000" />
       <workItem from="1716452451421" duration="13829000" />
+      <workItem from="1716493588153" duration="2229000" />
     </task>
     <task id="LOCAL-00001" summary="Corrected imports at App.js">
       <option name="closed" value="true" />
@@ -298,7 +299,31 @@
       <option name="project" value="LOCAL" />
       <updated>1716474839235</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="Necessary commit, no changes">
+      <option name="closed" value="true" />
+      <created>1716493804696</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1716493804696</updated>
+    </task>
+    <task id="LOCAL-00015" summary="Removed unecessary print">
+      <option name="closed" value="true" />
+      <created>1716497356741</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1716497356741</updated>
+    </task>
+    <task id="LOCAL-00016" summary="Corrected routing for repairs">
+      <option name="closed" value="true" />
+      <created>1716533475590</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1716533475590</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -343,6 +368,9 @@
     <MESSAGE value="Remove Repair component and put create repair button in show repairs page" />
     <MESSAGE value="Added success message in creation of repair" />
     <MESSAGE value="Implemented delete repair funcionality" />
-    <option name="LAST_COMMIT_MESSAGE" value="Implemented delete repair funcionality" />
+    <MESSAGE value="Necessary commit, no changes" />
+    <MESSAGE value="Removed unecessary print" />
+    <MESSAGE value="Corrected routing for repairs" />
+    <option name="LAST_COMMIT_MESSAGE" value="Corrected routing for repairs" />
   </component>
 </project>

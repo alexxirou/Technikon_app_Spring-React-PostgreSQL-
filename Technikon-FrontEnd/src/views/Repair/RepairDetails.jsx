@@ -22,6 +22,7 @@ const RepairDetails = () => {
       try {
         const response = await api.get(`/api/property-repairs/${propertyOwnerId}/${repairId}`);
         setRepair(response.data);
+        console.log("Repair details: ", response.data);
       } catch (error) {
         console.error("Failed to fetch repair details", error);
       } finally {
@@ -30,7 +31,6 @@ const RepairDetails = () => {
     };
     fetchRepair();
   }, [repairId, authData]);
-
 
   if (loading) {
     return (
@@ -49,6 +49,13 @@ const RepairDetails = () => {
       </Container>
     );
   }
+
+
+  const handleBackToRepairs = () => {
+    if (authData) {
+      navigate(PATHS.SHOW_REPAIRS(authData.userId));
+    }
+  };
 
   return (
     <Container maxWidth="md">
@@ -75,7 +82,7 @@ const RepairDetails = () => {
           Cost: ${repair.cost}
         </Typography>
         <Box mt={2}>
-          <Button variant="contained" color="primary" onClick={() => navigate(PATHS.SHOW_REPAIRS)}>
+        <Button variant="contained" color="primary" onClick={handleBackToRepairs}>
             Back to Repairs
           </Button>
         </Box>

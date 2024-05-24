@@ -4,12 +4,15 @@ import { Box, CircularProgress, Button, Typography, Container, Dialog, DialogTit
 import api from '../../api/Api';
 import { PATHS } from '../../lib/constants';
 import { useAuth } from '../../hooks/useAuth';
+import { TextField } from '@mui/material';
 
 const ShowRepairs = () => {
   const [repairs, setRepairs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [errorDialogOpen, setErrorDialogOpen] = useState(false);
   const [errorDialogMessage, setErrorDialogMessage] = useState('');
+  const [updateDialogOpen, setUpdateDialogOpen] = useState(false);
+  const [selectedRepair, setSelectedRepair] = useState(null);
   const { authData } = useAuth();
   const navigate = useNavigate();
 
@@ -50,31 +53,69 @@ const ShowRepairs = () => {
     );
   }
 
-  const handleShow = (repairId) => {
-    navigate(PATHS.REPAIR_DETAILS(propertyOwnerId,repairId));
-  };
-
-  const handleUpdate = (repairId) => {
-    navigate(`/update/${repairId}`);
-  };
-
-  const handleDelete = async (repairId) => {
-    try {
-      await api.delete(`/api/property-repairs/${propertyOwnerId}/delete/${repairId}`);
-      setRepairs(repairs.filter(repair => repair.id !== repairId));
-    } catch (error) {
-      console.error("Failed to delete repair", error);
-      if (error.response && error.response.status === 400) {
-        setErrorDialogMessage(error.response.data);
-        setErrorDialogOpen(true);
-      }
-    }
-  };
-
   const handleCreateRepair = () => {
     navigate(PATHS.CREATE_REPAIR);
   };
 
+  
+  const handleShow = (repairId) => {
+    navigate(PATHS.REPAIR_DETAILS(propertyOwnerId,repairId));
+  };
+
+
+  const handleUpdate = (repairId) => {
+    // Find the selected repair based on the repairId
+    const selected = repairs.find(repair => repair.id === repairId);
+    setSelectedRepair(selected);
+    setUpdateDialogOpen(true);
+  };
+
+  const handleCloseUpdateDialog = () => {
+    setUpdateDialogOpen(false);
+    setSelectedRepair(null);
+  };
+
+  // Inside handleUpdateSubmit function in ShowRepairs.js
+
+const handleUpdateSubmit = async () => {
+  try {
+    const response = await api.put(`/api/property-repairs/${propertyOwnerId}/${selectedRepair.id}`, selectedRepair);
+    console.log(response.data); // Log the response data
+
+    // Redirect to another page after successful update
+    navigate(PATHS.REPAIR_DETAILS(propertyOwnerId, selectedRepair.id));
+  } catch (error) {
+    console.error("Failed to update repair", error);
+    setErrorDialogMessage('Failed to update repair');
+    setErrorDialogOpen(true);
+  }
+};
+
+
+
+  const handleDelete = async (repairId) => {
+    // Get the repair object from the state based on the repairId
+    const repairToDelete = repairs.find(repair => repair.id === repairId);
+    
+    // Check if the repair has a status other than "DEFAULT_PENDING"
+    if (repairToDelete && repairToDelete.repairStatus !== "DEFAULT_PENDING") {
+      setErrorDialogMessage("You cannot delete this repair.");
+      setErrorDialogOpen(true);
+      return; // Exit the function without making the delete request
+    }
+
+    // If the repair has status "DEFAULT_PENDING", proceed with the delete request
+    try {
+      const response = await api.delete(`/api/property-repairs/${propertyOwnerId}/delete/${repairId}`);
+    
+        setRepairs(repairs.filter(repair => repair.id !== repairId));
+        console.log("Response status:", response.status); // Log the response status
+      
+    } catch (error) {
+      console.error("Failed to delete repair", error);
+    }
+  };
+ 
   const handleCloseErrorDialog = () => {
     setErrorDialogOpen(false);
     setErrorDialogMessage('');
@@ -127,6 +168,64 @@ const ShowRepairs = () => {
           ))
         )}
       </Box>
+      {/* Update Dialog */}
+    <Dialog open={updateDialogOpen} onClose={handleCloseUpdateDialog}>
+      <DialogTitle>Update Repair</DialogTitle>
+      <DialogContent>
+        <DialogContentText>Update the repair details below:</DialogContentText>
+        {/* Form fields for updating repair */}
+        <TextField
+          label="Short Description"
+          value={selectedRepair?.shortDescription || ''}
+          onChange={(e) => setSelectedRepair({ ...selectedRepair, shortDescription: e.target.value })}
+          fullWidth
+          margin="normal"
+        />
+        <TextField
+          label="Date of Repair"
+          type="date"
+          value={selectedRepair?.dateOfRepair || ''}
+          onChange={(e) => setSelectedRepair({ ...selectedRepair, dateOfRepair: e.target.value })}
+          fullWidth
+          margin="normal"
+          InputLabelProps={{
+          shrink: true,
+          }}
+        />
+        <TextField
+          label="Repair Type"
+          value={selectedRepair?.repairType || ''}
+          onChange={(e) => setSelectedRepair({ ...selectedRepair, repairType: e.target.value })}
+          fullWidth
+          margin="normal"
+        />
+        <TextField
+          label="Repair Status"
+          value={selectedRepair?.repairStatus || ''}
+          onChange={(e) => setSelectedRepair({ ...selectedRepair, repairStatus: e.target.value })}
+          fullWidth
+          margin="normal"
+        />
+        <TextField
+          label="Cost"
+          value={selectedRepair?.cost || ''}
+          onChange={(e) => setSelectedRepair({ ...selectedRepair, cost: e.target.value })}
+          fullWidth
+          margin="normal"
+        />
+        <TextField
+          label="Long Description"
+          value={selectedRepair?.longDescription || ''}
+          onChange={(e) => setSelectedRepair({ ...selectedRepair, longDescription: e.target.value })}
+          fullWidth
+          margin="normal"
+        />
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={handleCloseUpdateDialog} color="primary">Cancel</Button>
+        <Button onClick={handleUpdateSubmit} color="primary">Update</Button>
+      </DialogActions>
+    </Dialog>
       <Dialog open={errorDialogOpen} onClose={handleCloseErrorDialog}>
         <DialogTitle>Error</DialogTitle>
         <DialogContent>
@@ -139,7 +238,6 @@ const ShowRepairs = () => {
         </DialogActions>
       </Dialog>
     </Container>
-  );
-};
+  )}
 
 export default ShowRepairs;
