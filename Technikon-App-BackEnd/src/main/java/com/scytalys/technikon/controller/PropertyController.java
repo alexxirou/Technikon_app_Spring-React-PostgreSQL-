@@ -1,10 +1,9 @@
 package com.scytalys.technikon.controller;
 
 import com.scytalys.technikon.domain.Property;
-import com.scytalys.technikon.dto.PropertyCreateDto;
-import com.scytalys.technikon.dto.PropertyUpdateDto;
+import com.scytalys.technikon.dto.property.PropertyCreateDto;
+import com.scytalys.technikon.dto.property.PropertyUpdateDto;
 import com.scytalys.technikon.service.PropertyService;
-import com.sun.net.httpserver.HttpsServer;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -49,7 +48,7 @@ public class PropertyController {
 
     //CRUD
     //Create
-    @PostMapping("/property/create")
+    @PostMapping("/create")
     ResponseEntity<PropertyCreateDto> createProperty(@RequestBody PropertyCreateDto propertyDto) {
         HttpHeaders headers = new HttpHeaders();
         headers.add("message", "Creation of a property");
@@ -57,27 +56,44 @@ public class PropertyController {
     }
 
     //Update
-    @GetMapping("/property/")
+    @GetMapping("/getAllProperties/")
     public List<Property> read() {
         return propertyService.findAllProperties();
     }
 
-//    @PutMapping("/property/{propertyId}")
-//    public ResponseEntity<PropertyUpdateDto> updateProperty(
-//            @PathVariable long id,
-//            @RequestBody PropertyUpdateDto propertyDto) {
-//        Property updateProperty = propertyService.updateProperty(id, propertyDto);
-//        if (updateProperty == null) {
+    @PutMapping("/update/{propertyId}")
+    public ResponseEntity<PropertyUpdateDto> updateProperty(
+            @PathVariable("propertyId") long propertyId,
+            @RequestBody PropertyUpdateDto propertyUpdateDto) {
+
+        PropertyUpdateDto updatedProperty = propertyService.updateProperty(propertyId, propertyUpdateDto);
+        if (updatedProperty == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(updatedProperty);
+    }
+
+//    //Deactivate
+//    @PutMapping("/property/deactivate/{propertyId}")
+//    public ResponseEntity<PropertyUpdateDto> deactivateProperty(
+//            @PathVariable("propertyId") long propertyId,
+//            @RequestBody PropertyDeactivateDto propertyDeactivateDto) {
+//        PropertyUpdateDto deactivatedPropertyDto = propertyService.deactivateProperty(propertyId, propertyDeactivateDto);
+//        if (deactivatedPropertyDto == null) {
 //            return ResponseEntity.notFound().build();
 //        }
-//        return ResponseEntity.ok(updateProperty);
+//        return ResponseEntity.ok(deactivatedPropertyDto);
 //    }
-
-//Deactivate
-//    @PostMapping("/propertyDeactivate")
-//    public Property deactivateProperty(@RequestBody PropertyDto propertyDto){return null;}
-
-// Erase
-//    @PostMapping("/propertyDelete/{propertyId}")
-//    public Property eraseProperty(@RequestBody PropertyDto propertyDto){return null;}
+//
+//    //Erase
+//    @DeleteMapping("/property/{propertyId}")
+//    public ResponseEntity<Void> eraseProperty(@PathVariable("propertyId") long propertyId) {
+//        boolean isDeleted = propertyService.eraseProperty(propertyId);
+//        if (isDeleted) {
+//            return ResponseEntity.noContent().build();
+//        } else {
+//            return ResponseEntity.notFound().build();
+//        }
+//    }
 }
+

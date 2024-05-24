@@ -13,6 +13,7 @@ import com.scytalys.technikon.dto.UserSearchResponseDto;
 import com.scytalys.technikon.dto.UserUpdateDto;
 import com.scytalys.technikon.mapper.PropertyMapper;
 import com.scytalys.technikon.mapper.PropertyRepairMapper;
+import com.scytalys.technikon.repository.PropertyRepository;
 import com.scytalys.technikon.service.PropertyOwnerService;
 import com.scytalys.technikon.dto.repair.PropertyRepairDto;
 import com.scytalys.technikon.service.PropertyRepairService;
@@ -38,6 +39,7 @@ public class SampleData {
     private final PropertyService propertyService;
     private final PropertyRepairMapper propertyRepairMapper;
     private final PropertyMapper propertyMapper;
+    private final PropertyRepository propertyRepository;
 
     @Bean
     public CommandLineRunner myCommandLineRunner() {
@@ -61,6 +63,7 @@ public class SampleData {
             logger.info("Created property owner: {}", propertyOwner);
 //            propertyOwnerService.updateUserPassword(propertyOwner.getId(),"password", propertyOwner.getVersion());
             Property property = new Property();
+            property.setId(1);
             property.setTin("12345678910");
             property.setAddress("somewhere");
             property.setPropertyType(PropertyType.values()[1]);
@@ -69,12 +72,12 @@ public class SampleData {
             property.setLongitude(58.4);
             property.setPropertyOwner(propertyOwner);
             property.setPicture("fjrehgf");
-            propertyService.createProperty(propertyMapper.PropertyToPropertyCreateDto(property));
+            propertyService.createProperty(propertyMapper.toPropertyCreateDto(property));
             System.out.println(property.getId());
             System.out.println(property);
             logger.info("Created property: {}", property);
             System.out.println(propertyService.findPropertyById(1L));
-//            Property result = propertyService.searchProperty();
+//          Property result = propertyService.searchProperty();
 //            logger.info("Created result search response: {}", result);
 
 
@@ -93,6 +96,7 @@ public class SampleData {
 // DATA FOR PROPERTY REPAIR DEBUGGUING
 
             Property property1 = new Property();
+            property1.setId(2);
             property1.setTin("12345678911");
             property1.setAddress("Filellinon 12");
             property1.setPropertyOwner(propertyOwner);
@@ -101,10 +105,11 @@ public class SampleData {
             property1.setLatitude(13.5);
             property1.setLongitude(34.54);
             property1.setConstructionYear(LocalDate.of(1998, 10, 12));
-            propertyService.createProperty(propertyMapper.PropertyToPropertyCreateDto(property1));
+            propertyService.createProperty(propertyMapper.toPropertyCreateDto(property1));
 
 
             Property property2 = new Property();
+            property2.setId(3);
             property2.setTin("12345678999");
             property2.setAddress("Mesologgiou 12");
             property2.setPropertyOwner(propertyOwner);
@@ -112,7 +117,7 @@ public class SampleData {
             property2.setLatitude(13);
             property2.setLongitude(13);
             property2.setConstructionYear(LocalDate.of(2000, 2, 2));
-            propertyService.createProperty(propertyMapper.PropertyToPropertyCreateDto(property2));
+            propertyService.createProperty(propertyMapper.toPropertyCreateDto(property2));
 
             PropertyRepair propertyRepair1 = new PropertyRepair();
             propertyRepair1.setPropertyOwner(propertyOwner);

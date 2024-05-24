@@ -1,7 +1,7 @@
 package com.scytalys.technikon.service.impl;
 
-import com.scytalys.technikon.dto.PropertyCreateDto;
-import com.scytalys.technikon.dto.PropertyUpdateDto;
+import com.scytalys.technikon.dto.property.PropertyCreateDto;
+import com.scytalys.technikon.dto.property.PropertyUpdateDto;
 import com.scytalys.technikon.domain.Property;
 import com.scytalys.technikon.mapper.PropertyMapper;
 import com.scytalys.technikon.repository.PropertyRepository;
@@ -9,6 +9,7 @@ import com.scytalys.technikon.service.PropertyService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,10 +18,13 @@ import java.util.List;
 @AllArgsConstructor
 @Slf4j
 public class PropertyServiceImpl implements PropertyService {
-    private final PropertyRepository propertyRepository;
-    private final PropertyMapper propertyMapper;
+    @Autowired
+    private PropertyRepository propertyRepository;
 
-//Get Property (entity,table_id) - Search
+    @Autowired
+    private PropertyMapper propertyMapper;
+
+    //Get Property (entity,table_id) - Search
     @Override
     public Property findPropertyByTin(String tin) {
         return propertyRepository.findPropertyByTin(tin);
@@ -28,17 +32,18 @@ public class PropertyServiceImpl implements PropertyService {
 
     @Override
     public Property findPropertyById(long id) {
-        return propertyRepository.findById(id).orElseThrow(()-> new EntityNotFoundException("Property with id "+ id+ " not found"));
+        return propertyRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Property with id " + id + " not found"));
     }
 
     @Override
-    public List<Property> findByArea(double latitude, double longitude){
+    public List<Property> findByArea(double latitude, double longitude) {
         return propertyRepository.findByArea(latitude, longitude);
     }
 
     @Override
     public List<Property> findAllProperties() {
-       return propertyRepository.findAll(); }
+        return propertyRepository.findAll();
+    }
 
 //CRUD
 
@@ -50,7 +55,7 @@ public class PropertyServiceImpl implements PropertyService {
     }
 
     @Override
-    public Property updateProperty(long id, PropertyUpdateDto propertyDto) {
+    public PropertyUpdateDto updateProperty(long id, PropertyUpdateDto propertyDto) {
         Property propertyItem = propertyRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Property with id " + id + " not found"));
 
@@ -64,22 +69,29 @@ public class PropertyServiceImpl implements PropertyService {
             propertyRepository.save(propertyItem);
         }
 
-        return propertyItem;
+        return propertyMapper.toPropertyUpdateDto(propertyItem);
     }
 
 //    @Override
-//    public Property deactivateProperty(PropertyUpdateDto propertyDto) { return null;}
+//    public Property deactivateProperty(long id, PropertyDeactivateDto propertyDeactivateDto) {
+//        Property propertyItem = propertyRepository.findById(id)
+//                .orElseThrow(() -> new EntityNotFoundException("Property with id " + id + " not found"));
 //
-//      @Override
-//      public Property eraseProperty(long id){
-//      Property propertyItem = propertyRepository.eraseProperty.orElseThrow(() -> new EntityNotFoundException("Property  with id "+ id+ " not found"));
-//      if (propertyItem == null) {
-//           propertyRepository.delete(property);
-//           return true;
-//       }
-//      return false;
-//      }
-
+//        propertyItem.setActive(false);
+//        propertyRepository.save(propertyItem);
+//
+//        return propertyMapper.propertyToPropertyUpdateDto(propertyItem);
+//    }
+//
+//    @Override
+//    public Property eraseProperty(long id) {
+//        Property propertyItem = propertyRepository.eraseProperty.orElseThrow(() -> new EntityNotFoundException("Property  with id " + id + " not found"));
+//        if (propertyItem == null) {
+//            propertyRepository.delete(property);
+//            return true;
+//        }
+//        return false;
+//    }
 }
 
 

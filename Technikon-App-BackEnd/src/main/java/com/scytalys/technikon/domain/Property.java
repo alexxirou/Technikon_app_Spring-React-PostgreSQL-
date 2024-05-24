@@ -13,7 +13,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 public class Property {
     @Id
-    @Column(name = "id", nullable = false, length = 25)
+    @Column(name = "id",nullable = false, length = 25)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     @NotNull
