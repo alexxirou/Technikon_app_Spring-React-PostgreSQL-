@@ -18,7 +18,6 @@ const CreateRepair = () => {
   const [success, setSuccess] = useState(false);
 
   const token = localStorage.getItem('token');
-  // console.log(token);
 
   const validateCost = (cost) => {
     if (cost <= 0) {
