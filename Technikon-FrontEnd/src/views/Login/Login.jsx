@@ -42,7 +42,7 @@ const Login = () => {
     if (authorities.includes(ROLES.ADMIN)) {
       navigate(PATHS.ADMIN);
     } else if (authorities.includes(ROLES.USER)) {
-      navigate(PATHS.OWNER);
+      navigate(PATHS.OWNER(tin));
     } else {
       navigate(PATHS.HOME);
     }

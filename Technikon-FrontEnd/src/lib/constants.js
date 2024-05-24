@@ -4,7 +4,7 @@ export const PATHS = {
   SIGNUP: '/signup',
   CREATE_REPAIR: '/create-repair',
   SHOW_REPAIRS: (propertyOwnerId) => `/repairs/all-by-owner/${propertyOwnerId}`,
-  REPAIR_DETAILS: (propertyRepairId) => `/repair/${propertyRepairId}`,
+  REPAIR_DETAILS: (propertyOwnerId,propertyRepairId) => `/repair/${propertyOwnerId}/${propertyRepairId}`,
   PROPERTIES: (propertyOwnerId) => `/property/${propertyOwnerId}`,
   ADMIN: '/admin',
   OWNER: (tin) => `/owner/${tin}`,

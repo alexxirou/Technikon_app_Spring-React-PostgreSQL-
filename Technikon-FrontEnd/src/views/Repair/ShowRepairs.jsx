@@ -51,7 +51,7 @@ const ShowRepairs = () => {
   }
 
   const handleShow = (repairId) => {
-    navigate(PATHS.REPAIR_DETAILS.replace(':propertyOwnerId', propertyOwnerId).replace(':repairId', repairId));
+    navigate(PATHS.REPAIR_DETAILS(propertyOwnerId,repairId));
   };
 
   const handleUpdate = (repairId) => {
