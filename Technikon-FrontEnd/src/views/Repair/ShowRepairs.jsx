@@ -75,18 +75,22 @@ const ShowRepairs = () => {
     setSelectedRepair(null);
   };
 
-  const handleUpdateSubmit = async () => {
-    try {
-      const reponse = await api.put(`/api/property-repairs/${propertyOwnerId}/${selectedRepair.id}`, selectedRepair);
-      setUpdateDialogOpen(false);
-      console.log(reponse.data);
-      // Update repairs state or refetch repairs to reflect the changes
-    } catch (error) {
-      console.error("Failed to update repair", error);
-      setErrorDialogMessage('Failed to update repair');
-      setErrorDialogOpen(true);
-    }
-  };
+  // Inside handleUpdateSubmit function in ShowRepairs.js
+
+const handleUpdateSubmit = async () => {
+  try {
+    const response = await api.put(`/api/property-repairs/${propertyOwnerId}/${selectedRepair.id}`, selectedRepair);
+    console.log(response.data); // Log the response data
+
+    // Redirect to another page after successful update
+    navigate(PATHS.REPAIR_DETAILS(propertyOwnerId, selectedRepair.id));
+  } catch (error) {
+    console.error("Failed to update repair", error);
+    setErrorDialogMessage('Failed to update repair');
+    setErrorDialogOpen(true);
+  }
+};
+
 
 
   const handleDelete = async (repairId) => {
