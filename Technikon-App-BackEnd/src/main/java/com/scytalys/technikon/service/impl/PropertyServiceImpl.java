@@ -70,15 +70,16 @@ public class PropertyServiceImpl implements PropertyService {
 //    @Override
 //    public Property deactivateProperty(PropertyUpdateDto propertyDto) { return null;}
 //
-//       @Override
-//        public Property eraseProperty(long id){
-//        Property propertyItem = propertyRepository.eraseProperty.orElseThrow(() -> new EntityNotFoundException("Property  with id "+ id+ " not found"));
-//        if (propertyItem == null) {
-//            propertyRepository.delete(property);
-//            return true;
-//        }
-//        return false;
+//      @Override
+//      public Property eraseProperty(long id){
+//      Property propertyItem = propertyRepository.eraseProperty.orElseThrow(() -> new EntityNotFoundException("Property  with id "+ id+ " not found"));
+//      if (propertyItem == null) {
+//           propertyRepository.delete(property);
+//           return true;
 //       }
+//      return false;
+//      }
+
 }
 
 
