@@ -76,8 +76,9 @@ const ShowRepairs = () => {
   
     // If the repair has status "DEFAULT_PENDING", proceed with the delete request
     try {
-      await api.delete(`/api/property-repairs/${propertyOwnerId}/delete/${repairId}`);
+      const response = await api.delete(`/api/property-repairs/${propertyOwnerId}/delete/${repairId}`);
       setRepairs(repairs.filter(repair => repair.id !== repairId));
+      console.log(response.status);
     } catch (error) {
       console.error("Failed to delete repair", error);
     }

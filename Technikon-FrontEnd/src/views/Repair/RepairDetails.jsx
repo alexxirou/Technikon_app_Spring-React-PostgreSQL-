@@ -50,6 +50,13 @@ const RepairDetails = () => {
     );
   }
 
+
+  const handleBackToRepairs = () => {
+    if (authData) {
+      navigate(PATHS.SHOW_REPAIRS(authData.userId));
+    }
+  };
+
   return (
     <Container maxWidth="md">
       <Box mt={2} p={2} border={1} borderRadius={8} borderColor="grey.300">
@@ -75,7 +82,7 @@ const RepairDetails = () => {
           Cost: ${repair.cost}
         </Typography>
         <Box mt={2}>
-          <Button variant="contained" color="primary" onClick={() => navigate(PATHS.SHOW_REPAIRS)}>
+        <Button variant="contained" color="primary" onClick={handleBackToRepairs}>
             Back to Repairs
           </Button>
         </Box>

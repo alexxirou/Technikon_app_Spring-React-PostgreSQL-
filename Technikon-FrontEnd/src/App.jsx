@@ -26,7 +26,7 @@ const App = () => {
             <Route path={PATHS.CREATE_REPAIR} element={<RoleProtectedRoute allowedRoles={[ROLES.USER, ROLES.ADMIN]}><CreateRepair /> </RoleProtectedRoute>} />
             <Route path={PATHS.SHOW_REPAIRS(':tin')} element={<RoleProtectedRoute allowedRoles={[ROLES.USER, ROLES.ADMIN]}><ShowRepairs /> </RoleProtectedRoute>} />
             <Route 
-              path={PATHS.REPAIR_DETAILS(':id')} 
+              path={PATHS.REPAIR_DETAILS(':id', ':repairId')} 
               element={
                 <RoleProtectedRoute allowedRoles={[ROLES.USER, ROLES.ADMIN]}>
                   <RepairDetails />

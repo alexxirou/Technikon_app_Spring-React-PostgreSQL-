@@ -94,6 +94,12 @@ const CreateRepair = () => {
     }
   };
 
+  const handleGoToRepairs = () => {
+    if (authData) {
+      navigate(PATHS.SHOW_REPAIRS(authData.userId));
+    }
+  };
+
 
   return (
     <Container maxWidth="sm">
@@ -212,7 +218,7 @@ const CreateRepair = () => {
             </DialogContentText>
           </DialogContent>
           <DialogActions>
-            <Button onClick={() => navigate(PATHS.SHOW_REPAIRS)} color="primary">
+          <Button onClick={handleGoToRepairs} color="primary">
               Go to Repairs
             </Button>
           </DialogActions>
