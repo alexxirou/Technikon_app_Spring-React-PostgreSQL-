@@ -77,7 +77,7 @@ const Login = () => {
         
           const { tin, id, username, authorities: authoritiesArray, exp } = decodedToken;
           const authorities = authoritiesArray.map(authority => authority.authority);
-
+          console.log(exp);
           handleAuthentication(tin, id, username, authorities, exp);
         } 
       } else {

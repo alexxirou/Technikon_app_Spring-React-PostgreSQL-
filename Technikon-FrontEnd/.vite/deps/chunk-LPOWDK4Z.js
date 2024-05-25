@@ -1,7 +1,4 @@
 import {
-  ListContext_default
-} from "./chunk-LNNDTCBB.js";
-import {
   _extends,
   _objectWithoutPropertiesLoose,
   clsx_default,
@@ -30,7 +27,7 @@ import {
   __toESM
 } from "./chunk-CEQRFMJQ.js";
 
-// node_modules/@mui/material/List/List.js
+// node_modules/@mui/material/DialogActions/DialogActions.js
 init_objectWithoutPropertiesLoose();
 init_extends();
 var React = __toESM(require_react());
@@ -40,88 +37,70 @@ init_composeClasses();
 init_styled();
 init_useThemeProps();
 
-// node_modules/@mui/material/List/listClasses.js
+// node_modules/@mui/material/DialogActions/dialogActionsClasses.js
 init_generateUtilityClasses();
 init_generateUtilityClass();
-function getListUtilityClass(slot) {
-  return generateUtilityClass("MuiList", slot);
+function getDialogActionsUtilityClass(slot) {
+  return generateUtilityClass("MuiDialogActions", slot);
 }
-var listClasses = generateUtilityClasses("MuiList", ["root", "padding", "dense", "subheader"]);
-var listClasses_default = listClasses;
+var dialogActionsClasses = generateUtilityClasses("MuiDialogActions", ["root", "spacing"]);
+var dialogActionsClasses_default = dialogActionsClasses;
 
-// node_modules/@mui/material/List/List.js
+// node_modules/@mui/material/DialogActions/DialogActions.js
 var import_jsx_runtime = __toESM(require_jsx_runtime());
-var import_jsx_runtime2 = __toESM(require_jsx_runtime());
-var _excluded = ["children", "className", "component", "dense", "disablePadding", "subheader"];
+var _excluded = ["className", "disableSpacing"];
 var useUtilityClasses = (ownerState) => {
   const {
     classes,
-    disablePadding,
-    dense,
-    subheader
+    disableSpacing
   } = ownerState;
   const slots = {
-    root: ["root", !disablePadding && "padding", dense && "dense", subheader && "subheader"]
+    root: ["root", !disableSpacing && "spacing"]
   };
-  return composeClasses(slots, getListUtilityClass, classes);
+  return composeClasses(slots, getDialogActionsUtilityClass, classes);
 };
-var ListRoot = styled_default("ul", {
-  name: "MuiList",
+var DialogActionsRoot = styled_default("div", {
+  name: "MuiDialogActions",
   slot: "Root",
   overridesResolver: (props, styles) => {
     const {
       ownerState
     } = props;
-    return [styles.root, !ownerState.disablePadding && styles.padding, ownerState.dense && styles.dense, ownerState.subheader && styles.subheader];
+    return [styles.root, !ownerState.disableSpacing && styles.spacing];
   }
 })(({
   ownerState
 }) => _extends({
-  listStyle: "none",
-  margin: 0,
-  padding: 0,
-  position: "relative"
-}, !ownerState.disablePadding && {
-  paddingTop: 8,
-  paddingBottom: 8
-}, ownerState.subheader && {
-  paddingTop: 0
+  display: "flex",
+  alignItems: "center",
+  padding: 8,
+  justifyContent: "flex-end",
+  flex: "0 0 auto"
+}, !ownerState.disableSpacing && {
+  "& > :not(style) ~ :not(style)": {
+    marginLeft: 8
+  }
 }));
-var List = React.forwardRef(function List2(inProps, ref) {
+var DialogActions = React.forwardRef(function DialogActions2(inProps, ref) {
   const props = useThemeProps({
     props: inProps,
-    name: "MuiList"
+    name: "MuiDialogActions"
   });
   const {
-    children,
     className,
-    component = "ul",
-    dense = false,
-    disablePadding = false,
-    subheader
+    disableSpacing = false
   } = props, other = _objectWithoutPropertiesLoose(props, _excluded);
-  const context = React.useMemo(() => ({
-    dense
-  }), [dense]);
   const ownerState = _extends({}, props, {
-    component,
-    dense,
-    disablePadding
+    disableSpacing
   });
   const classes = useUtilityClasses(ownerState);
-  return (0, import_jsx_runtime2.jsx)(ListContext_default.Provider, {
-    value: context,
-    children: (0, import_jsx_runtime.jsxs)(ListRoot, _extends({
-      as: component,
-      className: clsx_default(classes.root, className),
-      ref,
-      ownerState
-    }, other, {
-      children: [subheader, children]
-    }))
-  });
+  return (0, import_jsx_runtime.jsx)(DialogActionsRoot, _extends({
+    className: clsx_default(classes.root, className),
+    ownerState,
+    ref
+  }, other));
 });
-true ? List.propTypes = {
+true ? DialogActions.propTypes = {
   // ┌────────────────────────────── Warning ──────────────────────────────┐
   // │ These PropTypes are generated from the TypeScript type definitions. │
   // │    To update them, edit the d.ts file and run `pnpm proptypes`.     │
@@ -139,36 +118,20 @@ true ? List.propTypes = {
    */
   className: import_prop_types.default.string,
   /**
-   * The component used for the root node.
-   * Either a string to use a HTML element or a component.
-   */
-  component: import_prop_types.default.elementType,
-  /**
-   * If `true`, compact vertical padding designed for keyboard and mouse input is used for
-   * the list and list items.
-   * The prop is available to descendant components as the `dense` context.
+   * If `true`, the actions do not have additional margin.
    * @default false
    */
-  dense: import_prop_types.default.bool,
-  /**
-   * If `true`, vertical padding is removed from the list.
-   * @default false
-   */
-  disablePadding: import_prop_types.default.bool,
-  /**
-   * The content of the subheader, normally `ListSubheader`.
-   */
-  subheader: import_prop_types.default.node,
+  disableSpacing: import_prop_types.default.bool,
   /**
    * The system prop that allows defining system overrides as well as additional CSS styles.
    */
   sx: import_prop_types.default.oneOfType([import_prop_types.default.arrayOf(import_prop_types.default.oneOfType([import_prop_types.default.func, import_prop_types.default.object, import_prop_types.default.bool])), import_prop_types.default.func, import_prop_types.default.object])
 } : void 0;
-var List_default = List;
+var DialogActions_default = DialogActions;
 
 export {
-  getListUtilityClass,
-  listClasses_default,
-  List_default
+  getDialogActionsUtilityClass,
+  dialogActionsClasses_default,
+  DialogActions_default
 };
-//# sourceMappingURL=chunk-BWLAGVZV.js.map
+//# sourceMappingURL=chunk-LPOWDK4Z.js.map

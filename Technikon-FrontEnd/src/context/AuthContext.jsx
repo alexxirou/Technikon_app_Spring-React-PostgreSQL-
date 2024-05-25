@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { jwtDecode } from "jwt-decode";
 import useLogout from '../hooks/useLogout';
 import useTokenExpiration from '../hooks/useTokenExpiration';
-
+import useLogoutOnNavigate from '../hooks/useLogoutOnNavigate';
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
@@ -32,7 +32,7 @@ export const AuthProvider = ({ children }) => {
 
   const { logout, logoutDialogOpen, handleCloseLogoutDialog } = useLogout(setAuthData);
   useTokenExpiration(authData, logout);
-
+  useLogoutOnNavigate(logout, authData);
   return (
     <AuthContext.Provider value={{ authData, setAuthData, logout, logoutDialogOpen, handleCloseLogoutDialog }}>
       {children}
