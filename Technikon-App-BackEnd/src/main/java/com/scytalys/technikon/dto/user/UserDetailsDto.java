@@ -1,4 +1,4 @@
-package com.scytalys.technikon.dto;
+package com.scytalys.technikon.dto.user;
 
 import java.util.List;
 

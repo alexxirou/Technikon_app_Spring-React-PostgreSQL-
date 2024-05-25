@@ -1,7 +1,6 @@
-package com.scytalys.technikon.dto;
+package com.scytalys.technikon.dto.user;
 
 
-import java.util.List;
 public record UserSearchResponseDto(Long id,
                                     String tin,
                                     String username,

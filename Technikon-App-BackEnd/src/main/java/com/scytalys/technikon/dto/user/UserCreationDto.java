@@ -1,4 +1,4 @@
-package com.scytalys.technikon.dto;
+package com.scytalys.technikon.dto.user;
 
 public record UserCreationDto(String tin,
                               String name,

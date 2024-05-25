@@ -1,6 +1,5 @@
 package com.scytalys.technikon.service;
-import com.scytalys.technikon.dto.*;
-import org.springframework.security.core.Authentication;
+import com.scytalys.technikon.dto.user.*;
 
 import java.util.List;
 

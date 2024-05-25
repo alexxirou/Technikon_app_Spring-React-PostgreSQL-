@@ -1,7 +1,9 @@
 package com.scytalys.technikon.controller;
 import com.scytalys.technikon.domain.PropertyOwner;
-import com.scytalys.technikon.dto.*;
-import com.scytalys.technikon.security.dto.AuthRequest;
+import com.scytalys.technikon.dto.user.UserDetailsDto;
+import com.scytalys.technikon.dto.user.UserSearchDto;
+import com.scytalys.technikon.dto.user.UserSearchResponseDto;
+import com.scytalys.technikon.dto.user.UserUpdateDto;
 import com.scytalys.technikon.security.service.UserInfoDetails;
 import com.scytalys.technikon.service.PropertyOwnerService;
 import com.scytalys.technikon.utility.HeaderUtility;

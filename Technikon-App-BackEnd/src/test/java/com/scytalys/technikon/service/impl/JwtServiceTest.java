@@ -1,34 +1,18 @@
 package com.scytalys.technikon.service.impl;
 
 import com.scytalys.technikon.domain.PropertyOwner;
-import com.scytalys.technikon.dto.UserCreationDto;
 import com.scytalys.technikon.repository.PropertyOwnerRepository;
-import com.scytalys.technikon.security.service.JwtService;
 import com.scytalys.technikon.security.service.JwtServiceImpl;
 import com.scytalys.technikon.security.service.UserInfoDetails;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
-import io.jsonwebtoken.security.Keys;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.mockito.Spy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.stereotype.Service;
-import org.springframework.test.context.junit4.SpringRunner;
 
-import java.security.Key;
 import java.util.Date;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 

@@ -3,9 +3,8 @@ package com.scytalys.technikon.service.impl;
 import com.scytalys.technikon.domain.Property;
 import com.scytalys.technikon.domain.PropertyOwner;
 
-import com.scytalys.technikon.domain.User;
 import com.scytalys.technikon.domain.category.PropertyType;
-import com.scytalys.technikon.dto.*;
+import com.scytalys.technikon.dto.user.*;
 import com.scytalys.technikon.mapper.OwnerMapper;
 import com.scytalys.technikon.repository.PropertyOwnerRepository;
 import com.scytalys.technikon.repository.PropertyRepository;
@@ -14,26 +13,20 @@ import com.scytalys.technikon.repository.PropertyRepository;
 import java.util.*;
 
 import com.scytalys.technikon.security.service.UserInfoService;
-import com.scytalys.technikon.utility.AuthenticationUtils;
 import jakarta.persistence.EntityNotFoundException;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.Spy;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.SpyBean;
-import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 
 import java.util.ArrayList;

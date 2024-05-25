@@ -9,10 +9,10 @@ import com.scytalys.technikon.domain.PropertyRepair;
 import com.scytalys.technikon.domain.category.PropertyType;
 import com.scytalys.technikon.domain.category.RepairStatus;
 import com.scytalys.technikon.domain.category.RepairType;
-import com.scytalys.technikon.dto.UserCreationDto;
-import com.scytalys.technikon.dto.UserSearchDto;
-import com.scytalys.technikon.dto.UserSearchResponseDto;
-import com.scytalys.technikon.dto.UserUpdateDto;
+import com.scytalys.technikon.dto.user.UserCreationDto;
+import com.scytalys.technikon.dto.user.UserSearchDto;
+import com.scytalys.technikon.dto.user.UserSearchResponseDto;
+import com.scytalys.technikon.dto.user.UserUpdateDto;
 import com.scytalys.technikon.dto.property.PropertyCreateDto;
 import com.scytalys.technikon.mapper.PropertyMapper;
 

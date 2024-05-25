@@ -1,8 +1,8 @@
 package com.scytalys.technikon.mapper;
 import com.scytalys.technikon.domain.PropertyOwner;
-import com.scytalys.technikon.dto.UserCreationDto;
-import com.scytalys.technikon.dto.UserResponseDto;
-import com.scytalys.technikon.dto.UserSearchResponseDto;
+import com.scytalys.technikon.dto.user.UserCreationDto;
+import com.scytalys.technikon.dto.user.UserResponseDto;
+import com.scytalys.technikon.dto.user.UserSearchResponseDto;
 import com.scytalys.technikon.repository.PropertyOwnerRepository;
 import com.scytalys.technikon.service.impl.PropertyOwnerServiceImpl;
 import com.scytalys.technikon.service.impl.PropertyServiceImpl;
@@ -12,8 +12,6 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-
-import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 

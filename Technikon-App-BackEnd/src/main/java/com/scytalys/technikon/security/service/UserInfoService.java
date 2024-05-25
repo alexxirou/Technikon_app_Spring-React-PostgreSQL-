@@ -3,7 +3,7 @@ package com.scytalys.technikon.security.service;
 
 import com.scytalys.technikon.domain.Admin;
 import com.scytalys.technikon.domain.PropertyOwner;
-import com.scytalys.technikon.dto.UserCreationDto;
+import com.scytalys.technikon.dto.user.UserCreationDto;
 import com.scytalys.technikon.mapper.OwnerMapper;
 import com.scytalys.technikon.repository.AdminRepository;
 import com.scytalys.technikon.repository.PropertyOwnerRepository;

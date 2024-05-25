@@ -4,18 +4,14 @@ import com.scytalys.technikon.domain.Admin;
 import com.scytalys.technikon.domain.Property;
 import com.scytalys.technikon.domain.PropertyOwner;
 import com.scytalys.technikon.domain.PropertyRepair;
-import com.scytalys.technikon.dto.UserUpdateDto;
 import com.scytalys.technikon.repository.AdminRepository;
 import com.scytalys.technikon.repository.PropertyOwnerRepository;
 import com.scytalys.technikon.repository.PropertyRepairRepository;
 import com.scytalys.technikon.repository.PropertyRepository;
 import com.scytalys.technikon.service.AdminService;
 import lombok.AllArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
