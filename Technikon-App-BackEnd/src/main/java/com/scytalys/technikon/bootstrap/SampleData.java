@@ -1,10 +1,11 @@
 package com.scytalys.technikon.bootstrap;
 
 
+import com.scytalys.technikon.domain.Admin;
 import com.scytalys.technikon.domain.Property;
 import com.scytalys.technikon.domain.PropertyOwner;
 import com.scytalys.technikon.domain.PropertyRepair;
-import com.scytalys.technikon.domain.User;
+
 import com.scytalys.technikon.domain.category.PropertyType;
 import com.scytalys.technikon.domain.category.RepairStatus;
 import com.scytalys.technikon.domain.category.RepairType;
@@ -14,27 +15,26 @@ import com.scytalys.technikon.dto.UserSearchResponseDto;
 import com.scytalys.technikon.dto.UserUpdateDto;
 import com.scytalys.technikon.dto.property.PropertyCreateDto;
 import com.scytalys.technikon.mapper.PropertyMapper;
-import com.scytalys.technikon.mapper.OwnerMapper;
+
 import com.scytalys.technikon.mapper.PropertyRepairMapper;
-import com.scytalys.technikon.repository.PropertyRepository;
 import com.scytalys.technikon.service.AdminService;
-import com.scytalys.technikon.repository.PropertyRepository;
+
 import com.scytalys.technikon.security.service.JwtService;
 import com.scytalys.technikon.security.service.UserInfoDetails;
 import com.scytalys.technikon.security.service.UserInfoService;
 import com.scytalys.technikon.service.PropertyOwnerService;
 import com.scytalys.technikon.service.PropertyRepairService;
 import com.scytalys.technikon.service.PropertyService;
-import com.scytalys.technikon.utility.AuthenticationUtils;
+
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.core.Authentication;
+
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -50,7 +50,7 @@ public class SampleData {
 
     private final PropertyRepairMapper propertyRepairMapper;
     private final PropertyMapper propertyMapper;
-    private final PropertyRepository propertyRepository;
+
 
     private final AdminService adminService;
 
@@ -58,7 +58,7 @@ public class SampleData {
     private final UserInfoService userInfoService;
     private JwtService jwtService;
 
-    private PropertyRepairMapper propertyRepairMapper;
+
 
 
     @Bean
@@ -152,6 +152,7 @@ public class SampleData {
             property1.setConstructionYear(LocalDate.of(1998, 10, 12));
             PropertyCreateDto propertyCreateDto2 = propertyMapper.toPropertyCreateDto(property1);
             propertyService.createProperty(propertyCreateDto2);
+            property1=propertyService.findPropertyByTin(property1.getTin());
 
             PropertyRepair propertyRepair1 = new PropertyRepair();
             propertyRepair1.setPropertyOwner(propertyOwner);

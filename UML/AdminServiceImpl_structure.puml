@@ -70,7 +70,7 @@ config=StructureConfiguration;
     "showPackageLevels": 2,
     "showDetailedClassStructure": true
   },
-  "rootClass": "com.scytalys.technikon.domain.PropertyOwner",
+  "rootClass": "com.scytalys.technikon.service.impl.AdminServiceImpl",
   "extensionCallbackMethod": "" // qualified.class.name#methodName - signature: public static String method(String)
 }
 diagram meta data end '/
@@ -95,11 +95,16 @@ subgraph cluster_197470096 {
 	fillcolor="#d8d8d8"
 	style=filled
    
-   Admin25216822[
+   AdminController931943586[
 	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
-<TR><TD ALIGN="LEFT" >(C)Admin</TD></TR>
+<TR><TD ALIGN="LEFT" >(C)AdminController</TD></TR>
 <HR/>
-<TR><TD ALIGN="LEFT" ># canEqual(other: Object): boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >-   adminService: AdminService [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" ># findAdmins(): List&lt;Admin&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" ># findOwners(fromYear: String, fromMonth: String, fromDay: String, toYear: String, toMonth: String, toDay: String): List&lt;PropertyOwner&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" ># findProperties(ownerTin: String): List&lt;Property&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" ># findRepairs(propertyTin: String): List&lt;PropertyRepair&gt;</TD></TR>
 </TABLE>>
 	style=filled
 	margin=0
@@ -107,22 +112,26 @@ subgraph cluster_197470096 {
 	fillcolor="#FFFFFF"
 ];
 
-Property25216822[
+AdminServiceImpl124484289[
 	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
-<TR><TD ALIGN="LEFT" >(C)Property</TD></TR>
+<TR><TD ALIGN="LEFT" >(C)AdminServiceImpl</TD></TR>
 <HR/>
-<TR><TD ALIGN="LEFT" >-   address: String [0..1]</TD></TR>
-<TR><TD ALIGN="LEFT" >-   constructionYear: LocalDate [0..1]</TD></TR>
-<TR><TD ALIGN="LEFT" >-   id: long [1]</TD></TR>
-<TR><TD ALIGN="LEFT" >-   isActive: boolean [1]</TD></TR>
-<TR><TD ALIGN="LEFT" >-   latitude: double [1]</TD></TR>
-<TR><TD ALIGN="LEFT" >-   longitude: double [1]</TD></TR>
-<TR><TD ALIGN="LEFT" >-   picture: String [0..1]</TD></TR>
-<TR><TD ALIGN="LEFT" >-   propertyOwner: PropertyOwner [0..1]</TD></TR>
-<TR><TD ALIGN="LEFT" >-   propertyType: PropertyType [0..1]</TD></TR>
-<TR><TD ALIGN="LEFT" >-   tin: String [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   adminRepository: AdminRepository [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   propertyOwnerRepository: PropertyOwnerRepository [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   propertyRepairRepository: PropertyRepairRepository [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   propertyRepository: PropertyRepository [0..1]</TD></TR>
 <HR/>
-<TR><TD ALIGN="LEFT" ># canEqual(other: Object): boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >+ create(admin: Admin): Admin</TD></TR>
+<TR><TD ALIGN="LEFT" >+ createOwner(propertyOwner: PropertyOwner): PropertyOwner</TD></TR>
+<TR><TD ALIGN="LEFT" >+ delete(id: Long)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ findAll(): List&lt;Admin&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ findById(id: Long): Admin</TD></TR>
+<TR><TD ALIGN="LEFT" >+ findOwner(tin: String): PropertyOwner</TD></TR>
+<TR><TD ALIGN="LEFT" >+ findProperty(tin: String): Property</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getDueRepairs(property: Property): List&lt;PropertyRepair&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getRegisteredOwners(from: LocalDate, to: LocalDate): List&lt;PropertyOwner&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getRegisteredProperties(owner: PropertyOwner): List&lt;Property&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ update(id: Long, admin: Admin): Admin</TD></TR>
 </TABLE>>
 	style=filled
 	margin=0
@@ -130,56 +139,20 @@ Property25216822[
 	fillcolor="#FFFFFF"
 ];
 
-PropertyOwner25216822[
+SampleData2033362088[
 	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
-<TR><TD ALIGN="LEFT" >(C)PropertyOwner</TD></TR>
-</TABLE>>
-	style=filled
-	margin=0
-	shape=plaintext
-	fillcolor="#FFFFFF"
-];
-
-PropertyRepair25216822[
-	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
-<TR><TD ALIGN="LEFT" >(C)PropertyRepair</TD></TR>
+<TR><TD ALIGN="LEFT" >(C)SampleData</TD></TR>
 <HR/>
-<TR><TD ALIGN="LEFT" >-   cost: BigDecimal [0..1]</TD></TR>
-<TR><TD ALIGN="LEFT" >-   dateOfRepair: LocalDate [0..1]</TD></TR>
-<TR><TD ALIGN="LEFT" >-   id: long [1]</TD></TR>
-<TR><TD ALIGN="LEFT" >-   longDescription: String [0..1]</TD></TR>
-<TR><TD ALIGN="LEFT" >-   property: Property [0..1]</TD></TR>
-<TR><TD ALIGN="LEFT" >-   propertyOwner: PropertyOwner [0..1]</TD></TR>
-<TR><TD ALIGN="LEFT" >-   repairStatus: RepairStatus [0..1]</TD></TR>
-<TR><TD ALIGN="LEFT" >-   repairType: RepairType [0..1]</TD></TR>
-<TR><TD ALIGN="LEFT" >-   shortDescription: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   adminService: AdminService [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   jwtService: JwtService [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   propertyMapper: PropertyMapper [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   propertyOwnerService: PropertyOwnerService [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   propertyRepairMapper: PropertyRepairMapper [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   propertyRepairService: PropertyRepairService [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   propertyService: PropertyService [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   userInfoService: UserInfoService [0..1]</TD></TR>
 <HR/>
-<TR><TD ALIGN="LEFT" ># canEqual(other: Object): boolean</TD></TR>
-</TABLE>>
-	style=filled
-	margin=0
-	shape=plaintext
-	fillcolor="#FFFFFF"
-];
-
-User25216822[
-	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
-<TR><TD ALIGN="LEFT" >(C)User</TD></TR>
-<HR/>
-<TR><TD ALIGN="LEFT" >-   address: String [0..1]</TD></TR>
-<TR><TD ALIGN="LEFT" >-   email: String [0..1]</TD></TR>
-<TR><TD ALIGN="LEFT" >-   id: Long [0..1]</TD></TR>
-<TR><TD ALIGN="LEFT" >-   isActive: boolean [1]</TD></TR>
-<TR><TD ALIGN="LEFT" >-   name: String [0..1]</TD></TR>
-<TR><TD ALIGN="LEFT" >-   password: String [0..1]</TD></TR>
-<TR><TD ALIGN="LEFT" >-   phoneNumber: String [0..1]</TD></TR>
-<TR><TD ALIGN="LEFT" >-   registrationDate: LocalDate [0..1]</TD></TR>
-<TR><TD ALIGN="LEFT" >-   surname: String [0..1]</TD></TR>
-<TR><TD ALIGN="LEFT" >-   tin: String [0..1]</TD></TR>
-<TR><TD ALIGN="LEFT" >-   username: String [0..1]</TD></TR>
-<TR><TD ALIGN="LEFT" >-   version: long [1]</TD></TR>
-<HR/>
-<TR><TD ALIGN="LEFT" ># canEqual(other: Object): boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >+ myCommandLineRunner(): CommandLineRunner</TD></TR>
 </TABLE>>
 	style=filled
 	margin=0
@@ -190,14 +163,10 @@ User25216822[
 } 
 
 'edges    
-Property25216822 -> PropertyOwner25216822[label="propertyOwner
-[0..1]"];
-PropertyRepair25216822 -> Property25216822[label="property
-[0..1]"];
-PropertyRepair25216822 -> PropertyOwner25216822[label="propertyOwner
-[0..1]"];
-User25216822 -> Admin25216822[arrowhead=none, arrowtail=empty, dir=both];
-User25216822 -> PropertyOwner25216822[arrowhead=none, arrowtail=empty, dir=both];
+AdminController931943586 -> AdminServiceImpl124484289[label="adminService
+[0..1]", arrowhead=none];
+SampleData2033362088 -> AdminServiceImpl124484289[label="adminService
+[0..1]", arrowhead=none];
     
 }
 @enduml

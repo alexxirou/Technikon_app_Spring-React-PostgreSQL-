@@ -1,0 +1,208 @@
+@startuml
+
+/' diagram meta data start
+config=StructureConfiguration;
+{
+  "projectClassification": {
+    "searchMode": "OpenProject", // OpenProject, AllProjects
+    "includedProjects": "",
+    "pathEndKeywords": "*.impl",
+    "isClientPath": "",
+    "isClientName": "",
+    "isTestPath": "",
+    "isTestName": "",
+    "isMappingPath": "",
+    "isMappingName": "",
+    "isDataAccessPath": "",
+    "isDataAccessName": "",
+    "isDataStructurePath": "",
+    "isDataStructureName": "",
+    "isInterfaceStructuresPath": "",
+    "isInterfaceStructuresName": "",
+    "isEntryPointPath": "",
+    "isEntryPointName": "",
+    "treatFinalFieldsAsMandatory": false
+  },
+  "graphRestriction": {
+    "classPackageExcludeFilter": "",
+    "classPackageIncludeFilter": "",
+    "classNameExcludeFilter": "",
+    "classNameIncludeFilter": "",
+    "methodNameExcludeFilter": "",
+    "methodNameIncludeFilter": "",
+    "removeByInheritance": "", // inheritance/annotation based filtering is done in a second step
+    "removeByAnnotation": "",
+    "removeByClassPackage": "", // cleanup the graph after inheritance/annotation based filtering is done
+    "removeByClassName": "",
+    "cutMappings": false,
+    "cutEnum": true,
+    "cutTests": true,
+    "cutClient": true,
+    "cutDataAccess": false,
+    "cutInterfaceStructures": false,
+    "cutDataStructures": false,
+    "cutGetterAndSetter": true,
+    "cutConstructors": true
+  },
+  "graphTraversal": {
+    "forwardDepth": 6,
+    "backwardDepth": 6,
+    "classPackageExcludeFilter": "",
+    "classPackageIncludeFilter": "",
+    "classNameExcludeFilter": "",
+    "classNameIncludeFilter": "",
+    "methodNameExcludeFilter": "",
+    "methodNameIncludeFilter": "",
+    "hideMappings": false,
+    "hideDataStructures": false,
+    "hidePrivateMethods": true,
+    "hideInterfaceCalls": true, // indirection: implementation -> interface (is hidden) -> implementation
+    "onlyShowApplicationEntryPoints": false, // root node is included
+    "useMethodCallsForStructureDiagram": "ForwardOnly" // ForwardOnly, BothDirections, No
+  },
+  "details": {
+    "aggregation": "GroupByClass", // ByClass, GroupByClass, None
+    "showClassGenericTypes": true,
+    "showMethods": true,
+    "showMethodParameterNames": true,
+    "showMethodParameterTypes": true,
+    "showMethodReturnType": true,
+    "showPackageLevels": 2,
+    "showDetailedClassStructure": true
+  },
+  "rootClass": "com.scytalys.technikon.security.service.JwtServiceImpl",
+  "extensionCallbackMethod": "" // qualified.class.name#methodName - signature: public static String method(String)
+}
+diagram meta data end '/
+
+
+
+digraph g {
+    rankdir="TB"
+    splines=polyline
+    
+
+'nodes 
+subgraph cluster_197470096 { 
+   	label=scytalys
+	labeljust=l
+	fillcolor="#ececec"
+	style=filled
+   
+   subgraph cluster_882458853 { 
+   	label=technikon
+	labeljust=l
+	fillcolor="#d8d8d8"
+	style=filled
+   
+   JwtAuthFilter1635390624[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)JwtAuthFilter</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   jwtServiceImpl: JwtServiceImpl [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   userDetailsService: UserInfoService [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" ># doFilterInternal(request: HttpServletRequest, response: HttpServletResponse, filterChain: FilterChain)</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+JwtServiceImpl1996202637[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)JwtServiceImpl</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   MINUTES: long [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   SECRET: String [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ createToken(claims: Map&lt;String, Object&gt;): String</TD></TR>
+<TR><TD ALIGN="LEFT" >+ extractAllClaims(token: String): Claims</TD></TR>
+<TR><TD ALIGN="LEFT" >+ extractClaim(token: String, claimsResolver: Function&lt;Claims, T&gt;): T</TD></TR>
+<TR><TD ALIGN="LEFT" >+ extractExpiration(token: String): Date</TD></TR>
+<TR><TD ALIGN="LEFT" >+ extractId(token: String): long</TD></TR>
+<TR><TD ALIGN="LEFT" >+ extractTin(token: String): String</TD></TR>
+<TR><TD ALIGN="LEFT" >+ extractUsername(token: String): String</TD></TR>
+<TR><TD ALIGN="LEFT" >+ generateToken(userInfoDetails: UserInfoDetails): String</TD></TR>
+<TR><TD ALIGN="LEFT" >- isTokenExpired(token: String): Boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >+ validateToken(token: String, userDetails: UserDetails): Boolean</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+SampleData2033362088[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)SampleData</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   adminService: AdminService [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   jwtService: JwtService [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   propertyMapper: PropertyMapper [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   propertyOwnerService: PropertyOwnerService [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   propertyRepairMapper: PropertyRepairMapper [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   propertyRepairService: PropertyRepairService [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   propertyService: PropertyService [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   userInfoService: UserInfoService [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ myCommandLineRunner(): CommandLineRunner</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+SecurityConfig1555090538[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)SecurityConfig</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   authFilter: JwtAuthFilter [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   userInfoService: UserInfoService [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ authenticationManager(config: AuthenticationConfiguration): AuthenticationManager</TD></TR>
+<TR><TD ALIGN="LEFT" >+ authenticationProvider(userDetailsService: UserDetailsService, passwordEncoder: PasswordEncoder): AuthenticationProvider</TD></TR>
+<TR><TD ALIGN="LEFT" >+ filterChain(http: HttpSecurity, authenticationProvider: AuthenticationProvider): SecurityFilterChain</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+UserAuthenticationController1177102140[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)UserAuthenticationController</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   authenticationManager: AuthenticationManager [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   jwtService: JwtService [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   propertyOwnerService: PropertyOwnerService [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   userInfoService: UserInfoService [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ adminLogin(authRequest: AuthRequest): ResponseEntity&lt;String&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ createPropertyOwner(newUser: UserCreationDto): ResponseEntity&lt;UserResponseDto&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ logout(request: HttpServletRequest, response: HttpServletResponse): ResponseEntity&lt;String&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ propertyOwnerLogin(authRequest: AuthRequest): ResponseEntity&lt;Map&lt;String, String&gt;&gt;</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+} 
+} 
+
+'edges    
+JwtAuthFilter1635390624 -> JwtServiceImpl1996202637[label="jwtServiceImpl
+[0..1]"];
+SampleData2033362088 -> JwtServiceImpl1996202637[label="jwtService
+[0..1]", arrowhead=none];
+SecurityConfig1555090538 -> JwtAuthFilter1635390624[label="authFilter
+[0..1]"];
+UserAuthenticationController1177102140 -> JwtServiceImpl1996202637[label="jwtService
+[0..1]", arrowhead=none];
+    
+}
+@enduml

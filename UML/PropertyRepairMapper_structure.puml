@@ -1,0 +1,297 @@
+@startuml
+
+/' diagram meta data start
+config=StructureConfiguration;
+{
+  "projectClassification": {
+    "searchMode": "OpenProject", // OpenProject, AllProjects
+    "includedProjects": "",
+    "pathEndKeywords": "*.impl",
+    "isClientPath": "",
+    "isClientName": "",
+    "isTestPath": "",
+    "isTestName": "",
+    "isMappingPath": "",
+    "isMappingName": "",
+    "isDataAccessPath": "",
+    "isDataAccessName": "",
+    "isDataStructurePath": "",
+    "isDataStructureName": "",
+    "isInterfaceStructuresPath": "",
+    "isInterfaceStructuresName": "",
+    "isEntryPointPath": "",
+    "isEntryPointName": "",
+    "treatFinalFieldsAsMandatory": false
+  },
+  "graphRestriction": {
+    "classPackageExcludeFilter": "",
+    "classPackageIncludeFilter": "",
+    "classNameExcludeFilter": "",
+    "classNameIncludeFilter": "",
+    "methodNameExcludeFilter": "",
+    "methodNameIncludeFilter": "",
+    "removeByInheritance": "", // inheritance/annotation based filtering is done in a second step
+    "removeByAnnotation": "",
+    "removeByClassPackage": "", // cleanup the graph after inheritance/annotation based filtering is done
+    "removeByClassName": "",
+    "cutMappings": false,
+    "cutEnum": true,
+    "cutTests": true,
+    "cutClient": true,
+    "cutDataAccess": false,
+    "cutInterfaceStructures": false,
+    "cutDataStructures": false,
+    "cutGetterAndSetter": true,
+    "cutConstructors": true
+  },
+  "graphTraversal": {
+    "forwardDepth": 6,
+    "backwardDepth": 6,
+    "classPackageExcludeFilter": "",
+    "classPackageIncludeFilter": "",
+    "classNameExcludeFilter": "",
+    "classNameIncludeFilter": "",
+    "methodNameExcludeFilter": "",
+    "methodNameIncludeFilter": "",
+    "hideMappings": false,
+    "hideDataStructures": false,
+    "hidePrivateMethods": true,
+    "hideInterfaceCalls": true, // indirection: implementation -> interface (is hidden) -> implementation
+    "onlyShowApplicationEntryPoints": false, // root node is included
+    "useMethodCallsForStructureDiagram": "ForwardOnly" // ForwardOnly, BothDirections, No
+  },
+  "details": {
+    "aggregation": "GroupByClass", // ByClass, GroupByClass, None
+    "showClassGenericTypes": true,
+    "showMethods": true,
+    "showMethodParameterNames": true,
+    "showMethodParameterTypes": true,
+    "showMethodReturnType": true,
+    "showPackageLevels": 2,
+    "showDetailedClassStructure": true
+  },
+  "rootClass": "com.scytalys.technikon.mapper.PropertyRepairMapper",
+  "extensionCallbackMethod": "" // qualified.class.name#methodName - signature: public static String method(String)
+}
+diagram meta data end '/
+
+
+
+digraph g {
+    rankdir="TB"
+    splines=polyline
+    
+
+'nodes 
+subgraph cluster_197470096 { 
+   	label=scytalys
+	labeljust=l
+	fillcolor="#ececec"
+	style=filled
+   
+   subgraph cluster_882458853 { 
+   	label=technikon
+	labeljust=l
+	fillcolor="#d8d8d8"
+	style=filled
+   
+   PropertyController931943586[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)PropertyController</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   propertyService: PropertyService [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" ># createProperty(propertyCreateDto: PropertyCreateDto): ResponseEntity&lt;PropertyCreateDto&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ eraseProperty(propertyId: long): ResponseEntity&lt;Object&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ findAllProperties(): List&lt;Property&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ read(propertyId: long): ResponseEntity&lt;Property&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ read(): List&lt;Property&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ readByArea(longitude: double, latitude: double): ResponseEntity&lt;List&lt;Property&gt;&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ readByTin(tin: String): ResponseEntity&lt;Property&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ updateProperty(propertyId: long, propertyUpdateDto: PropertyUpdateDto): ResponseEntity&lt;PropertyUpdateDto&gt;</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+PropertyRepairController931943586[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)PropertyRepairController</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   propertyRepairService: PropertyRepairService [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ create(propertyRepairDto: PropertyRepairDto, authentication: Authentication): ResponseEntity&lt;PropertyRepairDto&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ deletePropertyRepair(propertyRepairId: long, propertyOwnerId: long, authentication: Authentication): ResponseEntity&lt;Object&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ readAll(): ResponseEntity&lt;List&lt;PropertyRepairDto&gt;&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ readAllByOwner(propertyOwnerId: long, authentication: Authentication): ResponseEntity&lt;List&lt;PropertyRepairDto&gt;&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ readOne(repairId: long, propertyOwnerId: long, authentication: Authentication): ResponseEntity&lt;PropertyRepairDto&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ searchPropertyRepairsByDate(propertyOwnerId: long, date: LocalDate, authentication: Authentication): ResponseEntity&lt;List&lt;PropertyRepairDto&gt;&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ searchPropertyRepairsByDates(propertyOwnerId: long, firstDate: LocalDate, lastDate: LocalDate, authentication: Authentication): ResponseEntity&lt;List&lt;PropertyRepairDto&gt;&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ update(propertyRepairId: long, propertyOwnerId: long, dto: PropertyRepairUpdateDto, authentication: Authentication): ResponseEntity&lt;PropertyRepairUpdateDto&gt;</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+PropertyRepairDto26060674[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)PropertyRepairDto</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   cost: BigDecimal [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   dateOfRepair: LocalDate [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   id: long [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   longDescription: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   propertyId: long [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   propertyOwnerId: long [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   repairStatus: RepairStatus [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   repairType: RepairType [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   shortDescription: String [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ cost(): BigDecimal</TD></TR>
+<TR><TD ALIGN="LEFT" >+ dateOfRepair(): LocalDate</TD></TR>
+<TR><TD ALIGN="LEFT" >+ id(): long</TD></TR>
+<TR><TD ALIGN="LEFT" >+ longDescription(): String</TD></TR>
+<TR><TD ALIGN="LEFT" >+ propertyId(): long</TD></TR>
+<TR><TD ALIGN="LEFT" >+ propertyOwnerId(): long</TD></TR>
+<TR><TD ALIGN="LEFT" >+ repairStatus(): RepairStatus</TD></TR>
+<TR><TD ALIGN="LEFT" >+ repairType(): RepairType</TD></TR>
+<TR><TD ALIGN="LEFT" >+ shortDescription(): String</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+PropertyRepairMapper219619911[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(I)PropertyRepairMapper</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ RepairDtoToPropertyRepair(propertyRepairDto: PropertyRepairDto): PropertyRepair</TD></TR>
+<TR><TD ALIGN="LEFT" >+ RepairToPropertyRepairDto(propertyRepair: PropertyRepair): PropertyRepairDto</TD></TR>
+<TR><TD ALIGN="LEFT" >+ RepairToPropertyRepairUpdateDto(propertyRepair: PropertyRepair): PropertyRepairUpdateDto</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#F1E5FD"
+];
+
+PropertyRepairMapperImpl219619911[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)PropertyRepairMapperImpl</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ RepairDtoToPropertyRepair(propertyRepairDto: PropertyRepairDto): PropertyRepair</TD></TR>
+<TR><TD ALIGN="LEFT" >+ RepairToPropertyRepairDto(propertyRepair: PropertyRepair): PropertyRepairDto</TD></TR>
+<TR><TD ALIGN="LEFT" >+ RepairToPropertyRepairUpdateDto(propertyRepair: PropertyRepair): PropertyRepairUpdateDto</TD></TR>
+<TR><TD ALIGN="LEFT" ># propertyRepairDtoToProperty(propertyRepairDto: PropertyRepairDto): Property</TD></TR>
+<TR><TD ALIGN="LEFT" ># propertyRepairDtoToPropertyOwner(propertyRepairDto: PropertyRepairDto): PropertyOwner</TD></TR>
+<TR><TD ALIGN="LEFT" >- propertyRepairPropertyId(propertyRepair: PropertyRepair): long</TD></TR>
+<TR><TD ALIGN="LEFT" >- propertyRepairPropertyOwnerId(propertyRepair: PropertyRepair): Long</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+PropertyRepairServiceImpl124484289[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)PropertyRepairServiceImpl</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   propertyOwnerRepository: PropertyOwnerRepository [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   propertyRepairMapper: PropertyRepairMapper [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   propertyRepairRepository: PropertyRepairRepository [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   propertyRepository: PropertyRepository [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ createPropertyRepair(propertyRepairDto: PropertyRepairDto): PropertyRepairDto</TD></TR>
+<TR><TD ALIGN="LEFT" >+ deletePropertyRepair(id: long)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getPropertyRepair(id: long): PropertyRepairDto</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getPropertyRepairsByOwner(propertyOwnerId: long): List&lt;PropertyRepairDto&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ searchPropertyRepairsByDate(propertyOwnerId: long, date: LocalDate): List&lt;PropertyRepairDto&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ searchPropertyRepairsByDates(propertyOwnerId: long, firstDate: LocalDate, lastDate: LocalDate): List&lt;PropertyRepairDto&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ updatePropertyRepair(id: long, dto: PropertyRepairUpdateDto): PropertyRepairUpdateDto</TD></TR>
+<TR><TD ALIGN="LEFT" >- validateCostInputOrThrow(cost: BigDecimal)</TD></TR>
+<TR><TD ALIGN="LEFT" >- validateDateInputOrThrow(date: LocalDate)</TD></TR>
+<TR><TD ALIGN="LEFT" >- validateDatesInputOrThrow(date1: LocalDate, date2: LocalDate)</TD></TR>
+<TR><TD ALIGN="LEFT" >- validatePropertyExistsOrThrow(propertyId: long)</TD></TR>
+<TR><TD ALIGN="LEFT" >- validatePropertyOwnerExistsOrThrow(propertyOwnerId: long)</TD></TR>
+<TR><TD ALIGN="LEFT" >- validatePropertyRepairExistsOrThrow(propertyRepairId: long): PropertyRepair</TD></TR>
+<TR><TD ALIGN="LEFT" >- validateShortDescription(shortDescription: String)</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+PropertyServiceImpl124484289[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)PropertyServiceImpl</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   propertyMapper: PropertyMapper [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   propertyRepairService: PropertyRepairService [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   propertyRepository: PropertyRepository [1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ checkRelatedEntries(property: Property): boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >+ createProperty(propertyCreateDto: PropertyCreateDto): PropertyCreateDto</TD></TR>
+<TR><TD ALIGN="LEFT" >+ deactivateProperty(property: Property)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ eraseProperty(id: long)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ findAllProperties(): List&lt;Property&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ findByArea(latitude: double, longitude: double): List&lt;Property&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ findPropertyById(id: long): Property</TD></TR>
+<TR><TD ALIGN="LEFT" >+ findPropertyByTin(tin: String): Property</TD></TR>
+<TR><TD ALIGN="LEFT" >+ updateProperty(id: long, propertyDto: PropertyUpdateDto): PropertyUpdateDto</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+SampleData2033362088[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)SampleData</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   adminService: AdminService [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   jwtService: JwtService [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   propertyMapper: PropertyMapper [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   propertyOwnerService: PropertyOwnerService [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   propertyRepairMapper: PropertyRepairMapper [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   propertyRepairService: PropertyRepairService [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   propertyService: PropertyService [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   userInfoService: UserInfoService [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ myCommandLineRunner(): CommandLineRunner</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+} 
+} 
+
+'edges    
+PropertyController931943586 -> PropertyServiceImpl124484289[label="propertyService
+[0..1]", arrowhead=none];
+PropertyRepairController931943586 -> PropertyRepairServiceImpl124484289[label="propertyRepairService
+[0..1]", arrowhead=none];
+PropertyRepairMapper219619911 -> PropertyRepairMapperImpl219619911[arrowhead=none, arrowtail=empty, dir=both];
+PropertyRepairServiceImpl124484289 -> PropertyRepairMapper219619911[label="propertyRepairMapper
+[0..1]"];
+PropertyServiceImpl124484289 -> PropertyRepairServiceImpl124484289[label="propertyRepairService
+[1]", arrowhead=none];
+SampleData2033362088 -> PropertyRepairMapper219619911[label="propertyRepairMapper
+[0..1]"];
+SampleData2033362088 -> PropertyRepairServiceImpl124484289[label="propertyRepairService
+[0..1]", arrowhead=none];
+SampleData2033362088 -> PropertyServiceImpl124484289[label="propertyService
+[0..1]", arrowhead=none];
+    
+}
+@enduml

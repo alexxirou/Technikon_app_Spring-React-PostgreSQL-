@@ -133,11 +133,10 @@ PropertyOwnerController931943586[
 <HR/>
 <TR><TD ALIGN="LEFT" >-   propertyOwnerService: PropertyOwnerService [0..1]</TD></TR>
 <HR/>
-<TR><TD ALIGN="LEFT" >+ createPropertyOwner(newUser: UserCreationDto): ResponseEntity&lt;UserResponseDto&gt;</TD></TR>
-<TR><TD ALIGN="LEFT" >+ deleteUser(tin: String, version: long): ResponseEntity&lt;String&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ deleteUser(tin: String, authentication: Authentication): ResponseEntity&lt;String&gt;</TD></TR>
 <TR><TD ALIGN="LEFT" >+ findUsers(tin: String, username: String, email: String): ResponseEntity&lt;List&lt;UserSearchResponseDto&gt;&gt;</TD></TR>
-<TR><TD ALIGN="LEFT" >+ showUser(tin: String): ResponseEntity&lt;UserDetails&gt;</TD></TR>
-<TR><TD ALIGN="LEFT" >+ updateUser(tin: String, updateRequest: UserUpdateDto): ResponseEntity&lt;String&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ showUser(tin: String, authentication: Authentication): ResponseEntity&lt;UserDetailsDto&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ updateUser(tin: String, updateRequest: UserUpdateDto, authentication: Authentication): ResponseEntity&lt;String&gt;</TD></TR>
 </TABLE>>
 	style=filled
 	margin=0
@@ -150,18 +149,18 @@ PropertyOwnerServiceImpl124484289[
 <TR><TD ALIGN="LEFT" >(C)PropertyOwnerServiceImpl</TD></TR>
 <HR/>
 <TR><TD ALIGN="LEFT" >-   ownerMapper: OwnerMapper [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   passwordEncoder: PasswordEncoder [0..1]</TD></TR>
 <TR><TD ALIGN="LEFT" >-   propertyOwnerRepository: PropertyOwnerRepository [0..1]</TD></TR>
 <HR/>
-<TR><TD ALIGN="LEFT" >+ UpdateUser(tin: String, dto: UserUpdateDto)</TD></TR>
 <TR><TD ALIGN="LEFT" >+ checkUserHasProperties(tin: String): boolean</TD></TR>
-<TR><TD ALIGN="LEFT" >+ createDBUser(dto: UserCreationDto): PropertyOwner</TD></TR>
 <TR><TD ALIGN="LEFT" >+ createSearchResponse(users: List&lt;PropertyOwner&gt;): List&lt;UserSearchResponseDto&gt;</TD></TR>
 <TR><TD ALIGN="LEFT" >+ createUserResponseDto(user: PropertyOwner): UserResponseDto</TD></TR>
 <TR><TD ALIGN="LEFT" >+ deleteUser(tin: String)</TD></TR>
 <TR><TD ALIGN="LEFT" >+ findUser(tin: String): PropertyOwner</TD></TR>
 <TR><TD ALIGN="LEFT" >+ searchUser(dto: UserSearchDto): List&lt;PropertyOwner&gt;</TD></TR>
 <TR><TD ALIGN="LEFT" >+ softDeleteUser(tin: String)</TD></TR>
-<TR><TD ALIGN="LEFT" >+ userDetails(user: PropertyOwner): UserDetails</TD></TR>
+<TR><TD ALIGN="LEFT" >+ updateUser(tin: String, dto: UserUpdateDto)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ userDetails(user: PropertyOwner): UserDetailsDto</TD></TR>
 </TABLE>>
 	style=filled
 	margin=0
@@ -173,11 +172,36 @@ SampleData2033362088[
 	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
 <TR><TD ALIGN="LEFT" >(C)SampleData</TD></TR>
 <HR/>
-<TR><TD ALIGN="LEFT" >-   propertyOwnerService: PropertyOwnerService [1]</TD></TR>
-<TR><TD ALIGN="LEFT" >-   propertyRepairService: PropertyRepairService [1]</TD></TR>
-<TR><TD ALIGN="LEFT" >-   propertyService: PropertyService [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   adminService: AdminService [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   jwtService: JwtService [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   propertyMapper: PropertyMapper [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   propertyOwnerService: PropertyOwnerService [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   propertyRepairMapper: PropertyRepairMapper [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   propertyRepairService: PropertyRepairService [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   propertyService: PropertyService [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   userInfoService: UserInfoService [0..1]</TD></TR>
 <HR/>
 <TR><TD ALIGN="LEFT" >+ myCommandLineRunner(): CommandLineRunner</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+UserAuthenticationController1177102140[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)UserAuthenticationController</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   authenticationManager: AuthenticationManager [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   jwtService: JwtService [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   propertyOwnerService: PropertyOwnerService [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   userInfoService: UserInfoService [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ adminLogin(authRequest: AuthRequest): ResponseEntity&lt;String&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ createPropertyOwner(newUser: UserCreationDto): ResponseEntity&lt;UserResponseDto&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ logout(request: HttpServletRequest, response: HttpServletResponse): ResponseEntity&lt;String&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ propertyOwnerLogin(authRequest: AuthRequest): ResponseEntity&lt;Map&lt;String, String&gt;&gt;</TD></TR>
 </TABLE>>
 	style=filled
 	margin=0
@@ -220,12 +244,10 @@ UserUpdateDto686682215[
 <TR><TD ALIGN="LEFT" >-   address: String [0..1]</TD></TR>
 <TR><TD ALIGN="LEFT" >-   email: String [0..1]</TD></TR>
 <TR><TD ALIGN="LEFT" >-   password: String [0..1]</TD></TR>
-<TR><TD ALIGN="LEFT" >-   version: long [1]</TD></TR>
 <HR/>
 <TR><TD ALIGN="LEFT" >+ address(): String</TD></TR>
 <TR><TD ALIGN="LEFT" >+ email(): String</TD></TR>
 <TR><TD ALIGN="LEFT" >+ password(): String</TD></TR>
-<TR><TD ALIGN="LEFT" >+ version(): long</TD></TR>
 </TABLE>>
 	style=filled
 	margin=0
@@ -242,7 +264,9 @@ PropertyOwnerController931943586 -> PropertyOwnerServiceImpl124484289[label="pro
 PropertyOwnerServiceImpl124484289 -> OwnerMapper219619911[label="ownerMapper
 [0..1]"];
 SampleData2033362088 -> PropertyOwnerServiceImpl124484289[label="propertyOwnerService
-[1]", arrowhead=none];
+[0..1]", arrowhead=none];
+UserAuthenticationController1177102140 -> PropertyOwnerServiceImpl124484289[label="propertyOwnerService
+[0..1]", arrowhead=none];
     
 }
 @enduml

@@ -1,0 +1,208 @@
+@startuml
+
+/' diagram meta data start
+config=StructureConfiguration;
+{
+  "projectClassification": {
+    "searchMode": "OpenProject", // OpenProject, AllProjects
+    "includedProjects": "",
+    "pathEndKeywords": "*.impl",
+    "isClientPath": "",
+    "isClientName": "",
+    "isTestPath": "",
+    "isTestName": "",
+    "isMappingPath": "",
+    "isMappingName": "",
+    "isDataAccessPath": "",
+    "isDataAccessName": "",
+    "isDataStructurePath": "",
+    "isDataStructureName": "",
+    "isInterfaceStructuresPath": "",
+    "isInterfaceStructuresName": "",
+    "isEntryPointPath": "",
+    "isEntryPointName": "",
+    "treatFinalFieldsAsMandatory": false
+  },
+  "graphRestriction": {
+    "classPackageExcludeFilter": "",
+    "classPackageIncludeFilter": "",
+    "classNameExcludeFilter": "",
+    "classNameIncludeFilter": "",
+    "methodNameExcludeFilter": "",
+    "methodNameIncludeFilter": "",
+    "removeByInheritance": "", // inheritance/annotation based filtering is done in a second step
+    "removeByAnnotation": "",
+    "removeByClassPackage": "", // cleanup the graph after inheritance/annotation based filtering is done
+    "removeByClassName": "",
+    "cutMappings": false,
+    "cutEnum": true,
+    "cutTests": true,
+    "cutClient": true,
+    "cutDataAccess": false,
+    "cutInterfaceStructures": false,
+    "cutDataStructures": false,
+    "cutGetterAndSetter": true,
+    "cutConstructors": true
+  },
+  "graphTraversal": {
+    "forwardDepth": 6,
+    "backwardDepth": 6,
+    "classPackageExcludeFilter": "",
+    "classPackageIncludeFilter": "",
+    "classNameExcludeFilter": "",
+    "classNameIncludeFilter": "",
+    "methodNameExcludeFilter": "",
+    "methodNameIncludeFilter": "",
+    "hideMappings": false,
+    "hideDataStructures": false,
+    "hidePrivateMethods": true,
+    "hideInterfaceCalls": true, // indirection: implementation -> interface (is hidden) -> implementation
+    "onlyShowApplicationEntryPoints": false, // root node is included
+    "useMethodCallsForStructureDiagram": "ForwardOnly" // ForwardOnly, BothDirections, No
+  },
+  "details": {
+    "aggregation": "GroupByClass", // ByClass, GroupByClass, None
+    "showClassGenericTypes": true,
+    "showMethods": true,
+    "showMethodParameterNames": true,
+    "showMethodParameterTypes": true,
+    "showMethodReturnType": true,
+    "showPackageLevels": 2,
+    "showDetailedClassStructure": true
+  },
+  "rootClass": "com.scytalys.technikon.mapper.PropertyMapper",
+  "extensionCallbackMethod": "" // qualified.class.name#methodName - signature: public static String method(String)
+}
+diagram meta data end '/
+
+
+
+digraph g {
+    rankdir="TB"
+    splines=polyline
+    
+
+'nodes 
+subgraph cluster_197470096 { 
+   	label=scytalys
+	labeljust=l
+	fillcolor="#ececec"
+	style=filled
+   
+   subgraph cluster_882458853 { 
+   	label=technikon
+	labeljust=l
+	fillcolor="#d8d8d8"
+	style=filled
+   
+   PropertyController931943586[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)PropertyController</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   propertyService: PropertyService [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" ># createProperty(propertyCreateDto: PropertyCreateDto): ResponseEntity&lt;PropertyCreateDto&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ eraseProperty(propertyId: long): ResponseEntity&lt;Object&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ findAllProperties(): List&lt;Property&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ read(propertyId: long): ResponseEntity&lt;Property&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ read(): List&lt;Property&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ readByArea(longitude: double, latitude: double): ResponseEntity&lt;List&lt;Property&gt;&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ readByTin(tin: String): ResponseEntity&lt;Property&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ updateProperty(propertyId: long, propertyUpdateDto: PropertyUpdateDto): ResponseEntity&lt;PropertyUpdateDto&gt;</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+PropertyMapper219619911[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(I)PropertyMapper</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ PropertyCreateDtoToProperty(propertyCreateDto: PropertyCreateDto): Property</TD></TR>
+<TR><TD ALIGN="LEFT" >+ toPropertyCreateDto(property: Property): PropertyCreateDto</TD></TR>
+<TR><TD ALIGN="LEFT" >+ toPropertyUpdateDto(property: Property): PropertyUpdateDto</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#F1E5FD"
+];
+
+PropertyMapperImpl219619911[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)PropertyMapperImpl</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ PropertyCreateDtoToProperty(propertyCreateDto: PropertyCreateDto): Property</TD></TR>
+<TR><TD ALIGN="LEFT" ># propertyCreateDtoToPropertyOwner(propertyCreateDto: PropertyCreateDto): PropertyOwner</TD></TR>
+<TR><TD ALIGN="LEFT" >- propertyPropertyOwnerId(property: Property): Long</TD></TR>
+<TR><TD ALIGN="LEFT" >+ toPropertyCreateDto(property: Property): PropertyCreateDto</TD></TR>
+<TR><TD ALIGN="LEFT" >+ toPropertyUpdateDto(property: Property): PropertyUpdateDto</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+PropertyServiceImpl124484289[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)PropertyServiceImpl</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   propertyMapper: PropertyMapper [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   propertyRepairService: PropertyRepairService [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   propertyRepository: PropertyRepository [1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ checkRelatedEntries(property: Property): boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >+ createProperty(propertyCreateDto: PropertyCreateDto): PropertyCreateDto</TD></TR>
+<TR><TD ALIGN="LEFT" >+ deactivateProperty(property: Property)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ eraseProperty(id: long)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ findAllProperties(): List&lt;Property&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ findByArea(latitude: double, longitude: double): List&lt;Property&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ findPropertyById(id: long): Property</TD></TR>
+<TR><TD ALIGN="LEFT" >+ findPropertyByTin(tin: String): Property</TD></TR>
+<TR><TD ALIGN="LEFT" >+ updateProperty(id: long, propertyDto: PropertyUpdateDto): PropertyUpdateDto</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+SampleData2033362088[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)SampleData</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   adminService: AdminService [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   jwtService: JwtService [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   propertyMapper: PropertyMapper [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   propertyOwnerService: PropertyOwnerService [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   propertyRepairMapper: PropertyRepairMapper [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   propertyRepairService: PropertyRepairService [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   propertyService: PropertyService [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   userInfoService: UserInfoService [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ myCommandLineRunner(): CommandLineRunner</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+} 
+} 
+
+'edges    
+PropertyController931943586 -> PropertyServiceImpl124484289[label="propertyService
+[0..1]", arrowhead=none];
+PropertyMapper219619911 -> PropertyMapperImpl219619911[arrowhead=none, arrowtail=empty, dir=both];
+PropertyServiceImpl124484289 -> PropertyMapper219619911[label="propertyMapper
+[1]"];
+SampleData2033362088 -> PropertyMapper219619911[label="propertyMapper
+[0..1]"];
+SampleData2033362088 -> PropertyServiceImpl124484289[label="propertyService
+[0..1]", arrowhead=none];
+    
+}
+@enduml

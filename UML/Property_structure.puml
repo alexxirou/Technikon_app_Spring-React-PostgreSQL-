@@ -70,7 +70,7 @@ config=StructureConfiguration;
     "showPackageLevels": 2,
     "showDetailedClassStructure": true
   },
-  "rootClass": "com.scytalys.technikon.domain.PropertyOwner",
+  "rootClass": "com.scytalys.technikon.domain.Property",
   "extensionCallbackMethod": "" // qualified.class.name#methodName - signature: public static String method(String)
 }
 diagram meta data end '/
@@ -193,8 +193,6 @@ User25216822[
 Property25216822 -> PropertyOwner25216822[label="propertyOwner
 [0..1]"];
 PropertyRepair25216822 -> Property25216822[label="property
-[0..1]"];
-PropertyRepair25216822 -> PropertyOwner25216822[label="propertyOwner
 [0..1]"];
 User25216822 -> Admin25216822[arrowhead=none, arrowtail=empty, dir=both];
 User25216822 -> PropertyOwner25216822[arrowhead=none, arrowtail=empty, dir=both];

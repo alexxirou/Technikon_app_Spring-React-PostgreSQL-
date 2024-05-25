@@ -14,11 +14,11 @@ import java.util.List;
 @NoArgsConstructor
 public class Property {
     @Id
-    @Column(name = "id",nullable = false, length = 25)
+    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     @NotNull
-    @Column(name = "tin" , nullable = false, length = 11 )
+    @Column(name = "tin" )
     private String tin;
     @Column(name = "Address", nullable = false, length = 50)
     private String address;
