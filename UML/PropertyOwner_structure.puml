@@ -114,12 +114,13 @@ Property25216822[
 <TR><TD ALIGN="LEFT" >-   address: String [0..1]</TD></TR>
 <TR><TD ALIGN="LEFT" >-   constructionYear: LocalDate [0..1]</TD></TR>
 <TR><TD ALIGN="LEFT" >-   id: long [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   isActive: boolean [1]</TD></TR>
 <TR><TD ALIGN="LEFT" >-   latitude: double [1]</TD></TR>
 <TR><TD ALIGN="LEFT" >-   longitude: double [1]</TD></TR>
 <TR><TD ALIGN="LEFT" >-   picture: String [0..1]</TD></TR>
 <TR><TD ALIGN="LEFT" >-   propertyOwner: PropertyOwner [0..1]</TD></TR>
 <TR><TD ALIGN="LEFT" >-   propertyType: PropertyType [0..1]</TD></TR>
-<TR><TD ALIGN="LEFT" >-   tin: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   tin: String [1]</TD></TR>
 <HR/>
 <TR><TD ALIGN="LEFT" ># canEqual(other: Object): boolean</TD></TR>
 </TABLE>>
@@ -132,8 +133,6 @@ Property25216822[
 PropertyOwner25216822[
 	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
 <TR><TD ALIGN="LEFT" >(C)PropertyOwner</TD></TR>
-<HR/>
-<TR><TD ALIGN="LEFT" ># canEqual(other: Object): boolean</TD></TR>
 </TABLE>>
 	style=filled
 	margin=0
@@ -174,6 +173,7 @@ User25216822[
 <TR><TD ALIGN="LEFT" >-   name: String [0..1]</TD></TR>
 <TR><TD ALIGN="LEFT" >-   password: String [0..1]</TD></TR>
 <TR><TD ALIGN="LEFT" >-   phoneNumber: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   registrationDate: LocalDate [0..1]</TD></TR>
 <TR><TD ALIGN="LEFT" >-   surname: String [0..1]</TD></TR>
 <TR><TD ALIGN="LEFT" >-   tin: String [0..1]</TD></TR>
 <TR><TD ALIGN="LEFT" >-   username: String [0..1]</TD></TR>

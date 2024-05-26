@@ -1,9 +1,11 @@
 package com.scytalys.technikon.security.service;
 
 
+import com.scytalys.technikon.domain.Admin;
 import com.scytalys.technikon.domain.PropertyOwner;
-import com.scytalys.technikon.dto.UserCreationDto;
+import com.scytalys.technikon.dto.user.UserCreationDto;
 import com.scytalys.technikon.mapper.OwnerMapper;
+import com.scytalys.technikon.repository.AdminRepository;
 import com.scytalys.technikon.repository.PropertyOwnerRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.cache.annotation.CacheEvict;
@@ -20,25 +22,25 @@ import java.util.Optional;
 @AllArgsConstructor
 public class UserInfoService implements UserDetailsService {
     private final PropertyOwnerRepository propertyOwnerRepository;
-    //private final AdminRepository adminRepository;
+    private final AdminRepository adminRepository;
     private final PasswordEncoder passwordEncoder;
 
 
 
     @Override
     public UserInfoDetails loadUserByUsername(String username)  {
-        Optional<PropertyOwner> userOptional = propertyOwnerRepository.findByUsername(username);
+        Optional<PropertyOwner> userOptional = propertyOwnerRepository.findByUsername(username).filter(PropertyOwner::isActive);
         if (userOptional.isPresent()) {
             PropertyOwner user = userOptional.get();
             return new UserInfoDetails(user);
         }
 
         // If user is not found in the users repository, search in the admin repository
-        //Optional<Admin> adminOptional = adminRepository..findByUsername(username);
-//        if (adminOptional.isPresent()) {
-//            Admin admin = adminOptional.get();
-//            return new UserInfoDetails(admin);
-//        }
+        Optional<Admin> adminOptional = adminRepository.findByUsername(username);
+        if (adminOptional.isPresent()) {
+            Admin admin = adminOptional.get();
+            return new UserInfoDetails(admin);
+        }
         throw new BadCredentialsException("User not found " + username);
     }
 

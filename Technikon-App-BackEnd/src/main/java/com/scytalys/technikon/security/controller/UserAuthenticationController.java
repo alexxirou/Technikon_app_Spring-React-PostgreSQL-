@@ -1,8 +1,8 @@
 package com.scytalys.technikon.security.controller;
 
 import com.scytalys.technikon.domain.PropertyOwner;
-import com.scytalys.technikon.dto.UserCreationDto;
-import com.scytalys.technikon.dto.UserResponseDto;
+import com.scytalys.technikon.dto.user.UserCreationDto;
+import com.scytalys.technikon.dto.user.UserResponseDto;
 import com.scytalys.technikon.security.dto.AuthRequest;
 import com.scytalys.technikon.security.service.JwtService;
 import com.scytalys.technikon.security.service.UserInfoDetails;

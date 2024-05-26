@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import LogoutDialog from '../components/LogoutDialog';
+ // Import the hook
 
 const useLogout = (setAuthData) => {
   const [logoutDialogOpen, setLogoutDialogOpen] = useState(false);
@@ -31,8 +31,15 @@ const useLogout = (setAuthData) => {
 
   const handleCloseLogoutDialog = () => {
     setLogoutDialogOpen(false);
-    navigate('/');
+   
+    if (!['/', '/home', '/login', '/signup'].includes(window.location.pathname)) {
+        navigate('/');
+      
+    }
+    
   };
+
+
 
   return {
     logout,

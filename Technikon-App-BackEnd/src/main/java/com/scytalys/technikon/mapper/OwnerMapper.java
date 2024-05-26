@@ -1,11 +1,13 @@
 package com.scytalys.technikon.mapper;
 import com.scytalys.technikon.domain.PropertyOwner;
 import com.scytalys.technikon.domain.User;
-import com.scytalys.technikon.dto.*;
+import com.scytalys.technikon.dto.user.UserCreationDto;
+import com.scytalys.technikon.dto.user.UserResponseDto;
+import com.scytalys.technikon.dto.user.UserSearchResponseDto;
+import com.scytalys.technikon.dto.user.UserUpdateDto;
 import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.regex.Pattern;
 

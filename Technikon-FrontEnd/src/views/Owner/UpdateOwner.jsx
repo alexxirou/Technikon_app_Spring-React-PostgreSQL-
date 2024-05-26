@@ -1,23 +1,31 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react'; // Import useRef
 import { useAuth } from '../../hooks/useAuth';
-import { PATHS } from '../../lib/constants';
 import api from '../../api/Api';
-import { useNavigate } from 'react-router-dom';
+import Modal from '@mui/material/Modal';
+import { Button } from '@mui/material';
+import UpdateForm from './UpdateForm';
 
-const UpdateOwner = () => {
+const UpdateOwner = ({ ownerDetails, setOwnerDetails }) => {
   const { authData } = useAuth();
   const [errors, setErrors] = useState({});
   const tin = authData?.userTin;
   const [success, setSuccess] = useState(false);
-  const [email, setEmail] = useState('');
-  const [address, setAddress] = useState('');
   const [password, setPassword] = useState('');
-  const navigate = useNavigate(); // Import and use useNavigate hook
+  const [email, setEmail] = useState(ownerDetails?.email);
+  const [address, setAddress] = useState(ownerDetails?.address);
+  const [loading, setLoading] = useState(false);
+  const [open, setOpen] = useState(false);
+  const handleChange = (field, value) => {
+    if (field === 'email') setEmail(value);
+    if (field === 'address') setAddress(value);
+    if (field === 'password') setPassword(value);
+  };
 
-  const handleSubmit = async (e, submitField) => {
-    e.preventDefault();
+  // Define a ref
+  const formRef = useRef(null);
 
-    // Basic validation
+
+  const handleSubmit = async () => {
     const newErrors = {};
     if (email && !isValidEmail(email)) {
       newErrors.email = 'Invalid email format';
@@ -32,19 +40,31 @@ const UpdateOwner = () => {
     setErrors(newErrors);
 
     if (Object.keys(newErrors).length > 0) {
-      // If there are validation errors, return without submitting the form
       return;
     }
 
+    setLoading(true);
+
     try {
-      // Make a PUT request to update the owner
-      const response = await api.put(`/api/propertyOwners/${tin}`, { email, address, password });
-      // Redirect to owner profile page after successful update
-      console.log(response.status);
-      setSuccess(true); // Show the success dialog
-      setTimeout(() => {
-        navigate(PATHS.OWNER(tin)); // Redirect to owner profile page
-      }, 3000); // Redirect after 3 seconds (3000 milliseconds)
+     
+      const requestBody = {
+        email: email.trim() !== '' ? email : null,
+        address: address.trim() !== '' ? address : null,
+        password: password.trim() !== '' ? password : null,
+      };
+
+      const response = await api.put(`/api/propertyOwners/${tin}`, requestBody);
+      if (response.status === 202) {
+        setSuccess(true);
+        setOpen(false);
+        setOwnerDetails((prevOwnerDetails) => ({
+          ...prevOwnerDetails,
+          email: requestBody.email !== null ? requestBody.email : prevOwnerDetails.email,
+          address: requestBody.address !== null ? requestBody.address : prevOwnerDetails.address,
+        }));
+      } else {
+        throw new Error(response.data);
+      }
     } catch (error) {
       console.error('Error:', error);
       if (error.response) {
@@ -55,66 +75,34 @@ const UpdateOwner = () => {
       } else {
         setErrors('An unexpected error occurred');
       }
+    } finally {
+      setLoading(false);
     }
   };
 
-  const isValidEmail = (email) => {
-    // Basic email validation regex
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
-  };
-
-  const isValidPassword = (password) => {
-    const pattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
-    return pattern.test(password);
-  };
+  const isValidEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  const isValidPassword = (password) => /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/.test(password);
 
   return (
-    <div>
-      <h2>Update Owner</h2>
-      {success && (
-        <div className="success-dialog">
-          Owner details updated successfully. Redirecting...
-        </div>
-      )}
-      <form>
-        <div>
-          <label htmlFor="email">Email Address:</label>
-          <input
-            type="email"
-            id="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          {errors.email && <div className="error">{errors.email}</div>}
-        </div>
-        <div>
-          <label htmlFor="address">Address:</label>
-          <input
-            type="text"
-            id="address"
-            value={address}
-            onChange={(e) => setAddress(e.target.value)}
-          />
-          {errors.address && <div className="error">{errors.address}</div>}
-        </div>
-        <div>
-          <label htmlFor="password">Password:</label>
-          <input
-            type="password"
-            id="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          {errors.password && <div className="error">{errors.password}</div>}
-        </div>
-        <button type="submit" onClick={(e) => handleSubmit(e)}>Update All</button>
-        <button type="submit" onClick={(e) => handleSubmit(e, 'email')}>Update Email</button>
-        <button type="submit" onClick={(e) => handleSubmit(e, 'address')}>Update Address</button>
-        <button type="submit" onClick={(e) => handleSubmit(e, 'password')}>Update Password</button>
-      </form>
-    </div>
+    <>
+      <Modal open={open} onClose={() => setOpen(false)}>
+      <UpdateForm ref={formRef} 
+          email={email}
+          address={address}
+          password={password}
+          errors={errors}
+          loading={loading}
+          handleChange={handleChange}
+          handleSubmit={handleSubmit}
+          handleClose={() => setOpen(false)}
+          success={success}
+        />
+      </Modal>
+      <Button onClick={() => setOpen(true)} variant="contained" color="primary">
+        Update Owner
+      </Button>
+    </>
   );
 };
-
+UpdateOwner.displayName = 'UpdateOwner';
 export default UpdateOwner;

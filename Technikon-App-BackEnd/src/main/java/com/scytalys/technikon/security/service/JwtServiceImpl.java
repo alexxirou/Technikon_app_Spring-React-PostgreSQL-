@@ -72,7 +72,7 @@ public class JwtServiceImpl implements JwtService {
     }
 
     public String createToken(Map<String, Object> claims) {
-        Date expirationDate = new Date(System.currentTimeMillis() + (MINUTES * 60 * 1000)); // Set expiration for 30 minutes from now
+        Date expirationDate = new Date(System.currentTimeMillis() + (MINUTES * 60 * 1000));
         return Jwts.builder()
                 .setClaims(claims)
                 .setExpiration(expirationDate)

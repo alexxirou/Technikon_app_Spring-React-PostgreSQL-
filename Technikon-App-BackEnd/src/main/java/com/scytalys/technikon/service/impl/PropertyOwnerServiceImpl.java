@@ -1,8 +1,8 @@
 package com.scytalys.technikon.service.impl;
+import com.scytalys.technikon.dto.user.*;
 import com.scytalys.technikon.service.specifications.UserSearchSpecification;
 import com.scytalys.technikon.domain.PropertyOwner;
 import com.scytalys.technikon.domain.User;
-import com.scytalys.technikon.dto.*;
 import com.scytalys.technikon.mapper.OwnerMapper;
 import com.scytalys.technikon.repository.PropertyOwnerRepository;
 import com.scytalys.technikon.service.PropertyOwnerService;
@@ -10,10 +10,7 @@ import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.data.jpa.domain.Specification;
-import org.springframework.security.access.AccessDeniedException;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -87,13 +84,17 @@ public class PropertyOwnerServiceImpl implements PropertyOwnerService {
         PropertyOwner user= findUser(tin);
 
         PropertyOwner newUser = ownerMapper.updateDtoToUser(dto,user);
+
         if(dto.email()!=null) {
             String verifiedEmail = Optional.of(dto.email())
                     .filter(email -> Pattern.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$", email))
                     .orElseThrow(() -> new IllegalArgumentException("Invalid email format"));
-            user.setEmail(verifiedEmail);
-            user.setPassword(passwordEncoder.encode(user.getPassword()));
+            newUser.setEmail(verifiedEmail);
         }
+        if (newUser.getPassword()!=user.getPassword()) {
+            newUser.setPassword(passwordEncoder.encode(user.getPassword()));
+        }
+
         propertyOwnerRepository.save(newUser);
 
     }

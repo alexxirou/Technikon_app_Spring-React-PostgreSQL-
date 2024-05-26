@@ -42,7 +42,7 @@ const Login = () => {
     if (authorities.includes(ROLES.ADMIN)) {
       navigate(PATHS.ADMIN);
     } else if (authorities.includes(ROLES.USER)) {
-      navigate(PATHS.OWNER(tin));
+      navigate(PATHS.OWNER(id));
     } else {
       navigate(PATHS.HOME);
     }
@@ -58,14 +58,14 @@ const Login = () => {
   
     try {
       setIsSubmitting(true);
-  
+
       const response = await axios.post('http://localhost:5001/auth/login', {
         username,
         password,
       }, {
         withCredentials: true,
       });
-  
+     
       if (response.status === 200) {
         const data = await response.data;
         
@@ -77,7 +77,6 @@ const Login = () => {
         
           const { tin, id, username, authorities: authoritiesArray, exp } = decodedToken;
           const authorities = authoritiesArray.map(authority => authority.authority);
-
           handleAuthentication(tin, id, username, authorities, exp);
         } 
       } else {

@@ -11,7 +11,7 @@
     <groupId>com.scytalys</groupId>
     <artifactId>Technikon-App-BackEnd</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>eshop</name>
+    <name>Technikon</name>
     <description>An app to monitor property repairs.</description>
     <properties>
         <java.version>17</java.version>

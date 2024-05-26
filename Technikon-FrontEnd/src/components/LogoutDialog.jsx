@@ -8,10 +8,10 @@ import Button from '@mui/material/Button';
 const LogoutDialog = ({ open, onClose, onConfirm }) => {
   return (
     <Dialog open={open} onClose={onClose}>
-      <DialogTitle>Logout Successful</DialogTitle>
+      <DialogTitle>Logout</DialogTitle>
       <DialogContent>
         <DialogContentText>
-          You have been logged out successfully.
+          You have been logged out.
         </DialogContentText>
       </DialogContent>
       <DialogActions>

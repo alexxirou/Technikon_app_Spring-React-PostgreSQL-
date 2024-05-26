@@ -1,15 +1,15 @@
 package com.scytalys.technikon.domain;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
-import lombok.experimental.SuperBuilder;
+
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.UUID;
+
 
 @MappedSuperclass
 @Data
@@ -37,6 +37,9 @@ public class User {
     private String address;
     @NonNull
     private String phoneNumber;
-    private LocalDateTime createdAt= LocalDateTime.now();
+    @Version
+    private long version;
+    private LocalDate registrationDate= LocalDate.now();
+
 
 }
