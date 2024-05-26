@@ -14,6 +14,7 @@ import java.util.regex.Pattern;
 
 @Mapper(componentModel = "spring"  )
 @MapperConfig(unmappedSourcePolicy = ReportingPolicy.IGNORE, unmappedTargetPolicy = ReportingPolicy.IGNORE)
+
 public interface OwnerMapper {
         OwnerMapper INSTANCE = Mappers.getMapper(OwnerMapper.class);
 

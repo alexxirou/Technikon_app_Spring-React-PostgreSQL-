@@ -106,7 +106,7 @@ public class SampleData {
 
             propertyOwner=userInfoService.createDBUser(dto);
             propertyOwner.setRegistrationDate(LocalDate.of(2012, 9, 11));
-            adminService.createOwner(propertyOwner);
+           // adminService.createOwner(propertyOwner);
 ////
             logger.info("Created property owner: {}", propertyOwner);
             UserInfoDetails userInfoDetails=new UserInfoDetails(propertyOwner);
@@ -134,7 +134,7 @@ public class SampleData {
             logger.info("Searched property Owner: {}", resultUser);
             List<UserSearchResponseDto> responseDto=propertyOwnerService.createSearchResponse(resultUser);
             logger.info("Created user search response: {}", responseDto);
-            UserUpdateDto newUpdate = new UserUpdateDto(null,"elsewhere",null);
+            UserUpdateDto newUpdate = new UserUpdateDto(null,"elsewhere","");
             propertyOwnerService.updateUser(propertyOwner.getTin(), newUpdate);
             logger.info("Updated user with: {}", newUpdate);
             resultUser =propertyOwnerService.searchUser(request );
