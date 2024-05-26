@@ -5,7 +5,6 @@ export const createRepair = async (propertyOwnerId, repairData) => {
     return response.data;
 }
 
-
 export const fetchRepairs = async (propertyOwnerId) => {
   const response = await api.get(`/api/property-repairs/all-by-owner/${propertyOwnerId}`);
   return response.data;
@@ -13,7 +12,7 @@ export const fetchRepairs = async (propertyOwnerId) => {
 
 export const updateRepair = async (propertyOwnerId, repairId, repairData) => {
   const response = await api.put(`/api/property-repairs/${propertyOwnerId}/${repairId}`, repairData);
-  return response.data;
+  return response;
 };
 
 export const deleteRepair = async (propertyOwnerId, repairId) => {
