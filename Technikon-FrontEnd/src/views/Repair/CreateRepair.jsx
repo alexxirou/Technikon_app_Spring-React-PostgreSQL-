@@ -8,6 +8,7 @@ import { useAuth } from '../../hooks/useAuth';
 import { PATHS } from '../../lib/constants';
 import RepairForm from './RepairForm';
 import SuccessDialog from './SuccessDialog';
+import { createRepair } from './apiRepairService';
 
 
 const CreateRepair = () => {
