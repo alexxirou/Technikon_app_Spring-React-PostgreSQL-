@@ -5,7 +5,7 @@ import { useAuth } from '../../hooks/useAuth';
 
 const UnsubscribeButton = forwardRef(({ handleDeleteOwner }, ref) => {
   const [confirmDelete, setConfirmDelete] = useState(false);
-  const { authData, logout } = useAuth();
+
   
   
 

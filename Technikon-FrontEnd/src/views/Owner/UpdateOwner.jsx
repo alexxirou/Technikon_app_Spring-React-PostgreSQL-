@@ -80,6 +80,8 @@ const UpdateOwner = ({ ownerDetails, setOwnerDetails }) => {
     }
   };
 
+  
+
   const isValidEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
   const isValidPassword = (password) => /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/.test(password);
 
