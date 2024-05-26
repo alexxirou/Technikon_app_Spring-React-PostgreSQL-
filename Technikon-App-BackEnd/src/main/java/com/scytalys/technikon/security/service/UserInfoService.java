@@ -29,7 +29,7 @@ public class UserInfoService implements UserDetailsService {
 
     @Override
     public UserInfoDetails loadUserByUsername(String username)  {
-        Optional<PropertyOwner> userOptional = propertyOwnerRepository.findByUsername(username);
+        Optional<PropertyOwner> userOptional = propertyOwnerRepository.findByUsername(username).filter(PropertyOwner::isActive);
         if (userOptional.isPresent()) {
             PropertyOwner user = userOptional.get();
             return new UserInfoDetails(user);
