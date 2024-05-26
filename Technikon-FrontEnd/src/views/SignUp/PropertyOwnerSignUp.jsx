@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { Box } from '@mui/material';
 import { PATHS } from '../../lib/constants';
 import SignupForm from './SignupForm';
-import SignupDialog from './SignupDialog';
+import SignupDialog from './SignupSuccessDialog';
 
 const Signup = () => {
   const [formData, setFormData] = useState({

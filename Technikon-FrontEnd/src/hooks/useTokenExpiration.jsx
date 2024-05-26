@@ -1,9 +1,9 @@
 import { useEffect } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import {  useLocation } from 'react-router-dom';
 import api from '../api/Api';
 
+
 const useTokenExpiration = (authData, logout) => {
-  const navigate = useNavigate();
   const location = useLocation();
 
   useEffect(() => {

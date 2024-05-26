@@ -1,8 +1,13 @@
-import  { useState } from 'react';
+import { useState, forwardRef } from 'react';
 import { Button } from '@mui/material';
+import { useAuth } from '../../hooks/useAuth';
 
-const UnsubscribeButton = ({ handleDeleteOwner }) => {
+
+const UnsubscribeButton = forwardRef(({ handleDeleteOwner }, ref) => {
   const [confirmDelete, setConfirmDelete] = useState(false);
+  const { authData, logout } = useAuth();
+  
+  
 
   const handleClick = () => {
     if (confirmDelete) {
@@ -16,10 +21,12 @@ const UnsubscribeButton = ({ handleDeleteOwner }) => {
   };
 
   return (
-    <Button onClick={handleClick} variant="contained" color={confirmDelete ? 'secondary' : 'primary'}>
+    <Button ref={ref} onClick={handleClick} variant="contained" color={confirmDelete ? 'secondary' : 'primary'}>
       {confirmDelete ? 'Double Click to Confirm Deletion' : 'Unsubscribe'}
     </Button>
   );
-};
+});
+
+UnsubscribeButton.displayName = 'UnsubscribeButton';
 
 export default UnsubscribeButton;

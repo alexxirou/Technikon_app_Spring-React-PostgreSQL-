@@ -1,4 +1,4 @@
-import React from 'react';
+
 import { Link } from 'react-router-dom';
 import { PATHS } from '../../lib/constants';
 import { Button } from '@mui/material';
@@ -9,7 +9,6 @@ const OwnerButtonsComponent = ({ tin, id, updateModalOpen, handleCloseUpdateModa
     color: 'primary', // Set a default color value or fetch it from ownerDetails or other source
     
   };
-
 
 
   return (
@@ -24,5 +23,6 @@ const OwnerButtonsComponent = ({ tin, id, updateModalOpen, handleCloseUpdateModa
     </div>
   );
 };
+OwnerButtonsComponent.displayName = 'OwnerButtonsComponent';
 
 export default OwnerButtonsComponent;

@@ -45,7 +45,7 @@ const Header = () => {
                   Admin
                 </Button>
               )}
-              <Button component={Link} to={PATHS.OWNER(authData.userTin)} color="inherit">
+              <Button component={Link} to={PATHS.OWNER(authData.userId)} color="inherit">
                 Owner
               </Button>
               <Button component={Link} to={PATHS.SHOW_REPAIRS(authData.userId)} color="inherit">

@@ -1,5 +1,4 @@
-// src/components/UpdateOwner.js
-import { useState } from 'react';
+import { useState, useRef } from 'react'; // Import useRef
 import { useAuth } from '../../hooks/useAuth';
 import api from '../../api/Api';
 import Modal from '@mui/material/Modal';
@@ -16,12 +15,15 @@ const UpdateOwner = ({ ownerDetails, setOwnerDetails }) => {
   const [address, setAddress] = useState(ownerDetails?.address);
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
-
   const handleChange = (field, value) => {
     if (field === 'email') setEmail(value);
     if (field === 'address') setAddress(value);
     if (field === 'password') setPassword(value);
   };
+
+  // Define a ref
+  const formRef = useRef(null);
+
 
   const handleSubmit = async () => {
     const newErrors = {};
@@ -44,6 +46,7 @@ const UpdateOwner = ({ ownerDetails, setOwnerDetails }) => {
     setLoading(true);
 
     try {
+     
       const requestBody = {
         email: email.trim() !== '' ? email : null,
         address: address.trim() !== '' ? address : null,
@@ -83,7 +86,7 @@ const UpdateOwner = ({ ownerDetails, setOwnerDetails }) => {
   return (
     <>
       <Modal open={open} onClose={() => setOpen(false)}>
-        <UpdateForm
+      <UpdateForm ref={formRef} 
           email={email}
           address={address}
           password={password}
@@ -101,5 +104,5 @@ const UpdateOwner = ({ ownerDetails, setOwnerDetails }) => {
     </>
   );
 };
-
+UpdateOwner.displayName = 'UpdateOwner';
 export default UpdateOwner;
