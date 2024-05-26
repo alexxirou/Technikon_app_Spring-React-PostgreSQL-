@@ -90,10 +90,110 @@ Follow these steps to set up and run the Technikon project locally on your machi
    ```bash
       mvn exec:java
    ```
-         
+
+6. **Install Node.js and npm**:
+
+   You can download and install Node.js from the [official website](https://nodejs.org/).   
+
+
+7. **Navigate to Front-End react App and use npm install.**
+   ```bash
+      cd Technikon-FrontEnd
+      npm install
+   ```
+8. **Run the vite development server.** 
+
+    ```bash
+      npm run dev
+   ```
+
+   This will open the app on localhost:5417
+
+9. **Build for production.**
+   ```bash
+      npm run build
+   ```
+
+   This will create a static file to serve with a server.
+
 ## Usage
+
+### Registration and Login
+
+1. **Registration**: 
+   - Navigate to the registration page by clicking on the "Register" button or link.
+   - Fill out the registration form with your desired username, email, and password.
+   - Click on the "Register" button to create your account.
+
+2. **Login**: 
+   - After registering, you'll be redirected to the login page.
+   - Enter your username and password in the login form.
+   - Click on the "Login" button to authenticate yourself.
+
+### Update User Information
+
+1. **Update Information**: 
+   - Once logged in, navigate to the "Profile" or "Settings" section of the application.
+   - You should see options to update your username, email, password, or any other relevant information.
+   - Make the necessary changes and click on the "Save" or "Update" button to apply the changes.
+
+### Property Management
+
+1. **Add Property**: 
+   - To add a new property, navigate to the "Add Property" section.
+   - Fill out the required details such as property name, address, description, etc.
+   - Click on the "Add Property" button to add the property to your list.
+
+2. **Remove Property**: 
+   - If you want to remove a property, navigate to the "Manage Properties" section.
+   - You should see a list of properties associated with your account.
+   - Find the property you want to remove and click on the "Remove" or "Delete" button next to it.
+
+3. **Check Property Details**: 
+   - To view details of a specific property, navigate to the "Properties" section.
+   - You'll see a list of properties associated with your account.
+   - Click on the property name or details link to view more information about that property.
+
+4. **View Property Summary**: 
+   - In the "Properties" section, you can view a summary of all your properties, including their names, addresses, and other relevant information.
+
+### Repair Jobs Management
+
+1. **Add Repair Job**: 
+   - To add a new repair job, navigate to the "Add Repair Job" section.
+   - Fill out the required details such as job title, description, assigned contractor, etc.
+   - Click on the "Add Repair Job" button to create the repair job.
+
+2. **Remove Repair Job**: 
+   - If you want to remove a repair job, navigate to the "Manage Repair Jobs" section.
+   - You should see a list of repair jobs associated with your account.
+   - Find the repair job you want to remove and click on the "Remove" or "Delete" button next to it.
+
+3. **Check Repair Job Details**: 
+   - To view details of a specific repair job, navigate to the "Repair Jobs" section.
+   - You'll see a list of repair jobs associated with your account.
+   - Click on the job title or details link to view more information about that repair job.
+
+4. **View Repair Job Summary**: 
+   - In the "Repair Jobs" section, you can view a summary of all your repair jobs, including their titles, descriptions, status, etc.
+
+### Session Management
+
+- **Persistent Login**: 
+   - Your login session will persist even if you refresh the page or close the browser.
+   - You can continue using the application without having to log in again.
+
+- **Automatic Logout**: 
+   - If you remain inactive for 30 minutes, you'll be automatically logged out of your session.
+   - Additionally, if you attempt to log in or sign up again while already logged in, you'll be automatically logged out of your current session.
+
+### Navigation
+
+- Use the navigational buttons or links provided in the application to move between different sections such as profile, properties, repair jobs, etc.
+- Explore the various features and functionalities offered by the application to manage your properties and repair jobs efficiently.
+
 
 
 ## License
+The Technikon project is licensed under the [MIT License](https://opensource.org/licenses/MIT).
 
-## Contact
