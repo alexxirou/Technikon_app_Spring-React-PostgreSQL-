@@ -1,18 +1,23 @@
-import React, { useEffect, useState } from 'react';
+// src/components/Signup.js
+import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Button } from '@mui/material';
+import { Box } from '@mui/material';
 import { PATHS } from '../../lib/constants';
+import SignupForm from './SignupForm';
+import SignupDialog from './SignupDialog';
 
 const Signup = () => {
-  const [tin, setTin] = useState('');
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [email, setEmail] = useState('');
-  const [name, setName] = useState('');
-  const [surname, setSurname] = useState('');
-  const [address, setAddress] = useState('');
-  const [phoneNumber, setPhoneNumber] = useState('');
+  const [formData, setFormData] = useState({
+    tin: '',
+    username: '',
+    password: '',
+    email: '',
+    name: '',
+    surname: '',
+    address: '',
+    phoneNumber: ''
+  });
   const [error, setError] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [success, setSuccess] = useState(false);
@@ -25,33 +30,20 @@ const Signup = () => {
     }
   }, []);
 
-  // Function to validate email format
-  const validateEmail = (email) => {
-    const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return pattern.test(email);
+  const handleChange = (field, value) => {
+    setFormData(prevFormData => ({
+      ...prevFormData,
+      [field]: value
+    }));
   };
 
-  const validatePassword = (password) => {
-    // Password validation regex pattern
-    const pattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
-    return pattern.test(password);
-  };
-
-  // Function to validate TIN format
-  const validateTin = (tin) => {
-    // TIN validation regex pattern
-    const pattern = /^[a-zA-Z0-9]{9,}$/;
-    return pattern.test(tin);
-  };
-
-  // Function to validate phone number format with country code
-  const validatePhoneNumber = (phoneNumber) => {
-    // Phone number validation regex pattern with country code
-    const pattern = /^\+[1-9]\d{1,14}$/;
-    return pattern.test(phoneNumber);
-  };
+  const validateTin = (tin) => /^[a-zA-Z0-9]{9,}$/.test(tin);
+  const validatePassword = (password) => /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/.test(password);
+  const validateEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  const validatePhoneNumber = (phoneNumber) => /^\+[1-9]\d{1,14}$/.test(phoneNumber);
 
   const isFormValid = () => {
+    const { tin, username, password, email, phoneNumber } = formData;
     return (
       validateTin(tin) &&
       username.length >= 5 &&
@@ -66,31 +58,15 @@ const Signup = () => {
 
     try {
       setIsSubmitting(true);
+      localStorage.setItem('isSubmitting', true);
 
-      // Validate TIN
-      if (!validateTin(tin)) {
-        throw new Error('TIN must be at least 9 characters long and consist of alphanumeric characters');
-      }
+      const { tin, username, password, email, name, surname, address, phoneNumber } = formData;
 
-      // Validate username
-      if (username.length < 5) {
-        throw new Error('Username must be at least 5 characters long');
-      }
-
-      // Validate password
-      if (!validatePassword(password)) {
-        throw new Error('Password must contain at least one uppercase letter, one lowercase letter, one number, one special character, and be at least 8 characters long');
-      }
-
-      // Validate email
-      if (!validateEmail(email)) {
-        throw new Error('Invalid email format');
-      }
-
-      // Validate phone number
-      if (!validatePhoneNumber(phoneNumber)) {
-        throw new Error('Phone number must be in the format +<country code><number> and contain 10-15 digits');
-      }
+      if (!validateTin(tin)) throw new Error('Invalid TIN format.');
+      if (username.length < 5) throw new Error('Username must be at least 5 characters long.');
+      if (!validatePassword(password)) throw new Error('Password does not meet the required criteria.');
+      if (!validateEmail(email)) throw new Error('Invalid email format.');
+      if (!validatePhoneNumber(phoneNumber)) throw new Error('Invalid phone number format.');
 
       const response = await axios.post('http://localhost:5001/auth/signup', {
         tin,
@@ -108,151 +84,45 @@ const Signup = () => {
       if (response.status === 201) {
         setSuccess(true);
         setError('');
-
         setTimeout(() => {
           navigate(PATHS.LOGIN);
-        }, 3000); // Redirect after 3 seconds
+        }, 3000);
       } else {
-        const errorMessage = response.data.message || 'Signup failed: Invalid response';
+        const errorMessage = response.data || 'Signup failed: Invalid response';
         throw new Error(errorMessage);
       }
     } catch (error) {
       console.error('Error:', error);
-      if (error.response) {
-        const errorMessage = error.response.data || 'Signup failed: Invalid response';
-        setError(errorMessage);
+      if (error.response && error.response.data) {
+        setError(error.response.data);
       } else if (error.request) {
-        setError('No response received from the server');
+        setError('No response received from the server.');
       } else {
-        setError('An unexpected error occurred');
+        setError(error.message || 'An unexpected error occurred.');
       }
     } finally {
       setIsSubmitting(false);
+      localStorage.setItem('isSubmitting', false);
     }
   };
 
   return (
-    <div className="signup-container">
-      <h2>Signup</h2>
-      {error && <p className="error-message">{error}</p>}
-      <form onSubmit={handleSubmit}>
-        <div className="form-group">
-          <label htmlFor="tin">TIN:</label>
-          <input
-            type="text"
-            id="tin"
-            value={tin}
-            onChange={(e) => setTin(e.target.value)}
-            required
-          />
-          {!validateTin(tin) && (
-            <p className="validation-message">TIN must be at least 9 characters long and consist of alphanumeric characters</p>
-          )}
-        </div>
-        <div className="form-group">
-          <label htmlFor="username">Username:</label>
-          <input
-            type="text"
-            id="username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            required
-          />
-          {username.length < 5 && (
-            <p className="validation-message">Username must be at least 5 characters long</p>
-          )}
-        </div>
-        <div className="form-group">
-          <label htmlFor="password">Password:</label>
-          <input
-            type="password"
-            id="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-          {!validatePassword(password) && (
-            <p className="validation-message">Password must contain at least one uppercase letter, one lowercase letter, one number, one special character, and be at least 8 characters long</p>
-          )}
-        </div>
-        <div className="form-group">
-          <label htmlFor="email">Email:</label>
-          <input
-            type="email"
-            id="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-          {!validateEmail(email) && (
-            <p className="validation-message">Invalid email format</p>
-          )}
-        </div>
-        <div className="form-group">
-          <label htmlFor="name">Name:</label>
-          <input
-            type="text"
-            id="name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            required
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="surname">Surname:</label>
-          <input
-            type="text"
-            id="surname"
-            value={surname}
-            onChange={(e) => setSurname(e.target.value)}
-            required
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="address">Address:</label>
-          <input
-            type="text"
-            id="address"
-            value={address}
-            onChange={(e) => setAddress(e.target.value)}
-            required
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="phoneNumber">Phone Number:</label>
-          <input
-            type="text"
-            id="phoneNumber"
-            value={phoneNumber}
-            onChange={(e) => setPhoneNumber(e.target.value)}
-            required
-          />
-          {!validatePhoneNumber(phoneNumber) && (
-            <p className="validation-message">Invalid phone number format</p>
-          )}
-        </div>
-        <button type="submit" disabled={isSubmitting || !isFormValid()}>Signup</button>
-      </form>
+    <Box display="flex" justifyContent="center" alignItems="center" minHeight="100vh">
+      <Box width="100%" maxWidth="500px" padding="20px" boxShadow={3} borderRadius={2}>
+        <h2>Signup</h2>
+        {error && <p className="error-message">{error}</p>}
+        <SignupForm
+          formData={formData}
+          handleChange={handleChange}
+          handleSubmit={handleSubmit}
+          isFormValid={isFormValid}
+          isSubmitting={isSubmitting}
+        />
+      </Box>
 
-      <Dialog
-        open={success}
-        onClose={() => setSuccess(false)}
-      >
-        <DialogTitle>Signup Successful</DialogTitle>
-        <DialogContent>
-          <DialogContentText>
-            Your account has been successfully created. You will be redirected to the login page shortly.
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={() => navigate(PATHS.LOGIN)} color="primary">
-            Go to Login
-          </Button>
-        </DialogActions>
-      </Dialog>
-    </div>
+      <SignupDialog success={success} navigate={navigate} PATHS={PATHS} />
+    </Box>
   );
 };
 
 export default Signup;
-

@@ -1,10 +1,10 @@
-import { useState} from 'react';
+// src/components/UpdateOwner.js
+import { useState } from 'react';
 import { useAuth } from '../../hooks/useAuth';
-
 import api from '../../api/Api';
-
 import Modal from '@mui/material/Modal';
-import { Box, Typography, TextField, Button, CircularProgress } from '@mui/material';
+import { Button } from '@mui/material';
+import UpdateForm from './UpdateForm';
 
 const UpdateOwner = ({ ownerDetails, setOwnerDetails }) => {
   const { authData } = useAuth();
@@ -12,14 +12,16 @@ const UpdateOwner = ({ ownerDetails, setOwnerDetails }) => {
   const tin = authData?.userTin;
   const [success, setSuccess] = useState(false);
   const [password, setPassword] = useState('');
-  const [email, setEmail] = useState(ownerDetails?.email );
-  const [address, setAddress] = useState(ownerDetails?.address );
-  
+  const [email, setEmail] = useState(ownerDetails?.email);
+  const [address, setAddress] = useState(ownerDetails?.address);
   const [loading, setLoading] = useState(false);
-
   const [open, setOpen] = useState(false);
 
-
+  const handleChange = (field, value) => {
+    if (field === 'email') setEmail(value);
+    if (field === 'address') setAddress(value);
+    if (field === 'password') setPassword(value);
+  };
 
   const handleSubmit = async () => {
     const newErrors = {};
@@ -41,29 +43,22 @@ const UpdateOwner = ({ ownerDetails, setOwnerDetails }) => {
 
     setLoading(true);
 
+    try {
+      const requestBody = {
+        email: email.trim() !== '' ? email : null,
+        address: address.trim() !== '' ? address : null,
+        password: password.trim() !== '' ? password : null,
+      };
 
-      
-      try {
-        // Check if email, address, and password are empty, and set them to null if they are
-        const requestBody = {
-          email: email.trim() !== '' ? email : null,
-          address: address.trim() !== '' ? address : null,
-          password: password.trim() !== '' ? password : null
-          
-        };
-       
-      
-        const response = await api.put(`/api/propertyOwners/${tin}`, requestBody);
-        if (response.status === 202) {
-          setSuccess(true);
-          setOpen(false); 
-          setOwnerDetails(prevOwnerDetails => ({
-            ...prevOwnerDetails,
-            email: requestBody.email !== null ? requestBody.email : prevOwnerDetails.email,
-            address: requestBody.address !== null ? requestBody.address : prevOwnerDetails.address,
-            // Assuming password is always present in the request, so no need to check for null
-          }));
-        
+      const response = await api.put(`/api/propertyOwners/${tin}`, requestBody);
+      if (response.status === 202) {
+        setSuccess(true);
+        setOpen(false);
+        setOwnerDetails((prevOwnerDetails) => ({
+          ...prevOwnerDetails,
+          email: requestBody.email !== null ? requestBody.email : prevOwnerDetails.email,
+          address: requestBody.address !== null ? requestBody.address : prevOwnerDetails.address,
+        }));
       } else {
         throw new Error(response.data);
       }
@@ -82,80 +77,23 @@ const UpdateOwner = ({ ownerDetails, setOwnerDetails }) => {
     }
   };
 
-  const isValidEmail = (email) => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
-  };
-
-  const isValidPassword = (password) => {
-    const pattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
-    return pattern.test(password);
-  };
+  const isValidEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  const isValidPassword = (password) => /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/.test(password);
 
   return (
     <>
       <Modal open={open} onClose={() => setOpen(false)}>
-        <Box sx={{
-          position: 'absolute',
-          top: '50%',
-          left: '50%',
-          transform: 'translate(-50%, -50%)',
-          width: 400,
-          bgcolor: 'background.paper',
-          border: '2px solid #000',
-          boxShadow: 24,
-          p: 4,
-        }}>
-          <Typography variant="h5">Update Owner</Typography>
-          {success && (
-            <Typography variant="body1" className="success-dialog">
-              Owner details updated successfully. Redirecting...
-            </Typography>
-          )}
-          <form>
-            <TextField
-              fullWidth
-              margin="normal"
-              id="email"
-              label="Email Address"
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              error={!!errors.email}
-              helperText={errors.email}
-            />
-            <TextField
-              fullWidth
-              margin="normal"
-              id="address"
-              label="Address"
-              type="text"
-              value={address}
-              onChange={(e) => setAddress(e.target.value)}
-              error={!!errors.address}
-              helperText={errors.address}
-            />
-            <TextField
-              fullWidth
-              margin="normal"
-              id="password"
-              label="Password"
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              error={!!errors.password}
-              helperText={errors.password}
-            />
-            {loading ? (
-              <CircularProgress />
-            ) : (
-              <>
-                <Button onClick={handleSubmit} variant="contained">Update Owner</Button>
-                <Button onClick={() => setOpen(false)} variant="contained">Cancel</Button>
-              </>
-            )}
-          </form>
-        </Box>
+        <UpdateForm
+          email={email}
+          address={address}
+          password={password}
+          errors={errors}
+          loading={loading}
+          handleChange={handleChange}
+          handleSubmit={handleSubmit}
+          handleClose={() => setOpen(false)}
+          success={success}
+        />
       </Modal>
       <Button onClick={() => setOpen(true)} variant="contained" color="primary">
         Update Owner
