@@ -134,9 +134,9 @@ public class SampleData {
             logger.info("Searched property Owner: {}", resultUser);
             List<UserSearchResponseDto> responseDto=propertyOwnerService.createSearchResponse(resultUser);
             logger.info("Created user search response: {}", responseDto);
-            UserUpdateDto newUpdate = new UserUpdateDto(null,"elsewhere","");
-            propertyOwnerService.updateUser(propertyOwner.getTin(), newUpdate);
-            logger.info("Updated user with: {}", newUpdate);
+//            UserUpdateDto newUpdate = new UserUpdateDto(null,"elsewhere","");
+//            propertyOwnerService.updateUser(propertyOwner.getTin(), newUpdate);
+//            logger.info("Updated user with: {}", newUpdate);
             resultUser =propertyOwnerService.searchUser(request );
             logger.info("Searched property Owner: {}", resultUser);
 
