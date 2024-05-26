@@ -4,10 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f3732d33-421a-415d-ba42-6d0b12488ca7" name="Changes" comment="Fixed update repair button">
-      <change beforePath="$PROJECT_DIR$/Technikon-FrontEnd/src/views/Repair/CreateRepair.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/Technikon-FrontEnd/src/views/Repair/CreateRepair.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Technikon-FrontEnd/src/views/Repair/SuccessDialog.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/Technikon-FrontEnd/src/views/Repair/SuccessDialog.jsx" afterDir="false" />
-    </list>
+    <list default="true" id="f3732d33-421a-415d-ba42-6d0b12488ca7" name="Changes" comment="Fixed cancel button in UpdateRepairDialog.jsx" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -419,7 +416,23 @@
       <option name="project" value="LOCAL" />
       <updated>1716741566087</updated>
     </task>
-    <option name="localTasksCounter" value="32" />
+    <task id="LOCAL-00032" summary="Fixed create repair button">
+      <option name="closed" value="true" />
+      <created>1716755722381</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1716755722381</updated>
+    </task>
+    <task id="LOCAL-00033" summary="Fixed cancel button in UpdateRepairDialog.jsx">
+      <option name="closed" value="true" />
+      <created>1716756054956</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1716756054956</updated>
+    </task>
+    <option name="localTasksCounter" value="34" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -471,8 +484,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Merge branch 'FrontEndLoginFeature' of https://github.com/alexxirou/Technikon_app_Spring-React-PostgreSQL- into FrontEndLoginFeature" />
-    <MESSAGE value="Edit functionality for show repairs" />
     <MESSAGE value="Edit functionality for show repairss" />
     <MESSAGE value="Correct show repair details buttons" />
     <MESSAGE value="Correct show repair details refreshing page" />
@@ -496,7 +507,9 @@
     <MESSAGE value="Fixed repair updating passing user role and propertyOwnerId" />
     <MESSAGE value="Necessary commit" />
     <MESSAGE value="Fixed update repair button" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed update repair button" />
+    <MESSAGE value="Fixed create repair button" />
+    <MESSAGE value="Fixed cancel button in UpdateRepairDialog.jsx" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixed cancel button in UpdateRepairDialog.jsx" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

@@ -66,6 +66,10 @@ const CreateRepair = () => {
     }
   };
 
+  const handleCancel = () => {
+    handleGoToRepairs();
+  };
+
   return (
     <Container maxWidth="sm">
       <Box
@@ -80,6 +84,7 @@ const CreateRepair = () => {
           setFormData={setFormData}
           errors={errors}
           handleSubmit={handleSubmit}
+          handleCancel={handleCancel}
         />
         <SuccessDialog
           success={success}
@@ -92,5 +97,3 @@ const CreateRepair = () => {
 };
 
 export default CreateRepair;
-
-

@@ -1,10 +1,11 @@
-import { TextField, MenuItem, Button, Typography } from '@mui/material';
+import { TextField, MenuItem, Button, Typography, Box } from '@mui/material';
 
 const CreateForm = ({
   formData,
   setFormData,
   errors,
-  handleSubmit
+  handleSubmit,
+  handleCancel
 }) => {
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -97,15 +98,22 @@ const CreateForm = ({
           {errors.submit}
         </Typography>
       )}
-      <Button
-        type="submit"
-        variant="contained"
-        color="primary"
-        fullWidth
-        style={{ marginTop: '20px' }}
-      >
-        Create Repair
-      </Button>
+      <Box display="flex" justifyContent="space-between" mt={2}>
+        <Button
+          type="submit"
+          variant="contained"
+          color="primary"
+        >
+          Create Repair
+        </Button>
+        <Button
+          variant="outlined"
+          color="secondary"
+          onClick={handleCancel}
+        >
+          Cancel
+        </Button>
+      </Box>
     </form>
   );
 };
