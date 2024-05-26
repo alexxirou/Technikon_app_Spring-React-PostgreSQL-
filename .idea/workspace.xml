@@ -4,10 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f3732d33-421a-415d-ba42-6d0b12488ca7" name="Changes" comment="Added messages in console for deletion of repair">
-      <change beforePath="$PROJECT_DIR$/Technikon-FrontEnd/src/views/Repair/RepairDetails.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/Technikon-FrontEnd/src/views/Repair/RepairDetails.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Technikon-FrontEnd/src/views/Repair/ShowRepairs.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/Technikon-FrontEnd/src/views/Repair/ShowRepairs.jsx" afterDir="false" />
-    </list>
+    <list default="true" id="f3732d33-421a-415d-ba42-6d0b12488ca7" name="Changes" comment="Created smaller components for repair creation" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -364,7 +361,15 @@
       <option name="project" value="LOCAL" />
       <updated>1716555805742</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="Created smaller components for repair creation">
+      <option name="closed" value="true" />
+      <created>1716557578743</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1716557578743</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -415,6 +420,7 @@
     <MESSAGE value="Implemented update functionality" />
     <MESSAGE value="Added redirection in repair update, so that the new repair is correctly displayed at front" />
     <MESSAGE value="Added messages in console for deletion of repair" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added messages in console for deletion of repair" />
+    <MESSAGE value="Created smaller components for repair creation" />
+    <option name="LAST_COMMIT_MESSAGE" value="Created smaller components for repair creation" />
   </component>
 </project>
