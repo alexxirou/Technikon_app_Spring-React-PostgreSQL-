@@ -4,8 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f3732d33-421a-415d-ba42-6d0b12488ca7" name="Changes" comment="Reused RepairForm for updating a repair">
-      <change beforePath="$PROJECT_DIR$/Technikon-App-BackEnd/src/main/java/com/scytalys/technikon/repository/PropertyRepairRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/Technikon-App-BackEnd/src/main/java/com/scytalys/technikon/repository/PropertyRepairRepository.java" afterDir="false" />
+    <list default="true" id="f3732d33-421a-415d-ba42-6d0b12488ca7" name="Changes" comment="Corrected validations for updating a repair">
+      <change beforePath="$PROJECT_DIR$/Technikon-App-BackEnd/src/main/java/com/scytalys/technikon/controller/PropertyRepairController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Technikon-App-BackEnd/src/main/java/com/scytalys/technikon/controller/PropertyRepairController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Technikon-App-BackEnd/src/main/java/com/scytalys/technikon/exception/GlobalExceptionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/Technikon-App-BackEnd/src/main/java/com/scytalys/technikon/exception/GlobalExceptionHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Technikon-App-BackEnd/src/main/java/com/scytalys/technikon/service/PropertyRepairService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Technikon-App-BackEnd/src/main/java/com/scytalys/technikon/service/PropertyRepairService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Technikon-App-BackEnd/src/main/java/com/scytalys/technikon/service/impl/PropertyRepairServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/Technikon-App-BackEnd/src/main/java/com/scytalys/technikon/service/impl/PropertyRepairServiceImpl.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -213,7 +215,7 @@
       <workItem from="1716317661578" duration="3644000" />
       <workItem from="1716452451421" duration="13829000" />
       <workItem from="1716493588153" duration="2229000" />
-      <workItem from="1716727215693" duration="5803000" />
+      <workItem from="1716727215693" duration="7493000" />
     </task>
     <task id="LOCAL-00001" summary="Corrected imports at App.js">
       <option name="closed" value="true" />
@@ -423,7 +425,15 @@
       <option name="project" value="LOCAL" />
       <updated>1716733383065</updated>
     </task>
-    <option name="localTasksCounter" value="27" />
+    <task id="LOCAL-00027" summary="Corrected validations for updating a repair">
+      <option name="closed" value="true" />
+      <created>1716734825823</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1716734825823</updated>
+    </task>
+    <option name="localTasksCounter" value="28" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -464,7 +474,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Corrected buttons for property repair" />
     <MESSAGE value="Used material-ui components in login page and in display of owner fields" />
     <MESSAGE value="Created CreateRepair component with input validations" />
     <MESSAGE value="Link to repairs using property owner id" />
@@ -489,6 +498,7 @@
     <MESSAGE value="Fixed repair details to be logged only once, after the creation of repair" />
     <MESSAGE value="Added logging for deleting and updating a repair" />
     <MESSAGE value="Reused RepairForm for updating a repair" />
-    <option name="LAST_COMMIT_MESSAGE" value="Reused RepairForm for updating a repair" />
+    <MESSAGE value="Corrected validations for updating a repair" />
+    <option name="LAST_COMMIT_MESSAGE" value="Corrected validations for updating a repair" />
   </component>
 </project>

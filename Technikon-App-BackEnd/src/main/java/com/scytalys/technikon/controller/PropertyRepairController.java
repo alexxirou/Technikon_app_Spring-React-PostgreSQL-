@@ -114,7 +114,7 @@ public class PropertyRepairController {
             if (!(id ==propertyOwnerId)) throw new AccessDeniedException("You are not authorized to delete property repair for this owner.");
         }
         HttpHeaders headers= HeaderUtility.createHeaders("Success-Header", "Property repair deleted.");
-        propertyRepairService.deletePropertyRepair(propertyRepairId);
+        propertyRepairService.deletePropertyRepair(propertyOwnerId,propertyRepairId);
         return new ResponseEntity<>(headers,HttpStatus.OK);
     }
 }
