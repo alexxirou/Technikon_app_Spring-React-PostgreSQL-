@@ -13,10 +13,13 @@ import lombok.AllArgsConstructor;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.dao.DataAccessResourceFailureException;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.client.HttpClientErrorException;
 
 import java.math.BigDecimal;
+import java.nio.file.AccessDeniedException;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -181,9 +184,12 @@ public class PropertyRepairServiceImpl implements PropertyRepairService {
      */
     @Transactional
     @CacheEvict(value = "PropertyRepairs", allEntries = true)
-    public void deletePropertyRepair(long id) {
+    public void deletePropertyRepair(long propertyOwnerId, long id) {
         PropertyRepair propertyRepair = propertyRepairRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Property repair with id "+ id+ " not found"));
-       if (!propertyRepair.getRepairStatus().equals(DEFAULT_PENDING)) {
+        if (propertyRepair.getPropertyOwner().getId() != propertyOwnerId) {
+            throw new BadCredentialsException("You are not authorized to delete this repair");
+        }
+        if (!propertyRepair.getRepairStatus().equals(DEFAULT_PENDING)) {
            throw new DataAccessResourceFailureException("Cannot delete a property repair with this status");
        }
        propertyRepairRepository.deleteById(id);
