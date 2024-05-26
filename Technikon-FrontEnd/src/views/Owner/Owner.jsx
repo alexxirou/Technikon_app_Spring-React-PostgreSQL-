@@ -9,7 +9,7 @@ const Owner = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const { authData, logout } = useAuth();
-  const tin = authData.userTin;
+  const tin = authData?.userTin;
 
   useEffect(() => {
     const fetchOwnerDetails = async () => {

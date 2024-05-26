@@ -84,13 +84,17 @@ public class PropertyOwnerServiceImpl implements PropertyOwnerService {
         PropertyOwner user= findUser(tin);
 
         PropertyOwner newUser = ownerMapper.updateDtoToUser(dto,user);
+
         if(dto.email()!=null) {
             String verifiedEmail = Optional.of(dto.email())
                     .filter(email -> Pattern.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$", email))
                     .orElseThrow(() -> new IllegalArgumentException("Invalid email format"));
-            user.setEmail(verifiedEmail);
-            user.setPassword(passwordEncoder.encode(user.getPassword()));
+            newUser.setEmail(verifiedEmail);
         }
+        if (newUser.getPassword()!=user.getPassword()) {
+            newUser.setPassword(passwordEncoder.encode(user.getPassword()));
+        }
+
         propertyOwnerRepository.save(newUser);
 
     }

@@ -1,4 +1,4 @@
-import React from 'react';
+
 import { Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Button } from '@mui/material';
 
 const SuccessDialog = ({ success, handleClose, handleGoToRepairs }) => {

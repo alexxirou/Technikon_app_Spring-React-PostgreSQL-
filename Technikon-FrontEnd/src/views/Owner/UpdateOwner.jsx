@@ -41,17 +41,28 @@ const UpdateOwner = ({ ownerDetails, setOwnerDetails }) => {
 
     setLoading(true);
 
-    try {
-      const response = await api.put(`/api/propertyOwners/${tin}`, { email, address, password });
-      if (response.status === 202) {
-        setSuccess(true);
-        setOpen(false); 
-        setOwnerDetails(prevOwnerDetails => ({
-          ...prevOwnerDetails,
-          email: email !== ownerDetails.email ? email : prevOwnerDetails.email,
-          address: address !== ownerDetails.address ? address : prevOwnerDetails.address
-        }));
-        
+
+      
+      try {
+        // Check if email, address, and password are empty, and set them to null if they are
+        const requestBody = {
+          email: email.trim() !== '' ? email : null,
+          address: address.trim() !== '' ? address : null,
+          password: password.trim() !== '' ? password : null
+          
+        };
+       
+      
+        const response = await api.put(`/api/propertyOwners/${tin}`, requestBody);
+        if (response.status === 202) {
+          setSuccess(true);
+          setOpen(false); 
+          setOwnerDetails(prevOwnerDetails => ({
+            ...prevOwnerDetails,
+            email: requestBody.email !== null ? requestBody.email : prevOwnerDetails.email,
+            address: requestBody.address !== null ? requestBody.address : prevOwnerDetails.address,
+            // Assuming password is always present in the request, so no need to check for null
+          }));
         
       } else {
         throw new Error(response.data);
