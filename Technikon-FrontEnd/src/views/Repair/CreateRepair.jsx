@@ -1,15 +1,12 @@
-// Inside CreateRepair.js
-
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Container, Box } from '@mui/material';
-import api from '../../api/Api';
 import { useAuth } from '../../hooks/useAuth';
 import { PATHS } from '../../lib/constants';
 import RepairForm from './RepairForm';
 import SuccessDialog from './SuccessDialog';
 import { createRepair } from './apiRepairService';
-
+import { validateCost, validateDate } from './validationUtils';
 
 const CreateRepair = () => {
   const navigate = useNavigate();
@@ -28,8 +25,8 @@ const CreateRepair = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    const isCostValid = validateCost(formData.cost);
-    const isDateValid = validateDate(formData.dateOfRepair);
+    const isCostValid = validateCost(formData.cost, setErrors);
+    const isDateValid = validateDate(formData.dateOfRepair, setErrors);
 
     if (!isCostValid || !isDateValid) {
       return;
@@ -46,8 +43,8 @@ const CreateRepair = () => {
 
     try {
       const response = await createRepair(authData.userId, repairData);
-    console.log("Created Repair:", response); // Log the created repair data
-    setSuccess(true); // Show the success dialog
+      console.log("Created Repair:", response); 
+      setSuccess(true); // Show the success dialog
     } catch (error) {
       console.error('Error:', error);
       if (error.response) {
@@ -66,39 +63,6 @@ const CreateRepair = () => {
       navigate(PATHS.SHOW_REPAIRS(authData.userId));
     } else {
       console.error("User data not available");
-    }
-  };
-
-  const validateCost = (cost) => {
-    if (cost <= 0) {
-      setErrors((prevErrors) => ({
-        ...prevErrors,
-        cost: 'Insert a valid cost'
-      }));
-      return false;
-    } else {
-      setErrors((prevErrors) => {
-        const { cost, ...rest } = prevErrors;
-        return rest;
-      });
-      return true;
-    }
-  };
-
-  const validateDate = (date) => {
-    const today = new Date().toISOString().split('T')[0];
-    if (date < today) {
-      setErrors((prevErrors) => ({
-        ...prevErrors,
-        dateOfRepair: 'Date of repair cannot be in the past'
-      }));
-      return false;
-    } else {
-      setErrors((prevErrors) => {
-        const { dateOfRepair, ...rest } = prevErrors;
-        return rest;
-      });
-      return true;
     }
   };
 
@@ -128,3 +92,5 @@ const CreateRepair = () => {
 };
 
 export default CreateRepair;
+
+

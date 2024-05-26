@@ -59,8 +59,13 @@ const ShowRepairs = () => {
 
   const handleUpdateSubmit = async () => {
     try {
-      await updateRepair(propertyOwnerId, selectedRepair.id, selectedRepair);
+      const response = await updateRepair(propertyOwnerId, selectedRepair.id, selectedRepair);
+      console.log("Response status:",response.status);
+      if (response.status == 200){
+        console.log("Repair with id:", selectedRepair.id, "updated successfully");
+      }
       navigate(PATHS.REPAIR_DETAILS(propertyOwnerId, selectedRepair.id));
+
     } catch (error) {
       console.error("Failed to update repair", error);
       setErrorDialogMessage('Failed to update repair');
@@ -82,6 +87,7 @@ const ShowRepairs = () => {
       const responseStatus = await deleteRepair(propertyOwnerId, repairId);
       if (responseStatus === 200) {
         setRepairs(repairs.filter((repair) => repair.id !== repairId));
+        console.log("Repair with id:", repairId, "deleted successfully");
       }
     } catch (error) {
       console.error("Failed to delete repair", error);

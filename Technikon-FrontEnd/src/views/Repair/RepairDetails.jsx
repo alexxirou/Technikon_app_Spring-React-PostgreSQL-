@@ -1,4 +1,4 @@
-import  { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Box, CircularProgress, Typography, Container, Button } from '@mui/material';
 import api from '../../api/Api';
@@ -11,18 +11,19 @@ const RepairDetails = () => {
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
   const { authData } = useAuth();
-
+  const fetchInitiated = useRef(false);
 
   useEffect(() => {
-    if (!authData) {
+    if (!authData || fetchInitiated.current) {
       return;
     }
+    fetchInitiated.current = true;
     const propertyOwnerId = authData.userId;
     const fetchRepair = async () => {
       try {
         const response = await api.get(`/api/property-repairs/${propertyOwnerId}/${repairId}`);
         setRepair(response.data);
-        console.log("Repair details: ", response.data);
+        console.log("Repair details:", response.data);
       } catch (error) {
         console.error("Failed to fetch repair details", error);
       } finally {
@@ -81,7 +82,7 @@ const RepairDetails = () => {
           Cost: ${repair.cost}
         </Typography>
         <Box mt={2}>
-        <Button variant="contained" color="primary" onClick={handleBackToRepairs}>
+          <Button variant="contained" color="primary" onClick={handleBackToRepairs}>
             Back to Repairs
           </Button>
         </Box>

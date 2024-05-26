@@ -1,63 +1,48 @@
-import React from 'react';
-import { Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, TextField, Button } from '@mui/material';
+import React, { useState } from 'react';
+import { Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Button } from '@mui/material';
+import RepairForm from './RepairForm';
+import { validateCost, validateDate } from './validationUtils';
 
 const UpdateRepairDialog = ({ open, onClose, repair, onChange, onSubmit }) => {
+  const [errors, setErrors] = useState({});
+
+  const setFormData = (updatedData) => {
+    // Merge the updated data with the existing repair data
+    onChange({ ...repair, ...updatedData });
+  };
+
+
+  const handleSubmit = () => {
+    const isCostValid = validateCost(repair.cost, setErrors);
+    const isDateValid = validateDate(repair.dateOfRepair, setErrors);
+
+    if (!isCostValid || !isDateValid) {
+      return;
+    }
+
+    onSubmit();
+  };
+
   return (
     <Dialog open={open} onClose={onClose}>
       <DialogTitle>Update Repair</DialogTitle>
       <DialogContent>
         <DialogContentText>Update the repair details below:</DialogContentText>
-        <TextField
-          label="Short Description"
-          value={repair?.shortDescription || ''}
-          onChange={(e) => onChange({ ...repair, shortDescription: e.target.value })}
-          fullWidth
-          margin="normal"
-        />
-        <TextField
-          label="Date of Repair"
-          type="date"
-          value={repair?.dateOfRepair || ''}
-          onChange={(e) => onChange({ ...repair, dateOfRepair: e.target.value })}
-          fullWidth
-          margin="normal"
-          InputLabelProps={{ shrink: true }}
-        />
-        <TextField
-          label="Repair Type"
-          value={repair?.repairType || ''}
-          onChange={(e) => onChange({ ...repair, repairType: e.target.value })}
-          fullWidth
-          margin="normal"
-        />
-        <TextField
-          label="Repair Status"
-          value={repair?.repairStatus || ''}
-          onChange={(e) => onChange({ ...repair, repairStatus: e.target.value })}
-          fullWidth
-          margin="normal"
-        />
-        <TextField
-          label="Cost"
-          value={repair?.cost || ''}
-          onChange={(e) => onChange({ ...repair, cost: e.target.value })}
-          fullWidth
-          margin="normal"
-        />
-        <TextField
-          label="Long Description"
-          value={repair?.longDescription || ''}
-          onChange={(e) => onChange({ ...repair, longDescription: e.target.value })}
-          fullWidth
-          margin="normal"
+        <RepairForm
+          formData={repair}
+          setFormData={setFormData} // Pass the setFormData function
+          errors={errors}
+          handleSubmit={handleSubmit}
+          isUpdating={true} // Pass isUpdating prop if needed
         />
       </DialogContent>
       <DialogActions>
         <Button onClick={onClose} color="primary">Cancel</Button>
-        <Button onClick={onSubmit} color="primary">Update</Button>
+        <Button onClick={handleSubmit} color="primary">Update</Button>
       </DialogActions>
     </Dialog>
   );
 };
 
 export default UpdateRepairDialog;
+
