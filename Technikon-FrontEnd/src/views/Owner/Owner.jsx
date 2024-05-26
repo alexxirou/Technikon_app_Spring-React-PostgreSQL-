@@ -47,7 +47,7 @@ const Owner = () => {
           
           setTimeout(() => {
             logout();
-          }, 2000);
+          }, 1000);
      
         } else {
           const errorMessage = response.data.message;
