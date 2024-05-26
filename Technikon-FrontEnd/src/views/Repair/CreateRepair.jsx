@@ -3,10 +3,10 @@ import { useNavigate } from 'react-router-dom';
 import { Container, Box } from '@mui/material';
 import { useAuth } from '../../hooks/useAuth';
 import { PATHS } from '../../lib/constants';
-import RepairForm from './RepairForm';
 import SuccessDialog from './SuccessDialog';
 import { createRepair } from './apiRepairService';
 import { validateCost, validateDate } from './validationUtils';
+import CreateForm from './CreateForm';
 
 const CreateRepair = () => {
   const navigate = useNavigate();
@@ -75,7 +75,7 @@ const CreateRepair = () => {
         justifyContent="center"
         minHeight="100vh"
       >
-        <RepairForm
+        <CreateForm
           formData={formData}
           setFormData={setFormData}
           errors={errors}
