@@ -1,11 +1,11 @@
 import  { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Box, CircularProgress, Button, Typography, Container } from '@mui/material';
-// import { fetchRepairs, updateRepair, deleteRepair } from './apiRepairService';
+import { fetchRepairs, updateRepair, deleteRepair } from './apiRepairService';
 import { PATHS } from '../../lib/constants';
 import { useAuth } from '../../hooks/useAuth';
-//import UpdateRepairDialog from './UpdateRepairDialog';
-// import ErrorDialog from './ErrorDialog';
+import UpdateRepairDialog from './UpdateRepairDialog';
+import ErrorDialog from './ErrorDialog';
 
 const ShowRepairs = () => {
   const [repairs, setRepairs] = useState([]);

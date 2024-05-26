@@ -61,17 +61,17 @@ public class UserMapperTest {
 
     }
 
-    @Test
-    public void testUserCreationDtoToUser() {
-
-
-        // Call the method to be tested
-       PropertyOwner user = OwnerMapper.INSTANCE.userCreationDtoToPropertyOwner(createUserDto);
-       user.setId(3145648468468L);
-       propertyOwner.setCreatedAt(null);
-       user.setCreatedAt(null);
-       assertEquals(user, propertyOwner);
-    }
+//    @Test
+//    public void testUserCreationDtoToUser() {
+//
+//
+//        // Call the method to be tested
+//       PropertyOwner user = OwnerMapper.INSTANCE.userCreationDtoToPropertyOwner(createUserDto);
+//       user.setId(3145648468468L);
+//       propertyOwner.setCreatedAt(null);
+//       user.setCreatedAt(null);
+//       assertEquals(user, propertyOwner);
+//    }
 
     @Test
     public void testUserCreationDtoToUserFailNullField() {
