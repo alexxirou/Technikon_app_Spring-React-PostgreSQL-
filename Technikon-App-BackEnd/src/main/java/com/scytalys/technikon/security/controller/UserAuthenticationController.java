@@ -88,10 +88,6 @@ public class UserAuthenticationController {
     public ResponseEntity<String> logout(HttpServletRequest request, HttpServletResponse response) {
         try {
 
-            HttpSession session = request.getSession(false);
-            if (session != null) {
-                session.invalidate();
-            }
             SecurityContextHolder.clearContext();
             HttpHeaders headers = new HttpHeaders();
             headers.add("Success-Header", "User logout successful.");

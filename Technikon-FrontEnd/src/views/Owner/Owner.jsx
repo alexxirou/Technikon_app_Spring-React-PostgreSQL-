@@ -3,6 +3,8 @@ import api from '../../api/Api';
 import { useAuth } from '../../hooks/useAuth';
 import OwnerDetails from './OwnerDetails';
 import CircularProgress from '@mui/material/CircularProgress';
+import { useNavigate } from 'react-router-dom';
+import { PATHS } from '../../lib/constants';
 
 const Owner = () => {
   const [ownerDetails, setOwnerDetails] = useState(null);
@@ -10,6 +12,7 @@ const Owner = () => {
   const [error, setError] = useState(null);
   const { authData, logout } = useAuth();
   const tin = authData?.userTin;
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchOwnerDetails = async () => {
@@ -30,14 +33,43 @@ const Owner = () => {
     fetchOwnerDetails();
   }, [tin]);
 
-  const handleDeleteOwner = async () => {
-    try {
-      await api.delete(`/api/propertyOwners/${tin}`);
-      logout(); // Logout after successful deletion
-    } catch (error) {
-      setError(error.message);
-    }
-  };
+
+    const handleDeleteOwner = async () => {
+      setLoading(true);
+     
+      try {
+        const response = await api.delete(`/api/propertyOwners/${tin}`);
+     
+  
+      
+        if (response.status === 202) {
+          console.log('Owner deleted successfully');
+          
+          setTimeout(() => {
+            logout();
+          }, 1000);
+     
+        } else {
+          const errorMessage = response.data.message;
+          throw new Error(errorMessage);
+        }
+      } catch (error) {
+      
+        console.error('Error:', error);
+        setError(error.message);
+  
+        if (error.response) {
+          setError(error.response.data);
+        } else if (error.request) {
+          setError('No response received from the server');
+        } else {
+          setError('An unexpected error occurred');
+        }
+      } finally {
+        setLoading(false);
+      }
+      }
+  
 
   
   if (loading) {
