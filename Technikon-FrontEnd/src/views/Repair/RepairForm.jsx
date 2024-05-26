@@ -6,7 +6,8 @@ const RepairForm = ({
   formData,
   setFormData,
   errors,
-  handleSubmit
+  handleSubmit,
+  isUpdating
 }) => {
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -99,14 +100,14 @@ const RepairForm = ({
           {errors.submit}
         </Typography>
       )}
-      <Button
+     <Button
         type="submit"
         variant="contained"
         color="primary"
         fullWidth
         style={{ marginTop: '20px' }}
       >
-        Create Repair
+        {isUpdating ? 'Update Repair' : 'Create Repair'} {/* Button text based on isUpdating prop */}
       </Button>
     </form>
   );
