@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f3732d33-421a-415d-ba42-6d0b12488ca7" name="Changes" comment="Fixed repair updating passing user role and propertyOwnerId" />
+    <list default="true" id="f3732d33-421a-415d-ba42-6d0b12488ca7" name="Changes" comment="Fixed update repair button" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -166,7 +166,7 @@
       <workItem from="1716317661578" duration="3644000" />
       <workItem from="1716452451421" duration="13829000" />
       <workItem from="1716493588153" duration="2229000" />
-      <workItem from="1716727215693" duration="12496000" />
+      <workItem from="1716727215693" duration="13556000" />
     </task>
     <task id="LOCAL-00001" summary="Corrected imports at App.js">
       <option name="closed" value="true" />
@@ -400,7 +400,23 @@
       <option name="project" value="LOCAL" />
       <updated>1716740865205</updated>
     </task>
-    <option name="localTasksCounter" value="30" />
+    <task id="LOCAL-00030" summary="Necessary commit">
+      <option name="closed" value="true" />
+      <created>1716740974108</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1716740974108</updated>
+    </task>
+    <task id="LOCAL-00031" summary="Fixed update repair button">
+      <option name="closed" value="true" />
+      <created>1716741566087</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1716741566087</updated>
+    </task>
+    <option name="localTasksCounter" value="32" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -452,7 +468,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Link to repairs using property owner id" />
     <MESSAGE value="Merge branch 'FrontEndLoginFeature' of https://github.com/alexxirou/Technikon_app_Spring-React-PostgreSQL- into FrontEndLoginFeature" />
     <MESSAGE value="Edit functionality for show repairs" />
     <MESSAGE value="Edit functionality for show repairss" />
@@ -468,7 +483,6 @@
     <MESSAGE value="Added redirection in repair update, so that the new repair is correctly displayed at front" />
     <MESSAGE value="Added messages in console for deletion of repair" />
     <MESSAGE value="Created smaller components for repair creation" />
-    <MESSAGE value="Necessary commit" />
     <MESSAGE value="Changes to repair files" />
     <MESSAGE value="Corrected create repair file" />
     <MESSAGE value="Fixed repair details to be logged only once, after the creation of repair" />
@@ -477,7 +491,9 @@
     <MESSAGE value="Corrected validations for updating a repair" />
     <MESSAGE value="Fixed delete repair with propertyOwnerId validation" />
     <MESSAGE value="Fixed repair updating passing user role and propertyOwnerId" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed repair updating passing user role and propertyOwnerId" />
+    <MESSAGE value="Necessary commit" />
+    <MESSAGE value="Fixed update repair button" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixed update repair button" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

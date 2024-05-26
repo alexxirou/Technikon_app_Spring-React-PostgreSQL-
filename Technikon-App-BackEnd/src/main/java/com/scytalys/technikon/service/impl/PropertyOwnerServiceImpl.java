@@ -91,7 +91,7 @@ public class PropertyOwnerServiceImpl implements PropertyOwnerService {
                     .orElseThrow(() -> new IllegalArgumentException("Invalid email format"));
             newUser.setEmail(verifiedEmail);
         }
-        if (  newUser.getPassword().isEmpty()){
+        if ( newUser.getPassword()==null || newUser.getPassword().isEmpty()){
             newUser.setPassword(user.getPassword());
         }else newUser.setPassword(passwordEncoder.encode(newUser.getPassword()));
         propertyOwnerRepository.save(newUser);
