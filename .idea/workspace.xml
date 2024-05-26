@@ -4,7 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f3732d33-421a-415d-ba42-6d0b12488ca7" name="Changes" comment="Corrected create repair file" />
+    <list default="true" id="f3732d33-421a-415d-ba42-6d0b12488ca7" name="Changes" comment="Reused RepairForm for updating a repair">
+      <change beforePath="$PROJECT_DIR$/Technikon-App-BackEnd/src/main/java/com/scytalys/technikon/repository/PropertyRepairRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/Technikon-App-BackEnd/src/main/java/com/scytalys/technikon/repository/PropertyRepairRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Technikon-App-BackEnd/src/main/java/com/scytalys/technikon/service/impl/PropertyRepairServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/Technikon-App-BackEnd/src/main/java/com/scytalys/technikon/service/impl/PropertyRepairServiceImpl.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -210,7 +213,7 @@
       <workItem from="1716317661578" duration="3644000" />
       <workItem from="1716452451421" duration="13829000" />
       <workItem from="1716493588153" duration="2229000" />
-      <workItem from="1716727215693" duration="2523000" />
+      <workItem from="1716727215693" duration="5803000" />
     </task>
     <task id="LOCAL-00001" summary="Corrected imports at App.js">
       <option name="closed" value="true" />
@@ -396,7 +399,31 @@
       <option name="project" value="LOCAL" />
       <updated>1716729293481</updated>
     </task>
-    <option name="localTasksCounter" value="24" />
+    <task id="LOCAL-00024" summary="Fixed repair details to be logged only once, after the creation of repair">
+      <option name="closed" value="true" />
+      <created>1716730558877</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1716730558877</updated>
+    </task>
+    <task id="LOCAL-00025" summary="Added logging for deleting and updating a repair">
+      <option name="closed" value="true" />
+      <created>1716731943671</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1716731943671</updated>
+    </task>
+    <task id="LOCAL-00026" summary="Reused RepairForm for updating a repair">
+      <option name="closed" value="true" />
+      <created>1716733383065</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1716733383065</updated>
+    </task>
+    <option name="localTasksCounter" value="27" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -437,9 +464,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Corrected imports at App.js" />
-    <MESSAGE value="Corrected something" />
-    <MESSAGE value="Code clean up" />
     <MESSAGE value="Corrected buttons for property repair" />
     <MESSAGE value="Used material-ui components in login page and in display of owner fields" />
     <MESSAGE value="Created CreateRepair component with input validations" />
@@ -462,6 +486,9 @@
     <MESSAGE value="Necessary commit" />
     <MESSAGE value="Changes to repair files" />
     <MESSAGE value="Corrected create repair file" />
-    <option name="LAST_COMMIT_MESSAGE" value="Corrected create repair file" />
+    <MESSAGE value="Fixed repair details to be logged only once, after the creation of repair" />
+    <MESSAGE value="Added logging for deleting and updating a repair" />
+    <MESSAGE value="Reused RepairForm for updating a repair" />
+    <option name="LAST_COMMIT_MESSAGE" value="Reused RepairForm for updating a repair" />
   </component>
 </project>

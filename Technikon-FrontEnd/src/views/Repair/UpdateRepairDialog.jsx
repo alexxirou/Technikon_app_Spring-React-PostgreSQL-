@@ -6,6 +6,12 @@ import { validateCost, validateDate } from './validationUtils';
 const UpdateRepairDialog = ({ open, onClose, repair, onChange, onSubmit }) => {
   const [errors, setErrors] = useState({});
 
+  const setFormData = (updatedData) => {
+    // Merge the updated data with the existing repair data
+    onChange({ ...repair, ...updatedData });
+  };
+
+
   const handleSubmit = () => {
     const isCostValid = validateCost(repair.cost, setErrors);
     const isDateValid = validateDate(repair.dateOfRepair, setErrors);
@@ -23,10 +29,11 @@ const UpdateRepairDialog = ({ open, onClose, repair, onChange, onSubmit }) => {
       <DialogContent>
         <DialogContentText>Update the repair details below:</DialogContentText>
         <RepairForm
-          formData={repair} // Use repair object as formData
-          setFormData={onChange}
+          formData={repair}
+          setFormData={setFormData} // Pass the setFormData function
           errors={errors}
           handleSubmit={handleSubmit}
+          isUpdating={true} // Pass isUpdating prop if needed
         />
       </DialogContent>
       <DialogActions>
