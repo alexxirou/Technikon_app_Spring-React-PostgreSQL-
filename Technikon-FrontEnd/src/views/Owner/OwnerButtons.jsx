@@ -1,38 +1,28 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { PATHS } from '../../lib/constants';
+import { Button } from '@mui/material';
+import UpdateOwner from './UpdateOwner';
 
-const OwnerButtons = ({ tin, id, handleDeleteOwner }) => {
-  const [confirmDelete, setConfirmDelete] = useState(false);
-  
-
-  const handleClick = () => {
-    if (confirmDelete) {
-      handleDeleteOwner();
-    } else {
-      setConfirmDelete(true);
-      setTimeout(() => {
-        setConfirmDelete(false);
-      }, 2000);
-    }
+const OwnerButtonsComponent = ({ tin, id, updateModalOpen, handleCloseUpdateModal, ownerDetails, setOwnerDetails }) => {
+  const ownerState = {
+    color: 'primary', // Set a default color value or fetch it from ownerDetails or other source
+    
   };
 
+
+
   return (
-    <div>
-      <Link to={PATHS.UPDATE_OWNER(tin)}>
-        <button>Update Owner</button>
-      </Link>
-      <button onClick={handleClick}>
-        {confirmDelete ? 'Double Click to Confirm Deletion' : 'Unsubscribe'}
-      </button>
-      <Link to={PATHS.PROPERTIES(id)}>
-        <button>View Properties</button>
-      </Link>
-      <Link to={PATHS.SHOW_REPAIRS(id)}>
-        <button>View Repair Jobs</button>
-      </Link>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+      <UpdateOwner open={updateModalOpen} handleClose={handleCloseUpdateModal} ownerDetails={ownerDetails} setOwnerDetails={setOwnerDetails}  />
+      <Button component={Link} to={PATHS.PROPERTIES(id)} variant="contained" color={ownerState.color}>
+        View Properties
+      </Button>
+      <Button component={Link} to={PATHS.SHOW_REPAIRS(id)} variant="contained" color={ownerState.color}>
+        View Repair Jobs
+      </Button>
     </div>
   );
 };
 
-export default OwnerButtons;
+export default OwnerButtonsComponent;

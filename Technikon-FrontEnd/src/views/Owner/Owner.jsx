@@ -1,8 +1,8 @@
-import  { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import api from '../../api/Api';
 import { useAuth } from '../../hooks/useAuth';
 import OwnerDetails from './OwnerDetails';
-import OwnerButtons from './OwnerButtons';
+import CircularProgress from '@mui/material/CircularProgress';
 
 const Owner = () => {
   const [ownerDetails, setOwnerDetails] = useState(null);
@@ -10,69 +10,38 @@ const Owner = () => {
   const [error, setError] = useState(null);
   const { authData, logout } = useAuth();
   const tin = authData.userTin;
-  const propertyOwnerId = authData.userId;
 
   useEffect(() => {
     const fetchOwnerDetails = async () => {
       try {
         const response = await api.get(`/api/propertyOwners/${tin}`);
-
         if (response.status === 200) {
           setOwnerDetails(response.data.userInfo);
-          setLoading(false);
         } else {
-          const errorMessage = response.data.message;
-          throw new Error(errorMessage);
+          throw new Error('Failed to fetch owner details');
         }
       } catch (error) {
-        console.error('Error:', error);
-
-        if (error.response) {
-          setError(error.response.data);
-        } else if (error.request) {
-          setError('No response received from the server');
-        } else {
-          setError('An unexpected error occurred');
-        }
-
+        setError(error.message);
+      } finally {
         setLoading(false);
       }
     };
 
     fetchOwnerDetails();
-  }, []);
+  }, [tin]);
 
   const handleDeleteOwner = async () => {
-    setLoading(true);
     try {
-      const response = await api.delete(`/api/propertyOwners/${tin}`);
-
-      if (response.status === 202) {
-        console.log('Owner deleted successfully');
-        logout();
-      } else {
-        const errorMessage = response.data.message;
-        throw new Error(errorMessage);
-      }
+      await api.delete(`/api/propertyOwners/${tin}`);
+      logout(); // Logout after successful deletion
     } catch (error) {
-      console.error('Error:', error);
-
-      if (error.response) {
-        setError(error.response.data);
-      } else if (error.request) {
-        setError('No response received from the server');
-      } else {
-        setError('An unexpected error occurred');
-      }
-    } finally {
-      setLoading(false);
+      setError(error.message);
     }
   };
 
   
-
   if (loading) {
-    return <div>Loading...</div>;
+    return <CircularProgress />;
   }
 
   if (error) {
@@ -84,11 +53,13 @@ const Owner = () => {
   }
 
   return (
-    <div>
-      <OwnerDetails ownerDetails={ownerDetails} />
-      <OwnerButtons tin={tin} id={propertyOwnerId} handleDeleteOwner={handleDeleteOwner} />
-    </div>
+    <OwnerDetails
+      ownerDetails={ownerDetails}
+      handleDeleteOwner={handleDeleteOwner}
+      setOwnerDetails={setOwnerDetails}
+    />
   );
+  
 };
 
 export default Owner;

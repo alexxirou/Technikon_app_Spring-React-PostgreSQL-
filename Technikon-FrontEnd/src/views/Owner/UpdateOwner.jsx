@@ -1,23 +1,27 @@
-import { useState } from 'react';
+import { useState} from 'react';
 import { useAuth } from '../../hooks/useAuth';
-import { PATHS } from '../../lib/constants';
-import api from '../../api/Api';
-import { useNavigate } from 'react-router-dom';
 
-const UpdateOwner = () => {
+import api from '../../api/Api';
+
+import Modal from '@mui/material/Modal';
+import { Box, Typography, TextField, Button, CircularProgress } from '@mui/material';
+
+const UpdateOwner = ({ ownerDetails, setOwnerDetails }) => {
   const { authData } = useAuth();
   const [errors, setErrors] = useState({});
   const tin = authData?.userTin;
   const [success, setSuccess] = useState(false);
-  const [email, setEmail] = useState('');
-  const [address, setAddress] = useState('');
   const [password, setPassword] = useState('');
-  const navigate = useNavigate(); // Import and use useNavigate hook
+  const [email, setEmail] = useState(ownerDetails?.email );
+  const [address, setAddress] = useState(ownerDetails?.address );
+  
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = async (e, submitField) => {
-    e.preventDefault();
+  const [open, setOpen] = useState(false);
 
-    // Basic validation
+
+
+  const handleSubmit = async () => {
     const newErrors = {};
     if (email && !isValidEmail(email)) {
       newErrors.email = 'Invalid email format';
@@ -32,19 +36,26 @@ const UpdateOwner = () => {
     setErrors(newErrors);
 
     if (Object.keys(newErrors).length > 0) {
-      // If there are validation errors, return without submitting the form
       return;
     }
 
+    setLoading(true);
+
     try {
-      // Make a PUT request to update the owner
       const response = await api.put(`/api/propertyOwners/${tin}`, { email, address, password });
-      // Redirect to owner profile page after successful update
-      console.log(response.status);
-      setSuccess(true); // Show the success dialog
-      setTimeout(() => {
-        navigate(PATHS.OWNER(tin)); // Redirect to owner profile page
-      }, 3000); // Redirect after 3 seconds (3000 milliseconds)
+      if (response.status === 202) {
+        setSuccess(true);
+        setOpen(false); 
+        setOwnerDetails(prevOwnerDetails => ({
+          ...prevOwnerDetails,
+          email: email !== ownerDetails.email ? email : prevOwnerDetails.email,
+          address: address !== ownerDetails.address ? address : prevOwnerDetails.address
+        }));
+        
+        
+      } else {
+        throw new Error(response.data);
+      }
     } catch (error) {
       console.error('Error:', error);
       if (error.response) {
@@ -55,11 +66,12 @@ const UpdateOwner = () => {
       } else {
         setErrors('An unexpected error occurred');
       }
+    } finally {
+      setLoading(false);
     }
   };
 
   const isValidEmail = (email) => {
-    // Basic email validation regex
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
   };
@@ -70,50 +82,74 @@ const UpdateOwner = () => {
   };
 
   return (
-    <div>
-      <h2>Update Owner</h2>
-      {success && (
-        <div className="success-dialog">
-          Owner details updated successfully. Redirecting...
-        </div>
-      )}
-      <form>
-        <div>
-          <label htmlFor="email">Email Address:</label>
-          <input
-            type="email"
-            id="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          {errors.email && <div className="error">{errors.email}</div>}
-        </div>
-        <div>
-          <label htmlFor="address">Address:</label>
-          <input
-            type="text"
-            id="address"
-            value={address}
-            onChange={(e) => setAddress(e.target.value)}
-          />
-          {errors.address && <div className="error">{errors.address}</div>}
-        </div>
-        <div>
-          <label htmlFor="password">Password:</label>
-          <input
-            type="password"
-            id="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          {errors.password && <div className="error">{errors.password}</div>}
-        </div>
-        <button type="submit" onClick={(e) => handleSubmit(e)}>Update All</button>
-        <button type="submit" onClick={(e) => handleSubmit(e, 'email')}>Update Email</button>
-        <button type="submit" onClick={(e) => handleSubmit(e, 'address')}>Update Address</button>
-        <button type="submit" onClick={(e) => handleSubmit(e, 'password')}>Update Password</button>
-      </form>
-    </div>
+    <>
+      <Modal open={open} onClose={() => setOpen(false)}>
+        <Box sx={{
+          position: 'absolute',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+          width: 400,
+          bgcolor: 'background.paper',
+          border: '2px solid #000',
+          boxShadow: 24,
+          p: 4,
+        }}>
+          <Typography variant="h5">Update Owner</Typography>
+          {success && (
+            <Typography variant="body1" className="success-dialog">
+              Owner details updated successfully. Redirecting...
+            </Typography>
+          )}
+          <form>
+            <TextField
+              fullWidth
+              margin="normal"
+              id="email"
+              label="Email Address"
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              error={!!errors.email}
+              helperText={errors.email}
+            />
+            <TextField
+              fullWidth
+              margin="normal"
+              id="address"
+              label="Address"
+              type="text"
+              value={address}
+              onChange={(e) => setAddress(e.target.value)}
+              error={!!errors.address}
+              helperText={errors.address}
+            />
+            <TextField
+              fullWidth
+              margin="normal"
+              id="password"
+              label="Password"
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              error={!!errors.password}
+              helperText={errors.password}
+            />
+            {loading ? (
+              <CircularProgress />
+            ) : (
+              <>
+                <Button onClick={handleSubmit} variant="contained">Update Owner</Button>
+                <Button onClick={() => setOpen(false)} variant="contained">Cancel</Button>
+              </>
+            )}
+          </form>
+        </Box>
+      </Modal>
+      <Button onClick={() => setOpen(true)} variant="contained" color="primary">
+        Update Owner
+      </Button>
+    </>
   );
 };
 

@@ -11,7 +11,7 @@ const useTokenExpiration = (authData, logout) => {
       try {
         // Make API call to get server time
         const response = await api.get('/api/time');
-        console.log('API response:', response);
+      
 
         // Ensure the response contains the expected timestamp
         const serverTimestamp = response.data;
@@ -34,13 +34,13 @@ const useTokenExpiration = (authData, logout) => {
 
         // Convert expiration date from seconds to milliseconds for comparison
         const expirationDateInMilliseconds = authData.expDate * 1000;
-        console.log('Expiration date:', expirationDateInMilliseconds);
+       
 
         // Compare server time with token expiration time
         const isTokenExpired = expirationDateInMilliseconds < serverTimestamp;
 
         // If token is expired and user is not on login or sign-up page, logout
-        if (isTokenExpired && location.pathname !== '/login' && location.pathname !== '/signUp') {
+        if (isTokenExpired) {
           console.log('Token is expired, logging out');
           logout();
         } else {
