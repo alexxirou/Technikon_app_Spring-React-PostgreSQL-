@@ -100,15 +100,6 @@ const RepairForm = ({
           {errors.submit}
         </Typography>
       )}
-     <Button
-        type="submit"
-        variant="contained"
-        color="primary"
-        fullWidth
-        style={{ marginTop: '20px' }}
-      >
-        {isUpdating ? 'Update Repair' : 'Create Repair'} {/* Button text based on isUpdating prop */}
-      </Button>
     </form>
   );
 };

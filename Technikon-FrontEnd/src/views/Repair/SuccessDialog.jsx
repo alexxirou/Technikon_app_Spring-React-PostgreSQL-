@@ -1,14 +1,12 @@
-
+import React from 'react';
 import { Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Button } from '@mui/material';
 
-const SuccessDialog = ({ success, handleClose, handleGoToRepairs }) => {
+const SuccessDialog = ({ success, handleClose, handleGoToRepairs, message }) => {
   return (
     <Dialog open={success} onClose={handleClose}>
-      <DialogTitle>Repair created!</DialogTitle>
+      <DialogTitle>{message.title}</DialogTitle>
       <DialogContent>
-        <DialogContentText>
-          The property repair has been created successfully. You can now go to the repairs page.
-        </DialogContentText>
+        <DialogContentText>{message.content}</DialogContentText>
       </DialogContent>
       <DialogActions>
         <Button onClick={handleGoToRepairs} color="primary">
@@ -20,4 +18,3 @@ const SuccessDialog = ({ success, handleClose, handleGoToRepairs }) => {
 };
 
 export default SuccessDialog;
-
