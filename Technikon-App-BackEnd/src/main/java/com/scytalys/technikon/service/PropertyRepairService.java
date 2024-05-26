@@ -17,6 +17,6 @@ public interface PropertyRepairService {
     List<PropertyRepairDto> getPropertyRepairsByOwner(long propertyOwnerId);
     List<PropertyRepairDto> searchPropertyRepairsByDate(long propertyOwnerId, LocalDate date);
     List<PropertyRepairDto> searchPropertyRepairsByDates(long propertyOwnerId, LocalDate firstDate, LocalDate lastDate);
-    PropertyRepairUpdateDto updatePropertyRepair(long id, PropertyRepairUpdateDto propertyRepairUpdateDto);
-    void deletePropertyRepair(long propertyOwnerId, long id);
+    PropertyRepairUpdateDto updatePropertyRepair(long id, PropertyRepairUpdateDto propertyRepairUpdateDto, long propertyOwnerId, String role);
+    void deletePropertyRepair(long propertyOwnerId, long id, String role);
 }

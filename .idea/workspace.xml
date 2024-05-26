@@ -4,9 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f3732d33-421a-415d-ba42-6d0b12488ca7" name="Changes" comment="Corrected validations for updating a repair">
+    <list default="true" id="f3732d33-421a-415d-ba42-6d0b12488ca7" name="Changes" comment="Fixed delete repair with propertyOwnerId validation">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Technikon-App-BackEnd/src/main/java/com/scytalys/technikon/controller/PropertyRepairController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Technikon-App-BackEnd/src/main/java/com/scytalys/technikon/controller/PropertyRepairController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Technikon-App-BackEnd/src/main/java/com/scytalys/technikon/exception/GlobalExceptionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/Technikon-App-BackEnd/src/main/java/com/scytalys/technikon/exception/GlobalExceptionHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Technikon-App-BackEnd/src/main/java/com/scytalys/technikon/service/PropertyRepairService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Technikon-App-BackEnd/src/main/java/com/scytalys/technikon/service/PropertyRepairService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Technikon-App-BackEnd/src/main/java/com/scytalys/technikon/service/impl/PropertyRepairServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/Technikon-App-BackEnd/src/main/java/com/scytalys/technikon/service/impl/PropertyRepairServiceImpl.java" afterDir="false" />
     </list>
@@ -46,6 +46,9 @@
       </UrlAndAccount>
     </option>
   </component>
+  <component name="KubernetesApiProvider"><![CDATA[{
+  "isMigrated": true
+}]]></component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
@@ -61,6 +64,10 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "Application.TechnikonApplication.executor": "Run",
+    "HTTP Request.generated-requests | #63.executor": "Run",
+    "HTTP Request.generated-requests | #67.executor": "Run",
+    "HTTP Request.generated-requests | #68.executor": "Run",
+    "HTTP Request.generated-requests | #69.executor": "Run",
     "JUnit.JwtServiceTest.executor": "Run",
     "JUnit.JwtServiceTest.testGenerateTokenAndVerify.executor": "Run",
     "JUnit.JwtServiceTest.testVerifyJwtToken.executor": "Run",
@@ -97,68 +104,17 @@
   }
 }]]></component>
   <component name="RunManager" selected="Spring Boot.TechnikonApplication">
-    <configuration name="JwtServiceTest.testGenerateTokenAndVerify" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="Technikon-App-BackEnd" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.scytalys.technikon.service.impl.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="com.scytalys.technikon.service.impl" />
-      <option name="MAIN_CLASS_NAME" value="com.scytalys.technikon.service.impl.JwtServiceTest" />
-      <option name="METHOD_NAME" value="testGenerateTokenAndVerify" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
+    <configuration name="generated-requests | #63" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$APPLICATION_CONFIG_DIR$/scratches/generated-requests.http" index="63" requestIdentifier="#63" runType="Run single request">
+      <method v="2" />
     </configuration>
-    <configuration name="PropertyOwnerServiceImplTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="Technikon-App-BackEnd" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.scytalys.technikon.service.impl.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="com.scytalys.technikon.service.impl" />
-      <option name="MAIN_CLASS_NAME" value="com.scytalys.technikon.service.impl.PropertyOwnerServiceImplTest" />
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
+    <configuration name="generated-requests | #67" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$APPLICATION_CONFIG_DIR$/scratches/generated-requests.http" index="67" requestIdentifier="#67" runType="Run single request">
+      <method v="2" />
     </configuration>
-    <configuration name="PropertyOwnerServiceImplTest.testCreateUser" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="Technikon-App-BackEnd" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.scytalys.technikon.service.impl.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="com.scytalys.technikon.service.impl" />
-      <option name="MAIN_CLASS_NAME" value="com.scytalys.technikon.service.impl.PropertyOwnerServiceImplTest" />
-      <option name="METHOD_NAME" value="testCreateUser" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
+    <configuration name="generated-requests | #68" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$APPLICATION_CONFIG_DIR$/scratches/generated-requests.http" index="68" requestIdentifier="#68" runType="Run single request">
+      <method v="2" />
     </configuration>
-    <configuration name="PropertyOwnerServiceImplTest.userDetails_ReturnsUserDetailsWithEmptyProperties_WhenPropertyOwnerDoesNotExist" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="Technikon-App-BackEnd" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.scytalys.technikon.service.impl.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="com.scytalys.technikon.service.impl" />
-      <option name="MAIN_CLASS_NAME" value="com.scytalys.technikon.service.impl.PropertyOwnerServiceImplTest" />
-      <option name="METHOD_NAME" value="userDetails_ReturnsUserDetailsWithEmptyProperties_WhenPropertyOwnerDoesNotExist" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
+    <configuration name="generated-requests | #69" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$APPLICATION_CONFIG_DIR$/scratches/generated-requests.http" index="69" requestIdentifier="#69" runType="Run single request">
+      <method v="2" />
     </configuration>
     <configuration default="true" type="JetRunConfigurationType">
       <module name="Project" />
@@ -189,10 +145,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="Spring Boot.TechnikonApplication" />
-        <item itemvalue="JUnit.PropertyOwnerServiceImplTest.userDetails_ReturnsUserDetailsWithEmptyProperties_WhenPropertyOwnerDoesNotExist" />
-        <item itemvalue="JUnit.PropertyOwnerServiceImplTest.testCreateUser" />
-        <item itemvalue="JUnit.PropertyOwnerServiceImplTest" />
-        <item itemvalue="JUnit.JwtServiceTest.testGenerateTokenAndVerify" />
+        <item itemvalue="HTTP Request.generated-requests | #69" />
+        <item itemvalue="HTTP Request.generated-requests | #68" />
+        <item itemvalue="HTTP Request.generated-requests | #67" />
+        <item itemvalue="HTTP Request.generated-requests | #63" />
       </list>
     </recent_temporary>
   </component>
@@ -215,7 +171,7 @@
       <workItem from="1716317661578" duration="3644000" />
       <workItem from="1716452451421" duration="13829000" />
       <workItem from="1716493588153" duration="2229000" />
-      <workItem from="1716727215693" duration="7493000" />
+      <workItem from="1716727215693" duration="12185000" />
     </task>
     <task id="LOCAL-00001" summary="Corrected imports at App.js">
       <option name="closed" value="true" />
@@ -433,7 +389,15 @@
       <option name="project" value="LOCAL" />
       <updated>1716734825823</updated>
     </task>
-    <option name="localTasksCounter" value="28" />
+    <task id="LOCAL-00028" summary="Fixed delete repair with propertyOwnerId validation">
+      <option name="closed" value="true" />
+      <created>1716736054114</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1716736054114</updated>
+    </task>
+    <option name="localTasksCounter" value="29" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -449,6 +413,17 @@
     <option featureType="dependencySupport" implementationName="java:org.springframework.boot:spring-boot" />
     <option featureType="dependencySupport" implementationName="java:org.springframework:spring-webmvc" />
     <option featureType="dependencySupport" implementationName="java:org.projectlombok:lombok" />
+  </component>
+  <component name="Vcs.Log.History.Properties">
+    <option name="COLUMN_ID_ORDER">
+      <list>
+        <option value="Default.Root" />
+        <option value="Default.Author" />
+        <option value="Default.Date" />
+        <option value="Default.Subject" />
+        <option value="Space.CommitStatus" />
+      </list>
+    </option>
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
@@ -474,7 +449,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Used material-ui components in login page and in display of owner fields" />
     <MESSAGE value="Created CreateRepair component with input validations" />
     <MESSAGE value="Link to repairs using property owner id" />
     <MESSAGE value="Merge branch 'FrontEndLoginFeature' of https://github.com/alexxirou/Technikon_app_Spring-React-PostgreSQL- into FrontEndLoginFeature" />
@@ -499,6 +473,23 @@
     <MESSAGE value="Added logging for deleting and updating a repair" />
     <MESSAGE value="Reused RepairForm for updating a repair" />
     <MESSAGE value="Corrected validations for updating a repair" />
-    <option name="LAST_COMMIT_MESSAGE" value="Corrected validations for updating a repair" />
+    <MESSAGE value="Fixed delete repair with propertyOwnerId validation" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixed delete repair with propertyOwnerId validation" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/Technikon-App-BackEnd/src/main/java/com/scytalys/technikon/security/controller/UserAuthenticationController.java</url>
+          <line>76</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/Technikon-App-BackEnd/src/main/java/com/scytalys/technikon/security/service/UserInfoService.java</url>
+          <line>38</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

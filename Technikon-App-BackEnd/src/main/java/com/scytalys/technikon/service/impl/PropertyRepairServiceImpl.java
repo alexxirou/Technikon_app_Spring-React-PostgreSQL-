@@ -148,8 +148,11 @@ public class PropertyRepairServiceImpl implements PropertyRepairService {
     @Transactional
     @Override
     @CacheEvict(value = "PropertyRepairs", allEntries = true)
-    public PropertyRepairUpdateDto updatePropertyRepair(long id, PropertyRepairUpdateDto dto) {
+    public PropertyRepairUpdateDto updatePropertyRepair(long id, PropertyRepairUpdateDto dto, long propertyOwnerId, String role) {
         PropertyRepair propertyRepair = propertyRepairRepository.findById(id).orElseThrow(()-> new EntityNotFoundException("Property repair with id "+ id +" not found"));
+        if (propertyRepair.getPropertyOwner().getId() != propertyOwnerId && role.equals("ROLE_USER")) {
+            throw new BadCredentialsException("You are not authorized to update this repair");
+        }
 
         // Apply updates
         if(dto.dateOfRepair() != null){
@@ -184,9 +187,9 @@ public class PropertyRepairServiceImpl implements PropertyRepairService {
      */
     @Transactional
     @CacheEvict(value = "PropertyRepairs", allEntries = true)
-    public void deletePropertyRepair(long propertyOwnerId, long id) {
+    public void deletePropertyRepair(long propertyOwnerId, long id, String role) {
         PropertyRepair propertyRepair = propertyRepairRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Property repair with id "+ id+ " not found"));
-        if (propertyRepair.getPropertyOwner().getId() != propertyOwnerId) {
+        if (propertyRepair.getPropertyOwner().getId() != propertyOwnerId && role.equals("ROLE_USER")) {
             throw new BadCredentialsException("You are not authorized to delete this repair");
         }
         if (!propertyRepair.getRepairStatus().equals(DEFAULT_PENDING)) {
