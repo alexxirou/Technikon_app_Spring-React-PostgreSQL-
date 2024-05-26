@@ -34,12 +34,20 @@ public class PropertyController {
         return ResponseEntity.ok(property);
     }
 
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @GetMapping("/properties")
-    public List<Property> findAllProperties(Authentication authentication) {
-        return propertyService.findAllProperties();
-    }
+    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
+    @GetMapping("/properties/{propertyOwnerId}")
+    public ResponseEntity<List<Property>> findAllProperties(@PathVariable Long propertyOwnerId, Authentication authentication) {
+        if (authentication.getAuthorities().stream().noneMatch(a -> a.getAuthority().equals("ROLE_ADMIN")))  {
+            UserInfoDetails userInfoDetails = (UserInfoDetails) authentication.getPrincipal();
+            Long authId = userInfoDetails.getId();
+            if (!authId.equals(propertyOwnerId)) throw new AccessDeniedException("You are not authorized to add a property to a another user.");
+        }
+        List<Property> properties = propertyService.findAllProperties().stream()
+                .filter(property -> property.getPropertyOwner().getId().equals(propertyOwnerId))
+                .toList();
 
+        return ResponseEntity.ok(properties);
+    }
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     @GetMapping("/tin/{propertyTin}")
     public ResponseEntity<Property> readByTin(@PathVariable String tin, Authentication authentication) {
