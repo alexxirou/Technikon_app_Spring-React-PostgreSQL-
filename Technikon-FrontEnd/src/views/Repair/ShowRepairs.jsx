@@ -170,6 +170,8 @@ const ShowRepairs = () => {
       <Box mt={2} mb={2} display="flex" justifyContent="space-between" alignItems="center">
         <Typography variant="h4">Repairs</Typography>
         <Box>
+        {authData && authData.authorities.includes('ROLE_USER') && (
+         <>
           <Button variant="contained" color="primary" onClick={() => setSearchByDateDialogOpen(true)}>
             Search by Date
           </Button>
@@ -179,6 +181,8 @@ const ShowRepairs = () => {
           <Button variant="contained" color="primary" onClick={handleCreateRepair} style={{ marginLeft: '8px' }}>
             Create Repair
           </Button>
+          </>
+        )}
         </Box>
       </Box>
       <Box>

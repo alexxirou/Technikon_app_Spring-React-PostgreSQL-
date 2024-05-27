@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Box, CircularProgress, Button, Typography, Container, Snackbar } from '@mui/material';
 import { useAuth } from '../../hooks/useAuth';
 import UpdateRepairDialog from './UpdateRepairDialog';
@@ -30,9 +31,8 @@ const ShowRepairsStateless = ({
   handleCloseErrorDialog,
   handleSnackbarClose,
   handleSuccessDialogClose,
-  navigate,
+  authData,
   propertyOwnerId,
-  authData
 }) => {
 
 
@@ -52,12 +52,13 @@ const ShowRepairsStateless = ({
     );
   }
 
+
   return (
     <Container maxWidth="md">
       <Box mt={2} mb={2} display="flex" justifyContent="space-between" alignItems="center">
         <Typography variant="h4">Repairs</Typography>
         <Box>
-          {authData && authData.authorities.includes("ROLE_USER") && (
+     
             <>
               <Button variant="contained" color="primary" onClick={() => searchByDateDialogOpen(true)}>
                 Search by Date
@@ -69,7 +70,7 @@ const ShowRepairsStateless = ({
                 Create Repair
               </Button>
             </>
-          )}
+          
         </Box>
       </Box>
       <Box>
@@ -113,16 +114,24 @@ const ShowRepairsStateless = ({
       </Box>
       <Snackbar
         open={snackbarOpen}
-        autoHideDuration={6000} // Adjust duration as needed
+        autoHideDuration={6000}
         onClose={handleSnackbarClose}
         message={snackbarMessage}
       />
-      <SuccessDialog
-        open={successDialogOpen}
-        onClose={handleSuccessDialogClose}
-      />
+      <SuccessDialog open={successDialogOpen} onClose={handleSuccessDialogClose} />
     </Container>
   );
+};
+
+ShowRepairsStateless.propTypes = {
+  repairs: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      shortDescription: PropTypes.string.isRequired,
+      repairStatus: PropTypes.string.isRequired,
+    })
+  )
+  
 };
 
 export default ShowRepairsStateless;
