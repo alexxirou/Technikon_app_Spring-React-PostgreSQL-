@@ -10,6 +10,7 @@ import com.scytalys.technikon.repository.PropertyRepairRepository;
 import com.scytalys.technikon.repository.PropertyRepository;
 import com.scytalys.technikon.service.AdminService;
 import lombok.AllArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.util.LinkedList;
@@ -22,7 +23,7 @@ public class AdminServiceImpl implements AdminService {
     private final PropertyOwnerRepository propertyOwnerRepository;
     private final PropertyRepository propertyRepository;
     private final PropertyRepairRepository propertyRepairRepository;
-
+    private final PasswordEncoder passwordEncoder;
     // private final Logger logger = LoggerFactory.getLogger(AdminService.class);
 
     @Override
@@ -37,6 +38,8 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public Admin create(Admin admin) {
+
+        admin.setPassword(passwordEncoder.encode(admin.getPassword()));
         return adminRepository.save(admin);
     }
 

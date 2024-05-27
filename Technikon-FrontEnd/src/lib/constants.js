@@ -6,9 +6,9 @@ export const PATHS = {
   SHOW_REPAIRS: (propertyOwnerId) => `/repairs/all-by-owner/${propertyOwnerId}`,
   REPAIR_DETAILS: (propertyOwnerId,propertyRepairId) => `/repair/${propertyOwnerId}/${propertyRepairId}`,
   PROPERTIES: (propertyOwnerId) => `/property/${propertyOwnerId}`,
-  ADMIN: '/admin',
-  OWNER: (tin) => `/owner/${tin}`,
-  UPDATE_OWNER: (tin) => `/update-owner/${tin}`,
+  ADMIN: (id) => `/admin/${id}`,
+  OWNER: (id) => `/owner/${id}`,
+  UPDATE_OWNER: (id) => `/update-owner/${id}`,
 };
 
 export const ROLES = {
