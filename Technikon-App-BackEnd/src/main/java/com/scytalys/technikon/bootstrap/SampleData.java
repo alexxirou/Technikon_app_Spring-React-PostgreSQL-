@@ -106,7 +106,7 @@ public class SampleData {
 
             propertyOwner=userInfoService.createDBUser(dto);
             propertyOwner.setRegistrationDate(LocalDate.of(2012, 9, 11));
-           // adminService.createOwner(propertyOwner);
+            adminService.createOwner(propertyOwner);
 ////
             logger.info("Created property owner: {}", propertyOwner);
             UserInfoDetails userInfoDetails=new UserInfoDetails(propertyOwner);
