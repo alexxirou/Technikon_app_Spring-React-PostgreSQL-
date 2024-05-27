@@ -12,7 +12,8 @@ const Login = () => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
-  const { setAuthData} = useAuth();
+  const { authData, setAuthData} = useAuth();
+
 
   // Load isSubmitting state from localStorage or default to false
   const [isSubmitting, setIsSubmitting] = useState(() => {
@@ -37,7 +38,7 @@ const Login = () => {
 
   const  handleAuthentication = (tin, id, username, authorities, exp) => {
      setAuthData({ userId:id, userTin:tin, username:username, authorities: authorities, expDate:exp });
-   
+      
 
     if (authorities.includes(ROLES.ADMIN)) {
       navigate(PATHS.ADMIN(id));

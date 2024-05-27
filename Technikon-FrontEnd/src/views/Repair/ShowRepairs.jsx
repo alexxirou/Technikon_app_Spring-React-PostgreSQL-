@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Box, CircularProgress, Button, Typography, Container, Snackbar } from '@mui/material';
-import { fetchRepairs, updateRepair, deleteRepair, searchRepairsByDate, searchRepairsByDateRange } from './apiRepairService';
+import { fetchRepairs, fetchAllRepairs, updateRepair, deleteRepair, searchRepairsByDate, searchRepairsByDateRange } from './apiRepairService';
 import { PATHS } from '../../lib/constants';
 import { useAuth } from '../../hooks/useAuth';
 import UpdateRepairDialog from './UpdateRepairDialog';
@@ -34,10 +34,17 @@ const ShowRepairs = () => {
 
     const fetchAndSetRepairs = async () => {
       try {
-        const repairs = await fetchRepairs(propertyOwnerId);
+        let repairs;
+        if (authData.authorities.includes("ROLE_ADMIN")) {
+          repairs = await fetchAllRepairs();
+        } else {
+          repairs = await fetchRepairs(propertyOwnerId);
+        }
         setRepairs(repairs);
       } catch (error) {
         console.error("Failed to fetch repairs", error);
+        setErrorDialogMessage('Failed to fetch repairs');
+        setErrorDialogOpen(true);
       } finally {
         setLoading(false);
       }

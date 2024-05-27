@@ -4,14 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f3732d33-421a-415d-ba42-6d0b12488ca7" name="Changes" comment="Removed scrollbar from searching a repair by date">
+    <list default="true" id="f3732d33-421a-415d-ba42-6d0b12488ca7" name="Changes" comment="Fixed create property">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Technikon-App-BackEnd/src/main/java/com/scytalys/technikon/bootstrap/SampleData.java" beforeDir="false" afterPath="$PROJECT_DIR$/Technikon-App-BackEnd/src/main/java/com/scytalys/technikon/bootstrap/SampleData.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Technikon-App-BackEnd/src/main/java/com/scytalys/technikon/controller/PropertyController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Technikon-App-BackEnd/src/main/java/com/scytalys/technikon/controller/PropertyController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Technikon-App-BackEnd/src/main/java/com/scytalys/technikon/domain/Property.java" beforeDir="false" afterPath="$PROJECT_DIR$/Technikon-App-BackEnd/src/main/java/com/scytalys/technikon/domain/Property.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Technikon-App-BackEnd/src/main/java/com/scytalys/technikon/dto/property/PropertyCreateDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/Technikon-App-BackEnd/src/main/java/com/scytalys/technikon/dto/property/PropertyCreateDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Technikon-App-BackEnd/src/main/java/com/scytalys/technikon/dto/property/PropertyUpdateDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/Technikon-App-BackEnd/src/main/java/com/scytalys/technikon/dto/property/PropertyUpdateDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Technikon-App-BackEnd/src/main/java/com/scytalys/technikon/service/impl/PropertyServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/Technikon-App-BackEnd/src/main/java/com/scytalys/technikon/service/impl/PropertyServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Technikon-FrontEnd/src/views/Login/Login.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/Technikon-FrontEnd/src/views/Login/Login.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Technikon-FrontEnd/src/views/Repair/ShowRepairs.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/Technikon-FrontEnd/src/views/Repair/ShowRepairs.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Technikon-FrontEnd/src/views/Repair/apiRepairService.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/Technikon-FrontEnd/src/views/Repair/apiRepairService.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -107,7 +104,7 @@
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
-  <component name="RunManager" selected="HTTP Request.generated-requests | #71">
+  <component name="RunManager" selected="Spring Boot.TechnikonApplication">
     <configuration name="generated-requests | #67" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$APPLICATION_CONFIG_DIR$/scratches/generated-requests.http" index="67" requestIdentifier="#67" runType="Run single request">
       <method v="2" />
     </configuration>
@@ -148,8 +145,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="HTTP Request.generated-requests | #71" />
         <item itemvalue="Spring Boot.TechnikonApplication" />
+        <item itemvalue="HTTP Request.generated-requests | #71" />
         <item itemvalue="HTTP Request.generated-requests | #69" />
         <item itemvalue="HTTP Request.generated-requests | #68" />
         <item itemvalue="HTTP Request.generated-requests | #67" />
@@ -177,14 +174,6 @@
       <workItem from="1716493588153" duration="2229000" />
       <workItem from="1716727215693" duration="13556000" />
       <workItem from="1716791366005" duration="1087000" />
-    </task>
-    <task id="LOCAL-00005" summary="Used material-ui components in login page and in display of owner fields">
-      <option name="closed" value="true" />
-      <created>1716318735993</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1716318735993</updated>
     </task>
     <task id="LOCAL-00006" summary="Created CreateRepair component with input validations">
       <option name="closed" value="true" />
@@ -570,7 +559,15 @@
       <option name="project" value="LOCAL" />
       <updated>1716808868909</updated>
     </task>
-    <option name="localTasksCounter" value="54" />
+    <task id="LOCAL-00054" summary="Fixed create property">
+      <option name="closed" value="true" />
+      <created>1716816290834</created>
+      <option name="number" value="00054" />
+      <option name="presentableId" value="LOCAL-00054" />
+      <option name="project" value="LOCAL" />
+      <updated>1716816290834</updated>
+    </task>
+    <option name="localTasksCounter" value="55" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -622,7 +619,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Fixed delete repair with propertyOwnerId validation" />
     <MESSAGE value="Fixed repair updating passing user role and propertyOwnerId" />
     <MESSAGE value="Fixed update repair button" />
     <MESSAGE value="Fixed create repair button" />
@@ -647,6 +643,7 @@
     <MESSAGE value="Changed date format" />
     <MESSAGE value="Fixed update form bug" />
     <MESSAGE value="Removed scrollbar from searching a repair by date" />
-    <option name="LAST_COMMIT_MESSAGE" value="Removed scrollbar from searching a repair by date" />
+    <MESSAGE value="Fixed create property" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixed create property" />
   </component>
 </project>
