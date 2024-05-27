@@ -4,11 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f3732d33-421a-415d-ba42-6d0b12488ca7" name="Changes" comment="Fixed create property">
+    <list default="true" id="f3732d33-421a-415d-ba42-6d0b12488ca7" name="Changes" comment="Added fetch all repairs for admin">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Technikon-FrontEnd/src/views/Login/Login.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/Technikon-FrontEnd/src/views/Login/Login.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Technikon-FrontEnd/src/views/Repair/ShowRepairs.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/Technikon-FrontEnd/src/views/Repair/ShowRepairs.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Technikon-FrontEnd/src/views/Repair/apiRepairService.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/Technikon-FrontEnd/src/views/Repair/apiRepairService.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Technikon-FrontEnd/src/views/Repair/ShowRepairsStateless.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/Technikon-FrontEnd/src/views/Repair/ShowRepairsStateless.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -61,49 +59,49 @@
     <option name="showLibraryContents" value="true" />
     <option name="showMembers" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.TechnikonApplication.executor": "Run",
-    "HTTP Request.generated-requests | #63.executor": "Run",
-    "HTTP Request.generated-requests | #67.executor": "Run",
-    "HTTP Request.generated-requests | #68.executor": "Run",
-    "HTTP Request.generated-requests | #69.executor": "Run",
-    "HTTP Request.generated-requests | #71.executor": "Run",
-    "JUnit.JwtServiceTest.executor": "Run",
-    "JUnit.JwtServiceTest.testGenerateTokenAndVerify.executor": "Run",
-    "JUnit.JwtServiceTest.testVerifyJwtToken.executor": "Run",
-    "JUnit.PropertyOwnerServiceImplTest.executor": "Run",
-    "JUnit.PropertyOwnerServiceImplTest.testCreateUser.executor": "Run",
-    "JUnit.PropertyOwnerServiceImplTest.testSearchUserByFail.executor": "Run",
-    "JUnit.PropertyOwnerServiceImplTest.testUpdateUser.executor": "Run",
-    "JUnit.PropertyOwnerServiceImplTest.testUpdateUserFailWrongEmailFormat.executor": "Run",
-    "JUnit.PropertyOwnerServiceImplTest.userDetails_ReturnsUserDetailsWithEmptyProperties_WhenPropertyOwnerDoesNotExist.executor": "Run",
-    "JUnit.PropertyOwnerServiceImplTest.userDetails_ReturnsUserDetails_WhenPropertyOwnerExists.executor": "Run",
-    "JUnit.PropertyOwnerServiceImplTest.whenConcurrentUpdate_thenThrowException.executor": "Run",
-    "JUnit.UserMapperTest.executor": "Run",
-    "JUnit.UserMapperTest.testUserSearchResponseDtoCreation.executor": "Run",
-    "Maven.Technikon-App-BackEnd [clean].executor": "Run",
-    "Maven.Technikon-App-BackEnd [install].executor": "Run",
-    "RequestMappingsPanelOrder0": "0",
-    "RequestMappingsPanelOrder1": "1",
-    "RequestMappingsPanelWidth0": "75",
-    "RequestMappingsPanelWidth1": "75",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "Spring Boot.TechnikonApplication.executor": "Run",
-    "git-widget-placeholder": "FrontEndLoginFeature",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/alexandrosx/Documents/Project",
-    "node.js.detected.package.eslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Project",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.0",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.TechnikonApplication.executor&quot;: &quot;Run&quot;,
+    &quot;HTTP Request.generated-requests | #63.executor&quot;: &quot;Run&quot;,
+    &quot;HTTP Request.generated-requests | #67.executor&quot;: &quot;Run&quot;,
+    &quot;HTTP Request.generated-requests | #68.executor&quot;: &quot;Run&quot;,
+    &quot;HTTP Request.generated-requests | #69.executor&quot;: &quot;Run&quot;,
+    &quot;HTTP Request.generated-requests | #71.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.JwtServiceTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.JwtServiceTest.testGenerateTokenAndVerify.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.JwtServiceTest.testVerifyJwtToken.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.PropertyOwnerServiceImplTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.PropertyOwnerServiceImplTest.testCreateUser.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.PropertyOwnerServiceImplTest.testSearchUserByFail.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.PropertyOwnerServiceImplTest.testUpdateUser.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.PropertyOwnerServiceImplTest.testUpdateUserFailWrongEmailFormat.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.PropertyOwnerServiceImplTest.userDetails_ReturnsUserDetailsWithEmptyProperties_WhenPropertyOwnerDoesNotExist.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.PropertyOwnerServiceImplTest.userDetails_ReturnsUserDetails_WhenPropertyOwnerExists.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.PropertyOwnerServiceImplTest.whenConcurrentUpdate_thenThrowException.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.UserMapperTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.UserMapperTest.testUserSearchResponseDtoCreation.executor&quot;: &quot;Run&quot;,
+    &quot;Maven.Technikon-App-BackEnd [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.Technikon-App-BackEnd [install].executor&quot;: &quot;Run&quot;,
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;Spring Boot.TechnikonApplication.executor&quot;: &quot;Run&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;FrontEndLoginFeature&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/alexandrosx/Documents/Project&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager" selected="Spring Boot.TechnikonApplication">
     <configuration name="generated-requests | #67" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$APPLICATION_CONFIG_DIR$/scratches/generated-requests.http" index="67" requestIdentifier="#67" runType="Run single request">
       <method v="2" />
@@ -174,14 +172,6 @@
       <workItem from="1716493588153" duration="2229000" />
       <workItem from="1716727215693" duration="13556000" />
       <workItem from="1716791366005" duration="1087000" />
-    </task>
-    <task id="LOCAL-00006" summary="Created CreateRepair component with input validations">
-      <option name="closed" value="true" />
-      <created>1716321032161</created>
-      <option name="number" value="00006" />
-      <option name="presentableId" value="LOCAL-00006" />
-      <option name="project" value="LOCAL" />
-      <updated>1716321032161</updated>
     </task>
     <task id="LOCAL-00007" summary="Link to repairs using property owner id">
       <option name="closed" value="true" />
@@ -567,7 +557,15 @@
       <option name="project" value="LOCAL" />
       <updated>1716816290834</updated>
     </task>
-    <option name="localTasksCounter" value="55" />
+    <task id="LOCAL-00055" summary="Added fetch all repairs for admin">
+      <option name="closed" value="true" />
+      <created>1716819131070</created>
+      <option name="number" value="00055" />
+      <option name="presentableId" value="LOCAL-00055" />
+      <option name="project" value="LOCAL" />
+      <updated>1716819131070</updated>
+    </task>
+    <option name="localTasksCounter" value="56" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -619,7 +617,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Fixed repair updating passing user role and propertyOwnerId" />
     <MESSAGE value="Fixed update repair button" />
     <MESSAGE value="Fixed create repair button" />
     <MESSAGE value="Fixed cancel button in UpdateRepairDialog.jsx" />
@@ -644,6 +641,7 @@
     <MESSAGE value="Fixed update form bug" />
     <MESSAGE value="Removed scrollbar from searching a repair by date" />
     <MESSAGE value="Fixed create property" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed create property" />
+    <MESSAGE value="Added fetch all repairs for admin" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added fetch all repairs for admin" />
   </component>
 </project>
