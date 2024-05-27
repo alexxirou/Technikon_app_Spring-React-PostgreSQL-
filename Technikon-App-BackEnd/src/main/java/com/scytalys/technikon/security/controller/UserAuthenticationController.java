@@ -72,18 +72,18 @@ public class UserAuthenticationController {
         }
     }
 
-    @PostMapping("/admin/login")
-    public ResponseEntity<String> adminLogin(@RequestBody AuthRequest authRequest) {
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(authRequest.username(), authRequest.password()));
-        if (authentication.isAuthenticated()) {
-            UserInfoDetails userDetails = userInfoService.loadUserByUsername(authRequest.username());
-            String token = jwtService.generateToken(userDetails);
-            return ResponseEntity.ok(token);
-        } else {
-            throw new BadCredentialsException("Invalid credentials");
-        }
-    }
+//    @PostMapping("/admin/login")
+//    public ResponseEntity<String> adminLogin(@RequestBody AuthRequest authRequest) {
+//        Authentication authentication = authenticationManager.authenticate(
+//                new UsernamePasswordAuthenticationToken(authRequest.username(), authRequest.password()));
+//        if (authentication.isAuthenticated()) {
+//            UserInfoDetails userDetails = userInfoService.loadUserByUsername(authRequest.username());
+//            String token = jwtService.generateToken(userDetails);
+//            return ResponseEntity.ok(token);
+//        } else {
+//            throw new BadCredentialsException("Invalid credentials");
+//        }
+//    }
     @PostMapping("/logout")
     public ResponseEntity<String> logout(HttpServletRequest request, HttpServletResponse response) {
         try {
