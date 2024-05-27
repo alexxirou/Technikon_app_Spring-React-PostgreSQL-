@@ -1,6 +1,6 @@
 import api from '../../api/Api';
 
-export const createProperty = async (propertyOwnerId, propertyData) => {
+export const createProperty = async (propertyData) => {
     const response = await api.post('/api/property/create', propertyData);
     return response.data;
 }

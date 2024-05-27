@@ -1,22 +1,24 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Box, CircularProgress, Button, Typography, Container, Snackbar } from '@mui/material';
-import { fetchProperty, deleteProperties, getAllProperties, updateProperties } from './ApiPropertyService';
-import { PATHS } from '../../lib/constants';
+import { fetchProperty, deleteProperties, getAllProperties, updateProperties, createProperty } from './ApiPropertyService'; // Import createProperty function
+import { PATHS,ROLES } from '../../lib/constants';
 import { useAuth } from '../../hooks/useAuth';
-import UpdatePropertyDialog from './UpdatePropertyDIalog'; // Import the UpdatePropertyDialog component
+import UpdatePropertyDialog from './UpdatePropertyDIalog';
+import CreatePropertyDialog from './CreatePropertyDialog'; // Import the CreatePropertyDialog component
 
 const ShowProperties = () => {
   const [properties, setProperties] = useState([]);
   const [loading, setLoading] = useState(true);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState('');
+  const [isUpdateDialogOpen, setIsUpdateDialogOpen] = useState(false);
+  const [selectedProperty, setSelectedProperty] = useState(null);
+  const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false); // State for controlling the visibility of the CreatePropertyDialog
   const { authData } = useAuth();
   const navigate = useNavigate();
   const authorities = authData?.authorities;
   const propertyOwnerId = authData?.userId;
-  const [isUpdateDialogOpen, setIsUpdateDialogOpen] = useState(false);
-  const [selectedProperty, setSelectedProperty] = useState(null);
 
   const fetchAndSetProperties = async () => {
     try {
@@ -44,7 +46,12 @@ const ShowProperties = () => {
   }, [propertyOwnerId]);
 
   const handleCreateProperty = () => {
-    navigate(PATHS.CREATE_PROPERTY);
+    setIsCreateDialogOpen(true); // Open the CreatePropertyDialog
+  };
+
+  const handleCloseCreateDialog = () => {
+    setIsCreateDialogOpen(false);
+    fetchAndSetProperties(); 
   };
 
   const handleShowPropertyDetails = (propertyId) => {
@@ -100,9 +107,13 @@ const ShowProperties = () => {
     <Container maxWidth="md">
       <Box mt={2} mb={2} display="flex" justifyContent="space-between" alignItems="center">
         <Typography variant="h4">Properties</Typography>
+        {authData && authData.authorities.includes(ROLES.USER) && (
+         <>
         <Button variant="contained" color="primary" onClick={handleCreateProperty}>
           Create Property
         </Button>
+        </>
+        )}
       </Box>
       <Box display="flex" flexDirection="column">
         {properties.length === 0 ? (
@@ -155,6 +166,15 @@ const ShowProperties = () => {
         property={selectedProperty}
         onChange={setSelectedProperty}
         onSubmit={handleSubmitUpdateProperty} // Implement the update submission function
+      />
+       {/* CreatePropertyDialog component */}
+       <CreatePropertyDialog
+        open={isCreateDialogOpen}
+        onClose={handleCloseCreateDialog}
+        onCreate={() => {
+          handleCloseCreateDialog(); // Close the dialog
+          fetchAndSetProperties(); // Reload properties after creation
+        }}
       />
     </Container>
   );
