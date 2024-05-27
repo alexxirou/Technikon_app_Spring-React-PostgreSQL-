@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Box, CircularProgress, Typography, Container, Button } from '@mui/material';
 import api from '../../api/Api';
@@ -32,6 +32,14 @@ const RepairDetails = () => {
     };
     fetchRepair();
   }, [repairId, authData]);
+
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    const day = date.getDate().toString().padStart(2, '0');
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const year = date.getFullYear();
+    return `${day}-${month}-${year}`;
+  };
 
   if (loading) {
     return (
@@ -76,10 +84,10 @@ const RepairDetails = () => {
           Repair Status: {repair.repairStatus}
         </Typography>
         <Typography variant="body2" color="textSecondary">
-          Date of Repair: {repair.dateOfRepair}
+          Date of Repair: {formatDate(repair.dateOfRepair)}
         </Typography>
         <Typography variant="body2" color="textSecondary">
-          Cost: ${repair.cost}
+          Cost: {repair.cost} €
         </Typography>
         <Box mt={2}>
           <Button variant="contained" color="primary" onClick={handleBackToRepairs}>

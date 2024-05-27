@@ -19,11 +19,17 @@ const SearchRepairsForm = ({ onSearchByDate, onSearchByDateRange }) => {
   };
 
   const handleSearchByDate = () => {
-    onSearchByDate(date);
+    onSearchByDate(formatDateToDdMmYyyy(date));
   };
 
   const handleSearchByDateRange = () => {
-    onSearchByDateRange(startDate, endDate);
+    onSearchByDateRange(formatDateToDdMmYyyy(startDate), formatDateToDdMmYyyy(endDate));
+  };
+
+  // Function to format date string to dd/mm/yyyy format
+  const formatDateToDdMmYyyy = (dateString) => {
+    const [year, month, day] = dateString.split('-');
+    return `${day}/${month}/${year}`;
   };
 
   return (
