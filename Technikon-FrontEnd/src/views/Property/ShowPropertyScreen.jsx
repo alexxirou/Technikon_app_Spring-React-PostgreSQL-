@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Box, CircularProgress, Button, Typography, Container, Snackbar } from '@mui/material';
 import { fetchProperty, deleteProperties, getAllProperties, updateProperties, createProperty } from './ApiPropertyService'; // Import createProperty function
-import { PATHS,ROLES } from '../../lib/constants';
+import { PATHS, ROLES } from '../../lib/constants';
 import { useAuth } from '../../hooks/useAuth';
 import UpdatePropertyDialog from './UpdatePropertyDIalog';
 import CreatePropertyDialog from './CreatePropertyDialog'; // Import the CreatePropertyDialog component
@@ -15,6 +15,7 @@ const ShowProperties = () => {
   const [isUpdateDialogOpen, setIsUpdateDialogOpen] = useState(false);
   const [selectedProperty, setSelectedProperty] = useState(null);
   const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false); // State for controlling the visibility of the CreatePropertyDialog
+  const [selectedPropertyId, setSelectedPropertyId] = useState(null); 
   const { authData } = useAuth();
   const navigate = useNavigate();
   const authorities = authData?.authorities;
@@ -54,8 +55,9 @@ const ShowProperties = () => {
     fetchAndSetProperties(); 
   };
 
-  const handleShowPropertyDetails = (propertyId) => {
-    navigate(PATHS.PROPERTY_DETAILS(propertyOwnerId, propertyId));
+  const handleShowPropertyDetails = (Id, pId) => {
+
+    navigate(PATHS.PROPERTY_DETAILS(Id, pId));
   };
 
   const handleDeleteProperty = async (propertyId) => {
@@ -98,25 +100,24 @@ const ShowProperties = () => {
       setSnackbarOpen(true);
     }
   };
-
- 
-           
-
+  
 
   return (
     <Container maxWidth="md">
       <Box mt={2} mb={2} display="flex" justifyContent="space-between" alignItems="center">
         <Typography variant="h4">Properties</Typography>
         {authData && authData.authorities.includes(ROLES.USER) && (
-         <>
-        <Button variant="contained" color="primary" onClick={handleCreateProperty}>
-          Create Property
-        </Button>
-        </>
+          <Button variant="contained" color="primary" onClick={handleCreateProperty}>
+            Create Property
+          </Button>
         )}
       </Box>
       <Box display="flex" flexDirection="column">
-        {properties.length === 0 ? (
+        {loading ? (
+          <Box display="flex" justifyContent="center" alignItems="center" height="100vh">
+            <CircularProgress />
+          </Box>
+        ) : properties.length === 0 ? (
           <Typography variant="h6" align="center">
             No properties found.
           </Typography>
@@ -140,7 +141,7 @@ const ShowProperties = () => {
                 <Typography variant="subtitle1" style={{ marginRight: '10px' }}>Address: {property.address}</Typography>
               </Box>
               <Box display="flex">
-                <Button variant="contained" color="primary" onClick={() => handleShowPropertyDetails(property.id)}>
+                <Button variant="contained" color="primary" onClick={() => handleShowPropertyDetails(property.propertyOwner.id, property.id)}>
                   Show Details
                 </Button>
                 <Button variant="contained" color="error" onClick={() => handleDeleteProperty(property.id)} style={{ marginLeft: '8px' }}>
@@ -150,6 +151,7 @@ const ShowProperties = () => {
                   Update
                 </Button>
               </Box>
+           
             </Box>
           ))
         )}
@@ -167,8 +169,7 @@ const ShowProperties = () => {
         onChange={setSelectedProperty}
         onSubmit={handleSubmitUpdateProperty} // Implement the update submission function
       />
-       {/* CreatePropertyDialog component */}
-       <CreatePropertyDialog
+      <CreatePropertyDialog
         open={isCreateDialogOpen}
         onClose={handleCloseCreateDialog}
         onCreate={() => {
