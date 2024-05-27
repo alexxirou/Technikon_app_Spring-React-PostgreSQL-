@@ -109,7 +109,6 @@ public class PropertyRepairServiceImpl implements PropertyRepairService {
     @Override
     @Cacheable("PropertyRepairs")
     public List<PropertyRepairDto> searchPropertyRepairsByDate(long propertyOwnerId, LocalDate date) {
-        validateDateInputOrThrow(date);
         return propertyRepairRepository.getPropertyRepairByDate(propertyOwnerId, date)
                 .stream()
                 .map(propertyRepairMapper::RepairToPropertyRepairDto)
@@ -128,8 +127,6 @@ public class PropertyRepairServiceImpl implements PropertyRepairService {
     @Override
     @Cacheable("PropertyRepairs")
     public List<PropertyRepairDto> searchPropertyRepairsByDates (long propertyOwnerId, LocalDate firstDate, LocalDate lastDate) {
-        validateDateInputOrThrow(firstDate);
-        validateDateInputOrThrow(lastDate);
         validateDatesInputOrThrow(firstDate, lastDate);
         return propertyRepairRepository.getPropertyRepairsByDates(propertyOwnerId, firstDate, lastDate)
                 .stream()

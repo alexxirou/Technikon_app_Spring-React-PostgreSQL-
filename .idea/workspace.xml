@@ -4,10 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f3732d33-421a-415d-ba42-6d0b12488ca7" name="Changes" comment="Added cancel button in create repair page">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Technikon-App-BackEnd/src/main/java/com/scytalys/technikon/security/controller/UserAuthenticationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Technikon-App-BackEnd/src/main/java/com/scytalys/technikon/security/controller/UserAuthenticationController.java" afterDir="false" />
-    </list>
+    <list default="true" id="f3732d33-421a-415d-ba42-6d0b12488ca7" name="Changes" comment="Added cancel button in create repair page" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
