@@ -21,13 +21,13 @@ export const searchPropertiesByArea = async (propertyOwnerId,longitude ,latitude
   return response.data;
 };
 
-export const updateProperties = async (propertyOwnerId, propertyId, propertyData) => {
-  const response = await api.put(`/api/property/getAllProperties/update/${propertyOwnerId}/${propertyId}`, propertyData);
-  return response;
+export const updateProperties = async ( propertyId, data) => {
+  const response = await api.put(`/api/property/update/${propertyId}`, data);
+  return response.data;
 };
 
-export const deleteProperties = async (propertyOwnerId, propertyId) => {
-  const response = await api.delete(`/api/property/delete/${propertyOwnerId}/delete/${propertyId}`);
+export const deleteProperties = async (propertyId) => {
+  const response = await api.delete(`/api/property/delete/${propertyId}`);
   return response.status;
 }
 

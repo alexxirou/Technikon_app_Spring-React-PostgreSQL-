@@ -1,9 +1,10 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Box, CircularProgress, Button, Typography, Container, Snackbar } from '@mui/material';
-import { fetchProperty, deleteProperties, getAllProperties } from './ApiPropertyService';
+import { fetchProperty, deleteProperties, getAllProperties, updateProperties } from './ApiPropertyService';
 import { PATHS } from '../../lib/constants';
 import { useAuth } from '../../hooks/useAuth';
+import UpdatePropertyDialog from './UpdatePropertyDIalog'; // Import the UpdatePropertyDialog component
 
 const ShowProperties = () => {
   const [properties, setProperties] = useState([]);
@@ -14,30 +15,30 @@ const ShowProperties = () => {
   const navigate = useNavigate();
   const authorities = authData?.authorities;
   const propertyOwnerId = authData?.userId;
+  const [isUpdateDialogOpen, setIsUpdateDialogOpen] = useState(false);
+  const [selectedProperty, setSelectedProperty] = useState(null);
+
+  const fetchAndSetProperties = async () => {
+    try {
+      let properties;
+      if (authorities && authorities.includes('ROLE_USER')) {
+        properties = await fetchProperty(propertyOwnerId);
+      } else {
+        const response = await getAllProperties();
+        properties = response.data;
+      }
+      setProperties(properties);
+    } catch (error) {
+      console.error("Failed to fetch properties", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
     if (!propertyOwnerId) {
       return;
     }
-
-    const fetchAndSetProperties = async () => {
-      try {
-        let properties
-        if (authorities && authorities.includes('ROLE_USER')) {
-          properties = await fetchProperty(propertyOwnerId);
-        }
-        else {
-          const response = await getAllProperties();
-          properties = response.data;
-          console.log(properties);
-        }
-        setProperties(properties);
-      } catch (error) {
-        console.error("Failed to fetch properties", error);
-      } finally {
-        setLoading(false);
-      }
-    };
 
     fetchAndSetProperties();
   }, [propertyOwnerId]);
@@ -52,7 +53,7 @@ const ShowProperties = () => {
 
   const handleDeleteProperty = async (propertyId) => {
     try {
-      const responseStatus = await deleteProperties(propertyOwnerId, propertyId);
+      const responseStatus = await deleteProperties(propertyId);
       if (responseStatus === 200) {
         setProperties(properties.filter((property) => property.id !== propertyId));
         console.log("Property with id:", propertyId, "deleted successfully");
@@ -66,25 +67,34 @@ const ShowProperties = () => {
     }
   };
 
+  const handleUpdateProperty = (propertyId) => {
+    const propertyToUpdate = properties.find(property => property.id === propertyId);
+    setSelectedProperty(propertyToUpdate);
+    setIsUpdateDialogOpen(true);
+  };
+
   const handleSnackbarClose = () => {
     setSnackbarOpen(false);
   };
 
-  if (loading) {
-    return (
-      <Box display="flex" justifyContent="center" alignItems="center" height="100vh">
-        <CircularProgress />
-      </Box>
-    );
-  }
+  const handleSubmitUpdateProperty = async () => {
+    try {
+      const response = await updateProperties(selectedProperty.id, selectedProperty);
+      console.log("Property updated successfully", response);
+      setIsUpdateDialogOpen(false);
+      setSnackbarMessage("Property updated successfully");
+      setSnackbarOpen(true);
+      fetchAndSetProperties(); // Reload properties after update
+    } catch (error) {
+      console.error("Failed to update property", error);
+      setSnackbarMessage("Failed to update property");
+      setSnackbarOpen(true);
+    }
+  };
 
-  if (!propertyOwnerId) {
-    return (
-      <Typography variant="h6" align="center">
-        User not authenticated.
-      </Typography>
-    );
-  }
+ 
+           
+
 
   return (
     <Container maxWidth="md">
@@ -113,16 +123,11 @@ const ShowProperties = () => {
               borderRadius={8}
               borderColor="grey.300"
             >
-
-<Box  >
-  <Typography variant="subtitle1"  style={{ marginRight: '10px' }}>Owner Tin: {property.propertyOwner.tin}</Typography>
-  <Typography variant="subtitle1"  style={{ marginRight: '10px' }}>Property Tin: {property.tin}</Typography>
-  <Typography variant="subtitle1" style={{ marginRight: '10px' }}>Address: {property.address}</Typography>
-
-</Box>
-
-
-
+              <Box>
+                <Typography variant="subtitle1" style={{ marginRight: '10px' }}>Owner Tin: {property.propertyOwner.tin}</Typography>
+                <Typography variant="subtitle1" style={{ marginRight: '10px' }}>Property Tin: {property.tin}</Typography>
+                <Typography variant="subtitle1" style={{ marginRight: '10px' }}>Address: {property.address}</Typography>
+              </Box>
               <Box display="flex">
                 <Button variant="contained" color="primary" onClick={() => handleShowPropertyDetails(property.id)}>
                   Show Details
@@ -143,6 +148,13 @@ const ShowProperties = () => {
         autoHideDuration={6000}
         onClose={handleSnackbarClose}
         message={snackbarMessage}
+      />
+      <UpdatePropertyDialog
+        open={isUpdateDialogOpen}
+        onClose={() => setIsUpdateDialogOpen(false)}
+        property={selectedProperty}
+        onChange={setSelectedProperty}
+        onSubmit={handleSubmitUpdateProperty} // Implement the update submission function
       />
     </Container>
   );
