@@ -126,6 +126,9 @@ const Header = () => {
               <Button component={Link} to={PATHS.SHOW_REPAIRS(authData.userId)} color="inherit">
                 Repairs
               </Button>
+              <Button component={Link} to={PATHS.PROPERTIES(authData.userId)} color="inherit">
+                Properties
+              </Button>
               <Button color="inherit" onClick={logout}>
                 Logout
               </Button>
