@@ -43,7 +43,7 @@ public class PropertyController {
             if (!authId.equals(propertyOwnerId)) throw new AccessDeniedException("You are not authorized to add a property to a another user.");
         }
         List<Property> properties = propertyService.findAllProperties().stream()
-                .filter(property -> property.getPropertyOwner().getId().equals(propertyOwnerId))
+                .filter(property -> property.getPropertyOwner().getId().equals(propertyOwnerId)).filter(Property::isActive)
                 .toList();
 
         return ResponseEntity.ok(properties);
