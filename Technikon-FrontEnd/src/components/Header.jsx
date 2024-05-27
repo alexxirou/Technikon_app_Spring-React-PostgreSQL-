@@ -16,13 +16,14 @@ import { PATHS, ROLES } from "../lib/constants";
 import { useAuth } from '../hooks/useAuth';
 import AuthButtons from './AuthButtons';
 import SearchForm from './SearchForm';
-
+import { useNavigate } from 'react-router-dom';
 
 const Header = () => {
   const { authData, logout, logoutDialogOpen, handleCloseLogoutDialog } = useAuth();
   const [searchResult, setSearchResult] = useState([]);
   const [searchDialogOpen, setSearchDialogOpen] = useState(false);
   const [error, setError] = useState('');
+  const navigate= useNavigate();
 
   const handleCloseSearchDialog = () => {
     setSearchDialogOpen(false);
@@ -30,7 +31,7 @@ const Header = () => {
 
   const handleGoToOwnerDetails = (id) => {
     setSearchDialogOpen(false);
-    window.location.href = PATHS.OWNER(id);
+    navigate(PATHS.OWNER(id));
   };
 
   return (

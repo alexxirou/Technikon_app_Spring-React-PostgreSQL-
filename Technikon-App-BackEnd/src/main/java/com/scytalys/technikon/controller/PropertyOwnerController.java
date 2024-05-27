@@ -54,6 +54,21 @@ public class PropertyOwnerController {
         return new ResponseEntity<>(userInfo, headers, HttpStatus.OK);
     }
 
+
+    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
+    @GetMapping("/id/{userId}")
+    public ResponseEntity<UserDetailsDto> showUser(@PathVariable long userId, Authentication authentication) {
+        if (authentication.getAuthorities().stream().noneMatch(a -> a.getAuthority().equals("ROLE_ADMIN")))  {
+            UserInfoDetails userInfoDetails = (UserInfoDetails) authentication.getPrincipal();
+            long id = userInfoDetails.getId();
+
+            if( userId!=id) throw new AccessDeniedException("You are not authorized to update another user.");
+        }
+        UserDetailsDto userInfo=propertyOwnerService.userDetails(propertyOwnerService.findUser(userId));
+        HttpHeaders headers= HeaderUtility.createHeaders("Success-Header", "User with tin found.");
+        return new ResponseEntity<>(userInfo, headers, HttpStatus.OK);
+    }
+
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     @PutMapping("/{tin}")
     public ResponseEntity<String> updateUser(@PathVariable String tin, @RequestBody UserUpdateDto updateRequest, Authentication authentication) {

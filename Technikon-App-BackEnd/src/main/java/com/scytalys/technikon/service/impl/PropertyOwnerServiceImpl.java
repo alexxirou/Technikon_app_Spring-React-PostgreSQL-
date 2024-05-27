@@ -41,6 +41,10 @@ public class PropertyOwnerServiceImpl implements PropertyOwnerService {
         return propertyOwnerRepository.findByTin(tin).filter(User::isActive).orElseThrow(() -> new EntityNotFoundException("User not found."));
     }
 
+    @Override
+    public PropertyOwner findUser(long id) {
+        return propertyOwnerRepository.findById(id).filter(User::isActive).orElseThrow(() -> new EntityNotFoundException("User not found."));
+    }
     /**
      * Searches for a user in the repository by their username.
      *

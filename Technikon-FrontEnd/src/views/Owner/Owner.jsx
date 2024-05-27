@@ -3,21 +3,29 @@ import api from '../../api/Api';
 import { useAuth } from '../../hooks/useAuth';
 import OwnerDetails from './OwnerDetails';
 import CircularProgress from '@mui/material/CircularProgress';
-import { useNavigate } from 'react-router-dom';
+
 import { PATHS } from '../../lib/constants';
+import { useParams } from 'react-router-dom';
 
 const Owner = () => {
   const [ownerDetails, setOwnerDetails] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const { authData, logout } = useAuth();
+  const authorities = authData?.authorities || [];
   const tin = authData?.userTin;
-  const navigate = useNavigate();
+  const { id } = useParams();
 
   useEffect(() => {
+    if (!authorities) return;
     const fetchOwnerDetails = async () => {
       try {
-        const response = await api.get(`/api/propertyOwners/${tin}`);
+        let response;
+        if (authorities && authorities.includes('ROLE_USER')) {
+          response = await api.get(`/api/propertyOwners/${tin}`);
+        } else {
+          response = await api.get(`/api/propertyOwners/id/${id}`);
+        }
         if (response.status === 200) {
           setOwnerDetails(response.data.userInfo);
         } else {
@@ -31,7 +39,7 @@ const Owner = () => {
     };
 
     fetchOwnerDetails();
-  }, [tin]);
+  }, [tin, id, authorities]);
 
 
     const handleDeleteOwner = async () => {
