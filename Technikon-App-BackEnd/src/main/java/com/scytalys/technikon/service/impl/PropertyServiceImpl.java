@@ -34,7 +34,7 @@ public class PropertyServiceImpl implements PropertyService {
     //Get Property (entity,table_id) - Search
     @Override
     public Property findPropertyByTin(String tin) {
-        return propertyRepository.findPropertyByTin(tin);
+        return propertyRepository.findPropertyByTin(tin).filter(Property::isActive).orElseThrow(() -> new EntityNotFoundException("Property with tin " + tin + " not found"));;
     }
 
     @Override
