@@ -31,7 +31,7 @@ public class PropertyOwnerController {
     public ResponseEntity<List<UserSearchResponseDto>>  findUsers(
             @RequestParam(required = false) String tin,
             @RequestParam(required = false) String username,
-            @RequestParam(required = false) String email
+            @RequestParam(required = false) String email, Authentication authentication
     ) {
         UserSearchDto searchRequest = new UserSearchDto(tin, username, email);
         List<PropertyOwner> users = propertyOwnerService.searchUser(searchRequest);
