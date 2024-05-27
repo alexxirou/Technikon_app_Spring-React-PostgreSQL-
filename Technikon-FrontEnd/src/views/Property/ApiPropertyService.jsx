@@ -27,6 +27,11 @@ export const updateProperties = async (propertyOwnerId, propertyId, propertyData
 };
 
 export const deleteProperties = async (propertyOwnerId, propertyId) => {
-  const response = await api.delete(`/api/property//delete/${propertyOwnerId}/delete/${propertyId}`);
+  const response = await api.delete(`/api/property/delete/${propertyOwnerId}/delete/${propertyId}`);
   return response.status;
+}
+
+export const getAllProperties = async() =>  {
+  const response = await api.get('/api/property/getAllProperties/')
+  return response;
 };

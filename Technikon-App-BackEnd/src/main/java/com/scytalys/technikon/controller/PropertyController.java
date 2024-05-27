@@ -89,11 +89,15 @@ public class PropertyController {
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/getAllProperties/")
-    public List<Property> read() {
-        return propertyService.findAllProperties();
+    public ResponseEntity<List<Property>> read() {
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("message", "Found properties");
+
+        return new ResponseEntity<>(propertyService.findAllProperties(), headers, HttpStatus.OK);
     }
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     @PutMapping("/update/{propertyId}")
+
     public ResponseEntity<PropertyUpdateDto> updateProperty(
             @PathVariable("propertyId") long propertyId,
             @RequestBody PropertyUpdateDto propertyUpdateDto,
