@@ -40,7 +40,7 @@ const Login = () => {
    
 
     if (authorities.includes(ROLES.ADMIN)) {
-      navigate(PATHS.ADMIN);
+      navigate(PATHS.ADMIN(id));
     } else if (authorities.includes(ROLES.USER)) {
       navigate(PATHS.OWNER(id));
     } else {
