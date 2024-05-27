@@ -3,8 +3,8 @@ import api from '../../api/Api';
 import { useAuth } from '../../hooks/useAuth';
 import OwnerDetails from './OwnerDetails';
 import CircularProgress from '@mui/material/CircularProgress';
-
-import { PATHS } from '../../lib/constants';
+import { useNavigate } from 'react-router-dom';
+import { PATHS, ROLES } from '../../lib/constants';
 import { useParams } from 'react-router-dom';
 
 const Owner = () => {
@@ -14,14 +14,15 @@ const Owner = () => {
   const { authData, logout } = useAuth();
   const authorities = authData?.authorities || [];
   const tin = authData?.userTin;
+  const authId =authData?.userId;
   const { id } = useParams();
-
+  const navigate= useNavigate();
   useEffect(() => {
     if (!authorities) return;
     const fetchOwnerDetails = async () => {
       try {
         let response;
-        if (authorities && authorities.includes('ROLE_USER')) {
+        if (authorities && authorities.includes(ROLES.USER)) {
           response = await api.get(`/api/propertyOwners/${tin}`);
         } else {
           response = await api.get(`/api/propertyOwners/id/${id}`);
@@ -46,15 +47,22 @@ const Owner = () => {
       setLoading(true);
      
       try {
-        const response = await api.delete(`/api/propertyOwners/${tin}`);
-     
+        let response;
+        if (authorities && authorities.includes(ROLES.USER)) {
+          response = await api.delete(`/api/propertyOwners/${authId}`);
+        }
+        else{
+          response = await api.delete(`/api/propertyOwners/${id}`);
+        }
   
       
         if (response.status === 202) {
           console.log('Owner deleted successfully');
           
           setTimeout(() => {
-            logout();
+            if (authorities && authorities.includes(ROLES.USER)) {
+            logout();}
+            navigate(PATHS.HOME);
           }, 1000);
      
         } else {

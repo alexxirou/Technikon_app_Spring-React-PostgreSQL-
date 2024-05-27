@@ -83,9 +83,9 @@ public class PropertyOwnerServiceImpl implements PropertyOwnerService {
     @Override
     @Transactional
     @CacheEvict(value = "PropertyOwners", allEntries = true)
-    public void updateUser(String tin, UserUpdateDto dto){
+    public void updateUser(long id, UserUpdateDto dto){
 
-        PropertyOwner user= findUser(tin);
+        PropertyOwner user= findUser(id);
 
         PropertyOwner newUser = ownerMapper.updateDtoToUser(dto,user);
 
@@ -107,28 +107,27 @@ public class PropertyOwnerServiceImpl implements PropertyOwnerService {
     /**
      * Deletes a user from the repository by their ID.
      *
-     * @param tin The tin of the user to be deleted.
+     * @param id The id of the user to be deleted.
      */
     @Override
     @Transactional
     @CacheEvict(value = "PropertyOwners", allEntries = true)
-    public void deleteUser(String tin ) {
-        PropertyOwner user= findUser(tin);
+    public void deleteUser(long id ) {
 
-        propertyOwnerRepository.deleteById(user.getId());;
+        propertyOwnerRepository.deleteById(id);;
 
     }
 
     /**
      * Performs a soft delete on a user in the repository if the version matches
      *
-     * @param tin of the row to be deactivated
+     * @param id of the row to be deactivated
      */
     @Override
     @Transactional
     @CacheEvict(value = "PropertyOwners", allEntries = true)
-    public void softDeleteUser(String tin){
-        PropertyOwner user= propertyOwnerRepository.findByTin(tin).orElseThrow(() -> new EntityNotFoundException("User not found."));
+    public void softDeleteUser(long id){
+        PropertyOwner user= propertyOwnerRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("User not found."));
 
         user.setActive(false);
         propertyOwnerRepository.save(user);
@@ -151,13 +150,13 @@ public class PropertyOwnerServiceImpl implements PropertyOwnerService {
 
     /**
      *Returns the ids of properties linked to a  User
-     * @param tin The tin of the user
+     * @param id The tin of the user
      * @return a boolean based on if the user is linked to any property ids
      */
     @Override
 
-    public boolean checkUserHasProperties(String tin){
-        List<String> results=propertyOwnerRepository.findPropertyIdsByUserId(tin);
+    public boolean checkUserHasProperties(long id){
+        List<String> results=propertyOwnerRepository.findPropertyIdsByUserId(id);
         return !results.isEmpty(); // Return true if the list of property IDs is not empty
     }
 
@@ -181,7 +180,7 @@ public class PropertyOwnerServiceImpl implements PropertyOwnerService {
     public UserDetailsDto userDetails(PropertyOwner user){
 
         UserSearchResponseDto details = ownerMapper.userToUserSearchResponseDto(user);
-        List<String> properties = propertyOwnerRepository.findPropertyIdsByUserId(user.getTin());
+        List<String> properties = propertyOwnerRepository.findPropertyIdsByUserId(user.getId());
         return new UserDetailsDto(details, properties);
     }
 

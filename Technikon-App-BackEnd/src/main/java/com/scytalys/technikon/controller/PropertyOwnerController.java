@@ -70,35 +70,35 @@ public class PropertyOwnerController {
     }
 
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
-    @PutMapping("/{tin}")
-    public ResponseEntity<String> updateUser(@PathVariable String tin, @RequestBody UserUpdateDto updateRequest, Authentication authentication) {
+    @PutMapping("/{id}")
+    public ResponseEntity<String> updateUser(@PathVariable long id, @RequestBody UserUpdateDto updateRequest, Authentication authentication) {
         if (authentication.getAuthorities().stream().noneMatch(a -> a.getAuthority().equals("ROLE_ADMIN")))  {
             UserInfoDetails userInfoDetails = (UserInfoDetails) authentication.getPrincipal();
-            //long id = userInfoDetails.getId();
-            String authTin = userInfoDetails.getTin();
-            if (!authTin.equals(tin)) throw new AccessDeniedException("You are not authorized to update another user.");
+
+            long authId = userInfoDetails.getId();
+            if (authId!=id) throw new AccessDeniedException("You are not authorized to update another user.");
         }
-        propertyOwnerService.updateUser(tin, updateRequest);
+        propertyOwnerService.updateUser(id, updateRequest);
         HttpHeaders headers= HeaderUtility.createHeaders("Success-Header", "User updated.");
         return new ResponseEntity<>(headers, HttpStatus.ACCEPTED);
     }
 
 
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
-    @DeleteMapping("/{tin}")
-    public ResponseEntity<String> deleteUser(@PathVariable String tin, Authentication authentication) {
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteUser(@PathVariable long id, Authentication authentication) {
         if (authentication.getAuthorities().stream().noneMatch(a -> a.getAuthority().equals("ROLE_ADMIN")))  {
             UserInfoDetails userInfoDetails = (UserInfoDetails) authentication.getPrincipal();
-            String authTin = userInfoDetails.getTin();
-            if (!authTin.equals(tin)) throw new AccessDeniedException("You are not authorized to delete another user.");
+            long authId = userInfoDetails.getId();
+            if (authId!=id) throw new AccessDeniedException("You are not authorized to delete another user.");
         }
         HttpHeaders headers;
-        if(propertyOwnerService.checkUserHasProperties(tin)){
-            propertyOwnerService.softDeleteUser(tin);
+        if(propertyOwnerService.checkUserHasProperties(id)){
+            propertyOwnerService.softDeleteUser(id);
             headers= HeaderUtility.createHeaders("Success-Header", "User deactivated.");
         }
         else {
-            propertyOwnerService.deleteUser(tin);
+            propertyOwnerService.deleteUser(id);
             headers = HeaderUtility.createHeaders("Success-Header", "User deleted.");
         }
         return new ResponseEntity<>(headers, HttpStatus.ACCEPTED);

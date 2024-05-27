@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import  { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Box, CircularProgress, Button, Typography, Container, Snackbar } from '@mui/material';
 import { fetchRepairs, fetchAllRepairs, updateRepair, deleteRepair, searchRepairsByDate, searchRepairsByDateRange } from './apiRepairService';
-import { PATHS } from '../../lib/constants';
+import { PATHS, ROLES} from '../../lib/constants';
 import { useAuth } from '../../hooks/useAuth';
 import UpdateRepairDialog from './UpdateRepairDialog';
 import ErrorDialog from './ErrorDialog';
@@ -170,7 +170,7 @@ const ShowRepairs = () => {
       <Box mt={2} mb={2} display="flex" justifyContent="space-between" alignItems="center">
         <Typography variant="h4">Repairs</Typography>
         <Box>
-        {authData && authData.authorities.includes('ROLE_USER') && (
+        {authData && authData.authorities.includes(ROLES.USER) && (
          <>
           <Button variant="contained" color="primary" onClick={() => setSearchByDateDialogOpen(true)}>
             Search by Date
