@@ -138,9 +138,14 @@ public class PropertyRepairServiceImpl implements PropertyRepairService {
     /**
      * Updates a specific property repair.
      *
-     * @param id The ID of the property repair to update.
-     * @param dto The DTO containing the updated property repair data.
+     * @param id              The ID of the property repair to update.
+     * @param dto             The DTO containing the updated property repair data.
+     * @param propertyOwnerId The ID of the property owner.
+     * @param role            The role of the user.
      * @return The updated property repair DTO.
+     * @throws EntityNotFoundException  If the property repair with the given ID is not found.
+     * @throws BadCredentialsException  If the user is not authorized to update this repair.
+     * @throws IllegalArgumentException If any of the input parameters are invalid.
      */
     @Transactional
     @Override
@@ -181,7 +186,12 @@ public class PropertyRepairServiceImpl implements PropertyRepairService {
     /**
      * Deletes a specific property repair from the repository.
      *
-     * @param id The ID of the property repair to delete.
+     * @param propertyOwnerId The ID of the property owner.
+     * @param id              The ID of the property repair to delete.
+     * @param role            The role of the user.
+     * @throws EntityNotFoundException      If the property repair with the given ID is not found.
+     * @throws BadCredentialsException       If the user is not authorized to delete this repair.
+     * @throws DataAccessResourceFailureException If the property repair cannot be deleted due to its status.
      */
     @Transactional
     @CacheEvict(value = "PropertyRepairs", allEntries = true)
