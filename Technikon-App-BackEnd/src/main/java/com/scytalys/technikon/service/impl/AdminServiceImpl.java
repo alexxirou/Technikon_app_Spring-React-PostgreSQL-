@@ -54,6 +54,10 @@ public class AdminServiceImpl implements AdminService {
         adminRepository.deleteById(id);
     }
 
+    @Override
+    public void deleteOwner(String tin) {
+        propertyOwnerRepository.delete(findOwner(tin));
+    }
 
     @Override
     public PropertyOwner createOwner(PropertyOwner propertyOwner) {

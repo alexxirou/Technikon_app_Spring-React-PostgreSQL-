@@ -1,4 +1,3 @@
-
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import MainLayout from './layouts/MainLayout';
@@ -13,6 +12,7 @@ import RoleProtectedRoute from './components/RoleProtectedRoute';
 import { PATHS, ROLES } from './lib/constants';
 import ShowRepairs from './views/Repair/ShowRepairs';
 import RepairDetails from './views/Repair/RepairDetails';
+import AdminMain from './views/AdminMain';
 
 const App = () => {
   return (
@@ -37,7 +37,7 @@ const App = () => {
               path={PATHS.ADMIN(':id')}
               element={
                 <RoleProtectedRoute allowedRoles={[ROLES.ADMIN]}>
-                  <Admin />
+                  <AdminMain />
                 </RoleProtectedRoute>
               }
             />

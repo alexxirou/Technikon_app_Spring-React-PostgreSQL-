@@ -21,6 +21,8 @@ public interface AdminService {
     List<Property> getRegisteredProperties(PropertyOwner owner);
     List<PropertyRepair> getDueRepairs(Property property);
 
+    void deleteOwner(String tin);
+
     PropertyOwner createOwner(PropertyOwner propertyOwner);
     PropertyOwner findOwner(String tin);
     Property findProperty(String tin);

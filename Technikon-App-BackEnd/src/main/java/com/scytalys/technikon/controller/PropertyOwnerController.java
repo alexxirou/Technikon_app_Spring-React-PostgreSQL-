@@ -22,7 +22,6 @@ import java.util.List;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/api/propertyOwners")
-
 public class PropertyOwnerController {
     private final PropertyOwnerService propertyOwnerService;
 

@@ -26,6 +26,7 @@ public class AdminController {
     List<Admin> findAdmins() {
         return adminService.findAll();
     }
+
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/find-owners/{fromYear}/{fromMonth}/{fromDay}/{toYear}/{toMonth}/{toDay}/")
     List<PropertyOwner> findOwners(@PathVariable String fromYear, @PathVariable String fromMonth, @PathVariable String fromDay,
@@ -47,4 +48,10 @@ public class AdminController {
         return adminService.getDueRepairs(adminService.findProperty(propertyTin));
     }
 
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @GetMapping("/delete-owner/{ownerTin}/")
+    void deleteOwner(@PathVariable String ownerTin) {
+        adminService.deleteOwner(ownerTin);
+    }
 }

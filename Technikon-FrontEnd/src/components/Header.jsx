@@ -47,7 +47,7 @@ const Header = () => {
               color: "inherit",
             }}
           >
-            Home
+            TECHNIKON
           </Typography>
           <SearchForm
             setSearchResult={setSearchResult}
