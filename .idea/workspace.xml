@@ -4,7 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f3732d33-421a-415d-ba42-6d0b12488ca7" name="Changes" comment="Fixed button for deleting a repair" />
+    <list default="true" id="f3732d33-421a-415d-ba42-6d0b12488ca7" name="Changes" comment="Added logging in search by date/dates">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -481,7 +483,39 @@
       <option name="project" value="LOCAL" />
       <updated>1716799499338</updated>
     </task>
-    <option name="localTasksCounter" value="40" />
+    <task id="LOCAL-00040" summary="Added new java doc for updating and deleting a repair">
+      <option name="closed" value="true" />
+      <created>1716799772432</created>
+      <option name="number" value="00040" />
+      <option name="presentableId" value="LOCAL-00040" />
+      <option name="project" value="LOCAL" />
+      <updated>1716799772432</updated>
+    </task>
+    <task id="LOCAL-00041" summary="Removed IconButton from Header">
+      <option name="closed" value="true" />
+      <created>1716799874324</created>
+      <option name="number" value="00041" />
+      <option name="presentableId" value="LOCAL-00041" />
+      <option name="project" value="LOCAL" />
+      <updated>1716799874324</updated>
+    </task>
+    <task id="LOCAL-00042" summary="Removed Go to dashboard button from Home page">
+      <option name="closed" value="true" />
+      <created>1716800056526</created>
+      <option name="number" value="00042" />
+      <option name="presentableId" value="LOCAL-00042" />
+      <option name="project" value="LOCAL" />
+      <updated>1716800056526</updated>
+    </task>
+    <task id="LOCAL-00043" summary="Added logging in search by date/dates">
+      <option name="closed" value="true" />
+      <created>1716801118349</created>
+      <option name="number" value="00043" />
+      <option name="presentableId" value="LOCAL-00043" />
+      <option name="project" value="LOCAL" />
+      <updated>1716801118349</updated>
+    </task>
+    <option name="localTasksCounter" value="44" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -533,10 +567,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Necessary commit, no changes" />
-    <MESSAGE value="Removed unecessary print" />
-    <MESSAGE value="Corrected routing for repairs" />
-    <MESSAGE value="Implemented update functionality" />
     <MESSAGE value="Added redirection in repair update, so that the new repair is correctly displayed at front" />
     <MESSAGE value="Added messages in console for deletion of repair" />
     <MESSAGE value="Created smaller components for repair creation" />
@@ -558,6 +588,10 @@
     <MESSAGE value="Added pop up for deleting a repair" />
     <MESSAGE value="Added short description validation for updating a repair" />
     <MESSAGE value="Fixed button for deleting a repair" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed button for deleting a repair" />
+    <MESSAGE value="Added new java doc for updating and deleting a repair" />
+    <MESSAGE value="Removed IconButton from Header" />
+    <MESSAGE value="Removed Go to dashboard button from Home page" />
+    <MESSAGE value="Added logging in search by date/dates" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added logging in search by date/dates" />
   </component>
 </project>
