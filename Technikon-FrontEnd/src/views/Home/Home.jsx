@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { Container, Typography, Button, Box, Paper } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
@@ -7,13 +8,22 @@ const HomePage = () => {
   const navigate = useNavigate();
   const { authData } = useAuth();
 
+  useEffect(() => {
+    // Remove scrollbar from the document body
+    document.body.style.overflow = 'hidden';
+
+    // Cleanup effect on component unmount
+    return () => {
+      document.body.style.overflow = 'auto';
+    };
+  }, []); // Run only once on component mount
+
   return (
     <Box
       display="flex"
       flexDirection="column"
       alignItems="center"
       justifyContent="flex-start"
-      height="100vh"
       bgcolor="background.default"
       pt={8}
     >
