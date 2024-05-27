@@ -1,6 +1,5 @@
-// RepairForm.js
-
-import { TextField, MenuItem, Button, Typography } from '@mui/material';
+import React, { useState } from 'react';
+import { TextField, MenuItem, Typography } from '@mui/material';
 
 const RepairForm = ({
   formData,
@@ -9,12 +8,26 @@ const RepairForm = ({
   handleSubmit,
   isUpdating
 }) => {
+  const [shortDescriptionError, setShortDescriptionError] = useState('');
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({
       ...formData,
       [name]: value
     });
+
+    if (name === 'shortDescription') {
+      validateShortDescription(value);
+    }
+  };
+
+  const validateShortDescription = (shortDescription) => {
+    if (shortDescription.length > 50) {
+      setShortDescriptionError('Short description must be 50 characters or less');
+    } else {
+      setShortDescriptionError('');
+    }
   };
 
   return (
@@ -40,6 +53,8 @@ const RepairForm = ({
         fullWidth
         required
         margin="normal"
+        error={!!shortDescriptionError}
+        helperText={shortDescriptionError || errors.shortDescription}
       />
       <TextField
         name="repairType"

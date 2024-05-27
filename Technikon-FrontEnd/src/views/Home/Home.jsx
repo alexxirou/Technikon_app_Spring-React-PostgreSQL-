@@ -45,16 +45,8 @@ const HomePage = () => {
               Log In
             </Button>
           </>
-        ) : (
-          <Button 
-            variant="contained" 
-            color="primary" 
-            sx={{ mt: 2 }} 
-            onClick={() => navigate(PATHS.HOME)}
-          >
-            Go to Dashboard
-          </Button>
-        )}
+        ) : null 
+        }
       </Container>
     </Box>
   );

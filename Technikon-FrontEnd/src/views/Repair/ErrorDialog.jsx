@@ -6,7 +6,7 @@ const ErrorDialog = ({ open, message, onClose }) => {
     <Dialog open={open} onClose={onClose}>
       <DialogTitle>Error</DialogTitle>
       <DialogContent>
-        <DialogContentText>{message}</DialogContentText>
+        <DialogContentText>{"Repair with this status cannot be deleted"}</DialogContentText>
       </DialogContent>
       <DialogActions>
         <Button onClick={onClose} color="primary">OK</Button>

@@ -4,10 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f3732d33-421a-415d-ba42-6d0b12488ca7" name="Changes" comment="Added cancel button in create repair page">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Technikon-App-BackEnd/src/main/java/com/scytalys/technikon/security/controller/UserAuthenticationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Technikon-App-BackEnd/src/main/java/com/scytalys/technikon/security/controller/UserAuthenticationController.java" afterDir="false" />
-    </list>
+    <list default="true" id="f3732d33-421a-415d-ba42-6d0b12488ca7" name="Changes" comment="Fixed button for deleting a repair" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -444,7 +441,47 @@
       <option name="project" value="LOCAL" />
       <updated>1716757639787</updated>
     </task>
-    <option name="localTasksCounter" value="35" />
+    <task id="LOCAL-00035" summary="Fixed search by date/dates in backend to accept dates that refer to the past">
+      <option name="closed" value="true" />
+      <created>1716794798144</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1716794798144</updated>
+    </task>
+    <task id="LOCAL-00036" summary="Added logging for deleting a repair">
+      <option name="closed" value="true" />
+      <created>1716795163901</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1716795163901</updated>
+    </task>
+    <task id="LOCAL-00037" summary="Added pop up for deleting a repair">
+      <option name="closed" value="true" />
+      <created>1716796218247</created>
+      <option name="number" value="00037" />
+      <option name="presentableId" value="LOCAL-00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1716796218247</updated>
+    </task>
+    <task id="LOCAL-00038" summary="Added short description validation for updating a repair">
+      <option name="closed" value="true" />
+      <created>1716797665609</created>
+      <option name="number" value="00038" />
+      <option name="presentableId" value="LOCAL-00038" />
+      <option name="project" value="LOCAL" />
+      <updated>1716797665609</updated>
+    </task>
+    <task id="LOCAL-00039" summary="Fixed button for deleting a repair">
+      <option name="closed" value="true" />
+      <created>1716799499338</created>
+      <option name="number" value="00039" />
+      <option name="presentableId" value="LOCAL-00039" />
+      <option name="project" value="LOCAL" />
+      <updated>1716799499338</updated>
+    </task>
+    <option name="localTasksCounter" value="40" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -496,11 +533,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Correct show repair details buttons" />
-    <MESSAGE value="Correct show repair details refreshing page" />
-    <MESSAGE value="Remove Repair component and put create repair button in show repairs page" />
-    <MESSAGE value="Added success message in creation of repair" />
-    <MESSAGE value="Implemented delete repair funcionality" />
     <MESSAGE value="Necessary commit, no changes" />
     <MESSAGE value="Removed unecessary print" />
     <MESSAGE value="Corrected routing for repairs" />
@@ -521,6 +553,11 @@
     <MESSAGE value="Fixed create repair button" />
     <MESSAGE value="Fixed cancel button in UpdateRepairDialog.jsx" />
     <MESSAGE value="Added cancel button in create repair page" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added cancel button in create repair page" />
+    <MESSAGE value="Fixed search by date/dates in backend to accept dates that refer to the past" />
+    <MESSAGE value="Added logging for deleting a repair" />
+    <MESSAGE value="Added pop up for deleting a repair" />
+    <MESSAGE value="Added short description validation for updating a repair" />
+    <MESSAGE value="Fixed button for deleting a repair" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixed button for deleting a repair" />
   </component>
 </project>
