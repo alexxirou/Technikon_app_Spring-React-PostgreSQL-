@@ -77,10 +77,10 @@ const ShowRepairs = () => {
 
   const handleDelete = async (repairId) => {
     const repairToDelete = repairs.find((repair) => repair.id === repairId);
-
     if (repairToDelete && repairToDelete.repairStatus !== 'DEFAULT_PENDING') {
       setErrorDialogMessage("You cannot delete this repair");
       setErrorDialogOpen(true);
+      console.log("Repair with status", repairToDelete.repairStatus, "cannot be deleted")
       return;
     }
 
@@ -88,6 +88,7 @@ const ShowRepairs = () => {
       const responseStatus = await deleteRepair(propertyOwnerId, repairId);
       if (responseStatus === 200) {
         setRepairs(repairs.filter((repair) => repair.id !== repairId));
+        console.log("Repair with id:", repairId, "deleted successfully");
       }
     } catch (error) {
       console.error("Failed to delete repair", error);
