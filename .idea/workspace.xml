@@ -4,11 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f3732d33-421a-415d-ba42-6d0b12488ca7" name="Changes" comment="Partial implementation for admin buttons">
+    <list default="true" id="f3732d33-421a-415d-ba42-6d0b12488ca7" name="Changes" comment="Added address and tin of property inside Show repairs of UI">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Technikon-App-BackEnd/src/main/java/com/scytalys/technikon/dto/repair/PropertyRepairDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/Technikon-App-BackEnd/src/main/java/com/scytalys/technikon/dto/repair/PropertyRepairDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Technikon-App-BackEnd/src/main/java/com/scytalys/technikon/mapper/PropertyRepairMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/Technikon-App-BackEnd/src/main/java/com/scytalys/technikon/mapper/PropertyRepairMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Technikon-FrontEnd/src/views/Repair/RepairDetails.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/Technikon-FrontEnd/src/views/Repair/RepairDetails.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Technikon-App-BackEnd/src/main/java/com/scytalys/technikon/bootstrap/SampleData.java" beforeDir="false" afterPath="$PROJECT_DIR$/Technikon-App-BackEnd/src/main/java/com/scytalys/technikon/bootstrap/SampleData.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -31,6 +29,7 @@
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="UPDATE_TYPE" value="REBASE" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
   &quot;lastFilter&quot;: {
@@ -177,23 +176,7 @@
       <workItem from="1716493588153" duration="2229000" />
       <workItem from="1716727215693" duration="13556000" />
       <workItem from="1716791366005" duration="1087000" />
-      <workItem from="1716837035321" duration="3321000" />
-    </task>
-    <task id="LOCAL-00008" summary="Edit functionality for show repairss">
-      <option name="closed" value="true" />
-      <created>1716461744102</created>
-      <option name="number" value="00008" />
-      <option name="presentableId" value="LOCAL-00008" />
-      <option name="project" value="LOCAL" />
-      <updated>1716461744102</updated>
-    </task>
-    <task id="LOCAL-00009" summary="Correct show repair details buttons">
-      <option name="closed" value="true" />
-      <created>1716465689647</created>
-      <option name="number" value="00009" />
-      <option name="presentableId" value="LOCAL-00009" />
-      <option name="project" value="LOCAL" />
-      <updated>1716465689648</updated>
+      <workItem from="1716837035321" duration="4580000" />
     </task>
     <task id="LOCAL-00010" summary="Correct show repair details refreshing page">
       <option name="closed" value="true" />
@@ -571,7 +554,23 @@
       <option name="project" value="LOCAL" />
       <updated>1716820873344</updated>
     </task>
-    <option name="localTasksCounter" value="57" />
+    <task id="LOCAL-00057" summary="Added address and tin of property inside returned PropertyRepairDto">
+      <option name="closed" value="true" />
+      <created>1716840977491</created>
+      <option name="number" value="00057" />
+      <option name="presentableId" value="LOCAL-00057" />
+      <option name="project" value="LOCAL" />
+      <updated>1716840977491</updated>
+    </task>
+    <task id="LOCAL-00058" summary="Added address and tin of property inside Show repairs of UI">
+      <option name="closed" value="true" />
+      <created>1716841315203</created>
+      <option name="number" value="00058" />
+      <option name="presentableId" value="LOCAL-00058" />
+      <option name="project" value="LOCAL" />
+      <updated>1716841315203</updated>
+    </task>
+    <option name="localTasksCounter" value="59" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -623,8 +622,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Fixed create repair button" />
-    <MESSAGE value="Fixed cancel button in UpdateRepairDialog.jsx" />
     <MESSAGE value="Added cancel button in create repair page" />
     <MESSAGE value="Fixed search by date/dates in backend to accept dates that refer to the past" />
     <MESSAGE value="Added logging for deleting a repair" />
@@ -648,6 +645,8 @@
     <MESSAGE value="Fixed create property" />
     <MESSAGE value="Added fetch all repairs for admin" />
     <MESSAGE value="Partial implementation for admin buttons" />
-    <option name="LAST_COMMIT_MESSAGE" value="Partial implementation for admin buttons" />
+    <MESSAGE value="Added address and tin of property inside returned PropertyRepairDto" />
+    <MESSAGE value="Added address and tin of property inside Show repairs of UI" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added address and tin of property inside Show repairs of UI" />
   </component>
 </project>

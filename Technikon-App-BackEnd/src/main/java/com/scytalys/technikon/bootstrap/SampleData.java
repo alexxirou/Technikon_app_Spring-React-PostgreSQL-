@@ -65,17 +65,6 @@ public class SampleData {
     public CommandLineRunner myCommandLineRunner() {
         return args -> {
             Logger logger = LoggerFactory.getLogger(CommandLineRunner.class); // Replace MyApplication with your class name
-            PropertyRepair propertyRepair = new PropertyRepair();
-            propertyRepair.setDateOfRepair(LocalDate.of(2024, 6, 14));
-            propertyRepair.setShortDescription("Plumb work");
-            propertyRepair.setRepairType(RepairType.PLUMBING);
-            propertyRepair.setRepairStatus(RepairStatus.SCHEDULED);
-            propertyRepair.setCost(new BigDecimal(150));
-            propertyRepair.setLongDescription("Describing with details the work to be done");
-
-//            propertyRepairService.createPropertyRepair(propertyRepair);
-//            logger.info("Created property repair: {}", propertyRepair);
-
 
             Admin theAdmin = new Admin();
             theAdmin.setTin("1751614865GR");// id
@@ -201,7 +190,7 @@ public class SampleData {
             propertyRepairService.createPropertyRepair(propertyRepairMapper.RepairToPropertyRepairDto(propertyRepair3));
 
             PropertyRepair propertyRepair4 = new PropertyRepair();
-            propertyRepair4.setProperty(property);
+            propertyRepair4.setProperty(property1);
             propertyRepair4.setPropertyOwner(propertyOwner1);
             propertyRepair4.setCost(new BigDecimal(100));
             propertyRepair4.setRepairStatus(RepairStatus.IN_PROGRESS);
