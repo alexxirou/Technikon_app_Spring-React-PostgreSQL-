@@ -1,4 +1,5 @@
 import { TextField, MenuItem, Button, Typography, Box } from '@mui/material';
+import React, { useState } from 'react';
 
 const CreateForm = ({
   formData,
@@ -7,12 +8,26 @@ const CreateForm = ({
   handleSubmit,
   handleCancel
 }) => {
+  const [shortDescriptionError, setShortDescriptionError] = useState('');
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({
       ...formData,
       [name]: value
     });
+
+    if (name === 'shortDescription') {
+      validateShortDescription(value);
+    }
+  };
+
+  const validateShortDescription = (shortDescription) => {
+    if (shortDescription.length > 50) {
+      setShortDescriptionError('Short description must be 50 characters or less');
+    } else {
+      setShortDescriptionError('');
+    }
   };
 
   return (
@@ -38,6 +53,8 @@ const CreateForm = ({
         fullWidth
         required
         margin="normal"
+        error={!!shortDescriptionError}
+        helperText={shortDescriptionError || errors.shortDescription}
       />
       <TextField
         name="repairType"
@@ -103,6 +120,7 @@ const CreateForm = ({
           type="submit"
           variant="contained"
           color="primary"
+          disabled={!!shortDescriptionError}
         >
           Create Repair
         </Button>

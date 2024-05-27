@@ -157,6 +157,7 @@ public class PropertyRepairServiceImpl implements PropertyRepairService {
             propertyRepair.setDateOfRepair(dto.dateOfRepair());
         }
         if(dto.shortDescription() !=null){
+            validateShortDescription(dto.shortDescription());
             propertyRepair.setShortDescription(dto.shortDescription());
         }
         if(dto.repairType()!=null){
