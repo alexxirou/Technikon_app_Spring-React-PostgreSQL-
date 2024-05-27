@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.NonNull;
 
 import java.time.LocalDate;
+import java.time.Year;
 import java.util.List;
 
 @Entity(name = "Property")
@@ -23,7 +24,7 @@ public class Property {
     @Column(name = "Address", nullable = false, length = 50)
     private String address;
     @Column(name = "ConstructionYear", nullable = false, length = 4)
-    private LocalDate constructionYear;
+    private int constructionYear;
     @Column(name = "PropertyType" , nullable = false, length = 20)
     private PropertyType propertyType;
     @Column(name= "Latitude" , nullable= false , length = 8)

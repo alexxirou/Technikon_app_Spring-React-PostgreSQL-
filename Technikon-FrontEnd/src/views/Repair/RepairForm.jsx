@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { TextField, MenuItem, Typography } from '@mui/material';
+import { TextField, MenuItem, Button, Typography } from '@mui/material';
 
 const RepairForm = ({
   formData,
@@ -12,14 +12,13 @@ const RepairForm = ({
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+    if (name === 'shortDescription') {
+      validateShortDescription(value);
+    }
     setFormData({
       ...formData,
       [name]: value
     });
-
-    if (name === 'shortDescription') {
-      validateShortDescription(value);
-    }
   };
 
   const validateShortDescription = (shortDescription) => {
@@ -45,7 +44,7 @@ const RepairForm = ({
         error={!!errors.dateOfRepair}
         helperText={errors.dateOfRepair}
       />
-      <TextField
+     <TextField
         name="shortDescription"
         label="Short Description"
         value={formData.shortDescription}

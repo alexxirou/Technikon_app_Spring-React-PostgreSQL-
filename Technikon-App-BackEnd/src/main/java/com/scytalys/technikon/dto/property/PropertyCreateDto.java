@@ -14,7 +14,7 @@ public class PropertyCreateDto {
     private long propertyOwnerId;
     private String tin;
     private String address;
-    private LocalDate constructionYear;
+    private int constructionYear;
     private double latitude;
     private double longitude;
     private PropertyType propertyType;

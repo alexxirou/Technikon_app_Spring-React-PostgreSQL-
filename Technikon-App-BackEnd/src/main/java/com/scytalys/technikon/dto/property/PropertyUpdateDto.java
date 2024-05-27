@@ -12,7 +12,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 public class PropertyUpdateDto {
     private long id;
-    private LocalDate constructionYear;
+    private int constructionYear;
     private String address;
     private double latitude;
     private double longitude;
