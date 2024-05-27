@@ -1,5 +1,11 @@
 import React from 'react';
 import { Box, CircularProgress, Button, Typography, Container, Snackbar } from '@mui/material';
+import { useAuth } from '../../hooks/useAuth';
+import UpdateRepairDialog from './UpdateRepairDialog';
+import ErrorDialog from './ErrorDialog';
+import SearchByDateDialog from './SearchByDateDialog';
+import SearchByDateRangeDialog from './SearchByDateRangeDialog';
+import SuccessDialog from './SuccessDialog';
 
 const ShowRepairsStateless = ({
   repairs,
@@ -26,7 +32,10 @@ const ShowRepairsStateless = ({
   handleSuccessDialogClose,
   navigate,
   propertyOwnerId,
+  authData
 }) => {
+
+
   if (loading) {
     return (
       <Box display="flex" justifyContent="center" alignItems="center" height="100vh">
@@ -48,15 +57,19 @@ const ShowRepairsStateless = ({
       <Box mt={2} mb={2} display="flex" justifyContent="space-between" alignItems="center">
         <Typography variant="h4">Repairs</Typography>
         <Box>
-          <Button variant="contained" color="primary" onClick={() => setSearchByDateDialogOpen(true)}>
-            Search by Date
-          </Button>
-          <Button variant="contained" color="primary" onClick={() => setSearchByDateRangeDialogOpen(true)} style={{ marginLeft: '8px' }}>
-            Search by Date Range
-          </Button>
-          <Button variant="contained" color="primary" onClick={handleCreateRepair} style={{ marginLeft: '8px' }}>
-            Create Repair
-          </Button>
+          {authData && authData.authorities.includes("ROLE_USER") && (
+            <>
+              <Button variant="contained" color="primary" onClick={() => searchByDateDialogOpen(true)}>
+                Search by Date
+              </Button>
+              <Button variant="contained" color="primary" onClick={() => searchByDateRangeDialogOpen(true)} style={{ marginLeft: '8px' }}>
+                Search by Date Range
+              </Button>
+              <Button variant="contained" color="primary" onClick={handleCreateRepair} style={{ marginLeft: '8px' }}>
+                Create Repair
+              </Button>
+            </>
+          )}
         </Box>
       </Box>
       <Box>

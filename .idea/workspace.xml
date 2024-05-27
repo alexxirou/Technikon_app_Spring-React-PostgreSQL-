@@ -4,8 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f3732d33-421a-415d-ba42-6d0b12488ca7" name="Changes" comment="Removed scrollbar from searching a repair by date">
+    <list default="true" id="f3732d33-421a-415d-ba42-6d0b12488ca7" name="Changes" comment="Added fetch all repairs for admin">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Technikon-FrontEnd/src/views/Repair/ShowRepairsStateless.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/Technikon-FrontEnd/src/views/Repair/ShowRepairsStateless.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -24,7 +25,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="BackUpBranch" />
+        <entry key="$PROJECT_DIR$" value="Testing" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -65,6 +66,7 @@
     &quot;HTTP Request.generated-requests | #67.executor&quot;: &quot;Run&quot;,
     &quot;HTTP Request.generated-requests | #68.executor&quot;: &quot;Run&quot;,
     &quot;HTTP Request.generated-requests | #69.executor&quot;: &quot;Run&quot;,
+    &quot;HTTP Request.generated-requests | #71.executor&quot;: &quot;Run&quot;,
     &quot;JUnit.JwtServiceTest.executor&quot;: &quot;Run&quot;,
     &quot;JUnit.JwtServiceTest.testGenerateTokenAndVerify.executor&quot;: &quot;Run&quot;,
     &quot;JUnit.JwtServiceTest.testVerifyJwtToken.executor&quot;: &quot;Run&quot;,
@@ -101,9 +103,6 @@
   }
 }</component>
   <component name="RunManager" selected="Spring Boot.TechnikonApplication">
-    <configuration name="generated-requests | #63" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$APPLICATION_CONFIG_DIR$/scratches/generated-requests.http" index="63" requestIdentifier="#63" runType="Run single request">
-      <method v="2" />
-    </configuration>
     <configuration name="generated-requests | #67" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$APPLICATION_CONFIG_DIR$/scratches/generated-requests.http" index="67" requestIdentifier="#67" runType="Run single request">
       <method v="2" />
     </configuration>
@@ -111,6 +110,9 @@
       <method v="2" />
     </configuration>
     <configuration name="generated-requests | #69" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$APPLICATION_CONFIG_DIR$/scratches/generated-requests.http" index="69" requestIdentifier="#69" runType="Run single request">
+      <method v="2" />
+    </configuration>
+    <configuration name="generated-requests | #71" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$APPLICATION_CONFIG_DIR$/scratches/generated-requests.http" index="71" requestIdentifier="#71" runType="Run single request">
       <method v="2" />
     </configuration>
     <configuration default="true" type="JetRunConfigurationType">
@@ -142,10 +144,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="Spring Boot.TechnikonApplication" />
+        <item itemvalue="HTTP Request.generated-requests | #71" />
         <item itemvalue="HTTP Request.generated-requests | #69" />
         <item itemvalue="HTTP Request.generated-requests | #68" />
         <item itemvalue="HTTP Request.generated-requests | #67" />
-        <item itemvalue="HTTP Request.generated-requests | #63" />
       </list>
     </recent_temporary>
   </component>
@@ -170,22 +172,6 @@
       <workItem from="1716493588153" duration="2229000" />
       <workItem from="1716727215693" duration="13556000" />
       <workItem from="1716791366005" duration="1087000" />
-    </task>
-    <task id="LOCAL-00005" summary="Used material-ui components in login page and in display of owner fields">
-      <option name="closed" value="true" />
-      <created>1716318735993</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1716318735993</updated>
-    </task>
-    <task id="LOCAL-00006" summary="Created CreateRepair component with input validations">
-      <option name="closed" value="true" />
-      <created>1716321032161</created>
-      <option name="number" value="00006" />
-      <option name="presentableId" value="LOCAL-00006" />
-      <option name="project" value="LOCAL" />
-      <updated>1716321032161</updated>
     </task>
     <task id="LOCAL-00007" summary="Link to repairs using property owner id">
       <option name="closed" value="true" />
@@ -563,7 +549,23 @@
       <option name="project" value="LOCAL" />
       <updated>1716808868909</updated>
     </task>
-    <option name="localTasksCounter" value="54" />
+    <task id="LOCAL-00054" summary="Fixed create property">
+      <option name="closed" value="true" />
+      <created>1716816290834</created>
+      <option name="number" value="00054" />
+      <option name="presentableId" value="LOCAL-00054" />
+      <option name="project" value="LOCAL" />
+      <updated>1716816290834</updated>
+    </task>
+    <task id="LOCAL-00055" summary="Added fetch all repairs for admin">
+      <option name="closed" value="true" />
+      <created>1716819131070</created>
+      <option name="number" value="00055" />
+      <option name="presentableId" value="LOCAL-00055" />
+      <option name="project" value="LOCAL" />
+      <updated>1716819131070</updated>
+    </task>
+    <option name="localTasksCounter" value="56" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -615,8 +617,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Fixed delete repair with propertyOwnerId validation" />
-    <MESSAGE value="Fixed repair updating passing user role and propertyOwnerId" />
     <MESSAGE value="Fixed update repair button" />
     <MESSAGE value="Fixed create repair button" />
     <MESSAGE value="Fixed cancel button in UpdateRepairDialog.jsx" />
@@ -640,6 +640,8 @@
     <MESSAGE value="Changed date format" />
     <MESSAGE value="Fixed update form bug" />
     <MESSAGE value="Removed scrollbar from searching a repair by date" />
-    <option name="LAST_COMMIT_MESSAGE" value="Removed scrollbar from searching a repair by date" />
+    <MESSAGE value="Fixed create property" />
+    <MESSAGE value="Added fetch all repairs for admin" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added fetch all repairs for admin" />
   </component>
 </project>

@@ -56,6 +56,7 @@ public class PropertyServiceImpl implements PropertyService {
 
     @Override
     public PropertyCreateDto createProperty(PropertyCreateDto propertyCreateDto) {
+        propertyRepository.findById(propertyCreateDto.getPropertyOwnerId());
         Property property = propertyMapper.PropertyCreateDtoToProperty(propertyCreateDto);
         Property newProperty = propertyRepository.save(property);
         return propertyMapper.toPropertyCreateDto(newProperty);
