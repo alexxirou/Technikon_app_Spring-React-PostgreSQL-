@@ -191,59 +191,59 @@ const ShowRepairs = () => {
               border={1}
               borderRadius={8}
               borderColor="grey.300"
-                >
-                  <Box>
-                    <Typography variant="subtitle1">{repair.shortDescription}</Typography>
-                    <Typography variant="body2" color="textSecondary">
-                      {repair.repairStatus}
-                    </Typography>
-                  </Box>
-                  <Box>
-                    <Button variant="contained" color="primary" onClick={() => handleShow(repair.id)}>
-                      Show
-                    </Button>
-                    <Button variant="contained" color="secondary" onClick={() => handleUpdate(repair.id)} style={{ marginLeft: '8px' }}>
-                      Update
-                    </Button>
-                    <Button variant="contained" color="error" onClick={() => handleDelete(repair.id)} style={{ marginLeft: '8px' }}>
-                      Delete
-                    </Button>
-                  </Box>
-                </Box>
-              ))
-            )}
-          </Box>
-          <UpdateRepairDialog
-            open={updateDialogOpen}
-            onClose={handleCloseUpdateDialog}
-            repair={selectedRepair}
-            onChange={setSelectedRepair}
-            onSubmit={handleUpdateSubmit}
-          />
-          <ErrorDialog
-            open={errorDialogOpen}
-            message={errorDialogMessage}
-            onClose={handleCloseErrorDialog}
-          />
-          <SearchByDateDialog
-            open={searchByDateDialogOpen}
-            onClose={() => setSearchByDateDialogOpen(false)}
-            onSearch={handleSearchByDate}
-          />
-          <SearchByDateRangeDialog
-            open={searchByDateRangeDialogOpen}
-            onClose={() => setSearchByDateRangeDialogOpen(false)}
-            onSearch={handleSearchByDateRange}
-          />
-          <Snackbar
-            open={snackbarOpen}
-            autoHideDuration={6000} // Adjust duration as needed
-            onClose={handleSnackbarClose}
-            message={snackbarMessage}
-          />
-        </Container>
-      );
-    };
-    
-    export default ShowRepairs;
-    
+            >
+              <Box>
+                <Typography variant="subtitle1">{repair.shortDescription}</Typography>
+                <Typography variant="body2" color="textSecondary">
+                  {repair.repairStatus}
+                </Typography>
+              </Box>
+              <Box>
+                <Button variant="contained" color="primary" onClick={() => handleShow(repair.id)}>
+                  Show
+                </Button>
+                <Button variant="contained" color="secondary" onClick={() => handleUpdate(repair.id)} style={{ marginLeft: '8px' }}>
+                  Update
+                </Button>
+                <Button variant="contained" color="error" onClick={() => handleDelete(repair.id)} style={{ marginLeft: '8px' }}>
+                  Delete
+                </Button>
+              </Box>
+            </Box>
+          ))
+        )}
+      </Box>
+      <UpdateRepairDialog
+        open={updateDialogOpen}
+        onClose={handleCloseUpdateDialog}
+        repair={selectedRepair}
+        onChange={setSelectedRepair}
+        onSubmit={handleUpdateSubmit}
+      />
+      <ErrorDialog
+        open={errorDialogOpen}
+        message={errorDialogMessage}
+        onClose={handleCloseErrorDialog}
+      />
+      <SearchByDateDialog
+        open={searchByDateDialogOpen}
+        onClose={() => setSearchByDateDialogOpen(false)}
+        onSearch={handleSearchByDate}
+      />
+      <SearchByDateRangeDialog
+        open={searchByDateRangeDialogOpen}
+        onClose={() => setSearchByDateRangeDialogOpen(false)}
+        onSearch={handleSearchByDateRange}
+      />
+      <Snackbar
+        open={snackbarOpen}
+        autoHideDuration={6000} // Adjust duration as needed
+        onClose={handleSnackbarClose}
+        message={snackbarMessage}
+      />
+    </Container>
+  );
+};
+
+export default ShowRepairs;
+
