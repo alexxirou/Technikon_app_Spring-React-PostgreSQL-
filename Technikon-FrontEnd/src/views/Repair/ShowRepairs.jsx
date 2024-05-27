@@ -205,6 +205,8 @@ const ShowRepairs = () => {
             >
               <Box>
                 <Typography variant="subtitle1">{repair.shortDescription}</Typography>
+                <Typography variant="subtitle1">{repair.address}</Typography>
+                <Typography variant="subtitle1">{repair.dateOfRepair}</Typography>
                 <Typography variant="body2" color="textSecondary">
                   {repair.repairStatus}
                 </Typography>
