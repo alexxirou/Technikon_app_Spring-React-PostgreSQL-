@@ -16,6 +16,8 @@ public record PropertyRepairDto(
         RepairType repairType,
         RepairStatus repairStatus,
         BigDecimal cost,
-        String longDescription) {
+        String longDescription,
+        String address,
+        String propertyTin) {
 }
 
