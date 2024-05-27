@@ -6,6 +6,12 @@
   <component name="ChangeListManager">
     <list default="true" id="f3732d33-421a-415d-ba42-6d0b12488ca7" name="Changes" comment="Removed scrollbar from searching a repair by date">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Technikon-App-BackEnd/src/main/java/com/scytalys/technikon/bootstrap/SampleData.java" beforeDir="false" afterPath="$PROJECT_DIR$/Technikon-App-BackEnd/src/main/java/com/scytalys/technikon/bootstrap/SampleData.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Technikon-App-BackEnd/src/main/java/com/scytalys/technikon/controller/PropertyController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Technikon-App-BackEnd/src/main/java/com/scytalys/technikon/controller/PropertyController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Technikon-App-BackEnd/src/main/java/com/scytalys/technikon/domain/Property.java" beforeDir="false" afterPath="$PROJECT_DIR$/Technikon-App-BackEnd/src/main/java/com/scytalys/technikon/domain/Property.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Technikon-App-BackEnd/src/main/java/com/scytalys/technikon/dto/property/PropertyCreateDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/Technikon-App-BackEnd/src/main/java/com/scytalys/technikon/dto/property/PropertyCreateDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Technikon-App-BackEnd/src/main/java/com/scytalys/technikon/dto/property/PropertyUpdateDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/Technikon-App-BackEnd/src/main/java/com/scytalys/technikon/dto/property/PropertyUpdateDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Technikon-App-BackEnd/src/main/java/com/scytalys/technikon/service/impl/PropertyServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/Technikon-App-BackEnd/src/main/java/com/scytalys/technikon/service/impl/PropertyServiceImpl.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -24,7 +30,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="BackUpBranch" />
+        <entry key="$PROJECT_DIR$" value="Testing" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -58,52 +64,50 @@
     <option name="showLibraryContents" value="true" />
     <option name="showMembers" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.TechnikonApplication.executor&quot;: &quot;Run&quot;,
-    &quot;HTTP Request.generated-requests | #63.executor&quot;: &quot;Run&quot;,
-    &quot;HTTP Request.generated-requests | #67.executor&quot;: &quot;Run&quot;,
-    &quot;HTTP Request.generated-requests | #68.executor&quot;: &quot;Run&quot;,
-    &quot;HTTP Request.generated-requests | #69.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.JwtServiceTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.JwtServiceTest.testGenerateTokenAndVerify.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.JwtServiceTest.testVerifyJwtToken.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.PropertyOwnerServiceImplTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.PropertyOwnerServiceImplTest.testCreateUser.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.PropertyOwnerServiceImplTest.testSearchUserByFail.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.PropertyOwnerServiceImplTest.testUpdateUser.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.PropertyOwnerServiceImplTest.testUpdateUserFailWrongEmailFormat.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.PropertyOwnerServiceImplTest.userDetails_ReturnsUserDetailsWithEmptyProperties_WhenPropertyOwnerDoesNotExist.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.PropertyOwnerServiceImplTest.userDetails_ReturnsUserDetails_WhenPropertyOwnerExists.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.PropertyOwnerServiceImplTest.whenConcurrentUpdate_thenThrowException.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.UserMapperTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.UserMapperTest.testUserSearchResponseDtoCreation.executor&quot;: &quot;Run&quot;,
-    &quot;Maven.Technikon-App-BackEnd [clean].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.Technikon-App-BackEnd [install].executor&quot;: &quot;Run&quot;,
-    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
-    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
-    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
-    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;Spring Boot.TechnikonApplication.executor&quot;: &quot;Run&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;FrontEndLoginFeature&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/alexandrosx/Documents/Project&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.TechnikonApplication.executor": "Run",
+    "HTTP Request.generated-requests | #63.executor": "Run",
+    "HTTP Request.generated-requests | #67.executor": "Run",
+    "HTTP Request.generated-requests | #68.executor": "Run",
+    "HTTP Request.generated-requests | #69.executor": "Run",
+    "HTTP Request.generated-requests | #71.executor": "Run",
+    "JUnit.JwtServiceTest.executor": "Run",
+    "JUnit.JwtServiceTest.testGenerateTokenAndVerify.executor": "Run",
+    "JUnit.JwtServiceTest.testVerifyJwtToken.executor": "Run",
+    "JUnit.PropertyOwnerServiceImplTest.executor": "Run",
+    "JUnit.PropertyOwnerServiceImplTest.testCreateUser.executor": "Run",
+    "JUnit.PropertyOwnerServiceImplTest.testSearchUserByFail.executor": "Run",
+    "JUnit.PropertyOwnerServiceImplTest.testUpdateUser.executor": "Run",
+    "JUnit.PropertyOwnerServiceImplTest.testUpdateUserFailWrongEmailFormat.executor": "Run",
+    "JUnit.PropertyOwnerServiceImplTest.userDetails_ReturnsUserDetailsWithEmptyProperties_WhenPropertyOwnerDoesNotExist.executor": "Run",
+    "JUnit.PropertyOwnerServiceImplTest.userDetails_ReturnsUserDetails_WhenPropertyOwnerExists.executor": "Run",
+    "JUnit.PropertyOwnerServiceImplTest.whenConcurrentUpdate_thenThrowException.executor": "Run",
+    "JUnit.UserMapperTest.executor": "Run",
+    "JUnit.UserMapperTest.testUserSearchResponseDtoCreation.executor": "Run",
+    "Maven.Technikon-App-BackEnd [clean].executor": "Run",
+    "Maven.Technikon-App-BackEnd [install].executor": "Run",
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "Spring Boot.TechnikonApplication.executor": "Run",
+    "git-widget-placeholder": "FrontEndLoginFeature",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/alexandrosx/Documents/Project",
+    "node.js.detected.package.eslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
-  <component name="RunManager" selected="Spring Boot.TechnikonApplication">
-    <configuration name="generated-requests | #63" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$APPLICATION_CONFIG_DIR$/scratches/generated-requests.http" index="63" requestIdentifier="#63" runType="Run single request">
-      <method v="2" />
-    </configuration>
+}]]></component>
+  <component name="RunManager" selected="HTTP Request.generated-requests | #71">
     <configuration name="generated-requests | #67" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$APPLICATION_CONFIG_DIR$/scratches/generated-requests.http" index="67" requestIdentifier="#67" runType="Run single request">
       <method v="2" />
     </configuration>
@@ -111,6 +115,9 @@
       <method v="2" />
     </configuration>
     <configuration name="generated-requests | #69" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$APPLICATION_CONFIG_DIR$/scratches/generated-requests.http" index="69" requestIdentifier="#69" runType="Run single request">
+      <method v="2" />
+    </configuration>
+    <configuration name="generated-requests | #71" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$APPLICATION_CONFIG_DIR$/scratches/generated-requests.http" index="71" requestIdentifier="#71" runType="Run single request">
       <method v="2" />
     </configuration>
     <configuration default="true" type="JetRunConfigurationType">
@@ -141,11 +148,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="HTTP Request.generated-requests | #71" />
         <item itemvalue="Spring Boot.TechnikonApplication" />
         <item itemvalue="HTTP Request.generated-requests | #69" />
         <item itemvalue="HTTP Request.generated-requests | #68" />
         <item itemvalue="HTTP Request.generated-requests | #67" />
-        <item itemvalue="HTTP Request.generated-requests | #63" />
       </list>
     </recent_temporary>
   </component>

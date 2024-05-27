@@ -119,7 +119,7 @@ public class SampleData {
             property.setTin("15161651616fr");
             property.setAddress("somewhere");
             property.setPropertyType(PropertyType.values()[1]);
-            property.setConstructionYear(LocalDate.ofEpochDay(2000));
+            property.setConstructionYear(2000);
             property.setLatitude(10.5);
             property.setLongitude(58.4);
             property.setPropertyOwner(propertyOwner);
@@ -149,7 +149,7 @@ public class SampleData {
             property1.setPropertyType(PropertyType.MAISONETTE);
             property1.setLatitude(13.5);
             property1.setLongitude(34.54);
-            property1.setConstructionYear(LocalDate.of(1998, 10, 12));
+            property1.setConstructionYear(2001);
             PropertyCreateDto propertyCreateDto2 = propertyMapper.toPropertyCreateDto(property1);
             propertyService.createProperty(propertyCreateDto2);
             property1=propertyService.findPropertyByTin(property1.getTin());
