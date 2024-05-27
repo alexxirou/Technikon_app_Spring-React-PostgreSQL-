@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import  { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Box, CircularProgress, Button, Typography, Container, Snackbar } from '@mui/material';
-import { fetchRepairs, updateRepair, deleteRepair, searchRepairsByDate, searchRepairsByDateRange } from './apiRepairService';
-import { PATHS } from '../../lib/constants';
+import { fetchRepairs, fetchAllRepairs, updateRepair, deleteRepair, searchRepairsByDate, searchRepairsByDateRange } from './apiRepairService';
+import { PATHS, ROLES} from '../../lib/constants';
 import { useAuth } from '../../hooks/useAuth';
 import UpdateRepairDialog from './UpdateRepairDialog';
 import ErrorDialog from './ErrorDialog';
@@ -34,10 +34,17 @@ const ShowRepairs = () => {
 
     const fetchAndSetRepairs = async () => {
       try {
-        const repairs = await fetchRepairs(propertyOwnerId);
+        let repairs;
+        if (authData.authorities.includes("ROLE_ADMIN")) {
+          repairs = await fetchAllRepairs();
+        } else {
+          repairs = await fetchRepairs(propertyOwnerId);
+        }
         setRepairs(repairs);
       } catch (error) {
         console.error("Failed to fetch repairs", error);
+        setErrorDialogMessage('Failed to fetch repairs');
+        setErrorDialogOpen(true);
       } finally {
         setLoading(false);
       }
@@ -163,6 +170,8 @@ const ShowRepairs = () => {
       <Box mt={2} mb={2} display="flex" justifyContent="space-between" alignItems="center">
         <Typography variant="h4">Repairs</Typography>
         <Box>
+        {authData && authData.authorities.includes(ROLES.USER) && (
+         <>
           <Button variant="contained" color="primary" onClick={() => setSearchByDateDialogOpen(true)}>
             Search by Date
           </Button>
@@ -172,6 +181,8 @@ const ShowRepairs = () => {
           <Button variant="contained" color="primary" onClick={handleCreateRepair} style={{ marginLeft: '8px' }}>
             Create Repair
           </Button>
+          </>
+        )}
         </Box>
       </Box>
       <Box>
@@ -194,6 +205,8 @@ const ShowRepairs = () => {
             >
               <Box>
                 <Typography variant="subtitle1">{repair.shortDescription}</Typography>
+                <Typography variant="subtitle1">{repair.address}</Typography>
+                <Typography variant="subtitle1">{repair.dateOfRepair}</Typography>
                 <Typography variant="body2" color="textSecondary">
                   {repair.repairStatus}
                 </Typography>

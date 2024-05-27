@@ -16,7 +16,7 @@ import java.util.Optional;
 @Repository
 public interface PropertyRepository extends JpaRepository<Property, Long> {
 
-    Property findPropertyByTin(@Param("tin") String tin);
+    Optional<Property> findPropertyByTin(@Param("tin") String tin);
 
     Property findByTin(String tin);
 

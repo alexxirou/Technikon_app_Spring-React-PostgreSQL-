@@ -4,11 +4,14 @@ import api from '../../api/Api';
 import Modal from '@mui/material/Modal';
 import { Button } from '@mui/material';
 import UpdateForm from './UpdateForm';
-
+import { useParams } from 'react-router-dom';
 const UpdateOwner = ({ ownerDetails, setOwnerDetails }) => {
   const { authData } = useAuth();
   const [errors, setErrors] = useState({});
   const tin = authData?.userTin;
+  const authId =authData?.userId;
+  const authorities =authData?.authorities;
+  const { id } = useParams();
   const [success, setSuccess] = useState(false);
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState(ownerDetails?.email);
@@ -52,8 +55,13 @@ const UpdateOwner = ({ ownerDetails, setOwnerDetails }) => {
         address: address.trim() !== '' ? address : null,
         password: password.trim() !== '' ? password : null,
       };
-
-      const response = await api.put(`/api/propertyOwners/${tin}`, requestBody);
+      let response;
+      if (authorities && authorities.includes('ROLE_USER')) {
+        response = await api.put(`/api/propertyOwners/${authId}`, requestBody);
+      }
+      else{
+        response = await api.put(`/api/propertyOwners/${id}`, requestBody);
+      }
       if (response.status === 202) {
         setSuccess(true);
         setOpen(false);

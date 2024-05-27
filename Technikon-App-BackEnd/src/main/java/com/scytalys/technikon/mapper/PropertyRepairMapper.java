@@ -17,6 +17,8 @@ public interface PropertyRepairMapper {
     @Mapping(source = "id", target= "id")
     @Mapping(source = "propertyOwner.id", target = "propertyOwnerId")
     @Mapping(source = "property.id", target = "propertyId")
+    @Mapping(source = "property.address", target = "address")
+    @Mapping(source = "property.tin", target = "propertyTin")
     PropertyRepairDto RepairToPropertyRepairDto(PropertyRepair propertyRepair);
     PropertyRepairUpdateDto RepairToPropertyRepairUpdateDto(PropertyRepair propertyRepair);
 }

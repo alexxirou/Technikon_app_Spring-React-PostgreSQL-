@@ -4,6 +4,6 @@ import com.scytalys.technikon.domain.PropertyOwner;
 
 public interface PropertyOwnerService extends UserService<PropertyOwner> {
 
-    boolean checkUserHasProperties(String tin);
+    boolean checkUserHasProperties(long id);
 
 }

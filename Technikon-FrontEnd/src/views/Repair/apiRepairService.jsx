@@ -1,9 +1,17 @@
 import api from '../../api/Api';
+import { useAuth } from '../../hooks/useAuth';
+
 
 export const createRepair = async (propertyOwnerId, repairData) => {
     const response = await api.post('/api/property-repairs/create', repairData);
     return response.data;
 }
+
+// FOR ADMIN
+export const fetchAllRepairs = async () => {
+  const response = await api.get('/api/property-repairs/all');
+  return response.data;
+};
 
 export const fetchRepairs = async (propertyOwnerId) => {
   const response = await api.get(`/api/property-repairs/all-by-owner/${propertyOwnerId}`);

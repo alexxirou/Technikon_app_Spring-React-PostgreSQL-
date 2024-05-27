@@ -4,20 +4,29 @@ import { useAuth } from '../../hooks/useAuth';
 import OwnerDetails from './OwnerDetails';
 import CircularProgress from '@mui/material/CircularProgress';
 import { useNavigate } from 'react-router-dom';
-import { PATHS } from '../../lib/constants';
+import { PATHS, ROLES } from '../../lib/constants';
+import { useParams } from 'react-router-dom';
 
 const Owner = () => {
   const [ownerDetails, setOwnerDetails] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const { authData, logout } = useAuth();
+  const authorities = authData?.authorities || [];
   const tin = authData?.userTin;
-  const navigate = useNavigate();
-
+  const authId =authData?.userId;
+  const { id } = useParams();
+  const navigate= useNavigate();
   useEffect(() => {
+    if (!authorities) return;
     const fetchOwnerDetails = async () => {
       try {
-        const response = await api.get(`/api/propertyOwners/${tin}`);
+        let response;
+        if (authorities && authorities.includes(ROLES.USER)) {
+          response = await api.get(`/api/propertyOwners/${tin}`);
+        } else {
+          response = await api.get(`/api/propertyOwners/id/${id}`);
+        }
         if (response.status === 200) {
           setOwnerDetails(response.data.userInfo);
         } else {
@@ -31,22 +40,29 @@ const Owner = () => {
     };
 
     fetchOwnerDetails();
-  }, [tin]);
+  }, [tin, id, authorities]);
 
 
     const handleDeleteOwner = async () => {
       setLoading(true);
      
       try {
-        const response = await api.delete(`/api/propertyOwners/${tin}`);
-     
+        let response;
+        if (authorities && authorities.includes(ROLES.USER)) {
+          response = await api.delete(`/api/propertyOwners/${authId}`);
+        }
+        else{
+          response = await api.delete(`/api/propertyOwners/${id}`);
+        }
   
       
         if (response.status === 202) {
           console.log('Owner deleted successfully');
           
           setTimeout(() => {
-            logout();
+            if (authorities && authorities.includes(ROLES.USER)) {
+            logout();}
+            navigate(PATHS.HOME);
           }, 1000);
      
         } else {

@@ -65,17 +65,6 @@ public class SampleData {
     public CommandLineRunner myCommandLineRunner() {
         return args -> {
             Logger logger = LoggerFactory.getLogger(CommandLineRunner.class); // Replace MyApplication with your class name
-            PropertyRepair propertyRepair = new PropertyRepair();
-            propertyRepair.setDateOfRepair(LocalDate.of(2024, 6, 14));
-            propertyRepair.setShortDescription("Plumb work");
-            propertyRepair.setRepairType(RepairType.PLUMBING);
-            propertyRepair.setRepairStatus(RepairStatus.SCHEDULED);
-            propertyRepair.setCost(new BigDecimal(150));
-            propertyRepair.setLongDescription("Describing with details the work to be done");
-
-//            propertyRepairService.createPropertyRepair(propertyRepair);
-//            logger.info("Created property repair: {}", propertyRepair);
-
 
             Admin theAdmin = new Admin();
             theAdmin.setTin("1751614865GR");// id
@@ -119,7 +108,7 @@ public class SampleData {
             property.setTin("15161651616fr");
             property.setAddress("somewhere");
             property.setPropertyType(PropertyType.values()[1]);
-            property.setConstructionYear(LocalDate.ofEpochDay(2000));
+            property.setConstructionYear(2000);
             property.setLatitude(10.5);
             property.setLongitude(58.4);
             property.setPropertyOwner(propertyOwner);
@@ -149,7 +138,7 @@ public class SampleData {
             property1.setPropertyType(PropertyType.MAISONETTE);
             property1.setLatitude(13.5);
             property1.setLongitude(34.54);
-            property1.setConstructionYear(LocalDate.of(1998, 10, 12));
+            property1.setConstructionYear(2001);
             PropertyCreateDto propertyCreateDto2 = propertyMapper.toPropertyCreateDto(property1);
             propertyService.createProperty(propertyCreateDto2);
             property1=propertyService.findPropertyByTin(property1.getTin());
@@ -201,7 +190,7 @@ public class SampleData {
             propertyRepairService.createPropertyRepair(propertyRepairMapper.RepairToPropertyRepairDto(propertyRepair3));
 
             PropertyRepair propertyRepair4 = new PropertyRepair();
-            propertyRepair4.setProperty(property);
+            propertyRepair4.setProperty(property1);
             propertyRepair4.setPropertyOwner(propertyOwner1);
             propertyRepair4.setCost(new BigDecimal(100));
             propertyRepair4.setRepairStatus(RepairStatus.IN_PROGRESS);

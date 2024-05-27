@@ -41,8 +41,8 @@ public interface PropertyOwnerRepository extends JpaRepository<PropertyOwner, Lo
 
 
     @Transactional
-    @Query("SELECT p.tin FROM Property p WHERE p.propertyOwner.tin = :tin")
-    List<String> findPropertyIdsByUserId(@Param("tin") String tin);
+    @Query("SELECT p.id FROM Property p WHERE p.propertyOwner.id = :id")
+    List<String> findPropertyIdsByUserId(@Param("id") long id);
 
 //    @Transactional
 //    @Modifying

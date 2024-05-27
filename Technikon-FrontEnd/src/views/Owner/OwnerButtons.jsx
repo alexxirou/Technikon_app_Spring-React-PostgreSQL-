@@ -14,7 +14,7 @@ const OwnerButtonsComponent = ({ tin, id, updateModalOpen, handleCloseUpdateModa
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
       <UpdateOwner open={updateModalOpen} handleClose={handleCloseUpdateModal} ownerDetails={ownerDetails} setOwnerDetails={setOwnerDetails}  />
-      <Button component={Link} to={PATHS.PROPERTIES(id)} variant="contained" color={ownerState.color}>
+      <Button component={Link} to={PATHS.SHOW_PROPERTIES(id)} variant="contained" color={ownerState.color}>
         View Properties
       </Button>
       <Button component={Link} to={PATHS.SHOW_REPAIRS(id)} variant="contained" color={ownerState.color}>

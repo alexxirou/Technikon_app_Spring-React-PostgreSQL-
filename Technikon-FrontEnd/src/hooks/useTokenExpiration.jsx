@@ -1,10 +1,12 @@
 import { useEffect } from 'react';
-import {  useLocation } from 'react-router-dom';
+import {  useLocation, useNavigate } from 'react-router-dom';
+import { PATHS } from '../lib/constants';
 import api from '../api/Api';
 
 
 const useTokenExpiration = (authData, logout) => {
   const location = useLocation();
+  const navigate= useNavigate();
 
   useEffect(() => {
     const checkTokenExpiration = async () => {
@@ -42,7 +44,7 @@ const useTokenExpiration = (authData, logout) => {
         // If token is expired and user is not on login or sign-up page, logout
         if (isTokenExpired) {
           console.log('Token is expired, logging out');
-          logout();
+          navigate(PATHS.LOGIN);
         } else {
           console.log('Token is still valid');
         }

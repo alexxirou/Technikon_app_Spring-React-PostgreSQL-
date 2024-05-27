@@ -4,6 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
+<<<<<<< HEAD
     <list default="true" id="f3732d33-421a-415d-ba42-6d0b12488ca7" name="Changes" comment="Removed scrollbar from searching a repair by date">
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
@@ -15,6 +16,11 @@
       <change beforePath="$PROJECT_DIR$/Technikon-FrontEnd/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/Technikon-FrontEnd/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Technikon-FrontEnd/src/App.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/Technikon-FrontEnd/src/App.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Technikon-FrontEnd/src/components/Header.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/Technikon-FrontEnd/src/components/Header.jsx" afterDir="false" />
+=======
+    <list default="true" id="f3732d33-421a-415d-ba42-6d0b12488ca7" name="Changes" comment="Added address and tin of property inside Show repairs of UI">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Technikon-App-BackEnd/src/main/java/com/scytalys/technikon/bootstrap/SampleData.java" beforeDir="false" afterPath="$PROJECT_DIR$/Technikon-App-BackEnd/src/main/java/com/scytalys/technikon/bootstrap/SampleData.java" afterDir="false" />
+>>>>>>> 0b36fa81d75037d888453cbb93ff5710e6c30822
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -33,10 +39,11 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="BackUpBranch" />
+        <entry key="$PROJECT_DIR$" value="Testing" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="UPDATE_TYPE" value="REBASE" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
   &quot;lastFilter&quot;: {
@@ -58,6 +65,9 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
+  <component name="MavenRunner">
+    <option name="skipTests" value="true" />
+  </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 8
 }</component>
@@ -67,6 +77,7 @@
     <option name="showLibraryContents" value="true" />
     <option name="showMembers" value="true" />
   </component>
+<<<<<<< HEAD
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "Application.Main.executor": "Run",
@@ -114,6 +125,52 @@
     <configuration name="generated-requests | #63" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$APPLICATION_CONFIG_DIR$/scratches/generated-requests.http" index="63" requestIdentifier="#63" runType="Run single request">
       <method v="2" />
     </configuration>
+=======
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.TechnikonApplication.executor&quot;: &quot;Run&quot;,
+    &quot;HTTP Request.generated-requests | #63.executor&quot;: &quot;Run&quot;,
+    &quot;HTTP Request.generated-requests | #67.executor&quot;: &quot;Run&quot;,
+    &quot;HTTP Request.generated-requests | #68.executor&quot;: &quot;Run&quot;,
+    &quot;HTTP Request.generated-requests | #69.executor&quot;: &quot;Run&quot;,
+    &quot;HTTP Request.generated-requests | #71.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.JwtServiceTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.JwtServiceTest.testGenerateTokenAndVerify.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.JwtServiceTest.testVerifyJwtToken.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.PropertyOwnerServiceImplTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.PropertyOwnerServiceImplTest.testCreateUser.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.PropertyOwnerServiceImplTest.testSearchUserByFail.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.PropertyOwnerServiceImplTest.testUpdateUser.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.PropertyOwnerServiceImplTest.testUpdateUserFailWrongEmailFormat.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.PropertyOwnerServiceImplTest.userDetails_ReturnsUserDetailsWithEmptyProperties_WhenPropertyOwnerDoesNotExist.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.PropertyOwnerServiceImplTest.userDetails_ReturnsUserDetails_WhenPropertyOwnerExists.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.PropertyOwnerServiceImplTest.whenConcurrentUpdate_thenThrowException.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.UserMapperTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.UserMapperTest.testUserSearchResponseDtoCreation.executor&quot;: &quot;Run&quot;,
+    &quot;Maven.Technikon-App-BackEnd [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.Technikon-App-BackEnd [install].executor&quot;: &quot;Run&quot;,
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;Spring Boot.TechnikonApplication.executor&quot;: &quot;Run&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;FrontEndLoginFeature&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/alexandrosx/Documents/Project&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="RunManager" selected="Spring Boot.TechnikonApplication">
+>>>>>>> 0b36fa81d75037d888453cbb93ff5710e6c30822
     <configuration name="generated-requests | #67" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$APPLICATION_CONFIG_DIR$/scratches/generated-requests.http" index="67" requestIdentifier="#67" runType="Run single request">
       <method v="2" />
     </configuration>
@@ -121,6 +178,9 @@
       <method v="2" />
     </configuration>
     <configuration name="generated-requests | #69" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$APPLICATION_CONFIG_DIR$/scratches/generated-requests.http" index="69" requestIdentifier="#69" runType="Run single request">
+      <method v="2" />
+    </configuration>
+    <configuration name="generated-requests | #71" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$APPLICATION_CONFIG_DIR$/scratches/generated-requests.http" index="71" requestIdentifier="#71" runType="Run single request">
       <method v="2" />
     </configuration>
     <configuration default="true" type="JetRunConfigurationType">
@@ -149,6 +209,26 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+<<<<<<< HEAD
+=======
+    <recent_temporary>
+      <list>
+        <item itemvalue="Spring Boot.TechnikonApplication" />
+        <item itemvalue="HTTP Request.generated-requests | #71" />
+        <item itemvalue="HTTP Request.generated-requests | #69" />
+        <item itemvalue="HTTP Request.generated-requests | #68" />
+        <item itemvalue="HTTP Request.generated-requests | #67" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="jdk-17.0.10-temurin-17.0.10-4caba194b151-b3785831" />
+        <option value="jdk-22-openjdk-22-4caba194b151-f504ca98" />
+      </set>
+    </attachedChunks>
+>>>>>>> 0b36fa81d75037d888453cbb93ff5710e6c30822
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -163,46 +243,7 @@
       <workItem from="1716493588153" duration="2229000" />
       <workItem from="1716727215693" duration="13556000" />
       <workItem from="1716791366005" duration="1087000" />
-    </task>
-    <task id="LOCAL-00005" summary="Used material-ui components in login page and in display of owner fields">
-      <option name="closed" value="true" />
-      <created>1716318735993</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1716318735993</updated>
-    </task>
-    <task id="LOCAL-00006" summary="Created CreateRepair component with input validations">
-      <option name="closed" value="true" />
-      <created>1716321032161</created>
-      <option name="number" value="00006" />
-      <option name="presentableId" value="LOCAL-00006" />
-      <option name="project" value="LOCAL" />
-      <updated>1716321032161</updated>
-    </task>
-    <task id="LOCAL-00007" summary="Link to repairs using property owner id">
-      <option name="closed" value="true" />
-      <created>1716456729755</created>
-      <option name="number" value="00007" />
-      <option name="presentableId" value="LOCAL-00007" />
-      <option name="project" value="LOCAL" />
-      <updated>1716456729755</updated>
-    </task>
-    <task id="LOCAL-00008" summary="Edit functionality for show repairss">
-      <option name="closed" value="true" />
-      <created>1716461744102</created>
-      <option name="number" value="00008" />
-      <option name="presentableId" value="LOCAL-00008" />
-      <option name="project" value="LOCAL" />
-      <updated>1716461744102</updated>
-    </task>
-    <task id="LOCAL-00009" summary="Correct show repair details buttons">
-      <option name="closed" value="true" />
-      <created>1716465689647</created>
-      <option name="number" value="00009" />
-      <option name="presentableId" value="LOCAL-00009" />
-      <option name="project" value="LOCAL" />
-      <updated>1716465689648</updated>
+      <workItem from="1716837035321" duration="4580000" />
     </task>
     <task id="LOCAL-00010" summary="Correct show repair details refreshing page">
       <option name="closed" value="true" />
@@ -556,7 +597,47 @@
       <option name="project" value="LOCAL" />
       <updated>1716808868909</updated>
     </task>
-    <option name="localTasksCounter" value="54" />
+    <task id="LOCAL-00054" summary="Fixed create property">
+      <option name="closed" value="true" />
+      <created>1716816290834</created>
+      <option name="number" value="00054" />
+      <option name="presentableId" value="LOCAL-00054" />
+      <option name="project" value="LOCAL" />
+      <updated>1716816290834</updated>
+    </task>
+    <task id="LOCAL-00055" summary="Added fetch all repairs for admin">
+      <option name="closed" value="true" />
+      <created>1716819131070</created>
+      <option name="number" value="00055" />
+      <option name="presentableId" value="LOCAL-00055" />
+      <option name="project" value="LOCAL" />
+      <updated>1716819131070</updated>
+    </task>
+    <task id="LOCAL-00056" summary="Partial implementation for admin buttons">
+      <option name="closed" value="true" />
+      <created>1716820873344</created>
+      <option name="number" value="00056" />
+      <option name="presentableId" value="LOCAL-00056" />
+      <option name="project" value="LOCAL" />
+      <updated>1716820873344</updated>
+    </task>
+    <task id="LOCAL-00057" summary="Added address and tin of property inside returned PropertyRepairDto">
+      <option name="closed" value="true" />
+      <created>1716840977491</created>
+      <option name="number" value="00057" />
+      <option name="presentableId" value="LOCAL-00057" />
+      <option name="project" value="LOCAL" />
+      <updated>1716840977491</updated>
+    </task>
+    <task id="LOCAL-00058" summary="Added address and tin of property inside Show repairs of UI">
+      <option name="closed" value="true" />
+      <created>1716841315203</created>
+      <option name="number" value="00058" />
+      <option name="presentableId" value="LOCAL-00058" />
+      <option name="project" value="LOCAL" />
+      <updated>1716841315203</updated>
+    </task>
+    <option name="localTasksCounter" value="59" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -608,11 +689,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Fixed delete repair with propertyOwnerId validation" />
-    <MESSAGE value="Fixed repair updating passing user role and propertyOwnerId" />
-    <MESSAGE value="Fixed update repair button" />
-    <MESSAGE value="Fixed create repair button" />
-    <MESSAGE value="Fixed cancel button in UpdateRepairDialog.jsx" />
     <MESSAGE value="Added cancel button in create repair page" />
     <MESSAGE value="Fixed search by date/dates in backend to accept dates that refer to the past" />
     <MESSAGE value="Added logging for deleting a repair" />
@@ -633,6 +709,11 @@
     <MESSAGE value="Changed date format" />
     <MESSAGE value="Fixed update form bug" />
     <MESSAGE value="Removed scrollbar from searching a repair by date" />
-    <option name="LAST_COMMIT_MESSAGE" value="Removed scrollbar from searching a repair by date" />
+    <MESSAGE value="Fixed create property" />
+    <MESSAGE value="Added fetch all repairs for admin" />
+    <MESSAGE value="Partial implementation for admin buttons" />
+    <MESSAGE value="Added address and tin of property inside returned PropertyRepairDto" />
+    <MESSAGE value="Added address and tin of property inside Show repairs of UI" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added address and tin of property inside Show repairs of UI" />
   </component>
 </project>

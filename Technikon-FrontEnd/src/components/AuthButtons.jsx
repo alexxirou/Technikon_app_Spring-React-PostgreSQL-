@@ -1,4 +1,4 @@
-import React from 'react';
+
 import Button from "@mui/material/Button";
 import { Link } from "react-router-dom";
 import { PATHS, ROLES } from "../lib/constants";
@@ -8,10 +8,12 @@ const AuthButtons = ({ authData, logout }) => {
     <>
       {authData ? (
         <>
+        {authData && authData.authorities.includes(ROLES.USER) && (
           <Button component={Link} to={PATHS.OWNER(authData.userId)} color="inherit">
             Owner
           </Button>
-          <Button component={Link} to={PATHS.PROPERTIES(authData.userId)} color="inherit">
+        )}
+          <Button component={Link} to={PATHS.SHOW_PROPERTIES(authData.userId)} color="inherit">
             Properties
           </Button>
           <Button component={Link} to={PATHS.SHOW_REPAIRS(authData.userId)} color="inherit">

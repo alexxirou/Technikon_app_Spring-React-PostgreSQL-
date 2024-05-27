@@ -43,19 +43,19 @@ public class PropertyController {
             if (!authId.equals(propertyOwnerId)) throw new AccessDeniedException("You are not authorized to add a property to a another user.");
         }
         List<Property> properties = propertyService.findAllProperties().stream()
-                .filter(property -> property.getPropertyOwner().getId().equals(propertyOwnerId))
+                .filter(property -> property.getPropertyOwner().getId().equals(propertyOwnerId)).filter(Property::isActive)
                 .toList();
 
         return ResponseEntity.ok(properties);
     }
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
-    @GetMapping("/tin/{propertyTin}")
+    @GetMapping("/tin/{tin}")
     public ResponseEntity<Property> readByTin(@PathVariable String tin, Authentication authentication) {
         Property property = propertyService.findPropertyByTin(tin);
         if (authentication.getAuthorities().stream().noneMatch(a -> a.getAuthority().equals("ROLE_ADMIN")))  {
             UserInfoDetails userInfoDetails = (UserInfoDetails) authentication.getPrincipal();
-            String authTin = userInfoDetails.getTin();
-            if (!authTin.equals(property.getPropertyOwner().getTin())) throw new AccessDeniedException("You are not authorized to view a property of another user.");
+            long authId = userInfoDetails.getId();
+            if (authId!=property.getPropertyOwner().getId()) throw new AccessDeniedException("You are not authorized to view a property of another user.");
         }
         return property == null ? ResponseEntity.notFound().build() : ResponseEntity.ok(property);
     }
@@ -81,18 +81,23 @@ public class PropertyController {
             Long authId = userInfoDetails.getId();
             if (!authId.equals(propertyCreateDto.getPropertyOwnerId())) throw new AccessDeniedException("You are not authorized to add a property to a another user.");
         }
+        PropertyCreateDto propertyCreateDto1 = propertyService.createProperty(propertyCreateDto);
         HttpHeaders headers = new HttpHeaders();
         headers.add("message", "Creation of a property");
-        return new ResponseEntity<>(propertyService.createProperty(propertyCreateDto), headers, HttpStatus.CREATED);
+        return new ResponseEntity<>(propertyCreateDto1, headers, HttpStatus.CREATED);
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/getAllProperties/")
-    public List<Property> read() {
-        return propertyService.findAllProperties();
+    public ResponseEntity<List<Property>> read() {
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("message", "Found properties");
+
+        return new ResponseEntity<>(propertyService.findAllProperties(), headers, HttpStatus.OK);
     }
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     @PutMapping("/update/{propertyId}")
+
     public ResponseEntity<PropertyUpdateDto> updateProperty(
             @PathVariable("propertyId") long propertyId,
             @RequestBody PropertyUpdateDto propertyUpdateDto,
