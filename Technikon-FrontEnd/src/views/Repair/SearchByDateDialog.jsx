@@ -13,7 +13,7 @@ const SearchByDateDialog = ({ open, onClose, onSearch }) => {
     <Dialog open={open} onClose={onClose}>
       <DialogTitle>Search Repairs by Date</DialogTitle>
       <DialogContent>
-        <Box p={2}>
+        <Box p={2} minHeight="auto">
           <TextField
             label="Date"
             type="date"
