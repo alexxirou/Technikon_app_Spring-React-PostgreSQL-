@@ -4,9 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f3732d33-421a-415d-ba42-6d0b12488ca7" name="Changes" comment="Added fetch all repairs for admin">
+    <list default="true" id="f3732d33-421a-415d-ba42-6d0b12488ca7" name="Changes" comment="Partial implementation for admin buttons">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Technikon-FrontEnd/src/views/Repair/ShowRepairsStateless.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/Technikon-FrontEnd/src/views/Repair/ShowRepairsStateless.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Technikon-App-BackEnd/src/main/java/com/scytalys/technikon/dto/repair/PropertyRepairDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/Technikon-App-BackEnd/src/main/java/com/scytalys/technikon/dto/repair/PropertyRepairDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Technikon-App-BackEnd/src/main/java/com/scytalys/technikon/mapper/PropertyRepairMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/Technikon-App-BackEnd/src/main/java/com/scytalys/technikon/mapper/PropertyRepairMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Technikon-FrontEnd/src/views/Repair/RepairDetails.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/Technikon-FrontEnd/src/views/Repair/RepairDetails.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -49,6 +51,9 @@
 }</component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
+  </component>
+  <component name="MavenRunner">
+    <option name="skipTests" value="true" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 8
@@ -172,14 +177,7 @@
       <workItem from="1716493588153" duration="2229000" />
       <workItem from="1716727215693" duration="13556000" />
       <workItem from="1716791366005" duration="1087000" />
-    </task>
-    <task id="LOCAL-00007" summary="Link to repairs using property owner id">
-      <option name="closed" value="true" />
-      <created>1716456729755</created>
-      <option name="number" value="00007" />
-      <option name="presentableId" value="LOCAL-00007" />
-      <option name="project" value="LOCAL" />
-      <updated>1716456729755</updated>
+      <workItem from="1716837035321" duration="3321000" />
     </task>
     <task id="LOCAL-00008" summary="Edit functionality for show repairss">
       <option name="closed" value="true" />
@@ -565,7 +563,15 @@
       <option name="project" value="LOCAL" />
       <updated>1716819131070</updated>
     </task>
-    <option name="localTasksCounter" value="56" />
+    <task id="LOCAL-00056" summary="Partial implementation for admin buttons">
+      <option name="closed" value="true" />
+      <created>1716820873344</created>
+      <option name="number" value="00056" />
+      <option name="presentableId" value="LOCAL-00056" />
+      <option name="project" value="LOCAL" />
+      <updated>1716820873344</updated>
+    </task>
+    <option name="localTasksCounter" value="57" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -617,7 +623,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Fixed update repair button" />
     <MESSAGE value="Fixed create repair button" />
     <MESSAGE value="Fixed cancel button in UpdateRepairDialog.jsx" />
     <MESSAGE value="Added cancel button in create repair page" />
@@ -642,6 +647,7 @@
     <MESSAGE value="Removed scrollbar from searching a repair by date" />
     <MESSAGE value="Fixed create property" />
     <MESSAGE value="Added fetch all repairs for admin" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added fetch all repairs for admin" />
+    <MESSAGE value="Partial implementation for admin buttons" />
+    <option name="LAST_COMMIT_MESSAGE" value="Partial implementation for admin buttons" />
   </component>
 </project>

@@ -74,6 +74,12 @@ const RepairDetails = () => {
         <Typography variant="subtitle1">
           Short Description: {repair.shortDescription}
         </Typography>
+        <Typography variant="subtitle1">
+          Tin: {repair.propertyTin}
+        </Typography>
+        <Typography variant="subtitle1">
+          Address: {repair.address}
+        </Typography>
         <Typography variant="body2" color="textSecondary">
           Long Description: {repair.longDescription}
         </Typography>
