@@ -59,6 +59,7 @@ const ShowRepairs = () => {
     try {
       const repairs = await searchRepairsByDate(propertyOwnerId, date);
       setRepairs(repairs);
+      console.log("Repairs with date:", date, repairs);
     } catch (error) {
       console.error("Failed to search repairs by date", error);
       setErrorDialogMessage('Failed to search repairs by date');
@@ -70,6 +71,7 @@ const ShowRepairs = () => {
     try {
       const repairs = await searchRepairsByDateRange(propertyOwnerId, startDate, endDate);
       setRepairs(repairs);
+      console.log("Repairs within range of dates:", startDate,"and",endDate, repairs);
     } catch (error) {
       console.error("Failed to search repairs by date range", error);
       setErrorDialogMessage('Failed to search repairs by date range');
