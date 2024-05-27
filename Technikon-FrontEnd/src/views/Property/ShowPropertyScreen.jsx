@@ -29,6 +29,7 @@ const ShowProperties = () => {
         else {
           const response = await getAllProperties();
           properties = response.data;
+          console.log(properties);
         }
         setProperties(properties);
       } catch (error) {
@@ -86,7 +87,7 @@ const ShowProperties = () => {
   }
 
   return (
-    <Container maxWidth="lg">
+    <Container maxWidth="md">
       <Box mt={2} mb={2} display="flex" justifyContent="space-between" alignItems="center">
         <Typography variant="h4">Properties</Typography>
         <Button variant="contained" color="primary" onClick={handleCreateProperty}>
@@ -113,11 +114,13 @@ const ShowProperties = () => {
               borderColor="grey.300"
             >
 
-              <Box display="flex" flexDirection="row">
-                <Typography variant="subtitle1" style={{ marginRight: '16px' }}>Address: {property.address}</Typography>
-                <Typography variant="subtitle1"  style={{ marginRight: '16px' }}>Construction Year: {property.constructionYear}</Typography>
-                <Typography variant="subtitle1" >Tin: {property.tin}</Typography>
-              </Box>
+<Box  >
+  <Typography variant="subtitle1"  style={{ marginRight: '10px' }}>Owner Tin: {property.propertyOwner.tin}</Typography>
+  <Typography variant="subtitle1"  style={{ marginRight: '10px' }}>Property Tin: {property.tin}</Typography>
+  <Typography variant="subtitle1" style={{ marginRight: '10px' }}>Address: {property.address}</Typography>
+
+</Box>
+
 
 
               <Box display="flex">
