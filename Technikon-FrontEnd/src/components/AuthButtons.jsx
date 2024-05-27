@@ -11,6 +11,9 @@ const AuthButtons = ({ authData, logout }) => {
           <Button component={Link} to={PATHS.OWNER(authData.userId)} color="inherit">
             Owner
           </Button>
+          <Button component={Link} to={PATHS.PROPERTIES(authData.userId)} color="inherit">
+            Properties
+          </Button>
           <Button component={Link} to={PATHS.SHOW_REPAIRS(authData.userId)} color="inherit">
             Repairs
           </Button>
