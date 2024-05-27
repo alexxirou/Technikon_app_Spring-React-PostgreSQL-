@@ -2,7 +2,7 @@ import React from 'react';
 import { Container, Typography } from '@mui/material';
 
 const Footer = () => {
-  const year = new Date().getFullYear(); // Get the current year
+  const year = new Date().getFullYear();
 
   return (
     <Container maxWidth="sm">

@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f3732d33-421a-415d-ba42-6d0b12488ca7" name="Changes" comment="Fixed update repair button" />
+    <list default="true" id="f3732d33-421a-415d-ba42-6d0b12488ca7" name="Changes" comment="Fixed button for deleting a repair" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -41,9 +41,9 @@
       </UrlAndAccount>
     </option>
   </component>
-  <component name="KubernetesApiProvider"><![CDATA[{
-  "isMigrated": true
-}]]></component>
+  <component name="KubernetesApiProvider">{
+  &quot;isMigrated&quot;: true
+}</component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
@@ -56,48 +56,48 @@
     <option name="showLibraryContents" value="true" />
     <option name="showMembers" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.TechnikonApplication.executor": "Run",
-    "HTTP Request.generated-requests | #63.executor": "Run",
-    "HTTP Request.generated-requests | #67.executor": "Run",
-    "HTTP Request.generated-requests | #68.executor": "Run",
-    "HTTP Request.generated-requests | #69.executor": "Run",
-    "JUnit.JwtServiceTest.executor": "Run",
-    "JUnit.JwtServiceTest.testGenerateTokenAndVerify.executor": "Run",
-    "JUnit.JwtServiceTest.testVerifyJwtToken.executor": "Run",
-    "JUnit.PropertyOwnerServiceImplTest.executor": "Run",
-    "JUnit.PropertyOwnerServiceImplTest.testCreateUser.executor": "Run",
-    "JUnit.PropertyOwnerServiceImplTest.testSearchUserByFail.executor": "Run",
-    "JUnit.PropertyOwnerServiceImplTest.testUpdateUser.executor": "Run",
-    "JUnit.PropertyOwnerServiceImplTest.testUpdateUserFailWrongEmailFormat.executor": "Run",
-    "JUnit.PropertyOwnerServiceImplTest.userDetails_ReturnsUserDetailsWithEmptyProperties_WhenPropertyOwnerDoesNotExist.executor": "Run",
-    "JUnit.PropertyOwnerServiceImplTest.userDetails_ReturnsUserDetails_WhenPropertyOwnerExists.executor": "Run",
-    "JUnit.PropertyOwnerServiceImplTest.whenConcurrentUpdate_thenThrowException.executor": "Run",
-    "JUnit.UserMapperTest.executor": "Run",
-    "JUnit.UserMapperTest.testUserSearchResponseDtoCreation.executor": "Run",
-    "Maven.Technikon-App-BackEnd [clean].executor": "Run",
-    "Maven.Technikon-App-BackEnd [install].executor": "Run",
-    "RequestMappingsPanelOrder0": "0",
-    "RequestMappingsPanelOrder1": "1",
-    "RequestMappingsPanelWidth0": "75",
-    "RequestMappingsPanelWidth1": "75",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "Spring Boot.TechnikonApplication.executor": "Run",
-    "git-widget-placeholder": "FrontEndLoginFeature",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/alexandrosx/Documents/Project",
-    "node.js.detected.package.eslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Project",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.0",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.TechnikonApplication.executor&quot;: &quot;Run&quot;,
+    &quot;HTTP Request.generated-requests | #63.executor&quot;: &quot;Run&quot;,
+    &quot;HTTP Request.generated-requests | #67.executor&quot;: &quot;Run&quot;,
+    &quot;HTTP Request.generated-requests | #68.executor&quot;: &quot;Run&quot;,
+    &quot;HTTP Request.generated-requests | #69.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.JwtServiceTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.JwtServiceTest.testGenerateTokenAndVerify.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.JwtServiceTest.testVerifyJwtToken.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.PropertyOwnerServiceImplTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.PropertyOwnerServiceImplTest.testCreateUser.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.PropertyOwnerServiceImplTest.testSearchUserByFail.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.PropertyOwnerServiceImplTest.testUpdateUser.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.PropertyOwnerServiceImplTest.testUpdateUserFailWrongEmailFormat.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.PropertyOwnerServiceImplTest.userDetails_ReturnsUserDetailsWithEmptyProperties_WhenPropertyOwnerDoesNotExist.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.PropertyOwnerServiceImplTest.userDetails_ReturnsUserDetails_WhenPropertyOwnerExists.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.PropertyOwnerServiceImplTest.whenConcurrentUpdate_thenThrowException.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.UserMapperTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.UserMapperTest.testUserSearchResponseDtoCreation.executor&quot;: &quot;Run&quot;,
+    &quot;Maven.Technikon-App-BackEnd [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.Technikon-App-BackEnd [install].executor&quot;: &quot;Run&quot;,
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;Spring Boot.TechnikonApplication.executor&quot;: &quot;Run&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;FrontEndLoginFeature&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/alexandrosx/Documents/Project&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager" selected="Spring Boot.TechnikonApplication">
     <configuration name="generated-requests | #63" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$APPLICATION_CONFIG_DIR$/scratches/generated-requests.http" index="63" requestIdentifier="#63" runType="Run single request">
       <method v="2" />
@@ -167,6 +167,7 @@
       <workItem from="1716452451421" duration="13829000" />
       <workItem from="1716493588153" duration="2229000" />
       <workItem from="1716727215693" duration="13556000" />
+      <workItem from="1716791366005" duration="1087000" />
     </task>
     <task id="LOCAL-00001" summary="Corrected imports at App.js">
       <option name="closed" value="true" />
@@ -416,7 +417,71 @@
       <option name="project" value="LOCAL" />
       <updated>1716741566087</updated>
     </task>
-    <option name="localTasksCounter" value="32" />
+    <task id="LOCAL-00032" summary="Fixed create repair button">
+      <option name="closed" value="true" />
+      <created>1716755722381</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1716755722381</updated>
+    </task>
+    <task id="LOCAL-00033" summary="Fixed cancel button in UpdateRepairDialog.jsx">
+      <option name="closed" value="true" />
+      <created>1716756054956</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1716756054956</updated>
+    </task>
+    <task id="LOCAL-00034" summary="Added cancel button in create repair page">
+      <option name="closed" value="true" />
+      <created>1716757639787</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1716757639787</updated>
+    </task>
+    <task id="LOCAL-00035" summary="Fixed search by date/dates in backend to accept dates that refer to the past">
+      <option name="closed" value="true" />
+      <created>1716794798144</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1716794798144</updated>
+    </task>
+    <task id="LOCAL-00036" summary="Added logging for deleting a repair">
+      <option name="closed" value="true" />
+      <created>1716795163901</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1716795163901</updated>
+    </task>
+    <task id="LOCAL-00037" summary="Added pop up for deleting a repair">
+      <option name="closed" value="true" />
+      <created>1716796218247</created>
+      <option name="number" value="00037" />
+      <option name="presentableId" value="LOCAL-00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1716796218247</updated>
+    </task>
+    <task id="LOCAL-00038" summary="Added short description validation for updating a repair">
+      <option name="closed" value="true" />
+      <created>1716797665609</created>
+      <option name="number" value="00038" />
+      <option name="presentableId" value="LOCAL-00038" />
+      <option name="project" value="LOCAL" />
+      <updated>1716797665609</updated>
+    </task>
+    <task id="LOCAL-00039" summary="Fixed button for deleting a repair">
+      <option name="closed" value="true" />
+      <created>1716799499338</created>
+      <option name="number" value="00039" />
+      <option name="presentableId" value="LOCAL-00039" />
+      <option name="project" value="LOCAL" />
+      <updated>1716799499338</updated>
+    </task>
+    <option name="localTasksCounter" value="40" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -468,14 +533,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Merge branch 'FrontEndLoginFeature' of https://github.com/alexxirou/Technikon_app_Spring-React-PostgreSQL- into FrontEndLoginFeature" />
-    <MESSAGE value="Edit functionality for show repairs" />
-    <MESSAGE value="Edit functionality for show repairss" />
-    <MESSAGE value="Correct show repair details buttons" />
-    <MESSAGE value="Correct show repair details refreshing page" />
-    <MESSAGE value="Remove Repair component and put create repair button in show repairs page" />
-    <MESSAGE value="Added success message in creation of repair" />
-    <MESSAGE value="Implemented delete repair funcionality" />
     <MESSAGE value="Necessary commit, no changes" />
     <MESSAGE value="Removed unecessary print" />
     <MESSAGE value="Corrected routing for repairs" />
@@ -493,22 +550,14 @@
     <MESSAGE value="Fixed repair updating passing user role and propertyOwnerId" />
     <MESSAGE value="Necessary commit" />
     <MESSAGE value="Fixed update repair button" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed update repair button" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/Technikon-App-BackEnd/src/main/java/com/scytalys/technikon/security/controller/UserAuthenticationController.java</url>
-          <line>76</line>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/Technikon-App-BackEnd/src/main/java/com/scytalys/technikon/security/service/UserInfoService.java</url>
-          <line>38</line>
-          <option name="timeStamp" value="2" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
+    <MESSAGE value="Fixed create repair button" />
+    <MESSAGE value="Fixed cancel button in UpdateRepairDialog.jsx" />
+    <MESSAGE value="Added cancel button in create repair page" />
+    <MESSAGE value="Fixed search by date/dates in backend to accept dates that refer to the past" />
+    <MESSAGE value="Added logging for deleting a repair" />
+    <MESSAGE value="Added pop up for deleting a repair" />
+    <MESSAGE value="Added short description validation for updating a repair" />
+    <MESSAGE value="Fixed button for deleting a repair" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixed button for deleting a repair" />
   </component>
 </project>

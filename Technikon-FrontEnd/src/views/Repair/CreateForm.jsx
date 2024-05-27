@@ -1,12 +1,12 @@
+import { TextField, MenuItem, Button, Typography, Box } from '@mui/material';
 import React, { useState } from 'react';
-import { TextField, MenuItem, Typography } from '@mui/material';
 
-const RepairForm = ({
+const CreateForm = ({
   formData,
   setFormData,
   errors,
   handleSubmit,
-  isUpdating
+  handleCancel
 }) => {
   const [shortDescriptionError, setShortDescriptionError] = useState('');
 
@@ -115,8 +115,25 @@ const RepairForm = ({
           {errors.submit}
         </Typography>
       )}
+      <Box display="flex" justifyContent="space-between" mt={2}>
+        <Button
+          type="submit"
+          variant="contained"
+          color="primary"
+          disabled={!!shortDescriptionError}
+        >
+          Create Repair
+        </Button>
+        <Button
+          variant="outlined"
+          color="secondary"
+          onClick={handleCancel}
+        >
+          Cancel
+        </Button>
+      </Box>
     </form>
   );
 };
 
-export default RepairForm;
+export default CreateForm;
