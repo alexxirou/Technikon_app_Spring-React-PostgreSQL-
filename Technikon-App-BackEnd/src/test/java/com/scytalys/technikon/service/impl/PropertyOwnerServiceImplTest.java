@@ -44,8 +44,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.*;
-import static org.mockito.Mockito.doAnswer;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 
 public class PropertyOwnerServiceImplTest {
@@ -60,19 +59,20 @@ public class PropertyOwnerServiceImplTest {
     @Mock
     PropertyRepository propertyRepository;
 
-    @Spy
+
     @InjectMocks
     PropertyServiceImpl propertyService;
-    @Spy
+
     @InjectMocks
     private PropertyOwnerServiceImpl propertyOwnerService;
-    @Spy
+
     @InjectMocks
     private UserInfoService userInfoService;
 
     // Initialize ownerMapper
-
+    @Mock
     private PropertyOwner propertyOwner;
+    @Mock
     private Authentication authentication;
     @Mock
     private PasswordEncoder passwordEncoder;
@@ -171,16 +171,15 @@ public class PropertyOwnerServiceImplTest {
      */
     @Test
     public void testSoftDeleteUser() {
-        when(propertyOwnerRepository.findByTin(any(String.class))).thenReturn(Optional.of(propertyOwner));
-
-
-        // Set isActive flag to false
-        doAnswer(invocation -> {
-            propertyOwner.setActive(false); // Set isActive flag to false
-            return 1;
-        }).when(propertyOwnerService).softDeleteUser(eq(propertyOwner.getId()));
+        when(propertyOwnerRepository.findById(eq(1L))).thenReturn(Optional.of(propertyOwner));
+        when(propertyOwnerRepository.save(any(PropertyOwner.class))).thenAnswer(invocation -> invocation.getArgument(0));
+        // Act: Call the method under test
         propertyOwnerService.softDeleteUser(propertyOwner.getId());
+
+        // Assert: Verify the property owner was set to inactive
+
         assertFalse(propertyOwner.isActive());
+
     }
 
 
