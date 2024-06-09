@@ -37,8 +37,7 @@ public class User {
     private String address;
     @NonNull
     private String phoneNumber;
-    @Version
-    private long version;
+
     private LocalDate registrationDate= LocalDate.now();
 
 

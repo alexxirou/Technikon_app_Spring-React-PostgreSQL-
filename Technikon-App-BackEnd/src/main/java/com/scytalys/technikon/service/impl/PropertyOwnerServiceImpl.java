@@ -81,13 +81,12 @@ public class PropertyOwnerServiceImpl implements PropertyOwnerService {
      * @throws IllegalArgumentException if the provided DTO is invalid or contains incomplete information.
      */
     @Override
-    @Transactional
     @CacheEvict(value = "PropertyOwners", allEntries = true)
     public void updateUser(long id, UserUpdateDto dto){
 
         PropertyOwner user= findUser(id);
 
-        PropertyOwner newUser = ownerMapper.updateDtoToUser(dto,user);
+        PropertyOwner newUser = ownerMapper.updateDtoToUser(dto, user);
 
         if(dto.email()!=null) {
             String verifiedEmail = Optional.of(dto.email())
@@ -97,7 +96,7 @@ public class PropertyOwnerServiceImpl implements PropertyOwnerService {
         }
         if ( newUser.getPassword()==null || newUser.getPassword().isEmpty()){
             newUser.setPassword(user.getPassword());
-        }else newUser.setPassword(passwordEncoder.encode(newUser.getPassword()));
+        }else {newUser.setPassword(passwordEncoder.encode(newUser.getPassword()));}
         propertyOwnerRepository.save(newUser);
 
     }
